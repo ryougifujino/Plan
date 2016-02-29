@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="all" android:id="@+id/gp_main_drawer_core">
+        <item
+            android:id="@+id/item_main_drawer_planning_display"
+            android:icon="@drawable/main_drawer_planning_display"
+            android:title="@string/main_drawer_planning_display" />
+        <item
+            android:id="@+id/item_main_drawer_planning_done"
+            android:icon="@drawable/main_drawer_planning_done"
+            android:title="@string/main_drawer_planning_done" />
+        <item
+            android:id="@+id/item_main_drawer_history"
+            android:icon="@drawable/main_drawer_history"
+            android:title="@string/main_drawer_history" />
+        <item
+            android:id="@+id/item_main_drawer_achievement"
+            android:icon="@drawable/main_drawer_achievement"
+            android:title="@string/main_drawer_achievement" />
+
+
+    </group>
+
+    <group android:checkableBehavior="all" android:id="@+id/gp_main_drawer_other">
+        <item
+            android:id="@+id/item_main_drawer_extension"
+            android:icon="@drawable/main_drawer_extension"
+            android:title="@string/main_drawer_extension" />
+        <item
+            android:id="@+id/item_main_drawer_store"
+            android:icon="@drawable/main_drawer_store"
+            android:title="@string/main_drawer_store" />
+        <item
+            android:id="@+id/item_main_drawer_settings"
+            android:icon="@drawable/main_drawer_settings"
+            android:title="@string/main_drawer_settings" />
+    </group>
+
+
+</menu>

@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Planning</string>
+
+    <string name="main_drawer_planning_display">计划</string>
+    <string name="main_drawer_planning_done">完成</string>
+    <string name="main_drawer_history">历史</string>
+    <string name="main_drawer_achievement">成就</string>
+    <string name="main_drawer_extension">扩展</string>
+    <string name="main_drawer_store">商店</string>
+    <string name="main_drawer_settings">设置</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
