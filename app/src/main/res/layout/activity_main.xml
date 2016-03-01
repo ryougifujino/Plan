@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/dl_main_whole"
     android:fitsSystemWindows="true"
-    tools:context=".view.activity.MainActivity">
+    tools:context="link.ebbinghaus.planning.view.activity.impl.MainActivity">
 
 
     <LinearLayout
