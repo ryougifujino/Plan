@@ -1,19 +1,21 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:context="link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecificFragment">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecificFragment">
+
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/tl_planning_specific"
+        android:id="@+id/tl_planning_display_specific"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/vp_planning_specific"
+        android:id="@+id/vp_planning_display_specific"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">

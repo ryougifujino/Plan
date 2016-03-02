@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="192dp"
     android:background="?attr/colorPrimaryDark"
-    android:padding="@dimen/navigation_padding_top_default"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView

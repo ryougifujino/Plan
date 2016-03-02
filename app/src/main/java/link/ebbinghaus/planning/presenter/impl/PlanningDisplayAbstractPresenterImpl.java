@@ -25,4 +25,5 @@ public class PlanningDisplayAbstractPresenterImpl implements PlanningDisplayAbst
         List<Tab> tabs = mPlanningDisplayAbstractModel.makePlanningDisplayTabs();
         mPlanningDisplayAbstractView.bindViewPagerToTabLayout(tabs);
     }
+
 }

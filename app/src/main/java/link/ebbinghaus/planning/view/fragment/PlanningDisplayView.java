@@ -14,4 +14,5 @@ public interface PlanningDisplayView {
      * @param tabs 与Tab相关的参数
      */
     void bindViewPagerToTabLayout(List<Tab> tabs);
+
 }

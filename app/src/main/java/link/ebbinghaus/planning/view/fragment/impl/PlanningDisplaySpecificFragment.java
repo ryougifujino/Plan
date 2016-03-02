@@ -29,8 +29,8 @@ import link.ebbinhaus.planning.R;
 public class PlanningDisplaySpecificFragment extends BaseFragment implements PlanningDisplaySpecificView{
     private PlanningDisplaySpecificPresenter mPlanningDisplaySpecificPresenter;
 
-    @Bind(R.id.vp_planning_specific) ViewPager mViewPager;
-    @Bind(R.id.tl_planning_specific) TabLayout mTabLayout;
+    @Bind(R.id.vp_planning_display_specific) ViewPager mViewPager;
+    @Bind(R.id.tl_planning_display_specific) TabLayout mTabLayout;
     private FragmentPagerAdapter mFragmentPagerAdapter;
 
     @Override
@@ -46,9 +46,10 @@ public class PlanningDisplaySpecificFragment extends BaseFragment implements Pla
 
     @Override
     public void bindViewPagerToTabLayout(List<Tab> tabs) {
-        mFragmentPagerAdapter = new SimpleFragmentPagerAdapter(getChildFragmentManager(), getActivity() ,tabs);
+        mFragmentPagerAdapter = new SimpleFragmentPagerAdapter(getChildFragmentManager(), mActivity ,tabs);
         mViewPager.setAdapter(mFragmentPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
+
 }

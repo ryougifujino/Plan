@@ -25,4 +25,5 @@ public class PlanningDisplaySpecificPresenterImpl implements PlanningDisplaySpec
         List<Tab> tabs = mPlanningDisplaySpecificModel.makePlanningDisplayTabs();
         mPlanningDisplaySpecificView.bindViewPagerToTabLayout(tabs);
     }
+
 }

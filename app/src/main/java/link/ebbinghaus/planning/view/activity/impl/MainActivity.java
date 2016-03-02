@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,15 +13,14 @@ import com.yurikami.lib.utils.LogUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.presenter.impl.MainPresenterImpl;
-import link.ebbinhaus.planning.R;
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 import link.ebbinghaus.planning.presenter.MainPresenter;
+import link.ebbinghaus.planning.presenter.impl.MainPresenterImpl;
 import link.ebbinghaus.planning.view.activity.MainView;
+import link.ebbinhaus.planning.R;
 
 public class MainActivity extends BaseActivity implements MainView,
         NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerListener{
-    @Bind(R.id.tb_common_head) Toolbar mToolbar;
     @Bind(R.id.nv_main_drawer) NavigationView mNVDrawer;
     @Bind(R.id.dl_main_whole) DrawerLayout mDrawerLayout;
 
@@ -53,7 +51,6 @@ public class MainActivity extends BaseActivity implements MainView,
     private void init() {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setSupportActionBar(mToolbar);
         mMainPresenter = new MainPresenterImpl(this);
     }
 

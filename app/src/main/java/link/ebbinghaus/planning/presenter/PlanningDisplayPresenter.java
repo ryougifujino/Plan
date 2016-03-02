@@ -9,4 +9,5 @@ public interface PlanningDisplayPresenter {
      * 配置相关联的Viewpager和TabLayout
      */
     void configureRelatedViewPagerTabLayout();
+
 }

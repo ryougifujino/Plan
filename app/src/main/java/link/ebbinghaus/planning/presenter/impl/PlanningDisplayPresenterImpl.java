@@ -26,4 +26,5 @@ public class PlanningDisplayPresenterImpl implements PlanningDisplayPresenter {
         List<Tab> tabs = mPlanningDisplayModel.makePlanningDisplayTabs();
         mPlanningDisplayView.bindViewPagerToTabLayout(tabs);
     }
+
 }

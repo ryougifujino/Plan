@@ -29,8 +29,8 @@ import link.ebbinhaus.planning.R;
 public class PlanningDisplayAbstractFragment extends BaseFragment implements PlanningDisplayAbstractView{
     private PlanningDisplayAbstractPresenter mPlanningDisplayAbstractPresenter;
 
-    @Bind(R.id.vp_planning_abstract) ViewPager mViewPager;
-    @Bind(R.id.tl_planning_abstract) TabLayout mTabLayout;
+    @Bind(R.id.vp_planning_display_abstract) ViewPager mViewPager;
+    @Bind(R.id.tl_planning_display_abstract) TabLayout mTabLayout;
     private FragmentPagerAdapter mFragmentPagerAdapter;
 
     @Override
@@ -52,4 +52,5 @@ public class PlanningDisplayAbstractFragment extends BaseFragment implements Pla
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
+
 }
