@@ -50,7 +50,6 @@ public class PlanningDisplayAbstractFragment extends BaseFragment implements Pla
         mFragmentPagerAdapter = new SimpleFragmentPagerAdapter(getChildFragmentManager(), getActivity() ,tabs);
         mViewPager.setAdapter(mFragmentPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.yurikami.lib.utils;
+package com.yurikami.lib.util;
 
 import android.app.Activity;
 
@@ -9,18 +9,18 @@ import java.util.List;
  * Created by WINFIELD on 2016/2/17.
  */
 public class ActivityCollector {
-    public static List<Activity> activities = new ArrayList<>();
+    public static List<Activity> sActivities = new ArrayList<>();
 
     public static void addActivity(Activity activity){
-        activities.add(activity);
+        sActivities.add(activity);
     }
 
     public static void removeActivity(Activity activity){
-        activities.remove(activity);
+        sActivities.remove(activity);
     }
 
     public static void finishAll(){
-        for (Activity activity : activities){
+        for (Activity activity : sActivities){
             if(!activity.isFinishing())
                 activity.finish();
         }

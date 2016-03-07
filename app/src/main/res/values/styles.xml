@@ -8,7 +8,18 @@
         <!--<item name="colorAccent">@color/colorAccent</item>-->
 
     </style>
-
     <style name="AppTheme" parent="AppBaseTheme"/>
+
+    <style name="CustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">#0000FF</item>
+        <item name="tabMaxWidth">150dp</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabPaddingStart">12dp</item>
+        <item name="tabPaddingEnd">12dp</item>
+        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <item name="tabSelectedTextColor">?android:textColorPrimary</item>
+    </style>
+
+
 
 </resources>

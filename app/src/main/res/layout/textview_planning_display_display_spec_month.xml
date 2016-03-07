@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:textColor="#fff"
+          android:clickable="true"
+          android:singleLine="true"
+          android:layout_marginLeft="10dp"
+          android:layout_marginTop="10dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@drawable/planning_display_spec_month_event"
+          android:text="ddd">
+
+</TextView>

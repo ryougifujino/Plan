@@ -53,7 +53,6 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
         mFragmentPagerAdapter = new SimpleFragmentPagerAdapter(getChildFragmentManager(), mActivity, tabs);
         mViewPager.setAdapter(mFragmentPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
 
     @Override

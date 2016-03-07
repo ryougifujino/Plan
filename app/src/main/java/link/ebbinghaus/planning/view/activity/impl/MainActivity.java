@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.yurikami.lib.base.BaseActivity;
-import com.yurikami.lib.utils.LogUtil;
+import com.yurikami.lib.util.LogUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,12 +40,12 @@ public class MainActivity extends BaseActivity implements MainView,
 
         mMainPresenter.cacheMainDrawerFragmentMap(mFragmentMap);
 
-        LogUtil.d("DBConfig", DBConfig.CREATE_TABLE_EVENT);
-        LogUtil.d("DBConfig", DBConfig.CREATE_TABLE_LEARNING_EVENT_GROUP);
-        LogUtil.d("DBConfig", DBConfig.CREATE_TABLE_DEFAULT_INPUT_VALUE);
-        LogUtil.d("DBConfig", DBConfig.CREATE_TABLE_EVENT_GROUP);
-        LogUtil.d("DBConfig", DBConfig.CREATE_TABLE_EVENT_SUBTYPE);
-        LogUtil.d("DBConfig", DBConfig.CREATE_TABLE_FAST_TEMPLATE);
+        LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_EVENT);
+        LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_LEARNING_EVENT_GROUP);
+        LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_DEFAULT_INPUT_VALUE);
+        LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_EVENT_GROUP);
+        LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_EVENT_SUBTYPE);
+        LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_FAST_TEMPLATE);
     }
 
     private void init() {

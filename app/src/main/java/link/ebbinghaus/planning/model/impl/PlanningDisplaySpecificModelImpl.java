@@ -1,10 +1,16 @@
 package link.ebbinghaus.planning.model.impl;
 
+import android.widget.TextView;
+
+import com.yurikami.lib.entity.Datetime;
+import com.yurikami.lib.util.DateUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import link.ebbinghaus.planning.custom.constant.PlanningDisplayConstant;
 import link.ebbinghaus.planning.model.PlanningDisplaySpecificModel;
+import link.ebbinghaus.planning.model.entity.Event;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecGroupFragment;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecMonthFragment;
@@ -23,5 +29,41 @@ public class PlanningDisplaySpecificModelImpl implements PlanningDisplaySpecific
         tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_SPEC_GROUP, new PlanningDisplaySpecGroupFragment()));
         return tabs;
 
+    }
+
+    @Override
+    public List<Event>[] eventsToBlocks(List<Event> events, int dayOfMonth) {
+        List<Event>[] blocks = new List[dayOfMonth];
+        for (int i = 0 ;i < blocks.length ;i++){
+            blocks[i] = new ArrayList<>();
+        }
+        for (Event event: events){
+            long dateL = event.getEventExpectedFinishedDate();
+            Integer day = DateUtils.day(dateL);
+            blocks[day - 1].add(event);
+        }
+        return blocks;
+    }
+
+    @Override
+    public void makeDayWeekListitems(List<Datetime> dayWeekListitems, int dayInMonth, Datetime datetime) {
+        if (dayWeekListitems == null){
+            dayWeekListitems = new ArrayList<>();
+        }
+        Datetime startDate = Datetime.buildDate(datetime.getYear(), datetime.getMonth(), 1);
+        int startWeek = DateUtils.dayOfWeek(startDate);
+        for (int day = 1; day <= dayInMonth ;day++){
+            Datetime dayWeek = Datetime.buildDate(null, null, day);
+            int w = (startWeek + day -1) % 7;
+            dayWeek.setWeek( (w == 0) ? 7 : w );
+            dayWeekListitems.add(dayWeek);
+        }
+    }
+
+    @Override
+    public void setMonthEventAttrs(TextView eventTv, Event event, int windowWidth) {
+        eventTv.setText(event.getDescription());
+        int width = windowWidth / 4;
+        eventTv.setWidth(width);
     }
 }

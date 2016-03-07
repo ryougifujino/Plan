@@ -10,13 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.yurikami.lib.base.BaseFragment;
+import com.yurikami.lib.entity.Datetime;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.custom.adapter.planning.display.spec.MonthRecyclerViewAdapter;
+import link.ebbinghaus.planning.custom.other.mock.MonthEventsMock;
 import link.ebbinghaus.planning.model.entity.Event;
 import link.ebbinghaus.planning.view.fragment.PlanningDisplaySpecMonthView;
 import link.ebbinhaus.planning.R;
@@ -31,18 +32,17 @@ public class PlanningDisplaySpecMonthFragment extends BaseFragment implements Pl
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_planning_display_spec_month, container, false);
-        ButterKnife.bind(this,v);
+        ButterKnife.bind(this, v);
 
 
-
-        List<Event> events = new ArrayList<>();
-        for (int i = 0; i < 100 ;i++){
-            Event event = new Event();
-            event.setDescription(i + " item");
-            events.add(event);
-        }
+        List<Event> events = MonthEventsMock.getOneMonthEvents();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mRecyclerView.setAdapter(new MonthRecyclerViewAdapter(mActivity,events));
+        Datetime datetime = Datetime.buildDate(2016, 4, null);
+        MonthRecyclerViewAdapter adapter = new MonthRecyclerViewAdapter(mActivity,events,datetime);
+        mRecyclerView.setAdapter(adapter);
+        setFragmentLifeCycleListener(adapter);
+
+
         return v;
     }
 

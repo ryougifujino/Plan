@@ -9,6 +9,9 @@
     <string name="main_drawer_store">商店</string>
     <string name="main_drawer_settings">设置</string>
 
+    <string name="planning_display_spec_month_listitem_day">%1$d号</string>
+    <string name="planning_display_spec_month_listitem_week">星期%1$s</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

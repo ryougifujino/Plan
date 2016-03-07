@@ -1,19 +1,16 @@
-package com.yurikami.lib.utils;
+package com.yurikami.lib.util;
 
-import java.text.SimpleDateFormat;
+import com.yurikami.lib.entity.Datetime;
+
 import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by WINFIELD on 2016/2/29.
  */
-public class DateUtil {
-    private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    private static final SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-    private static long mLastTimestamp = 0l;
-    private static Calendar mLastCalendar;
+public class DateUtils {
+    private static long sLastTimestamp = 0l;
+    private static Calendar sLastCalendar;
 
     public static Date now() { return new Date(); }
     public static long nowTimestamp() { return System.currentTimeMillis(); }
@@ -28,12 +25,12 @@ public class DateUtil {
      */
     public static Integer extractTimestamp(long timestamp, String part){
         Calendar c;
-        if(timestamp == mLastTimestamp && mLastCalendar != null) {
-            c = mLastCalendar;
+        if(timestamp == sLastTimestamp && sLastCalendar != null) {
+            c = sLastCalendar;
         }else {
             c = Calendar.getInstance();
             c.setTimeInMillis(timestamp);
-            mLastCalendar = c;
+            sLastCalendar = c;
         }
         if("year".equals(part)){ return c.get(Calendar.YEAR); }
         else if("month".equals(part)){ return c.get(Calendar.MONTH) + 1; }
@@ -62,9 +59,39 @@ public class DateUtil {
         return c.getTimeInMillis();
     }
     public static long newDateTimestamp(int year, int month, int day){
-        return newTimestamp(year,month,day,0,0,0);
+        return newTimestamp(year, month, day, 0, 0, 0);
     }
     public static long newTimeTimestamp(int hour, int minute, int second){
         return newTimestamp(0,0,0,hour,minute,second);
+    }
+
+    /**
+     * 计算某年中某月的天数,不填返回null
+     * @param datetime year,month 必填
+     * @return 某年中某月的天数
+     */
+    public static int dayInMonth(Datetime datetime){
+        if(datetime == null || datetime.getYear() == null || datetime.getMonth() == null) {
+            throw new IllegalArgumentException("Illegal datetime,without year or month");
+        }
+        Calendar c = Calendar.getInstance();
+        c.set(datetime.getYear(), datetime.getMonth() - 1, 1);
+        return c.getActualMaximum(Calendar.DAY_OF_MONTH);
+    }
+
+    /**
+     * 计算某年某月某日是星期几
+     * @param datetime year,month,day 必填
+     * @return 周一:1 周二:2 周三:3 ...
+     */
+    public static int dayOfWeek(Datetime datetime){
+        if(datetime == null || datetime.getYear() == null || datetime.getMonth() == null
+                || datetime.getDay() == null) {
+            throw new IllegalArgumentException("Illegal datetime,without year or month or day");
+        }
+        Calendar c = Calendar.getInstance();
+        c.set(datetime.getYear(), datetime.getMonth() - 1, datetime.getDay());
+        int d = c.get(Calendar.DAY_OF_WEEK) - 1;
+        return (d == 0 ? 7 : d);
     }
 }

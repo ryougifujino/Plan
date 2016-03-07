@@ -1,11 +1,11 @@
-package com.yurikami.lib.utils;
+package com.yurikami.lib.util;
 
 import android.util.Log;
 
 /**
  * Created by WINFIELD on 2016/2/17.
  */
-public class LogUtil {
+public class LogUtils {
     public static final int VERBOSE = 1;
     public static final int DEBUG = 2;
     public static final int INFO = 3;
