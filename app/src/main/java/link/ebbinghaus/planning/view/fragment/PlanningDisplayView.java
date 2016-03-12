@@ -15,4 +15,12 @@ public interface PlanningDisplayView {
      */
     void bindViewPagerToTabLayout(List<Tab> tabs);
 
+    /**
+     * 预设置Toolbar上的Date(TextView)
+     */
+    void presetToolbarDate();
+    /**
+     * 设置Toolbar上的Date(TextView)
+     */
+    void setToolbarDate();
 }

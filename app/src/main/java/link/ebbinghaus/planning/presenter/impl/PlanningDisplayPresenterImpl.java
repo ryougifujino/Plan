@@ -15,8 +15,8 @@ public class PlanningDisplayPresenterImpl implements PlanningDisplayPresenter {
     private PlanningDisplayView mPlanningDisplayView;
     private PlanningDisplayModel mPlanningDisplayModel;
 
-    public PlanningDisplayPresenterImpl(PlanningDisplayView mPlanningDisplayView) {
-        this.mPlanningDisplayView = mPlanningDisplayView;
+    public PlanningDisplayPresenterImpl(PlanningDisplayView planningDisplayView) {
+        this.mPlanningDisplayView = planningDisplayView;
         mPlanningDisplayModel = new PlanningDisplayModelImpl();
     }
 
@@ -25,6 +25,14 @@ public class PlanningDisplayPresenterImpl implements PlanningDisplayPresenter {
     public void configureRelatedViewPagerTabLayout() {
         List<Tab> tabs = mPlanningDisplayModel.makePlanningDisplayTabs();
         mPlanningDisplayView.bindViewPagerToTabLayout(tabs);
+    }
+
+    @Override
+    public void preprocessToolbarDate() { mPlanningDisplayView.presetToolbarDate();}
+
+    @Override
+    public void configureToolbarDate() {
+        mPlanningDisplayView.setToolbarDate();
     }
 
 }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="link.ebbinghaus.planning.view.fragment.impl.PlanningDisplayFragment" >
+
+    <item
+        android:id="@+id/item_planning_display_toolbar_add"
+        android:orderInCategory="100"
+        android:title="action_settings"
+        android:icon="@drawable/planning_display_toolbar_add"
+        app:showAsAction="always">
+    </item>
+
+    <item
+        android:id="@+id/item_planning_display_toolbar_more"
+        android:orderInCategory="100"
+        android:title="action_settings"
+        android:icon="@drawable/planning_display_toolbar_more"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:id="@+id/menu_theme"
+                android:showAsAction="ifRoom|withText"
+                android:title="更换主题"/>
+            <item
+                android:id="@+id/menu_system"
+                android:showAsAction="ifRoom|withText"
+                android:title="系统设置"/>
+        </menu>
+    </item>
+
+
+
+</menu>

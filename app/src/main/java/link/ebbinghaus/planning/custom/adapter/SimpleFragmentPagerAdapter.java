@@ -36,4 +36,6 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return mTabs.size();
     }
+
+
 }

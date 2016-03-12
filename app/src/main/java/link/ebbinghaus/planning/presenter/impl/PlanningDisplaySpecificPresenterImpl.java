@@ -15,14 +15,14 @@ public class PlanningDisplaySpecificPresenterImpl implements PlanningDisplaySpec
     private PlanningDisplaySpecificView mPlanningDisplaySpecificView;
     private PlanningDisplaySpecificModel mPlanningDisplaySpecificModel;
 
-    public PlanningDisplaySpecificPresenterImpl(PlanningDisplaySpecificView mPlanningDisplaySpecificView) {
-        this.mPlanningDisplaySpecificView = mPlanningDisplaySpecificView;
+    public PlanningDisplaySpecificPresenterImpl(PlanningDisplaySpecificView planningDisplaySpecificView) {
+        this.mPlanningDisplaySpecificView = planningDisplaySpecificView;
         mPlanningDisplaySpecificModel = new PlanningDisplaySpecificModelImpl();
     }
 
     @Override
     public void configureRelatedViewPagerTabLayout() {
-        List<Tab> tabs = mPlanningDisplaySpecificModel.makePlanningDisplayTabs();
+        List<Tab> tabs = mPlanningDisplaySpecificModel.makePlanningDisplaySpecificTabs();
         mPlanningDisplaySpecificView.bindViewPagerToTabLayout(tabs);
     }
 

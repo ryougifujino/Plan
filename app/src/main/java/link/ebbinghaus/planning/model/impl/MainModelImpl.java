@@ -18,8 +18,6 @@ import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplayFragment;
 public class MainModelImpl implements MainModel {
     @Override
     public void cacheMainDrawerFragmentMap(SparseArray<Class> fm) {
-        if(fm == null)
-            fm = new SparseArray<>();
         fm.put(R.id.item_main_drawer_planning_display, PlanningDisplayFragment.class);
         fm.put(R.id.item_main_drawer_planning_done, PlanningDoneFragment.class);
         fm.put(R.id.item_main_drawer_history, HistoryFragment.class);

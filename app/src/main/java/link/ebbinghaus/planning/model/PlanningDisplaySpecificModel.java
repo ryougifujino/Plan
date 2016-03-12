@@ -1,17 +1,22 @@
 package link.ebbinghaus.planning.model;
 
-import android.widget.TextView;
-
 import com.yurikami.lib.entity.Datetime;
 
 import java.util.List;
 
 import link.ebbinghaus.planning.model.entity.Event;
+import link.ebbinghaus.planning.model.entity.sys.Tab;
 
 /**
  * Created by WINFIELD on 2016/3/1.
  */
-public interface PlanningDisplaySpecificModel extends PlanningDisplayModel {
+public interface PlanningDisplaySpecificModel {
+
+    /**
+     * 创建PlanningBuildSpecific的最顶层tabs
+     * @return PlanningBuildSpecific的tabs
+     */
+    List<Tab> makePlanningDisplaySpecificTabs();
 
     /**
      * 将某月里的Event集合排列成按天排序的Event集合的数组
@@ -29,11 +34,4 @@ public interface PlanningDisplaySpecificModel extends PlanningDisplayModel {
      */
     void makeDayWeekListitems(List<Datetime> dayWeekListitems, int dayInMonth, Datetime datetime);
 
-    /**
-     * 设置按月里listitem里的Event(TextView)的Attribute
-     * @param eventTv
-     * @param event
-     * @param windowWidth
-     */
-    void setMonthEventAttrs(TextView eventTv, Event event, int windowWidth);
 }

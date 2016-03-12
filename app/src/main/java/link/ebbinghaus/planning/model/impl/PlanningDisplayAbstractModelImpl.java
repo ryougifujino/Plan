@@ -14,7 +14,7 @@ import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplayAbstGroupFragm
  */
 public class PlanningDisplayAbstractModelImpl implements PlanningDisplayAbstractModel {
     @Override
-    public List<Tab> makePlanningDisplayTabs() {
+    public List<Tab> makePlanningDisplayAbstractTabs() {
         List<Tab> tabs = new ArrayList<>();
         tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_ABST_ALL, new PlanningDisplayAbstAllFragment()));
         tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_ABST_GROUP, new PlanningDisplayAbstGroupFragment()));

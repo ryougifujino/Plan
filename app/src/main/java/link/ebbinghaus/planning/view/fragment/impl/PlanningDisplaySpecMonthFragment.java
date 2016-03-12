@@ -18,6 +18,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.custom.adapter.planning.display.spec.MonthRecyclerViewAdapter;
 import link.ebbinghaus.planning.custom.other.mock.MonthEventsMock;
+import link.ebbinghaus.planning.custom.util.CommonUtils;
 import link.ebbinghaus.planning.model.entity.Event;
 import link.ebbinghaus.planning.view.fragment.PlanningDisplaySpecMonthView;
 import link.ebbinhaus.planning.R;
@@ -25,7 +26,8 @@ import link.ebbinhaus.planning.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlanningDisplaySpecMonthFragment extends BaseFragment implements PlanningDisplaySpecMonthView {
+public class PlanningDisplaySpecMonthFragment extends BaseFragment implements PlanningDisplaySpecMonthView,
+        PlanningDisplayFragment.OnToolbarDateChangeListener{
 
     @Bind(R.id.rv_planning_display_spec_month) RecyclerView mRecyclerView;
     @Override
@@ -40,10 +42,18 @@ public class PlanningDisplaySpecMonthFragment extends BaseFragment implements Pl
         Datetime datetime = Datetime.buildDate(2016, 4, null);
         MonthRecyclerViewAdapter adapter = new MonthRecyclerViewAdapter(mActivity,events,datetime);
         mRecyclerView.setAdapter(adapter);
-        setFragmentLifeCycleListener(adapter);
+        setOnFragmentDestroyListener(adapter);
+
+        PlanningDisplayFragment planningDisplayFragment = (PlanningDisplayFragment) getParentFragment().getParentFragment();
+        planningDisplayFragment.setOnToolbarDateChangeListener(this);
 
 
         return v;
     }
 
+
+    @Override
+    public void onDateChanged(Datetime datetime) {
+        CommonUtils.showLongToast(" MONTH "+datetime.getYear() + "  " + datetime.getMonth() + "  " + datetime.getDay());
+    }
 }

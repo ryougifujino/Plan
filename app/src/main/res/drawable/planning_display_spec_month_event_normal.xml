@@ -3,12 +3,6 @@
     <item android:state_pressed="false">
 		<shape>
 		    <!-- 圆角 -->
-		    <corners
-		        android:radius="9dp"
-		        android:topLeftRadius="2dp"
-		        android:topRightRadius="2dp"
-		        android:bottomLeftRadius="2dp"
-		        android:bottomRightRadius="2dp"/>
 		    
 		    <!-- 间隔 -->
 		    <padding 
@@ -18,9 +12,6 @@
 		        android:bottom="2dp"/>
 		    
 		    <!-- 描边 -->
-		    <stroke 
-		        android:width="0.2dp"
-		        android:color="#111"/>
 		    
 		    <!-- 填充 -->
 		    <solid 
@@ -31,12 +22,6 @@
     <item android:state_pressed="true">
         <shape>
 		    <!-- 圆角 -->
-		    <corners
-		        android:radius="9dp"
-		        android:topLeftRadius="2dp"
-		        android:topRightRadius="2dp"
-		        android:bottomLeftRadius="2dp"
-		        android:bottomRightRadius="2dp"/>
 		    
 		    <!-- 间隔 -->
 		    <padding 
@@ -46,9 +31,6 @@
 		        android:bottom="2dp"/>
 		    
 		    <!-- 描边 -->
-		    <stroke 
-		        android:width="0.2dp"
-		        android:color="#111"/>
 		    
 		    <!-- 填充 -->
 		    <solid 

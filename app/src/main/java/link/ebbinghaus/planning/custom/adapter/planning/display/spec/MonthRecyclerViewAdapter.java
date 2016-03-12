@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.yurikami.lib.base.BaseFragment;
 import com.yurikami.lib.entity.Datetime;
-import com.yurikami.lib.util.DateUtils;
 import com.yurikami.lib.util.CachePool;
+import com.yurikami.lib.util.DateUtils;
 import com.yurikami.lib.util.ViewGroupUtils;
 
 import java.util.ArrayList;
@@ -32,7 +32,7 @@ import link.ebbinhaus.planning.R;
  * Created by WINFIELD on 2016/3/2.
  */
 public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecyclerViewAdapter.ViewHolder>
-        implements BaseFragment.FragmentLifeCycleListener{
+        implements BaseFragment.OnFragmentDestroyListener {
     private final static int ROW_EVENT_COUNT = 3;
 
     private Context mContext;
@@ -86,8 +86,8 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
                 LinearLayout row = ViewGroupUtils.newHorizontalLl(mContext, lp);
                 for (int i = 1; i <= blockEventCount; i++) {
                     Event event = blockEvents.get(i - 1);
-                    TextView eventTv = (TextView) mInflater.inflate(R.layout.textview_planning_display_display_spec_month, row, false);
-                    mPlanningDisplaySpecificModel.setMonthEventAttrs(eventTv, event, App.getSystemInfo().getWindowWidth());
+                    TextView eventTv = (TextView) mInflater.inflate(R.layout.textview_planning_display_spec_month_event, row, false);
+                    holder.setMonthEventAttrs(eventTv, event);
                     row.addView(eventTv);
                     //每隔LISTITEM_ROW_COUNT个Event,新建一行,并把上一行添加到Row中
                     if ((i % ROW_EVENT_COUNT == 0) || (i == blockEventCount)) {
@@ -136,7 +136,16 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         public void setDayWeek(Datetime dayWeek){
             Resources res = mContext.getResources();
             dayOfMonthTv.setText(String.format(res.getString(R.string.planning_display_spec_month_listitem_day), dayWeek.getDay()));
-            dayOfWeekTv.setText(String.format(res.getString(R.string.planning_display_spec_month_listitem_week),dayWeek.getChnWeek()));
+            dayOfWeekTv.setText(String.format(res.getString(R.string.planning_display_spec_month_listitem_week), dayWeek.getChnWeek()));
+        }
+
+        public void setMonthEventAttrs(TextView eventTv, Event event){
+            eventTv.setText(event.getDescription());
+            int width = App.getSystemInfo().getWindowWidth() / 4;
+            if (event.getEventType() == 2){
+                eventTv.setBackgroundResource(R.drawable.planning_display_spec_month_event_normal);
+            }
+            eventTv.setWidth(width);
         }
 
     }

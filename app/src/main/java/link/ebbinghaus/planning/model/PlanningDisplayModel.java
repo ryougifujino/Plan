@@ -10,8 +10,14 @@ import link.ebbinghaus.planning.model.entity.sys.Tab;
 public interface PlanningDisplayModel {
 
     /**
-     * 创建一个PlanningDisplay的最顶层tab
-     * @return tabs
+     * 创建PlanningDisplay的最顶层tabs
+     * @return PlanningDisplay顶层tabs
      */
     List<Tab> makePlanningDisplayTabs();
+
+    /**
+     * 创建PlanningBuild的最顶层tabs
+     * @return PlanningBuild的tabs
+     */
+    List<Tab> makePlanningBuildTabs();
 }

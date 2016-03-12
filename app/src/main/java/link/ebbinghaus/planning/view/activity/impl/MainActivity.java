@@ -1,5 +1,6 @@
 package link.ebbinghaus.planning.view.activity.impl;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.SparseArray;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.yurikami.lib.base.BaseActivity;
 import com.yurikami.lib.util.LogUtils;
@@ -36,9 +39,16 @@ public class MainActivity extends BaseActivity implements MainView,
         init();
 
         mNVDrawer.setNavigationItemSelectedListener(this);
-        mDrawerLayout.setDrawerListener(this);
+        mDrawerLayout.addDrawerListener(this);
 
         mMainPresenter.cacheMainDrawerFragmentMap(mFragmentMap);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
+        }
 
         LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_EVENT);
         LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_LEARNING_EVENT_GROUP);

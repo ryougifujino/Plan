@@ -2,6 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             android:tag="ddd"
              tools:context="link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecMonthFragment">
 
     <android.support.v7.widget.RecyclerView

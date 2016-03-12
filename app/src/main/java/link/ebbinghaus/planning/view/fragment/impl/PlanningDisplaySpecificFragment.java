@@ -26,11 +26,13 @@ import link.ebbinhaus.planning.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlanningDisplaySpecificFragment extends BaseFragment implements PlanningDisplaySpecificView{
+public class PlanningDisplaySpecificFragment extends BaseFragment implements PlanningDisplaySpecificView,
+        ViewPager.OnPageChangeListener{
     private PlanningDisplaySpecificPresenter mPlanningDisplaySpecificPresenter;
 
     @Bind(R.id.vp_planning_display_specific) ViewPager mViewPager;
     @Bind(R.id.tl_planning_display_specific) TabLayout mTabLayout;
+    private int mViewPagerPosition;
     private FragmentPagerAdapter mFragmentPagerAdapter;
 
     @Override
@@ -40,7 +42,9 @@ public class PlanningDisplaySpecificFragment extends BaseFragment implements Pla
         ButterKnife.bind(this,v);
         mPlanningDisplaySpecificPresenter = new PlanningDisplaySpecificPresenterImpl(this);
 
+        mViewPager.addOnPageChangeListener(this);
         mPlanningDisplaySpecificPresenter.configureRelatedViewPagerTabLayout();
+
         return v;
     }
 
@@ -51,4 +55,18 @@ public class PlanningDisplaySpecificFragment extends BaseFragment implements Pla
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+    @Override
+    public void onPageSelected(int position) { mViewPagerPosition = position; }
+    @Override
+    public void onPageScrollStateChanged(int state) { }
+
+    /**
+     * 获取PlanningDisplaySpecificFragment里ViewPager正在显示的Page里的Fragment的实例
+     */
+    public Fragment nowVPFragment(){
+        return nowVPFragment(mViewPager.getId(), mViewPagerPosition);
+    }
 }

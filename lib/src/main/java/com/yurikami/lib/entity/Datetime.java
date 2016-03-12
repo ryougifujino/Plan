@@ -1,5 +1,7 @@
 package com.yurikami.lib.entity;
 
+import com.yurikami.lib.util.DateUtils;
+
 /**
  * Created by WINFIELD on 2016/3/6.
  */
@@ -14,6 +16,8 @@ public class Datetime {
 
     private String[] chnWeeks = {"一","二","三","四","五","六","日"};
     private String chnWeek;
+
+    public Datetime(){ }
 
     private Datetime(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second) {
         this.year = year;
@@ -34,6 +38,10 @@ public class Datetime {
 
     public static Datetime buildTime(Integer hour, Integer minute, Integer second){
         return buildDatetime(null, null, null, hour,minute,second);
+    }
+
+    public static Datetime buildTodayDate(){
+        return DateUtils.dateOfToday();
     }
 
 

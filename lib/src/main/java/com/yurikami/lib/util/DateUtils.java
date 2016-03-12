@@ -34,6 +34,7 @@ public class DateUtils {
         }
         if("year".equals(part)){ return c.get(Calendar.YEAR); }
         else if("month".equals(part)){ return c.get(Calendar.MONTH) + 1; }
+        else if("week".equals(part)){ return c.get(Calendar.DAY_OF_WEEK); }
         else if("day".equals(part)){ return c.get(Calendar.DAY_OF_MONTH); }
         else if("hour".equals(part)){ return c.get(Calendar.HOUR_OF_DAY); }
         else if("minute".equals(part)){ return c.get(Calendar.MINUTE); }
@@ -42,6 +43,7 @@ public class DateUtils {
     }
     public static Integer year(long timestamp){ return extractTimestamp(timestamp, "year"); }
     public static Integer month(long timestamp){ return extractTimestamp(timestamp, "month"); }
+    public static Integer week(long timestamp){ return formatWeek(extractTimestamp(timestamp, "week")); }
     public static Integer day(long timestamp){ return extractTimestamp(timestamp, "day"); }
     public static Integer hour(long timestamp){ return extractTimestamp(timestamp, "hour"); }
     public static Integer minute(long timestamp){ return extractTimestamp(timestamp, "minute");}
@@ -62,7 +64,7 @@ public class DateUtils {
         return newTimestamp(year, month, day, 0, 0, 0);
     }
     public static long newTimeTimestamp(int hour, int minute, int second){
-        return newTimestamp(0,0,0,hour,minute,second);
+        return newTimestamp(0, 0, 0, hour, minute, second);
     }
 
     /**
@@ -93,5 +95,42 @@ public class DateUtils {
         c.set(datetime.getYear(), datetime.getMonth() - 1, datetime.getDay());
         int d = c.get(Calendar.DAY_OF_WEEK) - 1;
         return (d == 0 ? 7 : d);
+    }
+
+    /**
+     * 把0代表星期日的情况换成7代表星期日的情况
+     * @param week 代表的星期数
+     * @return 星期数,星期一到日用1~7来表示
+     */
+    public static int formatWeek(int week){
+        if(week > 6 || week < 0)
+            return -1;
+        return week == 0 ? 7 : week;
+    }
+
+    /**
+     * 计算今天的年份,这个系列方法效率比dateOfToday效率低
+     * @return 今天的年份
+     */
+    public static int yearOfToday(){ return year(nowTimestamp()); }
+    public static int monthOfToday(){
+        return month(nowTimestamp());
+    }
+    public static int dayOfToday(){
+        return day(nowTimestamp());
+    }
+    public static int weekOfToday(){
+        return week(nowTimestamp());
+    }
+
+    /**
+     * 计算出今天的年月日星期,效率较高
+     * @return 今天的年月日星期
+     */
+    public static Datetime dateOfToday(){
+        long nowTimestamp = nowTimestamp();
+        Datetime date = Datetime.buildDate(year(nowTimestamp), month(nowTimestamp), day(nowTimestamp));
+        date.setWeek(week(nowTimestamp));
+        return date;
     }
 }

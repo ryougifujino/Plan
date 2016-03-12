@@ -15,15 +15,16 @@ public class PlanningDisplayAbstractPresenterImpl implements PlanningDisplayAbst
     private PlanningDisplayAbstractView mPlanningDisplayAbstractView;
     private PlanningDisplayAbstractModel mPlanningDisplayAbstractModel;
 
-    public PlanningDisplayAbstractPresenterImpl(PlanningDisplayAbstractView mPlanningDisplayAbstractView) {
-        this.mPlanningDisplayAbstractView = mPlanningDisplayAbstractView;
+    public PlanningDisplayAbstractPresenterImpl(PlanningDisplayAbstractView planningDisplayAbstractView) {
+        this.mPlanningDisplayAbstractView = planningDisplayAbstractView;
         mPlanningDisplayAbstractModel = new PlanningDisplayAbstractModelImpl();
     }
 
     @Override
     public void configureRelatedViewPagerTabLayout() {
-        List<Tab> tabs = mPlanningDisplayAbstractModel.makePlanningDisplayTabs();
+        List<Tab> tabs = mPlanningDisplayAbstractModel.makePlanningDisplayAbstractTabs();
         mPlanningDisplayAbstractView.bindViewPagerToTabLayout(tabs);
     }
+
 
 }

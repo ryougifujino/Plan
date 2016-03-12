@@ -1,7 +1,5 @@
 package link.ebbinghaus.planning.model.impl;
 
-import android.widget.TextView;
-
 import com.yurikami.lib.entity.Datetime;
 import com.yurikami.lib.util.DateUtils;
 
@@ -22,7 +20,7 @@ import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecWeekFragme
 public class PlanningDisplaySpecificModelImpl implements PlanningDisplaySpecificModel {
 
     @Override
-    public List<Tab> makePlanningDisplayTabs() {
+    public List<Tab> makePlanningDisplaySpecificTabs() {
         List<Tab> tabs = new ArrayList<>();
         tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_SPEC_MONTH, new PlanningDisplaySpecMonthFragment()));
         tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_SPEC_WEEK, new PlanningDisplaySpecWeekFragment()));
@@ -60,10 +58,4 @@ public class PlanningDisplaySpecificModelImpl implements PlanningDisplaySpecific
         }
     }
 
-    @Override
-    public void setMonthEventAttrs(TextView eventTv, Event event, int windowWidth) {
-        eventTv.setText(event.getDescription());
-        int width = windowWidth / 4;
-        eventTv.setWidth(width);
-    }
 }

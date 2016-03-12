@@ -10,4 +10,14 @@ public interface PlanningDisplayPresenter {
      */
     void configureRelatedViewPagerTabLayout();
 
+    /**
+     * 对Toolbar上的Date(TextView)进行预处理
+     */
+    void preprocessToolbarDate();
+
+    /**
+     * 配置Toolbar上的Date(TextView)
+     */
+    void configureToolbarDate();
+
 }
