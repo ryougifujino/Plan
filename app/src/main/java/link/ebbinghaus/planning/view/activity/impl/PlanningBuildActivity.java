@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
 import com.yurikami.lib.base.BaseActivity;
 
@@ -27,6 +28,7 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
     private PlanningBuildPresenter mPlanningBuildPresenter;
     private FragmentPagerAdapter mFragmentPagerAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,5 +50,13 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
         mFragmentPagerAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), this, tabs);
         mViewPager.setAdapter(mFragmentPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_planning_build,menu);
+        return true;
     }
 }

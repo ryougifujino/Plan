@@ -9,12 +9,13 @@ import android.view.ViewGroup;
 
 import com.yurikami.lib.base.BaseFragment;
 
+import link.ebbinghaus.planning.view.fragment.PlanningBuildAbstractView;
 import link.ebbinhaus.planning.R;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlanningBuildAbstractFragment extends BaseFragment {
+public class PlanningBuildAbstractFragment extends BaseFragment implements PlanningBuildAbstractView{
 
 
     public PlanningBuildAbstractFragment() {

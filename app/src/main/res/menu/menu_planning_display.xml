@@ -7,7 +7,7 @@
     <item
         android:id="@+id/item_planning_display_toolbar_add"
         android:orderInCategory="100"
-        android:title="action_settings"
+        android:title="制定计划"
         android:icon="@drawable/planning_display_toolbar_add"
         app:showAsAction="always">
     </item>
@@ -15,14 +15,14 @@
     <item
         android:id="@+id/item_planning_display_toolbar_more"
         android:orderInCategory="100"
-        android:title="action_settings"
+        android:title="更多"
         android:icon="@drawable/planning_display_toolbar_more"
         app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/menu_theme"
                 android:showAsAction="ifRoom|withText"
-                android:title="更换主题"/>
+                android:title="关于"/>
             <item
                 android:id="@+id/menu_system"
                 android:showAsAction="ifRoom|withText"

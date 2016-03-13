@@ -114,7 +114,7 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
     @Override
     public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
         mOnToolbarDateChangeListener.onDateChanged(Datetime.buildDate(year, monthOfYear + 1, dayOfMonth));
-        mToolbarDateTv.setText(String.format(mActivity.getResources().getString(R.string.planning_display_toolbar_date), year, monthOfYear + 1, dayOfMonth));
+        mToolbarDateTv.setText(String.format(getString(R.string.planning_display_toolbar_date), year, monthOfYear + 1, dayOfMonth));
         //TODO:可以有一个全局变量的设置控制重新开启是今天还是上一次的日期
         Datetime nowDate = Datetime.buildTodayDate();
         dialog.setPreselectedDate(nowDate.getYear(), nowDate.getMonth() - 1, nowDate.getDay());
