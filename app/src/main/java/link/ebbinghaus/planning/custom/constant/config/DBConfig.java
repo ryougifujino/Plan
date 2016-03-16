@@ -31,7 +31,8 @@ public class DBConfig {
             .pk(EventGroupColumn.PK_EVENT_GROUP_ID)
             .integer(EventGroupColumn.CREATE_TIME).text(EventGroupColumn.DESCRIPTION)
             .integer(EventGroupColumn.LEARNING_EVENT_COUNT)
-            .last(EventGroupColumn.NORMAL_OR_ABSTRACT_EVENT_COUNT,sql.INTEGER).sql();
+            .integer(EventGroupColumn.NORMAL_EVENT_COUNT)
+            .last(EventGroupColumn.ABSTRACT_EVENT_COUNT,sql.INTEGER).sql();
     public static final String CREATE_TABLE_EVENT_SUBTYPE = sql.create(Table.EVENT_SUBTYPE)
             .pk(EventSubtypeColumn.PK_EVENT_SUBTYPE_ID)
             .last(EventSubtypeColumn.EVENT_SUBTYPE,sql.TEXT).sql();
@@ -45,7 +46,7 @@ public class DBConfig {
             .integer(DefaultInputValueColumn.REMIND_TIME).integer(DefaultInputValueColumn.STRATEGY)
             .last(DefaultInputValueColumn.IS_SHOW_EVENT_SEQUENCE,sql.INTEGER).sql();
 
-    interface Table{
+    public interface Table{
         String EVENT = "event";
         String LEARNING_EVENT_GROUP = "learning_event_group";
         String EVENT_GROUP = "event_group";
@@ -53,7 +54,7 @@ public class DBConfig {
         String FAST_TEMPLATE = "fast_template";
         String DEFAULT_INPUT_VALUE = "default_input_value";
     }
-    interface EventColumn{
+    public interface EventColumn{
         String PK_EVENT_ID = "PK_EVENT_ID";
         String LEARNING_EVENT_GROUP_ID = "LEARNING_EVENT_GROUP_ID";
         String EVENT_GROUP_ID = "EVENT_GROUP_ID";
@@ -72,11 +73,11 @@ public class DBConfig {
         String REMIND_TIME = "REMIND_TIME";
         String EVENT_PROCESS = "EVENT_PROCESS"; //1:未开始 2:进行中/待办 3:成功/完成 4:失败/过期
     }
-    interface EventSubtypeColumn{
+    public interface EventSubtypeColumn{
         String PK_EVENT_SUBTYPE_ID = "PK_EVENT_SUBTYPE_ID";
         String EVENT_SUBTYPE = "EVENT_SUBTYPE";
     }
-    interface LearningEventGroupColumn{
+    public interface LearningEventGroupColumn{
         String PK_LEARNING_EVENT_GROUP_ID = "PK_LEARNING_EVENT_GROUP_ID";
         String KNOWLEDGE_QUANTITY = "KNOWLEDGE_QUANTITY";
         String STRATEGY = "STRATEGY";   //1:理解型 2:记忆型 3:强记型 4:永久型
@@ -86,19 +87,20 @@ public class DBConfig {
         String EFFICIENCY = "EFFICIENCY";   //效率 0.3:差 0.6:一般 0.9:高效 1:非常高效
         String UNDERSTANDING_DEGREE = "UNDERSTANDING_DEGREE";   //理解情况 0.3:不太理解 0.7:大致理解 1:完全理解
     }
-    interface EventGroupColumn{
+    public interface EventGroupColumn{
         String PK_EVENT_GROUP_ID = "PK_EVENT_GROUP_ID";
         String CREATE_TIME = "CREATE_TIME";
         String DESCRIPTION = "DESCRIPTION";
         String LEARNING_EVENT_COUNT = "LEARNING_EVENT_COUNT";
-        String NORMAL_OR_ABSTRACT_EVENT_COUNT = "NORMAL_OR_ABSTRACT_EVENT_COUNT";
+        String NORMAL_EVENT_COUNT = "NORMAL_EVENT_COUNT";
+        String ABSTRACT_EVENT_COUNT = "ABSTRACT_EVENT_COUNT";
     }
-    interface FastTemplateColumn{
+    public interface FastTemplateColumn{
         String PK_FAST_TEMPLATE_ID = "PK_FAST_TEMPLATE_ID";
         String TEMPLATE = "TEMPLATE";
         String EVENT_TYPE = "EVENT_TYPE";
     }
-    interface DefaultInputValueColumn{
+    public interface DefaultInputValueColumn{
         String PK_DEFAULT_INPUT_VALUE_ID = "PK_DEFAULT_INPUT_VALUE_ID";
         String MAX_WIDTH = "MAX_WIDTH";
         String IS_GREEK_ALPHABET_MARKED = "IS_GREEK_ALPHABET_MARKED";

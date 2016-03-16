@@ -2,9 +2,10 @@ package link.ebbinghaus.planning.presenter.impl;
 
 import java.util.List;
 
-import link.ebbinghaus.planning.model.PlanningDisplayModel;
+import link.ebbinghaus.planning.model.PlanningBuildModel;
+import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
-import link.ebbinghaus.planning.model.impl.PlanningDisplayModelImpl;
+import link.ebbinghaus.planning.model.impl.PlanningBuildModelImpl;
 import link.ebbinghaus.planning.presenter.PlanningBuildPresenter;
 import link.ebbinghaus.planning.view.activity.PlanningBuildView;
 
@@ -13,16 +14,29 @@ import link.ebbinghaus.planning.view.activity.PlanningBuildView;
  */
 public class PlanningBuildPresenterImpl implements PlanningBuildPresenter {
     private PlanningBuildView mPlanningBuildView;
-    private PlanningDisplayModel mPlanningDisplayModel;
+    private PlanningBuildModel mPlanningBuildModel;
 
     public PlanningBuildPresenterImpl(PlanningBuildView planningBuildView) {
         this.mPlanningBuildView = planningBuildView;
-        mPlanningDisplayModel = new PlanningDisplayModelImpl();
+        mPlanningBuildModel = new PlanningBuildModelImpl();
     }
 
     @Override
     public void configureRelatedViewPagerTabLayout() {
-        List<Tab> tabs = mPlanningDisplayModel.makePlanningBuildTabs();
+        List<Tab> tabs = mPlanningBuildModel.makePlanningBuildTabs();
         mPlanningBuildView.bindViewPagerToTabLayout(tabs);
+    }
+
+    @Override
+    public void saveSpecificEvent() {
+        Event event = new Event();
+        mPlanningBuildView.obtainSpecificEvent(event);
+        mPlanningBuildModel.persistLearningEvent(event);
+
+    }
+
+    @Override
+    public void doneSpecificEvent() {
+
     }
 }

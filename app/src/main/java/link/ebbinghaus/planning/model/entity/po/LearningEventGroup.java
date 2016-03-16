@@ -1,4 +1,8 @@
-package link.ebbinghaus.planning.model.entity;
+package link.ebbinghaus.planning.model.entity.po;
+
+import android.content.ContentValues;
+
+import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 
 /**
  * Created by WINFIELD on 2016/2/29.
@@ -75,5 +79,16 @@ public class LearningEventGroup {
 
     public void setUnderstandingDegree(float understandingDegree) {
         this.understandingDegree = understandingDegree;
+    }
+
+    public void convertToContentValues(ContentValues values){
+        values.put(DBConfig.LearningEventGroupColumn.PK_LEARNING_EVENT_GROUP_ID, pkLearningEventGroupId);
+        values.put(DBConfig.LearningEventGroupColumn.KNOWLEDGE_QUANTITY, knowledgeQuantity);
+        values.put(DBConfig.LearningEventGroupColumn.STRATEGY, strategy);
+        values.put(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_TOTAL, learningEventTotal);
+        values.put(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_FINISHED_COUNT, learningEventFinishedCount);
+        values.put(DBConfig.LearningEventGroupColumn.WORKLOAD, workload);
+        values.put(DBConfig.LearningEventGroupColumn.EFFICIENCY, efficiency);
+        values.put(DBConfig.LearningEventGroupColumn.UNDERSTANDING_DEGREE, understandingDegree);
     }
 }

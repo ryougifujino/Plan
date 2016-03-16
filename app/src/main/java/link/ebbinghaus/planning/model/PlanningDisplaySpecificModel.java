@@ -4,7 +4,7 @@ import com.yurikami.lib.entity.Datetime;
 
 import java.util.List;
 
-import link.ebbinghaus.planning.model.entity.Event;
+import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
 
 /**

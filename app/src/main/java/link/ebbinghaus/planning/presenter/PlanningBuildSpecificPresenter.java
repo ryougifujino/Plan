@@ -11,6 +11,11 @@ public interface PlanningBuildSpecificPresenter {
     void switchBuildPanel();
 
     /**
+     * 配置计划子类型
+     */
+    void configureSubtype();
+
+    /**
      * 配置学习计划的方案(策略)
      */
     void configureStrategy();

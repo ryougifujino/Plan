@@ -2,6 +2,8 @@ package com.yurikami.lib.util;
 
 import com.yurikami.lib.entity.Datetime;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -9,8 +11,15 @@ import java.util.Date;
  * Created by WINFIELD on 2016/2/29.
  */
 public class DateUtils {
+    public final long MINUTE_SECONDS = 60;
+    public final long HOUR_SECONDS = MINUTE_SECONDS * 60;
+    public final long DAY_SECONDS = HOUR_SECONDS * 24;
+
     private static long sLastTimestamp = 0l;
     private static Calendar sLastCalendar;
+
+    private static SimpleDateFormat chnDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+    private static SimpleDateFormat hourMinuteFormat = new SimpleDateFormat("HH:mm");
 
     public static Date now() { return new Date(); }
     public static long nowTimestamp() { return System.currentTimeMillis(); }
@@ -132,5 +141,59 @@ public class DateUtils {
         Datetime date = Datetime.buildDate(year(nowTimestamp), month(nowTimestamp), day(nowTimestamp));
         date.setWeek(week(nowTimestamp));
         return date;
+    }
+
+    /**
+     * 获取当前时间
+     * @return 格式:yyyy年MM月dd日
+     */
+    public static String currentChnDate(){
+        return chnDateFormat.format(now());
+    }
+    /**
+     * 将形如yyyy年MM月dd日的日期字符串转换为时间戳
+     * @param chnDate 日期字符串
+     * @return 正确返回时间戳,错误返回-1
+     */
+    public static long convertChnDate2Timestamp(String chnDate){
+        try {
+            Date date = chnDateFormat.parse(chnDate);
+            return date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+    /**
+     * 将时间戳转换为形如yyyy年MM月dd日
+     * @param timestamp 时间戳
+     * @return 中文年月日字符串
+     */
+    public static String formatTimestamp2ChnDate(long timestamp){
+        return chnDateFormat.format(timestamp);
+    }
+
+    /**
+     * 将形如HH:mm的时分字符串转换为时间戳
+     * @param hourMinute 时分字符串
+     * @return 正确返回时间戳,错误返回-1
+     */
+    public static long convertHourMinute2Timestamp(String hourMinute){
+        try {
+            Date date = hourMinuteFormat.parse(hourMinute);
+            return date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    /**
+     * 将时间戳转换为形如HH:mm
+     * @param timestamp 时间戳
+     * @return 形如HH:mm的字符串
+     */
+    public static String formatTimestamp2HourMinute(long timestamp){
+        return hourMinuteFormat.format(timestamp);
     }
 }

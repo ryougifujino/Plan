@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Point;
 import android.view.WindowManager;
 
+import link.ebbinghaus.planning.custom.db.DBHelper;
 import link.ebbinghaus.planning.model.entity.sys.SystemInfo;
 
 /**
@@ -19,7 +20,9 @@ public class App extends Application {
         super.onCreate();
         sContext = getApplicationContext();
 
+        //一些初始化操作(轻量级)
         initSystemInfo();
+        DBHelper.createDatabase(sContext);
     }
 
     private void initSystemInfo() {

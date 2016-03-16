@@ -23,6 +23,11 @@ public class PlanningBuildSpecificPresenterImpl implements PlanningBuildSpecific
     }
 
     @Override
+    public void configureSubtype() {
+
+    }
+
+    @Override
     public void configureStrategy() {
 
     }

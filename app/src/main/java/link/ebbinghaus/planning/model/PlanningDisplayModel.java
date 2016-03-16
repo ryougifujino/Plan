@@ -15,9 +15,4 @@ public interface PlanningDisplayModel {
      */
     List<Tab> makePlanningDisplayTabs();
 
-    /**
-     * 创建PlanningBuild的最顶层tabs
-     * @return PlanningBuild的tabs
-     */
-    List<Tab> makePlanningBuildTabs();
 }

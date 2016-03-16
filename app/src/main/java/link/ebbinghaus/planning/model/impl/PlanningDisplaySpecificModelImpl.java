@@ -8,7 +8,7 @@ import java.util.List;
 
 import link.ebbinghaus.planning.custom.constant.PlanningDisplayConstant;
 import link.ebbinghaus.planning.model.PlanningDisplaySpecificModel;
-import link.ebbinghaus.planning.model.entity.Event;
+import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecGroupFragment;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecMonthFragment;

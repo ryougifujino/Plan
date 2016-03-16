@@ -9,10 +9,13 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.yurikami.lib.base.BaseFragment;
+import com.yurikami.lib.util.DateUtils;
 
 import link.ebbinghaus.planning.custom.viewholder.planning.build.SpecificViewHolder;
+import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.presenter.PlanningBuildSpecificPresenter;
 import link.ebbinghaus.planning.presenter.impl.PlanningBuildSpecificPresenterImpl;
+import link.ebbinghaus.planning.view.activity.impl.PlanningBuildActivity;
 import link.ebbinghaus.planning.view.fragment.PlanningBuildSpecificView;
 import link.ebbinhaus.planning.R;
 
@@ -20,7 +23,8 @@ import link.ebbinhaus.planning.R;
  * A simple {@link Fragment} subclass.
  */
 public class PlanningBuildSpecificFragment extends BaseFragment implements PlanningBuildSpecificView,
-        View.OnClickListener,CompoundButton.OnCheckedChangeListener {
+        View.OnClickListener,CompoundButton.OnCheckedChangeListener,
+        PlanningBuildActivity.OnBuildMenuItemClickListener {
 
     private PlanningBuildSpecificPresenter mPlanningBuildSpecificPresenter;
 
@@ -44,6 +48,9 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         vh.setOnclickListener(this);
         vh.setOnCheckedChangeListener(this);
 
+        //注册OnBuildMenuItemClickListener监听器
+        ((PlanningBuildActivity)mActivity).setOnBuildMenuItemClickListener(this);
+
 
         return v;
     }
@@ -58,6 +65,11 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
             vh.showLearningPanel();
         }
         mPanelShowEventType = !mPanelShowEventType;
+    }
+
+    @Override
+    public void setSubtype() {
+
     }
 
     @Override
@@ -105,6 +117,9 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
             case R.id.btn_planning_build_switch_event_type:
                 mPlanningBuildSpecificPresenter.switchBuildPanel();
                 break;
+            case R.id.tv_planning_build_subtype:
+                mPlanningBuildSpecificPresenter.configureSubtype();
+                break;
             case R.id.tv_planning_build_strategy:
                 mPlanningBuildSpecificPresenter.configureStrategy();
                 break;
@@ -133,5 +148,27 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
                 mPlanningBuildSpecificPresenter.configureGreekAlphabet(isChecked);
                 break;
         }
+    }
+
+    @Override
+    public void onBuildMenuClick(Event event) {
+        //提取页面数据到event中
+
+        event.setLearningEventGroupId(1);
+        event.setEventGroupId(1);
+        event.setDescription("描述测试");
+//        event.setSummary("总结测试");
+        event.setEventType(1);
+        event.setEventSubtypeId(1);
+        event.setEventSequence(1);
+        event.setIsShowEventSequence(false);
+        event.setCreateTime(DateUtils.nowTimestamp());
+        event.setEventExpectedFinishedDate(DateUtils.convertChnDate2Timestamp("2016年3月15日"));
+//        event.setEventFinishedTime();
+        event.setIsEventFinished(false);
+        event.setIsGreekAlphabetMarked(false);
+        event.setIsRemind(false);
+        event.setRemindTime(-1);
+        event.setEventProcess(1);
     }
 }

@@ -9,4 +9,14 @@ public interface PlanningBuildPresenter {
      * 配置相关联的Viewpager和TabLayout
      */
     void configureRelatedViewPagerTabLayout();
+
+    /**
+     * 保存(不退出本Activity,但要清空)Event(普通或学习)
+     */
+    void saveSpecificEvent();
+
+    /**
+     * 完成(保存并退出Activity)Event(普通或学习)
+     */
+    void doneSpecificEvent();
 }

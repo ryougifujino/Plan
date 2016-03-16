@@ -85,6 +85,7 @@ public class MainActivity extends BaseActivity implements MainView,
     @Override
     public void onDrawerClosed(View drawerView) {
         try {
+            //FIXME java.lang.NullPointerException
             Fragment f = (Fragment) mFragmentMap.get(mNowFragmentId).newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.fl_main_content,f).commit();
         } catch (Exception e) {

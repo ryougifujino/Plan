@@ -1,5 +1,9 @@
-package link.ebbinghaus.planning.model.entity;
+package link.ebbinghaus.planning.model.entity.po;
 
+
+import android.content.ContentValues;
+
+import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 
 /**
  * Created by WINFIELD on 2016/2/29.
@@ -157,5 +161,25 @@ public class Event {
 
     public void setEventProcess(Integer eventProcess) {
         this.eventProcess = eventProcess;
+    }
+
+    public void convertToContentValues(ContentValues values){
+        values.put(DBConfig.EventColumn.PK_EVENT_ID, pkEventId);
+        values.put(DBConfig.EventColumn.LEARNING_EVENT_GROUP_ID, learningEventGroupId);
+        values.put(DBConfig.EventColumn.EVENT_GROUP_ID, eventGroupId);
+        values.put(DBConfig.EventColumn.DESCRIPTION, description);
+        values.put(DBConfig.EventColumn.SUMMARY, summary);
+        values.put(DBConfig.EventColumn.EVENT_TYPE, eventType);
+        values.put(DBConfig.EventColumn.EVENT_SUBTYPE_ID, eventSubtypeId);
+        values.put(DBConfig.EventColumn.EVENT_SEQUENCE, eventSequence);
+        values.put(DBConfig.EventColumn.IS_SHOW_EVENT_SEQUENCE, isShowEventSequence);
+        values.put(DBConfig.EventColumn.CREATE_TIME, createTime);
+        values.put(DBConfig.EventColumn.EVENT_EXPECTED_FINISHED_DATE, eventExpectedFinishedDate);
+        values.put(DBConfig.EventColumn.EVENT_FINISHED_TIME, eventFinishedTime);
+        values.put(DBConfig.EventColumn.IS_EVENT_FINISHED, isEventFinished);
+        values.put(DBConfig.EventColumn.IS_GREEK_ALPHABET_MARKED, isGreekAlphabetMarked);
+        values.put(DBConfig.EventColumn.IS_REMIND, isRemind);
+        values.put(DBConfig.EventColumn.REMIND_TIME, remindTime);
+        values.put(DBConfig.EventColumn.EVENT_PROCESS, eventProcess);
     }
 }

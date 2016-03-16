@@ -11,6 +11,11 @@ public interface PlanningBuildSpecificView {
     void setBuildPanel();
 
     /**
+     * 设置计划子类型
+     */
+    void setSubtype();
+
+    /**
      * 设置学习计划的方案(策略)
      */
     void setStrategy();

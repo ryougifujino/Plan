@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 import link.ebbinghaus.planning.custom.adapter.planning.display.spec.MonthRecyclerViewAdapter;
 import link.ebbinghaus.planning.custom.other.mock.MonthEventsMock;
 import link.ebbinghaus.planning.custom.util.CommonUtils;
-import link.ebbinghaus.planning.model.entity.Event;
+import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.view.fragment.PlanningDisplaySpecMonthView;
 import link.ebbinhaus.planning.R;
 

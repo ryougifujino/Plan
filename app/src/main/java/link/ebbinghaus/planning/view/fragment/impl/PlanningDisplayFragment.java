@@ -103,9 +103,6 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
             Fragment grandson = specificFragment.nowVPFragment();
 
             if (grandson instanceof OnToolbarDateChangeListener) {
-                //这个时候注册监听器,点击的时候与孙子Fragment取得实例有个时间差;
-                //不会造成注册时孙子Fragment还没创建的情况
-                setOnToolbarDateChangeListener((OnToolbarDateChangeListener) grandson);
                 mCalendarDatePicker.show(getChildFragmentManager(), PlanningDisplayFragment.this.getTag());
             }
         }

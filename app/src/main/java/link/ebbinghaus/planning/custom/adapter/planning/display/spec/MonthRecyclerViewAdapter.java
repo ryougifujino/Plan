@@ -24,7 +24,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.custom.other.App;
 import link.ebbinghaus.planning.model.PlanningDisplaySpecificModel;
-import link.ebbinghaus.planning.model.entity.Event;
+import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.impl.PlanningDisplaySpecificModelImpl;
 import link.ebbinhaus.planning.R;
 

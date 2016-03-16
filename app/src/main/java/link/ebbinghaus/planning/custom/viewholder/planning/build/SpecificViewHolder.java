@@ -16,6 +16,7 @@ import link.ebbinhaus.planning.R;
  */
 public class SpecificViewHolder extends BaseFragmentViewHolder{
     public TextView eventTypeTv;
+    public TextView eventSubtypeTv;
     public Button eventTypeBtn;
     public EditText descriptionEt;
     public LinearLayout fastTemplateLl;
@@ -33,6 +34,7 @@ public class SpecificViewHolder extends BaseFragmentViewHolder{
     public SpecificViewHolder(View v) {
         super(v);
         eventTypeTv = find(R.id.tv_planning_build_event_type);
+        eventSubtypeTv = find(R.id.tv_planning_build_subtype);
         eventTypeBtn = find(R.id.btn_planning_build_switch_event_type);
         descriptionEt = find(R.id.et_planning_build_description);
         fastTemplateLl = find(R.id.ll_planning_build_fast_template);
@@ -50,6 +52,7 @@ public class SpecificViewHolder extends BaseFragmentViewHolder{
 
     public void setOnclickListener(View.OnClickListener l){
         eventTypeBtn.setOnClickListener(l);
+        eventSubtypeTv.setOnClickListener(l);
         strategyTv.setOnClickListener(l);
         expectedFinishDateTv.setOnClickListener(l);
         remindTimeTv.setOnClickListener(l);

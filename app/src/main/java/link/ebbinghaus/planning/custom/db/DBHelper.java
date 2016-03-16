@@ -5,17 +5,26 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
+import link.ebbinghaus.planning.custom.db.dao.DefaultInputValueDao;
 
 /**
  * Created by WINFIELD on 2016/2/28.
  */
 public class DBHelper extends SQLiteOpenHelper {
+    private static DBHelper sHelper;
 
-    public DBHelper(Context context){
-        this(context, DBConfig.DB_NAME,null, DBConfig.DB_VERSION);
+    public static DBHelper getInstance(Context context){
+        if (sHelper == null){
+            sHelper = new DBHelper(context);
+        }
+        return sHelper;
     }
 
-    public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    private DBHelper(Context context){
+        this(context, DBConfig.DB_NAME, null, DBConfig.DB_VERSION);
+    }
+
+    private DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
@@ -27,6 +36,16 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(DBConfig.CREATE_TABLE_EVENT_SUBTYPE);
         db.execSQL(DBConfig.CREATE_TABLE_FAST_TEMPLATE);
         db.execSQL(DBConfig.CREATE_TABLE_DEFAULT_INPUT_VALUE);
+
+        //向表中插入一些默认数据
+        db.beginTransaction();
+        try {
+            db.insert(DBConfig.Table.DEFAULT_INPUT_VALUE, null, DefaultInputValueDao.presetDefaultInputValue());
+            db.setTransactionSuccessful();
+        }finally {
+            db.endTransaction();
+        }
+
     }
 
     @Override
@@ -37,4 +56,13 @@ public class DBHelper extends SQLiteOpenHelper {
             case 2:
         }
     }
+
+    /**
+     * 创建数据库(如果存在则不创建)
+     */
+    public static void createDatabase(Context context){
+        getInstance(context).getWritableDatabase().close();
+    }
+
+
 }
