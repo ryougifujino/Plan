@@ -3,6 +3,9 @@ package link.ebbinghaus.planning.custom.db.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 import link.ebbinghaus.planning.model.entity.po.LearningEventGroup;
 
@@ -11,53 +14,62 @@ import link.ebbinghaus.planning.model.entity.po.LearningEventGroup;
  */
 public class LearningEventGroupDao extends BaseDao<LearningEventGroup> {
 
+    public LearningEventGroupDao() {
+        super(DBConfig.LearningEventGroupColumn.PK_LEARNING_EVENT_GROUP_ID);
+    }
+
     @Override
-    protected void insert(LearningEventGroup learningEventGroup) {
+    protected void _insert(LearningEventGroup learningEventGroup) {
         ContentValues values = new ContentValues();
         learningEventGroup.convertToContentValues(values);
         db.insert(DBConfig.Table.LEARNING_EVENT_GROUP, null, values);
     }
 
     @Override
-    protected void delete(String where, String[] args) {
+    protected void _delete(String where, String[] args) {
         db.delete(DBConfig.Table.LEARNING_EVENT_GROUP, where, args);
     }
 
     @Override
-    protected void update(LearningEventGroup learningEventGroup, String where, String[] args) {
+    protected void _update(LearningEventGroup learningEventGroup, String where, String[] args) {
         ContentValues values = new ContentValues();
         learningEventGroup.convertToContentValues(values);
         db.update(DBConfig.Table.LEARNING_EVENT_GROUP, values, where, args);
     }
 
     @Override
-    public void removeByPrimaryKey(Integer pk) {
-        String whereClause = DBConfig.LearningEventGroupColumn.PK_LEARNING_EVENT_GROUP_ID + " = ?";
-        remove(whereClause, new String[]{pk.toString()});
+    public void updateByPrimaryKey(LearningEventGroup learningEventGroup) {
+        String whereClause = pkColumn + " = ?";
+        _update(learningEventGroup, whereClause, new String[]{learningEventGroup.getPkLearningEventGroupId().toString()});
     }
 
     @Override
-    public void modifyByPrimaryKey(LearningEventGroup learningEventGroup) {
-        String whereClause = DBConfig.LearningEventGroupColumn.PK_LEARNING_EVENT_GROUP_ID + " = ?";
-        modify(learningEventGroup, whereClause, new String[]{learningEventGroup.getPkLearningEventGroupId().toString()});
-    }
-
-    @Override
-    public LearningEventGroup findByPrimaryKey(Integer pk) {
+    public LearningEventGroup selectByPrimaryKey(Integer pk) {
         String querySql = "SELECT * FROM " + DBConfig.Table.LEARNING_EVENT_GROUP + " WHERE " +
-                DBConfig.LearningEventGroupColumn.PK_LEARNING_EVENT_GROUP_ID + " = ?";
+                pkColumn + " = ?";
         Cursor cursor = db.rawQuery(querySql, new String[]{pk.toString()});
         cursor.moveToFirst();
         LearningEventGroup learningEventGroup = new LearningEventGroup();
-        learningEventGroup.setPkLearningEventGroupId(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.PK_LEARNING_EVENT_GROUP_ID)));
-        learningEventGroup.setKnowledgeQuantity(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.KNOWLEDGE_QUANTITY)));
-        learningEventGroup.setStrategy(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.STRATEGY)));
-        learningEventGroup.setLearningEventTotal(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_TOTAL)));
-        learningEventGroup.setLearningEventFinishedCount(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_FINISHED_COUNT)));
-        learningEventGroup.setWorkload(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.WORKLOAD)));
-        learningEventGroup.setEfficiency(cursor.getFloat(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.EFFICIENCY)));
-        learningEventGroup.setUnderstandingDegree(cursor.getFloat(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.UNDERSTANDING_DEGREE)));
+        learningEventGroup.filledByCursor(cursor);
         cursor.close();
         return learningEventGroup;
     }
+
+    @Override
+    public List<LearningEventGroup> selectAll() {
+        String querySql = "SELECT * FROM " + DBConfig.Table.LEARNING_EVENT_GROUP;
+        Cursor cursor = db.rawQuery(querySql, null);
+        List<LearningEventGroup> learningEventGroups = new ArrayList<>();
+        while (cursor.moveToNext()){
+            LearningEventGroup learningEventGroup = new LearningEventGroup();
+            learningEventGroup.filledByCursor(cursor);
+            learningEventGroups.add(learningEventGroup);
+        }
+        cursor.close();
+        return learningEventGroups;
+    }
+
+    /* 以下方法为非通用方法 */
+
+
 }

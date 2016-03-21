@@ -22,6 +22,11 @@ public class PlanningBuildPresenterImpl implements PlanningBuildPresenter {
     }
 
     @Override
+    public void configureToolbar() {
+        mPlanningBuildView.setToolbar();
+    }
+
+    @Override
     public void configureRelatedViewPagerTabLayout() {
         List<Tab> tabs = mPlanningBuildModel.makePlanningBuildTabs();
         mPlanningBuildView.bindViewPagerToTabLayout(tabs);

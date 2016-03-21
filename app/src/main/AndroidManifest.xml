@@ -18,6 +18,8 @@
         </activity>
         <activity android:name="link.ebbinghaus.planning.view.activity.impl.PlanningBuildActivity">
         </activity>
+        <activity android:name="link.ebbinghaus.planning.view.activity.impl.CommonSelectActivity">
+        </activity>
     </application>
 
 </manifest>

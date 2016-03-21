@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_common_select_listitem"
+    android:background="?android:attr/selectableItemBackground"
+    android:padding="30dp"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_common_select_description"
+        android:ellipsize="end"
+        android:maxLength="30"
+        android:maxLines="3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="200dp"
+        android:text="描述描述描述描述描述描述"/>
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/iv_common_select_selected_icon"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_check_dark_disabled"/>
+
+</RelativeLayout>

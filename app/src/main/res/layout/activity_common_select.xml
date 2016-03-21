@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="link.ebbinghaus.planning.view.activity.impl.CommonSelectActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/head_common"/>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/rl_common_select_delete_toolbar"
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_common_select_delete_toolbar_arrow_back"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_centerVertical="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/common_arrow_back"/>
+
+            <TextView
+                android:layout_toRightOf="@id/iv_common_select_delete_toolbar_arrow_back"
+                android:id="@+id/tv_common_select_delete_toolbar_select_info"
+                android:padding="20dp"
+                android:text="已选择1个"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_alignParentRight="true"
+                android:id="@+id/tv_common_select_delete_toolbar_delete"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="20dp"
+                android:text="删除"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_toLeftOf="@id/tv_common_select_delete_toolbar_delete"
+                android:id="@+id/tv_common_select_delete_toolbar_select_all_toggle"
+                android:background="?android:attr/selectableItemBackground"
+                android:padding="20dp"
+                android:text="全选"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_common_select"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

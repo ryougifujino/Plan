@@ -73,7 +73,9 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignBaseline="@id/label_planning_build_subtype"
                     android:id="@+id/tv_planning_build_subtype"
+                    android:background="?android:attr/selectableItemBackground"
                     android:text="无/英语学习"
+                    android:maxWidth="200dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -100,20 +102,13 @@
                 <LinearLayout
                     android:layout_below="@id/label_ll_planning_build_description"
                     android:id="@+id/ll_planning_build_fast_template"
-                    android:padding="15dp"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
+                    android:gravity="right"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:text="快速模板"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:text="快速模板"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:text="快速模板"
+                    <Button
+                        android:id="@+id/btn_planning_build_fast_template"
+                        android:text="选择快速模板"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -148,6 +143,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignBaseline="@id/label_planning_build_expected_finish_date"
                     android:id="@+id/tv_planning_build_expected_finish_date"
+                    android:background="?android:attr/selectableItemBackground"
                     android:text="2016年3月13日"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -181,6 +177,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignBaseline="@id/label_planning_build_remind_time"
                     android:id="@+id/tv_planning_build_remind_time"
+                    android:background="?android:attr/selectableItemBackground"
                     android:text="15:30"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -228,8 +225,10 @@
                     android:padding="15dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignBaseline="@id/label_planning_build_event_group"
+                    android:background="?android:attr/selectableItemBackground"
                     android:id="@+id/tv_planning_build_event_group"
                     android:text="C++学习计划"
+                    android:maxWidth="200dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

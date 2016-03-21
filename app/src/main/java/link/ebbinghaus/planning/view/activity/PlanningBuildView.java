@@ -10,6 +10,11 @@ import link.ebbinghaus.planning.model.entity.sys.Tab;
  */
 public interface PlanningBuildView {
     /**
+     * 对toolbar进行设置
+     */
+    void setToolbar();
+
+    /**
      * 将ViewPager和TabLayout联系在一起,也可以进行一些对ViewPager、TabLayout的设置
      * @param tabs 与Tab相关的参数
      */

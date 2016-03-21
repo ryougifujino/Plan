@@ -3,7 +3,7 @@ package link.ebbinghaus.planning.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import link.ebbinghaus.planning.custom.constant.PlanningDisplayConstant;
+import link.ebbinghaus.planning.custom.constant.module.PlanningDisplayConstant;
 import link.ebbinghaus.planning.model.PlanningDisplayModel;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplayAbstractFragment;

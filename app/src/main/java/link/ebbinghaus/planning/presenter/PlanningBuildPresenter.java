@@ -4,6 +4,10 @@ package link.ebbinghaus.planning.presenter;
  * Created by WINFIELD on 2016/3/8.
  */
 public interface PlanningBuildPresenter {
+    /**
+     * 对toolbar进行设置
+     */
+    void configureToolbar();
 
     /**
      * 配置相关联的Viewpager和TabLayout

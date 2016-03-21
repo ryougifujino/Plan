@@ -1,6 +1,7 @@
 package link.ebbinghaus.planning.view.fragment.impl;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,13 +9,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import com.codetroopers.betterpickers.radialtimepicker.RadialTimePickerDialogFragment;
 import com.yurikami.lib.base.BaseFragment;
 import com.yurikami.lib.util.DateUtils;
 
+import link.ebbinghaus.planning.custom.constant.Constant;
+import link.ebbinghaus.planning.custom.constant.entity.FastTemplateConstant;
+import link.ebbinghaus.planning.custom.constant.module.PlanningBuildConstant;
 import link.ebbinghaus.planning.custom.viewholder.planning.build.SpecificViewHolder;
+import link.ebbinghaus.planning.model.entity.po.DefaultInputValue;
 import link.ebbinghaus.planning.model.entity.po.Event;
+import link.ebbinghaus.planning.model.entity.po.EventSubtype;
+import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
 import link.ebbinghaus.planning.presenter.PlanningBuildSpecificPresenter;
 import link.ebbinghaus.planning.presenter.impl.PlanningBuildSpecificPresenterImpl;
+import link.ebbinghaus.planning.view.activity.impl.CommonSelectActivity;
 import link.ebbinghaus.planning.view.activity.impl.PlanningBuildActivity;
 import link.ebbinghaus.planning.view.fragment.PlanningBuildSpecificView;
 import link.ebbinhaus.planning.R;
@@ -24,12 +33,24 @@ import link.ebbinhaus.planning.R;
  */
 public class PlanningBuildSpecificFragment extends BaseFragment implements PlanningBuildSpecificView,
         View.OnClickListener,CompoundButton.OnCheckedChangeListener,
-        PlanningBuildActivity.OnBuildMenuItemClickListener {
+        PlanningBuildActivity.OnBuildMenuItemClickListener,RadialTimePickerDialogFragment.OnTimeSetListener {
+
+    //requestCode
+    public static final int FLAG_EVENT_SUBTYPE = R.id.tv_planning_build_subtype & CommonSelectActivity.FLAG_MASK;
+    public static final int FLAG_FAST_TEMPLATE = R.id.btn_planning_build_fast_template & CommonSelectActivity.FLAG_MASK;
+    public static final int FLAG_EVENT_GROUP = R.id.tv_planning_build_event_group & CommonSelectActivity.FLAG_MASK;
+
+    /** Intent的name */
+    public static final String INTENT_NAME_FAST_TEMPLATE_TYPE = Constant.PACKAGE_NAME + ".FastTemplateType";
 
     private PlanningBuildSpecificPresenter mPlanningBuildSpecificPresenter;
 
     private SpecificViewHolder vh;
     private LayoutInflater mLayoutInflater;
+    private RadialTimePickerDialogFragment mRadialTimePicker;
+    /** 用来记录具体计划输入值的变量 */
+    private InputEventVo mInputEvent = new InputEventVo();
+
 
     /**
      * 控制输入面板显示的计划时普通型还是学习型
@@ -44,15 +65,70 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         View v = mLayoutInflater.inflate(R.layout.fragment_planning_build_specific, container, false);
         mPlanningBuildSpecificPresenter = new PlanningBuildSpecificPresenterImpl(this);
         vh = new SpecificViewHolder(v);
-
         vh.setOnclickListener(this);
         vh.setOnCheckedChangeListener(this);
 
         //注册OnBuildMenuItemClickListener监听器
         ((PlanningBuildActivity)mActivity).setOnBuildMenuItemClickListener(this);
 
+        mPlanningBuildSpecificPresenter.getAndSetDefaultInputValues(mInputEvent);
 
         return v;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case FLAG_EVENT_SUBTYPE:
+                if (resultCode == mActivity.RESULT_OK) {
+                    EventSubtype eventSubtype = data.getParcelableExtra(CommonSelectActivity.INTENT_NAME_RESULT);
+                    mPlanningBuildSpecificPresenter.configureEventSubtype(eventSubtype);
+                }else {
+                    EventSubtype eventSubtype = new EventSubtype();
+                    eventSubtype.setEventSubtype(mActivity.getString(R.string.common_none));
+                    mPlanningBuildSpecificPresenter.configureEventSubtype(eventSubtype);
+                }
+                break;
+            case FLAG_FAST_TEMPLATE:
+                if (resultCode == mActivity.RESULT_OK) {
+                    mPlanningBuildSpecificPresenter.configureFastTemplate();
+                }else {
+                }
+                break;
+            case FLAG_EVENT_GROUP:
+                if (resultCode == mActivity.RESULT_OK) {
+                    mPlanningBuildSpecificPresenter.configureEventGroup();
+                }else {
+                }
+                break;
+        }
+    }
+
+    @Override
+    public Event getInputEvent() {
+        mInputEvent.setDescription(vh.descriptionEt.getText().toString());
+        return mInputEvent;
+    }
+
+    @Override
+    public void setDefaultInputValue(DefaultInputValue defaultInputValue) {
+        // step1. 给mInputValue设置获取到的默认值(在presenter里做了大部分)
+        mInputEvent.setEventType(mPanelShowEventType ? FastTemplateConstant.SPEC_LEARNING_TYPE : FastTemplateConstant.SPEC_NORMAL_TYPE);
+        // step2. 给控件设置默认值
+        vh.eventSubtypeTv.setText(getString(R.string.common_none));
+        vh.strategyTv.setText(defaultInputValue.getChnStrategy());
+        vh.expectedFinishDateTv.setText(DateUtils.currentChnDate());
+        vh.remindSwitch.setChecked(defaultInputValue.isRemind());
+        vh.remindTimeTv.setText(defaultInputValue.getFormatRemindTime());
+        vh.sequenceSwitch.setChecked(defaultInputValue.isShowEventSequence());
+        vh.greekAlphabetSwitch.setChecked(defaultInputValue.isGreekAlphabetMarked());
+        vh.eventGroupTv.setText(getString(R.string.common_none));
+        // step3. 初始化其他控件
+        long rt = defaultInputValue.getRemindTime();
+        mRadialTimePicker = new RadialTimePickerDialogFragment()
+                .setOnTimeSetListener(this)
+                .setStartTime(DateUtils.hour(rt), DateUtils.minute(rt))
+                .setThemeLight();
     }
 
     @Override
@@ -65,25 +141,35 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
             vh.showLearningPanel();
         }
         mPanelShowEventType = !mPanelShowEventType;
+        mInputEvent.setEventType(mPanelShowEventType ? FastTemplateConstant.SPEC_LEARNING_TYPE : FastTemplateConstant.SPEC_NORMAL_TYPE);
     }
 
     @Override
-    public void setSubtype() {
+    public void setSubtype(EventSubtype result) {
+        vh.eventSubtypeTv.setText(result.getEventSubtype());
+        mInputEvent.setEventSubtypeId(result.getPkEventSubtypeId());
+    }
+
+    @Override
+    public void setFastTemplate() {
 
     }
 
     @Override
     public void setStrategy() {
-
+        //建立dialog然后根据返回值设置strategy TODO: change this
+        mInputEvent.setStrategy(1);
     }
 
     @Override
     public void setExpectedFinishDate() {
-
+        //建立dialog然后根据返回值设置计划日期 TODO:change this
+        mInputEvent.setEventExpectedFinishedDate(2l);
     }
 
     @Override
     public void setRemind(boolean isChecked) {
+        mInputEvent.setIsRemind(isChecked);
         if(isChecked) {
             vh.showRemindTime();
         }else {
@@ -93,17 +179,25 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
 
     @Override
     public void setRemindTime() {
-
+        //设置提醒时间的工作实际在下面的onTimeSet做了
+        mRadialTimePicker.show(getFragmentManager(), PlanningBuildSpecificFragment.this.getTag());
+    }
+    @Override
+    public void onTimeSet(RadialTimePickerDialogFragment dialog, int hourOfDay, int minute) {
+        String hourMinute = hourOfDay + ":" + minute;
+        mInputEvent.setRemindTime(DateUtils.convertHourMinute2Timestamp(hourMinute));
+        vh.remindTimeTv.setText(hourMinute);
+        mRadialTimePicker.setStartTime(hourOfDay, minute);
     }
 
     @Override
     public void setSequence(boolean isChecked) {
-
+        mInputEvent.setIsShowEventSequence(isChecked);
     }
 
     @Override
     public void setGreekAlphabet(boolean isChecked) {
-
+        mInputEvent.setIsGreekAlphabetMarked(isChecked);
     }
 
     @Override
@@ -118,7 +212,15 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
                 mPlanningBuildSpecificPresenter.switchBuildPanel();
                 break;
             case R.id.tv_planning_build_subtype:
-                mPlanningBuildSpecificPresenter.configureSubtype();
+                jumpToSelectActivityForResult(PlanningBuildConstant.TITLE_SELECT_SUBTYPE , FLAG_EVENT_SUBTYPE);
+                break;
+            case R.id.btn_planning_build_fast_template:
+                startActivityForResult(
+                        newIntent(CommonSelectActivity.class)
+                                .putExtra(INTENT_NAME_FAST_TEMPLATE_TYPE, mPanelShowEventType ? FastTemplateConstant.SPEC_LEARNING_TYPE : FastTemplateConstant.SPEC_NORMAL_TYPE)
+                                .putExtra(CommonSelectActivity.INTENT_NAME_TITLE, PlanningBuildConstant.TITLE_SELECT_FAST_TEMPLATE)
+                                .putExtra(CommonSelectActivity.INTENT_NAME_FLAG, FLAG_FAST_TEMPLATE),
+                        FLAG_FAST_TEMPLATE);
                 break;
             case R.id.tv_planning_build_strategy:
                 mPlanningBuildSpecificPresenter.configureStrategy();
@@ -130,9 +232,16 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
                 mPlanningBuildSpecificPresenter.configureRemindTime();
                 break;
             case R.id.tv_planning_build_event_group:
-                mPlanningBuildSpecificPresenter.configureEventGroup();
+                jumpToSelectActivityForResult(PlanningBuildConstant.TITLE_SELECT_EVENT_GROUP ,FLAG_EVENT_GROUP);
                 break;
         }
+    }
+    private void jumpToSelectActivityForResult(String title, int requestCode){
+        startActivityForResult(
+                newIntent(CommonSelectActivity.class)
+                        .putExtra(CommonSelectActivity.INTENT_NAME_TITLE, title)
+                        .putExtra(CommonSelectActivity.INTENT_NAME_FLAG, requestCode),
+                requestCode);
     }
 
     @Override
@@ -162,7 +271,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         event.setEventSubtypeId(1);
         event.setEventSequence(1);
         event.setIsShowEventSequence(false);
-        event.setCreateTime(DateUtils.nowTimestamp());
+        event.setCreateTime(System.currentTimeMillis());
         event.setEventExpectedFinishedDate(DateUtils.convertChnDate2Timestamp("2016年3月15日"));
 //        event.setEventFinishedTime();
         event.setIsEventFinished(false);
@@ -171,4 +280,5 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         event.setRemindTime(-1);
         event.setEventProcess(1);
     }
+
 }

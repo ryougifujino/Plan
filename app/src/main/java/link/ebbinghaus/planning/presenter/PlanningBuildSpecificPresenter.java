@@ -1,9 +1,18 @@
 package link.ebbinghaus.planning.presenter;
 
+import link.ebbinghaus.planning.model.entity.po.EventSubtype;
+import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
+
 /**
  * Created by WINFIELD on 2016/3/14.
  */
 public interface PlanningBuildSpecificPresenter {
+
+    /**
+     * 从数据库里获取输入默认值,然后再设置
+     * @param inputEvent 输入界面的底层值
+     */
+    void getAndSetDefaultInputValues(InputEventVo inputEvent);
 
     /**
      * 根据是普通计划还是学习计划切换到相应的面板上去
@@ -12,8 +21,14 @@ public interface PlanningBuildSpecificPresenter {
 
     /**
      * 配置计划子类型
+     * @param result 从SelectActivity返回的结果
      */
-    void configureSubtype();
+    void configureEventSubtype(EventSubtype result);
+
+    /**
+     * 配置快速模板并填入描述中
+     */
+    void configureFastTemplate();
 
     /**
      * 配置学习计划的方案(策略)
@@ -49,4 +64,9 @@ public interface PlanningBuildSpecificPresenter {
      * 配置计划组
      */
     void configureEventGroup();
+
+    /**
+     * 关闭数据库
+     */
+    void closeDB();
 }

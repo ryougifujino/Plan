@@ -3,6 +3,9 @@ package link.ebbinghaus.planning.custom.db.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
 
@@ -11,47 +14,62 @@ import link.ebbinghaus.planning.model.entity.po.EventSubtype;
  */
 public class EventSubtypeDao extends BaseDao<EventSubtype> {
 
+    public EventSubtypeDao() {
+        super(DBConfig.EventSubtypeColumn.PK_EVENT_SUBTYPE_ID);
+    }
+
     @Override
-    protected void insert(EventSubtype eventSubtype) {
+    protected void _insert(EventSubtype eventSubtype) {
         ContentValues values = new ContentValues();
         eventSubtype.convertToContentValues(values);
         db.insert(DBConfig.Table.EVENT_SUBTYPE, null, values);
     }
 
     @Override
-    protected void delete(String where, String[] args) {
+    protected void _delete(String where, String[] args) {
         db.delete(DBConfig.Table.EVENT_SUBTYPE, where, args);
     }
 
     @Override
-    protected void update(EventSubtype eventSubtype, String where, String[] args) {
+    protected void _update(EventSubtype eventSubtype, String where, String[] args) {
         ContentValues values = new ContentValues();
         eventSubtype.convertToContentValues(values);
         db.update(DBConfig.Table.EVENT_SUBTYPE, values, where, args);
     }
 
     @Override
-    public void removeByPrimaryKey(Integer pk) {
-        String whereClause = DBConfig.EventSubtypeColumn.PK_EVENT_SUBTYPE_ID + " = ?";
-        remove(whereClause, new String[]{pk.toString()});
+    public void updateByPrimaryKey(EventSubtype eventSubtype) {
+        String whereClause = pkColumn + " = ?";
+        _update(eventSubtype, whereClause, new String[]{eventSubtype.getPkEventSubtypeId().toString()});
     }
 
     @Override
-    public void modifyByPrimaryKey(EventSubtype eventSubtype) {
-        String whereClause = DBConfig.EventSubtypeColumn.PK_EVENT_SUBTYPE_ID + " = ?";
-        modify(eventSubtype, whereClause, new String[]{eventSubtype.getPkEventSubtypeId().toString()});
-    }
-
-    @Override
-    public EventSubtype findByPrimaryKey(Integer pk) {
+    public EventSubtype selectByPrimaryKey(Integer pk) {
         String querySql = "SELECT * FROM " + DBConfig.Table.EVENT_SUBTYPE + " WHERE " +
-                DBConfig.EventSubtypeColumn.PK_EVENT_SUBTYPE_ID + " = ?";
+                pkColumn + " = ?";
         Cursor cursor = db.rawQuery(querySql, new String[]{pk.toString()});
         cursor.moveToFirst();
         EventSubtype eventSubtype = new EventSubtype();
-        eventSubtype.setPkEventSubtypeId(cursor.getInt(cursor.getColumnIndex(DBConfig.EventSubtypeColumn.PK_EVENT_SUBTYPE_ID)));
-        eventSubtype.setEventSubtype(cursor.getString(cursor.getColumnIndex(DBConfig.EventSubtypeColumn.EVENT_SUBTYPE)));
+        eventSubtype.filledByCursor(cursor);
         cursor.close();
         return eventSubtype;
     }
+
+    @Override
+    public List<EventSubtype> selectAll() {
+        String querySql = "SELECT * FROM " + DBConfig.Table.EVENT_SUBTYPE;
+        Cursor cursor = db.rawQuery(querySql, null);
+        List<EventSubtype> eventGroups = new ArrayList<>();
+        while (cursor.moveToNext()){
+            EventSubtype eventGroup = new EventSubtype();
+            eventGroup.filledByCursor(cursor);
+            eventGroups.add(eventGroup);
+        }
+        cursor.close();
+        return eventGroups;
+    }
+
+    /* 以下方法为非通用方法 */
+
+
 }

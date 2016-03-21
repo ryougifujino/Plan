@@ -1,9 +1,24 @@
 package link.ebbinghaus.planning.view.fragment;
 
+import link.ebbinghaus.planning.model.entity.po.DefaultInputValue;
+import link.ebbinghaus.planning.model.entity.po.Event;
+import link.ebbinghaus.planning.model.entity.po.EventSubtype;
+
 /**
  * Created by WINFIELD on 2016/3/14.
  */
 public interface PlanningBuildSpecificView {
+
+    /**
+     * 获取控件中的值,并以Event对象的形式返回
+     * @return 控件中的值
+     */
+    Event getInputEvent();
+
+    /**
+     * 设置数据库里存放的输入预设值
+     */
+    void setDefaultInputValue(DefaultInputValue defaultInputValue);
 
     /**
      * 根据普通计划还是学习计划设置面板
@@ -12,8 +27,14 @@ public interface PlanningBuildSpecificView {
 
     /**
      * 设置计划子类型
+     * @param result 从SelectActivity返回的结果,用于设置
      */
-    void setSubtype();
+    void setSubtype(EventSubtype result);
+
+    /**
+     * 设置快速模板到描述EditText里面
+     */
+    void setFastTemplate();
 
     /**
      * 设置学习计划的方案(策略)

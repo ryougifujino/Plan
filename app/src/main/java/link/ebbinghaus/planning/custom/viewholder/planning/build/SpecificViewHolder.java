@@ -4,7 +4,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -19,7 +18,7 @@ public class SpecificViewHolder extends BaseFragmentViewHolder{
     public TextView eventSubtypeTv;
     public Button eventTypeBtn;
     public EditText descriptionEt;
-    public LinearLayout fastTemplateLl;
+    public Button fastTemplateBtn;
     public TextView strategyLabel;
     public TextView strategyTv;
     public TextView expectedFinishDateTv;
@@ -37,7 +36,7 @@ public class SpecificViewHolder extends BaseFragmentViewHolder{
         eventSubtypeTv = find(R.id.tv_planning_build_subtype);
         eventTypeBtn = find(R.id.btn_planning_build_switch_event_type);
         descriptionEt = find(R.id.et_planning_build_description);
-        fastTemplateLl = find(R.id.ll_planning_build_fast_template);
+        fastTemplateBtn = find(R.id.btn_planning_build_fast_template);
         strategyLabel = find(R.id.label_planning_build_strategy);
         strategyTv = find(R.id.tv_planning_build_strategy);
         expectedFinishDateTv = find(R.id.tv_planning_build_expected_finish_date);
@@ -53,6 +52,7 @@ public class SpecificViewHolder extends BaseFragmentViewHolder{
     public void setOnclickListener(View.OnClickListener l){
         eventTypeBtn.setOnClickListener(l);
         eventSubtypeTv.setOnClickListener(l);
+        fastTemplateBtn.setOnClickListener(l);
         strategyTv.setOnClickListener(l);
         expectedFinishDateTv.setOnClickListener(l);
         remindTimeTv.setOnClickListener(l);

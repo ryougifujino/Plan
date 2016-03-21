@@ -98,7 +98,7 @@ public class DBConfig {
     public interface FastTemplateColumn{
         String PK_FAST_TEMPLATE_ID = "PK_FAST_TEMPLATE_ID";
         String TEMPLATE = "TEMPLATE";
-        String EVENT_TYPE = "EVENT_TYPE";
+        String EVENT_TYPE = "EVENT_TYPE"; //1:学习型 2:普通型 3:模糊型
     }
     public interface DefaultInputValueColumn{
         String PK_DEFAULT_INPUT_VALUE_ID = "PK_DEFAULT_INPUT_VALUE_ID";

@@ -18,11 +18,11 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        sContext = getApplicationContext();
+        sContext = getApplicationContext(); /*! 这句话必须在这里 */
 
         //一些初始化操作(轻量级)
         initSystemInfo();
-        DBHelper.createDatabase(sContext);
+        DBHelper.createDatabase();
     }
 
     private void initSystemInfo() {

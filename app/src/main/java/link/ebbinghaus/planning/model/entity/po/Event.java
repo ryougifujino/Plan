@@ -2,6 +2,9 @@ package link.ebbinghaus.planning.model.entity.po;
 
 
 import android.content.ContentValues;
+import android.database.Cursor;
+
+import com.yurikami.lib.util.Utils;
 
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 
@@ -17,7 +20,7 @@ public class Event {
     private Integer eventType;   //1:学习型 2:普通型 3:模糊型
     private Integer eventSubtypeId;
     private Integer eventSequence;
-    private boolean isShowEventSequence;   //1:true 2:false
+    private boolean isShowEventSequence;   //1:true 0:false
     private long createTime; //精确到秒
     private long eventExpectedFinishedDate;   //精确到日
     private long eventFinishedTime;
@@ -163,6 +166,26 @@ public class Event {
         this.eventProcess = eventProcess;
     }
 
+
+    /* --- */
+
+    public void setIsShowEventSequence(Integer isShowEventSequence){
+        setIsShowEventSequence(Utils.int2Bool(isShowEventSequence));
+    }
+
+    public void setIsEventFinished(Integer isEventFinished) {
+        setIsEventFinished(Utils.int2Bool(isEventFinished));
+    }
+
+    public void setIsGreekAlphabetMarked(Integer isGreekAlphabetMarked) {
+        setIsGreekAlphabetMarked(Utils.int2Bool(isGreekAlphabetMarked));
+    }
+
+    public void setIsRemind(Integer isRemind) {
+        setIsRemind(Utils.int2Bool(isRemind));
+    }
+
+
     public void convertToContentValues(ContentValues values){
         values.put(DBConfig.EventColumn.PK_EVENT_ID, pkEventId);
         values.put(DBConfig.EventColumn.LEARNING_EVENT_GROUP_ID, learningEventGroupId);
@@ -181,5 +204,25 @@ public class Event {
         values.put(DBConfig.EventColumn.IS_REMIND, isRemind);
         values.put(DBConfig.EventColumn.REMIND_TIME, remindTime);
         values.put(DBConfig.EventColumn.EVENT_PROCESS, eventProcess);
+    }
+    
+    public void filledByCursor(Cursor cursor){
+        setPkEventId(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.PK_EVENT_ID)));
+        setLearningEventGroupId(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.LEARNING_EVENT_GROUP_ID)));
+        setEventGroupId(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_GROUP_ID)));
+        setDescription(cursor.getString(cursor.getColumnIndex(DBConfig.EventColumn.DESCRIPTION)));
+        setSummary(cursor.getString(cursor.getColumnIndex(DBConfig.EventColumn.SUMMARY)));
+        setEventType(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_TYPE)));
+        setEventSubtypeId(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_SUBTYPE_ID)));
+        setEventSequence(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_SEQUENCE)));
+        setIsShowEventSequence(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.IS_SHOW_EVENT_SEQUENCE)));
+        setCreateTime(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.CREATE_TIME)));
+        setEventExpectedFinishedDate(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_EXPECTED_FINISHED_DATE)));
+        setEventFinishedTime(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_FINISHED_TIME)));
+        setIsEventFinished(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.IS_EVENT_FINISHED)));
+        setIsGreekAlphabetMarked(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.IS_GREEK_ALPHABET_MARKED)));
+        setIsRemind(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.IS_REMIND)));
+        setRemindTime(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.REMIND_TIME)));
+        setEventProcess(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_PROCESS)));
     }
 }

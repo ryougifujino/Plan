@@ -1,6 +1,7 @@
 package link.ebbinghaus.planning.model.entity.po;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 
@@ -90,5 +91,16 @@ public class LearningEventGroup {
         values.put(DBConfig.LearningEventGroupColumn.WORKLOAD, workload);
         values.put(DBConfig.LearningEventGroupColumn.EFFICIENCY, efficiency);
         values.put(DBConfig.LearningEventGroupColumn.UNDERSTANDING_DEGREE, understandingDegree);
+    }
+    
+    public void filledByCursor(Cursor cursor){
+        setPkLearningEventGroupId(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.PK_LEARNING_EVENT_GROUP_ID)));
+        setKnowledgeQuantity(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.KNOWLEDGE_QUANTITY)));
+        setStrategy(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.STRATEGY)));
+        setLearningEventTotal(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_TOTAL)));
+        setLearningEventFinishedCount(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_FINISHED_COUNT)));
+        setWorkload(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.WORKLOAD)));
+        setEfficiency(cursor.getFloat(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.EFFICIENCY)));
+        setUnderstandingDegree(cursor.getFloat(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.UNDERSTANDING_DEGREE)));
     }
 }

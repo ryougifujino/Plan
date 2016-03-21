@@ -41,15 +41,19 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
         setContentView(R.layout.activity_planning_build);
         ButterKnife.bind(this);
         mPlanningBuildPresenter = new PlanningBuildPresenterImpl(this);
+        mPlanningBuildPresenter.configureToolbar();
 
         mPlanningBuildPresenter.configureRelatedViewPagerTabLayout();
 
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
 
+    @Override
+    public void setToolbar() {
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
     @Override
     public void bindViewPagerToTabLayout(List<Tab> tabs) {

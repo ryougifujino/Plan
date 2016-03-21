@@ -1,6 +1,7 @@
 package com.yurikami.lib.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -72,4 +73,12 @@ public class BaseFragment extends Fragment {
         return getChildFragmentManager().findFragmentByTag(fragmentTag);
     }
 
+    /**
+     * 创建一个新的Intent
+     * @param cls 目标class
+     * @return 新的Intent
+     */
+    protected Intent newIntent(Class<?> cls){
+        return new Intent(mActivity, cls);
+    }
 }

@@ -33,7 +33,7 @@ import link.ebbinhaus.planning.R;
  */
 public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecyclerViewAdapter.ViewHolder>
         implements BaseFragment.OnFragmentDestroyListener {
-    private final static int ROW_EVENT_COUNT = 3;
+    private final int ROW_EVENT_COUNT = 3;
 
     private Context mContext;
     private LayoutInflater mInflater;

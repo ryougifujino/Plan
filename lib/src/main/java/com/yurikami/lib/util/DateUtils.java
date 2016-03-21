@@ -21,8 +21,8 @@ public class DateUtils {
     private static SimpleDateFormat chnDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
     private static SimpleDateFormat hourMinuteFormat = new SimpleDateFormat("HH:mm");
 
-    public static Date now() { return new Date(); }
-    public static long nowTimestamp() { return System.currentTimeMillis(); }
+    private static Date now() { return new Date(); }
+    private static long nowTimestamp() { return System.currentTimeMillis(); }
 
 
     /**
@@ -141,6 +141,15 @@ public class DateUtils {
         Datetime date = Datetime.buildDate(year(nowTimestamp), month(nowTimestamp), day(nowTimestamp));
         date.setWeek(week(nowTimestamp));
         return date;
+    }
+
+    /**
+     * 获取到今天日期0点的时间戳
+     * @return 今天日期0点的时间戳
+     */
+    public static long currentDateTimestamp(){
+        Datetime date = dateOfToday();
+        return newDateTimestamp(date.getYear(),date.getMonth(),date.getDay());
     }
 
     /**
