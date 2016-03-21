@@ -24,7 +24,7 @@ public interface PlanningBuildModel {
      * 向数据库保存一个制定好的学习计划
      * @param event 学习计划分项
      */
-    void persistLearningEvent(Event event);
+    void addLearningEvent(Event event);
 
     /**
      * 向数据库保存一个制定好的普通计划
@@ -32,48 +32,48 @@ public interface PlanningBuildModel {
      * @param eventSubtype 计划子类型
      * @param eventGroup 计划组
      */
-    void persistEvent(Event event,EventSubtype eventSubtype,EventGroup eventGroup);
+    void addEvent(Event event, EventSubtype eventSubtype, EventGroup eventGroup);
 
     /**
      * 向数据库保存一个制定好的模糊计划
      * @param event
      */
-    void persistAbstractEvent(Event event);
+    void addAbstractEvent(Event event);
 
     /**
      * 获取数据库中保存的默认输入值
      */
-    DefaultInputValue getDefaultInputValue();
+    DefaultInputValue findDefaultInputValue();
 
     /**
-     * 获取所有子类型
+     * 查找所有子类型
      * @return 所有子类型
      */
-    List<EventSubtype> getAllEventSubtype();
+    List<EventSubtype> findAllEventSubtype();
 
     /**
-     * 获取具体学习计划的所有快速模板
+     * 查找具体学习计划的所有快速模板
      * @return 具体学习计划的所有快速模板
      */
-    List<FastTemplate> getAllSpecLearningFastTemplate();
+    List<FastTemplate> findAllSpecLearningFastTemplate();
 
     /**
-     * 获取具体普通计划的所有快速模板
+     * 查找具体普通计划的所有快速模板
      * @return 普通计划的所有快速模板
      */
-    List<FastTemplate> getAllSpecNormalFastTemplate();
+    List<FastTemplate> findAllSpecNormalFastTemplate();
 
     /**
-     * 获取模糊计划的所有快速模板
+     * 查找模糊计划的所有快速模板
      * @return 模糊计划的所有快速模板
      */
-    List<FastTemplate> getAllAbstFastTemplate();
+    List<FastTemplate> findAllAbstFastTemplate();
 
     /**
-     * 获取所有计划组
+     * 查找所有计划组
      * @return 所有计划组
      */
-    List<EventGroup> getAllEventGroup();
+    List<EventGroup> findAllEventGroup();
 
     /**
      * 关闭数据库

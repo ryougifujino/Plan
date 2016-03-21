@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import link.ebbinghaus.planning.custom.constant.module.PlanningBuildConstant;
-import link.ebbinghaus.planning.custom.db.daoadapter.impl.DefaultInputValueDaoAdapter;
-import link.ebbinghaus.planning.custom.db.daoadapter.impl.EventDaoAdapter;
-import link.ebbinghaus.planning.custom.db.daoadapter.impl.EventGroupDaoAdapter;
-import link.ebbinghaus.planning.custom.db.daoadapter.impl.EventSubtypeDaoAdapter;
-import link.ebbinghaus.planning.custom.db.daoadapter.impl.FastTemplateDaoAdapter;
+import link.ebbinghaus.planning.custom.db.decorator.impl.DefaultInputValueDaoDecorator;
+import link.ebbinghaus.planning.custom.db.decorator.impl.EventDaoDecorator;
+import link.ebbinghaus.planning.custom.db.decorator.impl.EventGroupDaoDecorator;
+import link.ebbinghaus.planning.custom.db.decorator.impl.EventSubtypeDaoDecorator;
+import link.ebbinghaus.planning.custom.db.decorator.impl.FastTemplateDaoDecorator;
 import link.ebbinghaus.planning.model.PlanningBuildModel;
 import link.ebbinghaus.planning.model.entity.po.DefaultInputValue;
 import link.ebbinghaus.planning.model.entity.po.Event;
@@ -23,10 +23,10 @@ import link.ebbinghaus.planning.view.fragment.impl.PlanningBuildSpecificFragment
  * Created by WINFIELD on 2016/3/14.
  */
 public class PlanningBuildModelImpl implements PlanningBuildModel {
-    private DefaultInputValueDaoAdapter mDefaultInputValueDao = new DefaultInputValueDaoAdapter();
-    private EventSubtypeDaoAdapter mEventSubtypeDao = new EventSubtypeDaoAdapter();
-    private FastTemplateDaoAdapter mFastTemplateDao = new FastTemplateDaoAdapter();
-    private EventGroupDaoAdapter mEventGroupDao = new EventGroupDaoAdapter();
+    private DefaultInputValueDaoDecorator mDefaultInputValueDao = new DefaultInputValueDaoDecorator();
+    private EventSubtypeDaoDecorator mEventSubtypeDao = new EventSubtypeDaoDecorator();
+    private FastTemplateDaoDecorator mFastTemplateDao = new FastTemplateDaoDecorator();
+    private EventGroupDaoDecorator mEventGroupDao = new EventGroupDaoDecorator();
 
     @Override
     public List<Tab> makePlanningBuildTabs() {
@@ -37,50 +37,50 @@ public class PlanningBuildModelImpl implements PlanningBuildModel {
     }
 
     @Override
-    public void persistLearningEvent(Event event) {
-        EventDaoAdapter eventDao = new EventDaoAdapter();
-        eventDao.add(event);
+    public void addLearningEvent(Event event) {
+        EventDaoDecorator eventDao = new EventDaoDecorator();
+        eventDao.insert(event);
         eventDao.closeDB();
     }
 
     @Override
-    public void persistEvent(Event event, EventSubtype eventSubtype, EventGroup eventGroup) {
+    public void addEvent(Event event, EventSubtype eventSubtype, EventGroup eventGroup) {
 
     }
 
     @Override
-    public void persistAbstractEvent(Event event) {
+    public void addAbstractEvent(Event event) {
 
     }
 
     @Override
-    public DefaultInputValue getDefaultInputValue() {
-        return mDefaultInputValueDao.findAll().get(0);
+    public DefaultInputValue findDefaultInputValue() {
+        return mDefaultInputValueDao.selectAll().get(0);
     }
 
     @Override
-    public List<EventSubtype> getAllEventSubtype() {
-        return mEventSubtypeDao.findAll();
+    public List<EventSubtype> findAllEventSubtype() {
+        return mEventSubtypeDao.selectAll();
     }
 
     @Override
-    public List<FastTemplate> getAllSpecLearningFastTemplate() {
+    public List<FastTemplate> findAllSpecLearningFastTemplate() {
         return mFastTemplateDao.findSpecLearningAll();
     }
 
     @Override
-    public List<FastTemplate> getAllSpecNormalFastTemplate() {
+    public List<FastTemplate> findAllSpecNormalFastTemplate() {
         return mFastTemplateDao.findSpecNormalAll();
     }
 
     @Override
-    public List<FastTemplate> getAllAbstFastTemplate() {
+    public List<FastTemplate> findAllAbstFastTemplate() {
         return mFastTemplateDao.findAbstractAll();
     }
 
     @Override
-    public List<EventGroup> getAllEventGroup() {
-        return mEventGroupDao.findAll();
+    public List<EventGroup> findAllEventGroup() {
+        return mEventGroupDao.selectAll();
     }
 
     @Override

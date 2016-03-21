@@ -21,7 +21,19 @@ import link.ebbinghaus.planning.custom.viewholder.common.select.DeleteToolbarVie
 import link.ebbinhaus.planning.R;
 
 /**
- * Created by WINFIELD on 2016/3/20.
+ * <pre>
+ *
+ * 子类需要实现的方法
+ * protected abstract void deleteFromDatabase(T t);
+ *
+ * 注意子类覆盖时要用SelectRecycleViewAdapter.ViewHolder,不然编译无法通过
+ * \@Override
+ * public  void onBindViewHolder(SelectRecycleViewAdapter.ViewHolder holder, int position) {
+ *     holder.configure(position, mData.get(position).获取描述的方法);
+ *  }
+ *
+ * </pre>
+ * @param <T>
  */
 public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends RecyclerView.Adapter<SelectRecycleViewAdapter.ViewHolder>
         implements BaseActivity.OnActivityDestroyListener,View.OnClickListener,View.OnLongClickListener {
@@ -31,6 +43,7 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
     protected OnItemClickListener mOnItemClickListener;
     protected DeleteToolbarViewHolder mDeleteToolbar;
     protected List<T> mData;
+    protected ISelectDaoAdapter mDao;
 
     /** 用于记录每个listitem的选中情况 */
     protected List<Boolean> mListitemsSelectedStatus = new ArrayList<>();
@@ -41,10 +54,14 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
     /** 是否选中了所有 */
     protected boolean mIsSelectedAll = false;
 
-    public SelectRecycleViewAdapter(Context context, DeleteToolbarViewHolder deleteToolbar) {
+    public SelectRecycleViewAdapter(Context context, ISelectDaoAdapter dao,DeleteToolbarViewHolder deleteToolbar) {
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(this.mContext);
+        this.mDao = dao;
         this.mDeleteToolbar = deleteToolbar;
+
+        this.mData = mDao.selectAll();
+        initListitemsSelectedStatus();
 
         mDeleteToolbar.arrowBackIv.setOnClickListener(this);
         mDeleteToolbar.selectAllToggleTv.setOnClickListener(this);
@@ -77,6 +94,12 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
             ButterKnife.bind(this, itemView);
         }
 
+        /**
+         * 给控件添加描述,控制listitem的选中状态的显示,<br>
+         * 给listitem设置监听器
+         * @param position 位置
+         * @param description 描述信息
+         */
         public void configure(int position, String description){
             boolean isSelected = mListitemsSelectedStatus.get(position);
             if(isSelected){
@@ -133,22 +156,16 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
         return true;
     }
 
-    //需要重写或实现的方法
+    ///
 
     /** 从数据库中删除 */
     protected abstract void deleteFromDatabase(T t);
 
-    /** 注意子类覆盖时要用SelectRecycleViewAdapter.ViewHolder,不然编译无法通过 */
-//    @Override
-//    public  void onBindViewHolder(SelectRecycleViewAdapter.ViewHolder holder, int position) {
-//        holder.configure(position, mData.get(position).获取描述的方法);
-//    }
-
-    /** 在Activity Destroy时关闭数据库 */
-//    @Override
-//    public void onDestroy() {
-//        dao.closeDB();
-//    }
+    /** 关闭数据库 */
+    @Override
+    public void onDestroy() {
+        mDao.closeDB();
+    }
 
     //以下为辅助方法
 

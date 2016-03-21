@@ -1,4 +1,4 @@
-package link.ebbinghaus.planning.custom.db.daoadapter.impl;
+package link.ebbinghaus.planning.custom.db.decorator.impl;
 
 import link.ebbinghaus.planning.custom.db.dao.EventSubtypeDao;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
@@ -6,10 +6,10 @@ import link.ebbinghaus.planning.model.entity.po.EventSubtype;
 /**
  * Created by WINFIELD on 2016/3/17.
  */
-public class EventSubtypeDaoAdapter extends BaseDaoAdapter<EventSubtype> {
+public class EventSubtypeDaoDecorator extends BaseDaoDecorator<EventSubtype> {
     private EventSubtypeDao dao;
 
-    public EventSubtypeDaoAdapter() {
+    public EventSubtypeDaoDecorator() {
         super(new EventSubtypeDao());
         dao = (EventSubtypeDao) super.dao;
     }

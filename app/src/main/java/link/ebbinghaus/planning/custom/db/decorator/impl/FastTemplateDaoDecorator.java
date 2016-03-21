@@ -1,4 +1,4 @@
-package link.ebbinghaus.planning.custom.db.daoadapter.impl;
+package link.ebbinghaus.planning.custom.db.decorator.impl;
 
 import java.util.List;
 
@@ -8,10 +8,10 @@ import link.ebbinghaus.planning.model.entity.po.FastTemplate;
 /**
  * Created by WINFIELD on 2016/3/17.
  */
-public class FastTemplateDaoAdapter extends BaseDaoAdapter<FastTemplate> {
+public class FastTemplateDaoDecorator extends BaseDaoDecorator<FastTemplate> {
     private FastTemplateDao dao;
 
-    public FastTemplateDaoAdapter() {
+    public FastTemplateDaoDecorator() {
         super(new FastTemplateDao());
         dao = (FastTemplateDao) super.dao;
     }

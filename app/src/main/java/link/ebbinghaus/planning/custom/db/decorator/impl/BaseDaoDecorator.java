@@ -1,24 +1,24 @@
-package link.ebbinghaus.planning.custom.db.daoadapter.impl;
+package link.ebbinghaus.planning.custom.db.decorator.impl;
 
 import java.util.List;
 
 import link.ebbinghaus.planning.custom.db.dao.BaseDao;
-import link.ebbinghaus.planning.custom.db.daoadapter.IBaseDaoAdapter;
+import link.ebbinghaus.planning.custom.db.decorator.IBaseDaoDecorator;
 
 //TODO: 操作数据库改为多线程,在DaoAdapter的方法层面上进行使用
 /**
- * DaoAdapter的基类
+ * DaoDecorator的基类
  * @param <T>
  */
-public class BaseDaoAdapter<T> implements IBaseDaoAdapter<T>{
+public class BaseDaoDecorator<T> implements IBaseDaoDecorator<T> {
     protected BaseDao<T> dao;
 
-    public BaseDaoAdapter(BaseDao<T> dao){
+    public BaseDaoDecorator(BaseDao<T> dao){
         this.dao = dao;
     }
 
     @Override
-    public void add(T t) {
+    public void insert(T t) {
         dao.beginTransaction();
         try {
             dao.insert(t);
@@ -29,7 +29,7 @@ public class BaseDaoAdapter<T> implements IBaseDaoAdapter<T>{
     }
 
     @Override
-    public void removeByPrimaryKey(Integer pk) {
+    public void deleteByPrimaryKey(Integer pk) {
         dao.beginTransaction();
         try {
             dao.deleteByPrimaryKey(pk);
@@ -40,7 +40,7 @@ public class BaseDaoAdapter<T> implements IBaseDaoAdapter<T>{
     }
 
     @Override
-    public void modifyByPrimaryKey(T t) {
+    public void updateByPrimaryKey(T t) {
         dao.beginTransaction();
         try {
             dao.updateByPrimaryKey(t);
@@ -51,12 +51,12 @@ public class BaseDaoAdapter<T> implements IBaseDaoAdapter<T>{
     }
 
     @Override
-    public T findByPrimaryKey(Integer pk) {
+    public T selectByPrimaryKey(Integer pk) {
         return dao.selectByPrimaryKey(pk);
     }
 
     @Override
-    public void addSome(List<T> ts) {
+    public void insertSome(List<T> ts) {
         dao.beginTransaction();
         try {
             dao.insertSome(ts);
@@ -67,7 +67,7 @@ public class BaseDaoAdapter<T> implements IBaseDaoAdapter<T>{
     }
 
     @Override
-    public void removeSomeByPrimaryKeys(List<Integer> pks) {
+    public void deleteSomeByPrimaryKeys(List<Integer> pks) {
         dao.beginTransaction();
         try {
             dao.deleteSomeByPrimaryKeys(pks);
@@ -78,7 +78,7 @@ public class BaseDaoAdapter<T> implements IBaseDaoAdapter<T>{
     }
 
     @Override
-    public void modifySomeByPrimaryKeys(List<T> ts) {
+    public void updateSomeByPrimaryKeys(List<T> ts) {
         dao.beginTransaction();
         try {
             dao.updateSomeByPrimaryKeys(ts);
@@ -89,7 +89,7 @@ public class BaseDaoAdapter<T> implements IBaseDaoAdapter<T>{
     }
 
     @Override
-    public void removeAll() {
+    public void deleteAll() {
         dao.beginTransaction();
         try {
             dao.deleteAll();
@@ -100,7 +100,7 @@ public class BaseDaoAdapter<T> implements IBaseDaoAdapter<T>{
     }
 
     @Override
-    public List<T> findAll() {
+    public List<T> selectAll() {
         return dao.selectAll();
     }
 
@@ -109,6 +109,6 @@ public class BaseDaoAdapter<T> implements IBaseDaoAdapter<T>{
      */
     @Override
     public void closeDB() {
-        dao.close();
+        dao.closeDB();
     }
 }

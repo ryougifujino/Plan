@@ -3,9 +3,9 @@ package link.ebbinghaus.planning.model.entity.vo;
 import link.ebbinghaus.planning.model.entity.po.Event;
 
 /**
- * 在PlanningBuildSpec模块用来组织输入信息的vo
- * 增加了一个只在这个页面使用的未来最大计划宽度限制的属性;
- * 增加了一个在PlanningBuildActivity进行插入一条新的学习计划组记录时,
+ * 在PlanningBuildSpec模块用来组织输入信息的vo<br>
+ * 增加了一个只在这个页面使用的未来最大计划宽度限制的属性;<br>
+ * 增加了一个在PlanningBuildActivity进行插入一条新的学习计划组记录时,<br>
  * 所用到的方案strategy
  */
 public class InputEventVo extends Event {

@@ -7,12 +7,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import link.ebbinghaus.planning.custom.other.App;
 
 /**
- * 数据库管理器,使用此可以让数据库变得线程安全
- *
- * 所有的Dao都要使用此管理器来管理SQLiteDatabase,
- * 不能直接调用DBHelper的实例然后调用getWritableDatabase方法,这样数据库就变得线程不安全了
- *
- * !但要注意,使用了此管理器,new了多少Dao就要close多少,否则会造成计数异常,
+ * 数据库管理器,使用此可以让数据库变得线程安全<br>
+ * <br>
+ * 所有的Dao都要使用此管理器来管理SQLiteDatabase,<br>
+ * 不能直接调用DBHelper的实例然后调用getWritableDatabase方法,这样数据库就变得线程不安全了<br>
+ * <br>
+ * !但要注意,使用了此管理器,new了多少Dao就要close多少,否则会造成计数异常,<br>
  * !(导致的结果就是SQLiteDatabase不能正常close)
  */
 public class DBManager {

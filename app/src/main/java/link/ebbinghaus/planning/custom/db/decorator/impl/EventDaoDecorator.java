@@ -1,4 +1,4 @@
-package link.ebbinghaus.planning.custom.db.daoadapter.impl;
+package link.ebbinghaus.planning.custom.db.decorator.impl;
 
 import link.ebbinghaus.planning.custom.db.dao.EventDao;
 import link.ebbinghaus.planning.model.entity.po.Event;
@@ -6,10 +6,10 @@ import link.ebbinghaus.planning.model.entity.po.Event;
 /**
  * Created by WINFIELD on 2016/3/17.
  */
-public class EventDaoAdapter extends BaseDaoAdapter<Event> {
+public class EventDaoDecorator extends BaseDaoDecorator<Event> {
     private EventDao dao;
 
-    public EventDaoAdapter(){
+    public EventDaoDecorator(){
         super(new EventDao());
         dao = (EventDao) super.dao;
     }

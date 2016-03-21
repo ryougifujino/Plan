@@ -13,11 +13,15 @@ import com.yurikami.lib.base.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import link.ebbinghaus.planning.custom.adapter.common.select.DefaultSelectDaoAdapter;
+import link.ebbinghaus.planning.custom.adapter.common.select.FastTemplateSelectDaoAdapter;
 import link.ebbinghaus.planning.custom.adapter.common.select.SelectEventGroupRVAdapter;
 import link.ebbinghaus.planning.custom.adapter.common.select.SelectEventSubtypeRVAdapter;
 import link.ebbinghaus.planning.custom.adapter.common.select.SelectFastTemplateRVAdapter;
 import link.ebbinghaus.planning.custom.adapter.common.select.SelectRecycleViewAdapter;
 import link.ebbinghaus.planning.custom.constant.Constant;
+import link.ebbinghaus.planning.custom.db.decorator.impl.EventGroupDaoDecorator;
+import link.ebbinghaus.planning.custom.db.decorator.impl.EventSubtypeDaoDecorator;
 import link.ebbinghaus.planning.custom.viewholder.common.select.DeleteToolbarViewHolder;
 import link.ebbinghaus.planning.presenter.CommonSelectPresenter;
 import link.ebbinghaus.planning.presenter.impl.CommonSelectPresenterImpl;
@@ -26,8 +30,8 @@ import link.ebbinghaus.planning.view.fragment.impl.PlanningBuildSpecificFragment
 import link.ebbinhaus.planning.R;
 
 /**
- * 要想添加这个类SelectActivity新的使用者,只需要更改chooseRecyclerViewAdapter方法,
- * 通过发送唯一的Flag来确定使用哪个适配器(SelectRecycleViewAdapter的子类)
+ * 要想添加这个类SelectActivity新的使用者,只需要更改chooseRecyclerViewAdapter方法,<br>
+ * 通过发送唯一的Flag来确定使用哪个适配器(SelectRecycleViewAdapter的子类)<br>
  * !Flag的值为发送者控件的 id 与上 FLAG_MASK 掩码
  */
 public class CommonSelectActivity extends BaseActivity implements CommonSelectView,
@@ -36,7 +40,7 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
     /** 获取本Activity标题所需要用到的Intent Name */
     public static final String INTENT_NAME_TITLE = Constant.PACKAGE_NAME + ".SelectTitle";
     /**
-     * 获取发送者所定义的requestCode所需要用到的Intent Name
+     * 获取发送者所定义的requestCode所需要用到的Intent Name<br>
      * !requestCode应用了调用startActivityForResult的控件的Id来确保唯一性
      */
     public static final String INTENT_NAME_FLAG = Constant.PACKAGE_NAME + ".Flag";
@@ -102,15 +106,15 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
     public void chooseRecyclerViewAdapter() {
         switch (mFlag){
             case PlanningBuildSpecificFragment.FLAG_EVENT_SUBTYPE:
-                mAdapter = new SelectEventSubtypeRVAdapter(this, mDeleteToolbar);
+                mAdapter = new SelectEventSubtypeRVAdapter(this, new DefaultSelectDaoAdapter(new EventSubtypeDaoDecorator()),mDeleteToolbar);
                 break;
             case PlanningBuildSpecificFragment.FLAG_FAST_TEMPLATE:
                 //单独获取FastTemplate类型(普通、学习、模糊)
                 int fastTemplateType = mIntent.getIntExtra(PlanningBuildSpecificFragment.INTENT_NAME_FAST_TEMPLATE_TYPE, -1);
-                mAdapter = new SelectFastTemplateRVAdapter(this, mDeleteToolbar, fastTemplateType);
+                mAdapter = new SelectFastTemplateRVAdapter(this, new FastTemplateSelectDaoAdapter(fastTemplateType),mDeleteToolbar);
                 break;
             case PlanningBuildSpecificFragment.FLAG_EVENT_GROUP:
-                mAdapter = new SelectEventGroupRVAdapter(this, mDeleteToolbar);
+                mAdapter = new SelectEventGroupRVAdapter(this, new DefaultSelectDaoAdapter(new EventGroupDaoDecorator()),mDeleteToolbar);
                 break;
             default:
                 throw new IllegalArgumentException("发送者传递的requestCode的Flag不正确");

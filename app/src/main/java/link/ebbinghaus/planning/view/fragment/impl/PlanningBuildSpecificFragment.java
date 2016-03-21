@@ -53,7 +53,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
 
 
     /**
-     * 控制输入面板显示的计划时普通型还是学习型
+     * 控制输入面板显示的计划时普通型还是学习型<br>
      * false: 普通型 true:学习型
      */
     private boolean mPanelShowEventType = false;

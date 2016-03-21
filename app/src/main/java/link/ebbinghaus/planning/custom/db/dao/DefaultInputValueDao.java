@@ -12,7 +12,7 @@ import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 import link.ebbinghaus.planning.model.entity.po.DefaultInputValue;
 
 /**
- * !此类的增方法不能调用(虽然实现了)
+ * !此类的增方法不能调用(虽然实现了)<br>
  * 因为按照业务逻辑,默认输入值只应该有一条记录
  */
 public class DefaultInputValueDao extends BaseDao<DefaultInputValue> {

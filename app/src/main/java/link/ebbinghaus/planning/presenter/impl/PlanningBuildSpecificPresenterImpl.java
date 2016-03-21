@@ -24,7 +24,7 @@ public class PlanningBuildSpecificPresenterImpl implements PlanningBuildSpecific
 
     @Override
     public void getAndSetDefaultInputValues(InputEventVo inputEvent) {
-        DefaultInputValue value = mPlanningBuildModel.getDefaultInputValue();
+        DefaultInputValue value = mPlanningBuildModel.findDefaultInputValue();
         mPlanningBuildSpecificView.setDefaultInputValue(value);
         inputEvent.setMaxWidth(value.getMaxWidth());
         inputEvent.setIsGreekAlphabetMarked(value.isGreekAlphabetMarked());

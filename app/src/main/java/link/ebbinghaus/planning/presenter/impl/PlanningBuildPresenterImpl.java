@@ -36,7 +36,7 @@ public class PlanningBuildPresenterImpl implements PlanningBuildPresenter {
     public void saveSpecificEvent() {
         Event event = new Event();
         mPlanningBuildView.obtainSpecificEvent(event);
-        mPlanningBuildModel.persistLearningEvent(event);
+        mPlanningBuildModel.addLearningEvent(event);
 
     }
 
