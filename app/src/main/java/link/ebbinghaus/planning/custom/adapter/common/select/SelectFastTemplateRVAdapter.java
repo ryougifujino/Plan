@@ -26,7 +26,7 @@ public class SelectFastTemplateRVAdapter extends SelectRecycleViewAdapter<FastTe
     }
 
     @Override
-    public void onCreateButtonClick(String content) {
+    public void onDialogConfirm(String content) {
         FastTemplate fastTemplate = new FastTemplate();
         fastTemplate.setTemplate(content);
         fastTemplate.setEventType(((FastTemplateSelectDaoAdapter)mDao).getEventType());

@@ -116,8 +116,9 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
          * 当制定计划Toolbar上的save和done按钮点击时调用此方法
          * 目的是为了从ViewPager中正在显示的Fragment里面提取相应的数据到形参event中
          * @param event 用于保存提取的数据
+         * @return 如果event获取完整的话返回true,否则false
          */
-        void onBuildMenuClick(Event event);
+        boolean onBuildMenuClick(Event event);
     }
 
     public void setOnBuildMenuItemClickListener(OnBuildMenuItemClickListener l){

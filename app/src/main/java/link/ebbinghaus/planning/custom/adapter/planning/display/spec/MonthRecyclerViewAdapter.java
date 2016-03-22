@@ -79,7 +79,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         if (blockEventCount != 0) {
             LinearLayout block = mViewCachePool.getCache(position);
             if (block == null) {
-                ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                ViewGroup.LayoutParams lp = ViewGroupUtils.genMatchWrapLP();
                 block = ViewGroupUtils.newVerticalLl(mContext, lp);
 
                 //把block里面的所有Event放入block容器中

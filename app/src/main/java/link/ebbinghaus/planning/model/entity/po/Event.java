@@ -94,67 +94,67 @@ public class Event {
         this.eventSequence = eventSequence;
     }
 
-    public boolean isShowEventSequence() {
+    public Boolean getIsShowEventSequence() {
         return isShowEventSequence;
     }
 
-    public void setIsShowEventSequence(boolean isShowEventSequence) {
+    public void setIsShowEventSequence(Boolean isShowEventSequence) {
         this.isShowEventSequence = isShowEventSequence;
     }
 
-    public long getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(long createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 
-    public long getEventExpectedFinishedDate() {
+    public Long getEventExpectedFinishedDate() {
         return eventExpectedFinishedDate;
     }
 
-    public void setEventExpectedFinishedDate(long eventExpectedFinishedDate) {
+    public void setEventExpectedFinishedDate(Long eventExpectedFinishedDate) {
         this.eventExpectedFinishedDate = eventExpectedFinishedDate;
     }
 
-    public long getEventFinishedTime() {
+    public Long getEventFinishedTime() {
         return eventFinishedTime;
     }
 
-    public void setEventFinishedTime(long eventFinishedTime) {
+    public void setEventFinishedTime(Long eventFinishedTime) {
         this.eventFinishedTime = eventFinishedTime;
     }
 
-    public boolean isEventFinished() {
+    public Boolean getIsEventFinished() {
         return isEventFinished;
     }
 
-    public void setIsEventFinished(boolean isEventFinished) {
+    public void setIsEventFinished(Boolean isEventFinished) {
         this.isEventFinished = isEventFinished;
     }
 
-    public boolean isGreekAlphabetMarked() {
+    public Boolean getIsGreekAlphabetMarked() {
         return isGreekAlphabetMarked;
     }
 
-    public void setIsGreekAlphabetMarked(boolean isGreekAlphabetMarked) {
+    public void setIsGreekAlphabetMarked(Boolean isGreekAlphabetMarked) {
         this.isGreekAlphabetMarked = isGreekAlphabetMarked;
     }
 
-    public boolean isRemind() {
+    public Boolean getIsRemind() {
         return isRemind;
     }
 
-    public void setIsRemind(boolean isRemind) {
+    public void setIsRemind(Boolean isRemind) {
         this.isRemind = isRemind;
     }
 
-    public long getRemindTime() {
+    public Long getRemindTime() {
         return remindTime;
     }
 
-    public void setRemindTime(long remindTime) {
+    public void setRemindTime(Long remindTime) {
         this.remindTime = remindTime;
     }
 
@@ -165,7 +165,6 @@ public class Event {
     public void setEventProcess(Integer eventProcess) {
         this.eventProcess = eventProcess;
     }
-
 
     /* --- */
 
@@ -224,5 +223,25 @@ public class Event {
         setIsRemind(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.IS_REMIND)));
         setRemindTime(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.REMIND_TIME)));
         setEventProcess(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_PROCESS)));
+    }
+
+    public void copyFrom(Event event){
+        setPkEventId(event.getPkEventId());
+        setLearningEventGroupId(event.getLearningEventGroupId());
+        setEventGroupId(event.getEventGroupId());
+        setDescription(event.getDescription());
+        setSummary(event.getSummary());
+        setEventType(event.getEventType());
+        setEventSubtypeId(event.getEventSubtypeId());
+        setEventSequence(event.getEventSequence());
+        setIsShowEventSequence(event.getIsShowEventSequence());
+        setCreateTime(event.getCreateTime());
+        setEventExpectedFinishedDate(event.getEventExpectedFinishedDate());
+        setEventFinishedTime(event.getEventFinishedTime());
+        setIsEventFinished(event.getIsEventFinished());
+        setIsGreekAlphabetMarked(event.getIsGreekAlphabetMarked());
+        setIsRemind(event.getIsRemind());
+        setRemindTime(event.getRemindTime());
+        setEventProcess(event.getEventProcess());
     }
 }

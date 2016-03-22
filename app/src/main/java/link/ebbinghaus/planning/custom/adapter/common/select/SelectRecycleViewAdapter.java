@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.yurikami.lib.base.BaseActivity;
 import com.yurikami.lib.util.LogUtils;
+import com.yurikami.lib.widget.SingleInputDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +21,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.custom.viewholder.common.select.DeleteToolbarViewHolder;
-import link.ebbinghaus.planning.view.fragment.impl.CommonSelectDialogFragment;
 import link.ebbinhaus.planning.R;
 
 /**
@@ -40,7 +40,7 @@ import link.ebbinhaus.planning.R;
  */
 public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends RecyclerView.Adapter<SelectRecycleViewAdapter.ViewHolder>
         implements BaseActivity.OnActivityDestroyListener,View.OnClickListener,
-        View.OnLongClickListener, CommonSelectDialogFragment.OnCreateButtonClickListener{
+        View.OnLongClickListener, SingleInputDialog.OnDialogConfirmListener {
 
     protected Context mContext;
     protected LayoutInflater mLayoutInflater;
@@ -58,7 +58,7 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
     /** 是否选中了所有 */
     protected boolean mIsSelectedAll = false;
 
-    public SelectRecycleViewAdapter(Context context, ISelectDaoAdapter dao,DeleteToolbarViewHolder deleteToolbar) {
+    public SelectRecycleViewAdapter(Context context, ISelectDaoAdapter<T> dao,DeleteToolbarViewHolder deleteToolbar) {
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(this.mContext);
         this.mDao = dao;
@@ -141,7 +141,7 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
                 break;
         }
         refreshDeleteToolbar();
-        this.notifyDataSetChanged();
+        this.notifyDataSetChanged();    //TODO:增加动画效果,改成this.notifyItemRemoved();
     }
 
     @Override
@@ -152,6 +152,7 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
             mDeleteStatus = true;
             mListitemsSelectedStatus.set(position, true);
             mSelectedCount = 1;
+            mIsSelectedAll = mData.size() == 1;
         }else {
             deleteStatusClickLogic(position);
         }

@@ -26,11 +26,11 @@ public class EventGroup implements Parcelable{
         this.pkEventGroupId = pkEventGroupId;
     }
 
-    public long getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(long createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 
@@ -66,6 +66,7 @@ public class EventGroup implements Parcelable{
         this.abstractEventCount = abstractEventCount;
     }
 
+
     /** 辅助方法 */
 
     public void convertToContentValues(ContentValues values){
@@ -84,6 +85,15 @@ public class EventGroup implements Parcelable{
         setLearningEventCount(cursor.getInt(cursor.getColumnIndex(DBConfig.EventGroupColumn.LEARNING_EVENT_COUNT)));
         setNormalEventCount(cursor.getInt(cursor.getColumnIndex(DBConfig.EventGroupColumn.NORMAL_EVENT_COUNT)));
         setAbstractEventCount(cursor.getInt(cursor.getColumnIndex(DBConfig.EventGroupColumn.ABSTRACT_EVENT_COUNT)));
+    }
+
+    public void copyFrom(EventGroup eventGroup){
+        setPkEventGroupId(eventGroup.getPkEventGroupId());
+        setCreateTime(eventGroup.getCreateTime());
+        setDescription(eventGroup.getDescription());
+        setLearningEventCount(eventGroup.getLearningEventCount());
+        setNormalEventCount(eventGroup.getNormalEventCount());
+        setAbstractEventCount(eventGroup.getAbstractEventCount());
     }
 
     /** Parcelable方法 */

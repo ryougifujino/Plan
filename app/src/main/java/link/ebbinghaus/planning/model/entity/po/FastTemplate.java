@@ -53,6 +53,12 @@ public class FastTemplate implements Parcelable{
         setEventType(cursor.getInt(cursor.getColumnIndex(DBConfig.FastTemplateColumn.EVENT_TYPE)));
     }
 
+    public void copyFrom(FastTemplate fastTemplate){
+        setPkFastTemplateId(fastTemplate.getPkFastTemplateId());
+        setTemplate(fastTemplate.getTemplate());
+        setEventType(fastTemplate.getEventType());
+    }
+
     /** Parcelable方法 */
 
     public FastTemplate(){}

@@ -8,6 +8,7 @@
     tools:context="link.ebbinghaus.planning.view.fragment.impl.PlanningBuildSpecificFragment">
 
     <android.support.v7.widget.CardView
+        android:visibility="gone"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
@@ -94,6 +95,8 @@
                         android:padding="15dp"
                         android:id="@+id/et_planning_build_description"
                         android:maxLength="30"
+                        android:maxLines="3"
+                        android:ellipsize="end"
                         android:hint="可输入30字"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
@@ -127,6 +130,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignBaseline="@id/label_planning_build_strategy"
                     android:id="@+id/tv_planning_build_strategy"
+                    android:background="?android:attr/selectableItemBackground"
                     android:text="理解型"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

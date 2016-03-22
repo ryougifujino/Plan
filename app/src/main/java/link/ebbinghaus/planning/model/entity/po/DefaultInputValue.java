@@ -37,27 +37,27 @@ public class DefaultInputValue {
         this.maxWidth = maxWidth;
     }
 
-    public boolean isGreekAlphabetMarked() {
+    public Boolean getIsGreekAlphabetMarked() {
         return isGreekAlphabetMarked;
     }
 
-    public void setIsGreekAlphabetMarked(boolean isGreekAlphabetMarked) {
+    public void setIsGreekAlphabetMarked(Boolean isGreekAlphabetMarked) {
         this.isGreekAlphabetMarked = isGreekAlphabetMarked;
     }
 
-    public boolean isRemind() {
+    public Boolean getIsRemind() {
         return isRemind;
     }
 
-    public void setIsRemind(boolean isRemind) {
+    public void setIsRemind(Boolean isRemind) {
         this.isRemind = isRemind;
     }
 
-    public long getRemindTime() {
+    public Long getRemindTime() {
         return remindTime;
     }
 
-    public void setRemindTime(long remindTime) {
+    public void setRemindTime(Long remindTime) {
         this.remindTime = remindTime;
     }
 
@@ -69,11 +69,11 @@ public class DefaultInputValue {
         this.strategy = strategy;
     }
 
-    public boolean isShowEventSequence() {
+    public Boolean getIsShowEventSequence() {
         return isShowEventSequence;
     }
 
-    public void setIsShowEventSequence(boolean isShowEventSequence) {
+    public void setIsShowEventSequence(Boolean isShowEventSequence) {
         this.isShowEventSequence = isShowEventSequence;
     }
 
@@ -125,5 +125,15 @@ public class DefaultInputValue {
         setRemindTime(cursor.getLong(cursor.getColumnIndex(DBConfig.DefaultInputValueColumn.REMIND_TIME)));
         setStrategy(cursor.getInt(cursor.getColumnIndex(DBConfig.DefaultInputValueColumn.STRATEGY)));
         setIsShowEventSequence(cursor.getInt(cursor.getColumnIndex(DBConfig.DefaultInputValueColumn.IS_SHOW_EVENT_SEQUENCE)));
+    }
+
+    public void copyFrom(DefaultInputValue defaultInputValue){
+        setPkDefaultInputValueId(defaultInputValue.getPkDefaultInputValueId());
+        setMaxWidth(defaultInputValue.getMaxWidth());
+        setIsGreekAlphabetMarked(defaultInputValue.getIsGreekAlphabetMarked());
+        setIsRemind(defaultInputValue.getIsRemind());
+        setRemindTime(defaultInputValue.getRemindTime());
+        setStrategy(defaultInputValue.getStrategy());
+        setIsShowEventSequence(defaultInputValue.getIsShowEventSequence());
     }
 }

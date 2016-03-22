@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.yurikami.lib.base.BaseActivity;
+import com.yurikami.lib.widget.SingleInputDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,7 +28,6 @@ import link.ebbinghaus.planning.custom.viewholder.common.select.DeleteToolbarVie
 import link.ebbinghaus.planning.presenter.CommonSelectPresenter;
 import link.ebbinghaus.planning.presenter.impl.CommonSelectPresenterImpl;
 import link.ebbinghaus.planning.view.activity.CommonSelectView;
-import link.ebbinghaus.planning.view.fragment.impl.CommonSelectDialogFragment;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningBuildSpecificFragment;
 import link.ebbinhaus.planning.R;
 
@@ -53,7 +53,7 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
 
     private CommonSelectPresenter mCommonSelectPresenter;
     private SelectRecycleViewAdapter mAdapter;
-    private CommonSelectDialogFragment mAddDialog;
+    private SingleInputDialog mAddDialog;
     private Intent mIntent;
     private int mFlag;
 
@@ -98,9 +98,9 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
 
     @Override
     public void initToolbarAddDialog() {
-        mAddDialog = new CommonSelectDialogFragment();
+        mAddDialog = SingleInputDialog.newInstance(getString(R.string.common_select_add_dialog_title));
     }
-    private void showDialog(){
+    private void showDialog() {
         mAddDialog.show(getSupportFragmentManager(),getClass().getName());
     }
 
@@ -144,7 +144,7 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
 
     @Override
     public void setOnCreateButtonClickListener() {
-        mAddDialog.setOnCreateButtonClickListener(mAdapter);
+        mAddDialog.setOnDialogConfirmListener(mAdapter);
     }
 
     @Override

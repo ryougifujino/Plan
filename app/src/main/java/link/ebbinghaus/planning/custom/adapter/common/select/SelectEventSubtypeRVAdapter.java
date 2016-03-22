@@ -26,7 +26,7 @@ public class SelectEventSubtypeRVAdapter extends SelectRecycleViewAdapter<EventS
     }
 
     @Override
-    public void onCreateButtonClick(String content) {
+    public void onDialogConfirm(String content) {
         EventSubtype eventSubtype = new EventSubtype();
         eventSubtype.setEventSubtype(content);
         mDao.insert(eventSubtype);

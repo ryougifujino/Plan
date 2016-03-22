@@ -6,9 +6,9 @@
               android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/et_common_select_add_input"
+        android:id="@+id/et_dialog_single_input"
         android:maxLength="10"
-        android:lines="1"
+        android:singleLine="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

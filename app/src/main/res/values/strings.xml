@@ -1,14 +1,6 @@
 <resources>
     <string name="app_name">Planning</string>
 
-    <!-- common -->
-    <string name="common_none">无</string>
-    <string name="common_select_all">全选</string>
-    <string name="common_select_none">全不选</string>
-    <string name="common_delete">删除</string>
-    <string name="common_create">创建</string>
-    <string name="common_cancel">取消</string>
-
     <!-- main -->
     <string name="main_drawer_planning_display">计划</string>
     <string name="main_drawer_planning_done">完成</string>
@@ -27,6 +19,8 @@
     <!-- planning_build -->
     <string name="planning_build_spec_normal_event">普通计划</string>
     <string name="planning_build_spec_learning_event">学习计划</string>
+    <string name="planning_build_spec_description_validate_info">描述不能为空</string>
+    <string name="planning_build_spec_event_strategy_select_dialog_title">选择计划方案</string>
 
     <!-- common_select -->
     <string name="common_select_delete_toolbar_select_info">已选择%1$d个</string>

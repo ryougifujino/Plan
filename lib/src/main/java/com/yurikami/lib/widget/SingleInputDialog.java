@@ -1,4 +1,4 @@
-package link.ebbinghaus.planning.view.fragment.impl;
+package com.yurikami.lib.widget;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -12,37 +12,45 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import link.ebbinhaus.planning.R;
+import com.yurikami.lib.R;
 
 /**
- * Created by WINFIELD on 2016/3/21.
+ * 带一个框的dialog,可通过setTitle设置标题
  */
-public class CommonSelectDialogFragment extends DialogFragment
+public class SingleInputDialog extends DialogFragment
         implements DialogInterface.OnShowListener,View.OnClickListener,TextWatcher{
-    @Bind(R.id.et_common_select_add_input) EditText mAddInputEt;
-    private OnCreateButtonClickListener mOnCreateButtonClickListener;
+    public static final String KEY_TITLE = "title";
+
+    private EditText mInputEt;
+    private OnDialogConfirmListener mOnDialogConfirmListener;
     private Button mPositiveButton;
     private AlertDialog mDialog;
+
+    public static SingleInputDialog newInstance(String title){
+        SingleInputDialog singleInputDialog = new SingleInputDialog();
+        Bundle args = new Bundle();
+        args.putString(KEY_TITLE, title);
+        singleInputDialog.setArguments(args);
+        return singleInputDialog;
+    }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_common_select, null);
-        ButterKnife.bind(this, v);
+        String title = getArguments().getString(KEY_TITLE);
+        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_single_input, null);
+        mInputEt = (EditText) v.findViewById(R.id.et_dialog_single_input);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(v)
-                .setTitle(getString(R.string.common_select_add_dialog_title))
-                .setPositiveButton(getString(R.string.common_create), null)
+                .setTitle(title)
+                .setPositiveButton(getString(R.string.common_confirm), null)
                 .setNegativeButton(getString(R.string.common_cancel), null);
         mDialog = builder.create();
         mDialog.setOnShowListener(this);
 
-        mAddInputEt.addTextChangedListener(this);
+        mInputEt.addTextChangedListener(this);
         return mDialog;
     }
-
 
     @Override
     public void onShow(DialogInterface dialog) {
@@ -53,10 +61,10 @@ public class CommonSelectDialogFragment extends DialogFragment
 
     @Override
     public void onClick(View v) {
-        if(mOnCreateButtonClickListener == null){
-            throw new IllegalStateException("创建按钮的监听器必须被注册");
+        if(mOnDialogConfirmListener == null){
+            throw new IllegalStateException("确认按钮的监听器必须被注册");
         }
-        mOnCreateButtonClickListener.onCreateButtonClick(mAddInputEt.getText().toString());
+        mOnDialogConfirmListener.onDialogConfirm(mInputEt.getText().toString());
         mDialog.dismiss();
     }
 
@@ -65,7 +73,7 @@ public class CommonSelectDialogFragment extends DialogFragment
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        String content = mAddInputEt.getText().toString();
+        String content = mInputEt.getText().toString();
         if(content.length() == 0){
             mPositiveButton.setEnabled(false);      //FIXME:若要适配横屏,则这里要修复
         }else{
@@ -76,18 +84,18 @@ public class CommonSelectDialogFragment extends DialogFragment
     @Override
     public void afterTextChanged(Editable s) { }
 
-    public void setOnCreateButtonClickListener(OnCreateButtonClickListener l){
-        mOnCreateButtonClickListener = l;
+    public void setOnDialogConfirmListener(OnDialogConfirmListener l){
+        mOnDialogConfirmListener = l;
     }
     /**
-     * 创建按钮的监听器
+     * 确认按钮的监听器
      */
-    public interface OnCreateButtonClickListener{
+    public interface OnDialogConfirmListener {
 
         /**
-         * 点击创建按钮时的回调函数
+         * 点击确认按钮时的回调函数
          * @param content 添加输入框里的内容
          */
-        void onCreateButtonClick(String content);
+        void onDialogConfirm(String content);
     }
 }

@@ -14,7 +14,6 @@ public class EventSubtype implements Parcelable{
     private Long pkEventSubtypeId;
     private String eventSubtype;
 
-
     public Long getPkEventSubtypeId() {
         return pkEventSubtypeId;
     }
@@ -41,6 +40,11 @@ public class EventSubtype implements Parcelable{
     public void filledByCursor(Cursor cursor){
         setPkEventSubtypeId(cursor.getLong(cursor.getColumnIndex(DBConfig.EventSubtypeColumn.PK_EVENT_SUBTYPE_ID)));
         setEventSubtype(cursor.getString(cursor.getColumnIndex(DBConfig.EventSubtypeColumn.EVENT_SUBTYPE)));
+    }
+
+    public void copyFrom(EventSubtype eventSubtype){
+        setPkEventSubtypeId(eventSubtype.getPkEventSubtypeId());
+        setEventSubtype(eventSubtype.getEventSubtype());
     }
 
     /** Parcelable方法 */

@@ -66,19 +66,19 @@ public class LearningEventGroup {
         this.workload = workload;
     }
 
-    public float getEfficiency() {
+    public Float getEfficiency() {
         return efficiency;
     }
 
-    public void setEfficiency(float efficiency) {
+    public void setEfficiency(Float efficiency) {
         this.efficiency = efficiency;
     }
 
-    public float getUnderstandingDegree() {
+    public Float getUnderstandingDegree() {
         return understandingDegree;
     }
 
-    public void setUnderstandingDegree(float understandingDegree) {
+    public void setUnderstandingDegree(Float understandingDegree) {
         this.understandingDegree = understandingDegree;
     }
 
@@ -102,5 +102,16 @@ public class LearningEventGroup {
         setWorkload(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.WORKLOAD)));
         setEfficiency(cursor.getFloat(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.EFFICIENCY)));
         setUnderstandingDegree(cursor.getFloat(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.UNDERSTANDING_DEGREE)));
+    }
+
+    public void copyFrom(LearningEventGroup learningEventGroup){
+        setPkLearningEventGroupId(learningEventGroup.getPkLearningEventGroupId());
+        setKnowledgeQuantity(learningEventGroup.getKnowledgeQuantity());
+        setStrategy(learningEventGroup.getStrategy());
+        setLearningEventTotal(learningEventGroup.getLearningEventTotal());
+        setLearningEventFinishedCount(learningEventGroup.getLearningEventFinishedCount());
+        setWorkload(learningEventGroup.getWorkload());
+        setEfficiency(learningEventGroup.getEfficiency());
+        setUnderstandingDegree(learningEventGroup.getUnderstandingDegree());
     }
 }

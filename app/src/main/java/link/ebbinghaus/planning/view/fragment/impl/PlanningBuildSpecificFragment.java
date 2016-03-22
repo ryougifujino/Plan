@@ -3,17 +3,27 @@ package link.ebbinghaus.planning.view.fragment.impl;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
+import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
+import com.codetroopers.betterpickers.calendardatepicker.MonthAdapter;
 import com.codetroopers.betterpickers.radialtimepicker.RadialTimePickerDialogFragment;
 import com.yurikami.lib.base.BaseFragment;
+import com.yurikami.lib.entity.Datetime;
 import com.yurikami.lib.util.DateUtils;
+import com.yurikami.lib.util.StringUtils;
+import com.yurikami.lib.widget.RadioSelectDialog;
+
+import java.util.Calendar;
 
 import link.ebbinghaus.planning.custom.constant.Constant;
+import link.ebbinghaus.planning.custom.constant.entity.EventConstant;
 import link.ebbinghaus.planning.custom.constant.entity.FastTemplateConstant;
 import link.ebbinghaus.planning.custom.constant.module.PlanningBuildConstant;
 import link.ebbinghaus.planning.custom.viewholder.planning.build.SpecificViewHolder;
@@ -35,7 +45,9 @@ import link.ebbinhaus.planning.R;
  */
 public class PlanningBuildSpecificFragment extends BaseFragment implements PlanningBuildSpecificView,
         View.OnClickListener,CompoundButton.OnCheckedChangeListener,
-        PlanningBuildActivity.OnBuildMenuItemClickListener,RadialTimePickerDialogFragment.OnTimeSetListener {
+        PlanningBuildActivity.OnBuildMenuItemClickListener,
+        RadialTimePickerDialogFragment.OnTimeSetListener,
+        CalendarDatePickerDialogFragment.OnDateSetListener, RadioSelectDialog.OnRadioSelectListener {
 
     //requestCode
     public static final int FLAG_EVENT_SUBTYPE = R.id.tv_planning_build_subtype & CommonSelectActivity.FLAG_MASK;
@@ -50,8 +62,12 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     private SpecificViewHolder vh;
     private LayoutInflater mLayoutInflater;
     private RadialTimePickerDialogFragment mRadialTimePicker;
+    private CalendarDatePickerDialogFragment mCalendarDatePicker;
+    private RadioSelectDialog mRadioSelectDialog;
+    private Snackbar mSnackbar;
     /** 用来记录具体计划输入值的变量 */
     private InputEventVo mInputEvent = new InputEventVo();
+    Datetime mNowDate = Datetime.buildTodayDate();
 
 
     /**
@@ -126,10 +142,10 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         vh.eventSubtypeTv.setText(getString(R.string.common_none));
         vh.strategyTv.setText(defaultInputValue.getChnStrategy());
         vh.expectedFinishDateTv.setText(DateUtils.currentChnDate());
-        vh.remindSwitch.setChecked(defaultInputValue.isRemind());
+        vh.remindSwitch.setChecked(defaultInputValue.getIsRemind());
         vh.remindTimeTv.setText(defaultInputValue.getFormatRemindTime());
-        vh.sequenceSwitch.setChecked(defaultInputValue.isShowEventSequence());
-        vh.greekAlphabetSwitch.setChecked(defaultInputValue.isGreekAlphabetMarked());
+        vh.sequenceSwitch.setChecked(defaultInputValue.getIsShowEventSequence());
+        vh.greekAlphabetSwitch.setChecked(defaultInputValue.getIsGreekAlphabetMarked());
         vh.eventGroupTv.setText(getString(R.string.common_none));
         // step3. 初始化其他控件
         long rt = defaultInputValue.getRemindTime();
@@ -137,6 +153,20 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
                 .setOnTimeSetListener(this)
                 .setStartTime(DateUtils.hour(rt), DateUtils.minute(rt))
                 .setThemeLight();
+        mCalendarDatePicker = new CalendarDatePickerDialogFragment()
+                .setOnDateSetListener(this)
+                .setFirstDayOfWeek(Calendar.SUNDAY)
+                .setPreselectedDate(mNowDate.getYear(), mNowDate.getMonth() - 1, mNowDate.getDay())
+                .setDateRange(new MonthAdapter.CalendarDay(), null)
+                .setThemeLight();
+        mRadioSelectDialog = RadioSelectDialog.newInstance(EventConstant.STRATEGYS, getString(R.string.planning_build_spec_event_strategy_select_dialog_title));
+        mRadioSelectDialog.setOnRadioSelectListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mSnackbar = Snackbar.make(getView(), getString(R.string.planning_build_spec_description_validate_info), Snackbar.LENGTH_LONG);
     }
 
     @Override
@@ -164,15 +194,29 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     }
 
     @Override
-    public void setStrategy() {
-        //建立dialog然后根据返回值设置strategy TODO: change this
-        mInputEvent.setStrategy(1);
+    public void selectStrategy() {
+        //选择计划方案(实际上是弹出dialog后,最后再下面的onRadioSelected返回结果)
+        mRadioSelectDialog.show(getFragmentManager(),this.getTag());
+    }
+    @Override
+    public void onRadioSelected(int index) {
+        mInputEvent.setStrategy(index + 1);
+        vh.strategyTv.setText(EventConstant.STRATEGYS[index]);
+        mRadioSelectDialog.dismiss();
     }
 
+    //TODO:以后扩展成智能宽度选择型
     @Override
     public void setExpectedFinishDate() {
-        //建立dialog然后根据返回值设置计划日期 TODO:change this
-        mInputEvent.setEventExpectedFinishedDate(2l);
+        //设置计划日期的工作实际在下面的onDateSet做了
+        mCalendarDatePicker.show(getFragmentManager(), this.getTag());
+
+    }
+    @Override
+    public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
+        mInputEvent.setEventExpectedFinishedDate(DateUtils.newDateTimestamp(year, monthOfYear + 1, dayOfMonth));
+        vh.expectedFinishDateTv.setText(StringUtils.splice2ChnDate(year, monthOfYear + 1, dayOfMonth));
+        dialog.setPreselectedDate(mNowDate.getYear(), mNowDate.getMonth() - 1, mNowDate.getDay());
     }
 
     @Override
@@ -269,9 +313,17 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     }
 
     @Override
-    public void onBuildMenuClick(Event event) {
+    public boolean onBuildMenuClick(Event event) {
         //提取页面数据到event中
-
+        //step 1.验证填写完整性
+        if (TextUtils.isEmpty(vh.descriptionEt.getText().toString().trim())) {
+            mSnackbar.show();
+            return false;
+        }
+        //step 2.填入event
+        event.copyFrom(getInputEvent());
+        return true;
+        /*
         event.setLearningEventGroupId(1L);
         event.setEventGroupId(1L);
         event.setDescription("描述测试");
@@ -288,6 +340,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         event.setIsRemind(false);
         event.setRemindTime(-1);
         event.setEventProcess(1);
+         */
     }
 
 }

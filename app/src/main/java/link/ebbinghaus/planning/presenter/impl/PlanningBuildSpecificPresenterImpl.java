@@ -28,11 +28,11 @@ public class PlanningBuildSpecificPresenterImpl implements PlanningBuildSpecific
         DefaultInputValue value = mPlanningBuildModel.findDefaultInputValue();
         mPlanningBuildSpecificView.setDefaultInputValue(value);
         inputEvent.setMaxWidth(value.getMaxWidth());
-        inputEvent.setIsGreekAlphabetMarked(value.isGreekAlphabetMarked());
-        inputEvent.setIsRemind(value.isRemind());
+        inputEvent.setIsGreekAlphabetMarked(value.getIsGreekAlphabetMarked());
+        inputEvent.setIsRemind(value.getIsRemind());
         inputEvent.setRemindTime(value.getRemindTime());
         inputEvent.setStrategy(value.getStrategy());
-        inputEvent.setIsShowEventSequence(value.isShowEventSequence());
+        inputEvent.setIsShowEventSequence(value.getIsShowEventSequence());
         //默认值,不在默认值数据表里,手动设置的
         inputEvent.setEventExpectedFinishedDate(DateUtils.currentDateTimestamp());
     }
@@ -56,7 +56,7 @@ public class PlanningBuildSpecificPresenterImpl implements PlanningBuildSpecific
 
     @Override
     public void configureStrategy() {
-        mPlanningBuildSpecificView.setStrategy();
+        mPlanningBuildSpecificView.selectStrategy();
     }
 
     @Override

@@ -39,9 +39,9 @@ public interface PlanningBuildSpecificView {
     void setFastTemplate(String template);
 
     /**
-     * 设置学习计划的方案(策略)
+     * 选择学习计划的方案(策略)
      */
-    void setStrategy();
+    void selectStrategy();
 
     /**
      * 设置计划日期

@@ -49,6 +49,7 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
     private OnToolbarDateChangeListener mOnToolbarDateChangeListener;
     private TextView mToolbarDateTv;
     private CalendarDatePickerDialogFragment mCalendarDatePicker;
+    Datetime mNowDate = Datetime.buildTodayDate();
 
 
     @Override
@@ -82,15 +83,14 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
     @Override
     public void presetToolbarDate() {
         mToolbarDateTv = (TextView) mLayoutInflater.inflate(R.layout.textview_planning_display_toolbar_date, mToolbar, false);
-        Datetime nowDate = Datetime.buildTodayDate();
-        mToolbarDateTv.setText(String.format(mActivity.getResources().getString(R.string.planning_display_toolbar_date), nowDate.getYear(), nowDate.getMonth(), nowDate.getDay()));
+        mToolbarDateTv.setText(String.format(mActivity.getResources().getString(R.string.planning_display_toolbar_date), mNowDate.getYear(), mNowDate.getMonth(), mNowDate.getDay()));
         mToolbarDateTv.setOnClickListener(this);
         mToolbar.addView(mToolbarDateTv);
 
         mCalendarDatePicker = new CalendarDatePickerDialogFragment()
                 .setOnDateSetListener(this)
                 .setFirstDayOfWeek(Calendar.SUNDAY)
-                .setPreselectedDate(nowDate.getYear(), nowDate.getMonth() - 1, nowDate.getDay())
+                .setPreselectedDate(mNowDate.getYear(), mNowDate.getMonth() - 1, mNowDate.getDay())
                 .setDateRange(new MonthAdapter.CalendarDay(), null)
                 .setThemeLight();
     }
@@ -103,7 +103,7 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
             Fragment grandson = specificFragment.nowVPFragment();
 
             if (grandson instanceof OnToolbarDateChangeListener) {
-                mCalendarDatePicker.show(getChildFragmentManager(), PlanningDisplayFragment.this.getTag());
+                mCalendarDatePicker.show(getChildFragmentManager(), this.getTag());
             }
         }
     }
@@ -113,8 +113,7 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
         mOnToolbarDateChangeListener.onDateChanged(Datetime.buildDate(year, monthOfYear + 1, dayOfMonth));
         mToolbarDateTv.setText(String.format(getString(R.string.planning_display_toolbar_date), year, monthOfYear + 1, dayOfMonth));
         //TODO:可以有一个全局变量的设置控制重新开启是今天还是上一次的日期
-        Datetime nowDate = Datetime.buildTodayDate();
-        dialog.setPreselectedDate(nowDate.getYear(), nowDate.getMonth() - 1, nowDate.getDay());
+        dialog.setPreselectedDate(mNowDate.getYear(), mNowDate.getMonth() - 1, mNowDate.getDay());
     }
 
     @Override

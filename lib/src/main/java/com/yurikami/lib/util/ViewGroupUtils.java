@@ -24,6 +24,10 @@ public class ViewGroupUtils {
         return newLinearLayout(context, lp, LinearLayout.VERTICAL);
     }
 
+    /**
+     * 去除掉目标vp的父vp
+     * @param viewGroup 目标vp
+     */
     public static void snipParent(ViewGroup viewGroup){
         if (viewGroup != null) {
             ViewGroup parent = (ViewGroup) viewGroup.getParent();
@@ -31,6 +35,16 @@ public class ViewGroupUtils {
                 parent.removeView(viewGroup);
             }
         }
+    }
+
+    public static ViewGroup.LayoutParams genMatchWrapLP(){
+        return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+    public static ViewGroup.LayoutParams gen2MatchLP(){
+        return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+    public static ViewGroup.LayoutParams gen2WrapLP(){
+        return new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 }

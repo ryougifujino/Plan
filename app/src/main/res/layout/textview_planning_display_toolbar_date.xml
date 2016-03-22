@@ -4,6 +4,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="2016年3月10日"
+    android:padding="20dp"
     android:layout_gravity="center"
     android:id="@+id/tv_planning_display_toolbar_date"
+    android:background="?android:attr/selectableItemBackground"
     />
