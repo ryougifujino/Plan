@@ -5,7 +5,7 @@ import java.util.List;
 import link.ebbinghaus.planning.custom.db.dao.BaseDao;
 import link.ebbinghaus.planning.custom.db.decorator.IBaseDaoDecorator;
 
-//TODO: 操作数据库改为多线程,在DaoAdapter的方法层面上进行使用
+//TODO: 操作数据库改为多线程,在DaoAdapter的方法层面上进行使用!!change->考虑只应该在用的地方再用,不然有不同步的可能
 /**
  * DaoDecorator的基类
  * @param <T>
@@ -18,18 +18,20 @@ public class BaseDaoDecorator<T> implements IBaseDaoDecorator<T> {
     }
 
     @Override
-    public void insert(T t) {
+    public long insert(T t) {
+        long rowId = -1L;
         dao.beginTransaction();
         try {
-            dao.insert(t);
+            rowId = dao.insert(t);
             dao.setTransactionSuccessful();
         }finally {
             dao.endTransaction();
         }
+        return rowId;
     }
 
     @Override
-    public void deleteByPrimaryKey(Integer pk) {
+    public void deleteByPrimaryKey(Long pk) {
         dao.beginTransaction();
         try {
             dao.deleteByPrimaryKey(pk);
@@ -67,7 +69,7 @@ public class BaseDaoDecorator<T> implements IBaseDaoDecorator<T> {
     }
 
     @Override
-    public void deleteSomeByPrimaryKeys(List<Integer> pks) {
+    public void deleteSomeByPrimaryKeys(List<Long> pks) {
         dao.beginTransaction();
         try {
             dao.deleteSomeByPrimaryKeys(pks);
@@ -89,14 +91,16 @@ public class BaseDaoDecorator<T> implements IBaseDaoDecorator<T> {
     }
 
     @Override
-    public void deleteAll() {
+    public int deleteAll() {
+        int affectedRow = 0;
         dao.beginTransaction();
         try {
-            dao.deleteAll();
+            affectedRow = dao.deleteAll();
             dao.setTransactionSuccessful();
         }finally {
             dao.endTransaction();
         }
+        return affectedRow;
     }
 
     @Override

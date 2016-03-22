@@ -34,14 +34,15 @@ public interface IBaseDaoDecorator<T>{
     /**
      * 增方法
      * @param t 欲添加的实体
+     * @return 插入记录的id
      */
-    void insert(T t);
+    long insert(T t);
 
     /**
      * 删方法
      * @param pk 要删除记录的主键
      */
-    void deleteByPrimaryKey(Integer pk);
+    void deleteByPrimaryKey(Long pk);
 
     /**
      * 修改方法
@@ -68,7 +69,7 @@ public interface IBaseDaoDecorator<T>{
      * 根据主键批量删除
      * @param pks 要删除记录的主键集
      */
-    void deleteSomeByPrimaryKeys(List<Integer> pks);
+    void deleteSomeByPrimaryKeys(List<Long> pks);
 
     /**
      * 根据主键批量修改
@@ -80,8 +81,9 @@ public interface IBaseDaoDecorator<T>{
 
     /**
      * 删除所有记录
+     * @return 删除的行数
      */
-    void deleteAll();
+    int deleteAll();
 
     /**
      * 查找所有记录

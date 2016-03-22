@@ -20,4 +20,11 @@ public interface CommonSelectPresenter {
      */
     void configureRecyclerView();
 
+    /**
+     * 根据从回调函数onCreateButtonClick得到的content向对应数据库添加一个记录,<br>
+     * 并且刷新RecyclerView
+     * @param content
+     */
+    void addNewItemToDatabaseAndRefreshUi(String content);
+
 }

@@ -6,6 +6,8 @@
     <string name="common_select_all">全选</string>
     <string name="common_select_none">全不选</string>
     <string name="common_delete">删除</string>
+    <string name="common_create">创建</string>
+    <string name="common_cancel">取消</string>
 
     <!-- main -->
     <string name="main_drawer_planning_display">计划</string>
@@ -28,6 +30,7 @@
 
     <!-- common_select -->
     <string name="common_select_delete_toolbar_select_info">已选择%1$d个</string>
+    <string name="common_select_add_dialog_title">创建新条目</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

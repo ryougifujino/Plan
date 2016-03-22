@@ -11,18 +11,18 @@ import link.ebbinghaus.planning.custom.constant.config.DBConfig;
  * Created by WINFIELD on 2016/2/29.
  */
 public class EventGroup implements Parcelable{
-    private Integer pkEventGroupId;
-    private long createTime;
+    private Long pkEventGroupId;
+    private Long createTime;
     private String description;
     private Integer learningEventCount;
     private Integer normalEventCount;
     private Integer abstractEventCount;
 
-    public Integer getPkEventGroupId() {
+    public Long getPkEventGroupId() {
         return pkEventGroupId;
     }
 
-    public void setPkEventGroupId(Integer pkEventGroupId) {
+    public void setPkEventGroupId(Long pkEventGroupId) {
         this.pkEventGroupId = pkEventGroupId;
     }
 
@@ -78,7 +78,7 @@ public class EventGroup implements Parcelable{
     }
     
     public void filledByCursor(Cursor cursor){
-        setPkEventGroupId(cursor.getInt(cursor.getColumnIndex(DBConfig.EventGroupColumn.PK_EVENT_GROUP_ID)));
+        setPkEventGroupId(cursor.getLong(cursor.getColumnIndex(DBConfig.EventGroupColumn.PK_EVENT_GROUP_ID)));
         setCreateTime(cursor.getLong(cursor.getColumnIndex(DBConfig.EventGroupColumn.CREATE_TIME)));
         setDescription(cursor.getString(cursor.getColumnIndex(DBConfig.EventGroupColumn.DESCRIPTION)));
         setLearningEventCount(cursor.getInt(cursor.getColumnIndex(DBConfig.EventGroupColumn.LEARNING_EVENT_COUNT)));

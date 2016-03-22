@@ -19,22 +19,28 @@ public class EventSubtypeDao extends BaseDao<EventSubtype> {
     }
 
     @Override
-    protected void _insert(EventSubtype eventSubtype) {
+    protected long _insert(EventSubtype eventSubtype) {
         ContentValues values = new ContentValues();
         eventSubtype.convertToContentValues(values);
-        db.insert(DBConfig.Table.EVENT_SUBTYPE, null, values);
+        return db.insert(DBConfig.Table.EVENT_SUBTYPE, null, values);
     }
 
     @Override
-    protected void _delete(String where, String[] args) {
-        db.delete(DBConfig.Table.EVENT_SUBTYPE, where, args);
+    protected int _delete(String where, String[] args) {
+        return db.delete(DBConfig.Table.EVENT_SUBTYPE, where, args);
     }
 
     @Override
-    protected void _update(EventSubtype eventSubtype, String where, String[] args) {
+    protected int _update(EventSubtype eventSubtype, String where, String[] args) {
         ContentValues values = new ContentValues();
         eventSubtype.convertToContentValues(values);
-        db.update(DBConfig.Table.EVENT_SUBTYPE, values, where, args);
+        return db.update(DBConfig.Table.EVENT_SUBTYPE, values, where, args);
+    }
+
+    @Override
+    public long insert(EventSubtype eventSubtype) {
+        eventSubtype.setPkEventSubtypeId(_insert(eventSubtype));
+        return eventSubtype.getPkEventSubtypeId();
     }
 
     @Override
@@ -54,6 +60,14 @@ public class EventSubtypeDao extends BaseDao<EventSubtype> {
         cursor.close();
         return eventSubtype;
     }
+
+    @Override
+    public void insertSome(List<EventSubtype> eventSubtypes) {
+        for (EventSubtype eventSubtype : eventSubtypes) {
+            eventSubtype.setPkEventSubtypeId(_insert(eventSubtype));
+        }
+    }
+
 
     @Override
     public List<EventSubtype> selectAll() {

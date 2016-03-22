@@ -3,6 +3,7 @@ package link.ebbinghaus.planning.view.activity.impl;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +27,7 @@ import link.ebbinghaus.planning.custom.viewholder.common.select.DeleteToolbarVie
 import link.ebbinghaus.planning.presenter.CommonSelectPresenter;
 import link.ebbinghaus.planning.presenter.impl.CommonSelectPresenterImpl;
 import link.ebbinghaus.planning.view.activity.CommonSelectView;
+import link.ebbinghaus.planning.view.fragment.impl.CommonSelectDialogFragment;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningBuildSpecificFragment;
 import link.ebbinhaus.planning.R;
 
@@ -51,6 +53,7 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
 
     private CommonSelectPresenter mCommonSelectPresenter;
     private SelectRecycleViewAdapter mAdapter;
+    private CommonSelectDialogFragment mAddDialog;
     private Intent mIntent;
     private int mFlag;
 
@@ -81,6 +84,7 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
         switch (item.getItemId()){
             case R.id.item_common_select_toolbar_add:
                 //弹出dialog
+                showDialog();
                 return true;
         }
         return false;
@@ -90,6 +94,14 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
     public void setToolbar() {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void initToolbarAddDialog() {
+        mAddDialog = new CommonSelectDialogFragment();
+    }
+    private void showDialog(){
+        mAddDialog.show(getSupportFragmentManager(),getClass().getName());
     }
 
     @Override
@@ -124,9 +136,15 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
     @Override
     public void setRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         setOnActivityDestroyListener(mAdapter);
         mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void setOnCreateButtonClickListener() {
+        mAddDialog.setOnCreateButtonClickListener(mAdapter);
     }
 
     @Override
@@ -140,4 +158,5 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
         setResult(RESULT_CANCELED, new Intent());
         finish();
     }
+
 }

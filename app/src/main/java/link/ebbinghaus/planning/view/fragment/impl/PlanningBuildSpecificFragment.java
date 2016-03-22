@@ -19,7 +19,9 @@ import link.ebbinghaus.planning.custom.constant.module.PlanningBuildConstant;
 import link.ebbinghaus.planning.custom.viewholder.planning.build.SpecificViewHolder;
 import link.ebbinghaus.planning.model.entity.po.DefaultInputValue;
 import link.ebbinghaus.planning.model.entity.po.Event;
+import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
+import link.ebbinghaus.planning.model.entity.po.FastTemplate;
 import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
 import link.ebbinghaus.planning.presenter.PlanningBuildSpecificPresenter;
 import link.ebbinghaus.planning.presenter.impl.PlanningBuildSpecificPresenterImpl;
@@ -85,20 +87,26 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
                     mPlanningBuildSpecificPresenter.configureEventSubtype(eventSubtype);
                 }else {
                     EventSubtype eventSubtype = new EventSubtype();
-                    eventSubtype.setEventSubtype(mActivity.getString(R.string.common_none));
+                    eventSubtype.setEventSubtype(getString(R.string.common_none));
                     mPlanningBuildSpecificPresenter.configureEventSubtype(eventSubtype);
                 }
                 break;
             case FLAG_FAST_TEMPLATE:
                 if (resultCode == mActivity.RESULT_OK) {
-                    mPlanningBuildSpecificPresenter.configureFastTemplate();
+                    FastTemplate fastTemplate = data.getParcelableExtra(CommonSelectActivity.INTENT_NAME_RESULT);
+                    mPlanningBuildSpecificPresenter.configureDescription(fastTemplate.getTemplate());
                 }else {
+                    mPlanningBuildSpecificPresenter.configureDescription(null);
                 }
                 break;
             case FLAG_EVENT_GROUP:
                 if (resultCode == mActivity.RESULT_OK) {
-                    mPlanningBuildSpecificPresenter.configureEventGroup();
+                    EventGroup eventGroup = data.getParcelableExtra(CommonSelectActivity.INTENT_NAME_RESULT);
+                    mPlanningBuildSpecificPresenter.configureEventGroup(eventGroup);
                 }else {
+                    EventGroup eventGroup = new EventGroup();
+                    eventGroup.setDescription(getString(R.string.common_none));
+                    mPlanningBuildSpecificPresenter.configureEventGroup(eventGroup);
                 }
                 break;
         }
@@ -151,8 +159,8 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     }
 
     @Override
-    public void setFastTemplate() {
-
+    public void setFastTemplate(String template) {
+        vh.descriptionEt.setText(template);
     }
 
     @Override
@@ -201,8 +209,9 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     }
 
     @Override
-    public void setEventGroup() {
-
+    public void setEventGroup(EventGroup eventGroup) {
+        vh.eventGroupTv.setText(eventGroup.getDescription());
+        mInputEvent.setEventGroupId(eventGroup.getPkEventGroupId());
     }
 
     @Override
@@ -263,12 +272,12 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     public void onBuildMenuClick(Event event) {
         //提取页面数据到event中
 
-        event.setLearningEventGroupId(1);
-        event.setEventGroupId(1);
+        event.setLearningEventGroupId(1L);
+        event.setEventGroupId(1L);
         event.setDescription("描述测试");
 //        event.setSummary("总结测试");
         event.setEventType(1);
-        event.setEventSubtypeId(1);
+        event.setEventSubtypeId(1L);
         event.setEventSequence(1);
         event.setIsShowEventSequence(false);
         event.setCreateTime(System.currentTimeMillis());

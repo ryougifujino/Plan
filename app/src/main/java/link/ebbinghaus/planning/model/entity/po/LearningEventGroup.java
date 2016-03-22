@@ -9,20 +9,20 @@ import link.ebbinghaus.planning.custom.constant.config.DBConfig;
  * Created by WINFIELD on 2016/2/29.
  */
 public class LearningEventGroup {
-    private Integer pkLearningEventGroupId;
+    private Long pkLearningEventGroupId;
     private Integer knowledgeQuantity;
     private Integer strategy;   //1:理解型 2:记忆型 3:强记型 4:永久型
     private Integer learningEventTotal;   //这个学习计划组的总数量
     private Integer learningEventFinishedCount;
     private Integer workload;   //工作量,单位:人分
-    private float efficiency;   //效率 0.3:差 0.6:一般 0.9:高效 1:非常高效
-    private float understandingDegree;   //理解情况 0.3:不太理解 0.7:大致理解 1:完全理解
+    private Float efficiency;   //效率 0.3:差 0.6:一般 0.9:高效 1:非常高效
+    private Float understandingDegree;   //理解情况 0.3:不太理解 0.7:大致理解 1:完全理解
 
-    public Integer getPkLearningEventGroupId() {
+    public Long getPkLearningEventGroupId() {
         return pkLearningEventGroupId;
     }
 
-    public void setPkLearningEventGroupId(Integer pkLearningEventGroupId) {
+    public void setPkLearningEventGroupId(Long pkLearningEventGroupId) {
         this.pkLearningEventGroupId = pkLearningEventGroupId;
     }
 
@@ -94,7 +94,7 @@ public class LearningEventGroup {
     }
     
     public void filledByCursor(Cursor cursor){
-        setPkLearningEventGroupId(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.PK_LEARNING_EVENT_GROUP_ID)));
+        setPkLearningEventGroupId(cursor.getLong(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.PK_LEARNING_EVENT_GROUP_ID)));
         setKnowledgeQuantity(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.KNOWLEDGE_QUANTITY)));
         setStrategy(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.STRATEGY)));
         setLearningEventTotal(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_TOTAL)));

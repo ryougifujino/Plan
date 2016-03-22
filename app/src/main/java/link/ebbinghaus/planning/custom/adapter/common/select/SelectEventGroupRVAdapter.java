@@ -22,6 +22,17 @@ public class SelectEventGroupRVAdapter extends SelectRecycleViewAdapter<EventGro
 
     @Override
     public void onBindViewHolder(SelectRecycleViewAdapter.ViewHolder holder, int position) {
-        holder.descriptionTv.setText(mData.get(position).getDescription());
+        holder.configure(position,mData.get(position).getDescription());
+    }
+
+    @Override
+    public void onCreateButtonClick(String content) {
+        EventGroup eventGroup = new EventGroup();
+        eventGroup.setDescription(content);
+        eventGroup.setCreateTime(System.currentTimeMillis());
+        mDao.insert(eventGroup);
+        mData.add(0, eventGroup);
+        mListitemsSelectedStatus.add(0,false);
+        this.notifyDataSetChanged();
     }
 }

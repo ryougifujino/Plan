@@ -32,12 +32,30 @@ public class FastTemplateSelectDaoAdapter implements ISelectDaoAdapter<FastTempl
     }
 
     @Override
-    public void deleteByPrimaryKey(Integer pk) {
+    public void deleteByPrimaryKey(Long pk) {
         dao.deleteByPrimaryKey(pk);
+    }
+
+    @Override
+    public void insert(FastTemplate fastTemplate) {
+        dao.insert(fastTemplate);
     }
 
     @Override
     public void closeDB() {
         dao.closeDB();
+    }
+
+    public Integer getEventType(){
+        switch (flag){
+            case FastTemplateConstant.SPEC_LEARNING_TYPE:
+                return FastTemplateConstant.SPEC_LEARNING_TYPE;
+            case FastTemplateConstant.SPEC_NORMAL_TYPE:
+                return FastTemplateConstant.SPEC_NORMAL_TYPE;
+            case FastTemplateConstant.ABSTRACT_TYPE:
+                return FastTemplateConstant.ABSTRACT_TYPE;
+            default:
+                throw new IllegalArgumentException("传递的快速模板类型不正确");
+        }
     }
 }

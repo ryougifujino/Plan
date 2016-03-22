@@ -1,5 +1,6 @@
 package link.ebbinghaus.planning.presenter;
 
+import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
 import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
 
@@ -26,9 +27,11 @@ public interface PlanningBuildSpecificPresenter {
     void configureEventSubtype(EventSubtype result);
 
     /**
-     * 配置快速模板并填入描述中
+     *
+     * 把模板填入描述控件(EditText)中
+     * @param template 模板
      */
-    void configureFastTemplate();
+    void configureDescription(String template);
 
     /**
      * 配置学习计划的方案(策略)
@@ -62,8 +65,9 @@ public interface PlanningBuildSpecificPresenter {
 
     /**
      * 配置计划组
+     * @param eventGroup 计划组
      */
-    void configureEventGroup();
+    void configureEventGroup(EventGroup eventGroup);
 
     /**
      * 关闭数据库

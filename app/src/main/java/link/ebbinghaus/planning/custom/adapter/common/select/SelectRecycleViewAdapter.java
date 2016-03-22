@@ -11,13 +11,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.yurikami.lib.base.BaseActivity;
+import com.yurikami.lib.util.LogUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.custom.viewholder.common.select.DeleteToolbarViewHolder;
+import link.ebbinghaus.planning.view.fragment.impl.CommonSelectDialogFragment;
 import link.ebbinhaus.planning.R;
 
 /**
@@ -36,14 +39,15 @@ import link.ebbinhaus.planning.R;
  * @param <T>
  */
 public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends RecyclerView.Adapter<SelectRecycleViewAdapter.ViewHolder>
-        implements BaseActivity.OnActivityDestroyListener,View.OnClickListener,View.OnLongClickListener {
+        implements BaseActivity.OnActivityDestroyListener,View.OnClickListener,
+        View.OnLongClickListener, CommonSelectDialogFragment.OnCreateButtonClickListener{
 
     protected Context mContext;
     protected LayoutInflater mLayoutInflater;
     protected OnItemClickListener mOnItemClickListener;
     protected DeleteToolbarViewHolder mDeleteToolbar;
     protected List<T> mData;
-    protected ISelectDaoAdapter mDao;
+    protected ISelectDaoAdapter<T> mDao;
 
     /** 用于记录每个listitem的选中情况 */
     protected List<Boolean> mListitemsSelectedStatus = new ArrayList<>();
@@ -61,6 +65,7 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
         this.mDeleteToolbar = deleteToolbar;
 
         this.mData = mDao.selectAll();
+        Collections.reverse(mData);
         initListitemsSelectedStatus();
 
         mDeleteToolbar.arrowBackIv.setOnClickListener(this);
@@ -135,13 +140,13 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
                 onDeleteClickLogic();
                 break;
         }
-
         refreshDeleteToolbar();
         this.notifyDataSetChanged();
     }
 
     @Override
     public boolean onLongClick(View v) {
+        LogUtils.d("onLongClick","function");
         int position = (int) v.getTag();
         if (!mDeleteStatus){
             mDeleteStatus = true;
@@ -212,16 +217,6 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
     }
 
     /**
-     * 当点击删除工具条上的返回箭头时对参数的设置逻辑
-     */
-    private void onArrowBackClickLogic(){
-        setListitemsSelectedStatus(false);
-        mSelectedCount = 0;
-        mDeleteStatus = false;
-        mIsSelectedAll = false;
-    }
-
-    /**
      * 当点击删除工具条上的全选/全不选的toggle时对参数的设置逻辑
      */
     private void onSelectAllToggleClickLogic(){
@@ -232,6 +227,16 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
             mSelectedCount = mData.size();
         }
         setListitemsSelectedStatus(mIsSelectedAll = !mIsSelectedAll);
+    }
+
+    /**
+     * 当点击删除工具条上的返回箭头时对参数的设置逻辑
+     */
+    private void onArrowBackClickLogic(){
+        setListitemsSelectedStatus(false);
+        mSelectedCount = 0;
+        mDeleteStatus = false;
+        mIsSelectedAll = false;
     }
 
     /**
@@ -254,6 +259,8 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
         }
     }
 
+    //以下为本类的监听器
+
     /**
      * 处于删除状态时,点击和长按对参数设置的逻辑
      * @param position 当前点击或长按时listitem的位置
@@ -273,8 +280,6 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
 
         }
     }
-
-    //以下为本类的监听器
 
     /**
      * 设置listitem的监听器

@@ -19,22 +19,28 @@ public class LearningEventGroupDao extends BaseDao<LearningEventGroup> {
     }
 
     @Override
-    protected void _insert(LearningEventGroup learningEventGroup) {
+    protected long _insert(LearningEventGroup learningEventGroup) {
         ContentValues values = new ContentValues();
         learningEventGroup.convertToContentValues(values);
-        db.insert(DBConfig.Table.LEARNING_EVENT_GROUP, null, values);
+        return db.insert(DBConfig.Table.LEARNING_EVENT_GROUP, null, values);
     }
 
     @Override
-    protected void _delete(String where, String[] args) {
-        db.delete(DBConfig.Table.LEARNING_EVENT_GROUP, where, args);
+    protected int _delete(String where, String[] args) {
+        return db.delete(DBConfig.Table.LEARNING_EVENT_GROUP, where, args);
     }
 
     @Override
-    protected void _update(LearningEventGroup learningEventGroup, String where, String[] args) {
+    protected int _update(LearningEventGroup learningEventGroup, String where, String[] args) {
         ContentValues values = new ContentValues();
         learningEventGroup.convertToContentValues(values);
-        db.update(DBConfig.Table.LEARNING_EVENT_GROUP, values, where, args);
+        return db.update(DBConfig.Table.LEARNING_EVENT_GROUP, values, where, args);
+    }
+
+    @Override
+    public long insert(LearningEventGroup learningEventGroup) {
+        learningEventGroup.setPkLearningEventGroupId(_insert(learningEventGroup));
+        return learningEventGroup.getPkLearningEventGroupId();
     }
 
     @Override
@@ -54,6 +60,14 @@ public class LearningEventGroupDao extends BaseDao<LearningEventGroup> {
         cursor.close();
         return learningEventGroup;
     }
+
+    @Override
+    public void insertSome(List<LearningEventGroup> learningEventGroups) {
+        for (LearningEventGroup learningEventGroup : learningEventGroups) {
+            learningEventGroup.setPkLearningEventGroupId(_insert(learningEventGroup));
+        }
+    }
+
 
     @Override
     public List<LearningEventGroup> selectAll() {

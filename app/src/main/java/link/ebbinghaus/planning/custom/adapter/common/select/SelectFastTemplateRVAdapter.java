@@ -10,7 +10,7 @@ import link.ebbinghaus.planning.model.entity.po.FastTemplate;
  */
 public class SelectFastTemplateRVAdapter extends SelectRecycleViewAdapter<FastTemplate> {
 
-    public SelectFastTemplateRVAdapter(Context context, ISelectDaoAdapter dao, DeleteToolbarViewHolder deleteToolbar) {
+    public SelectFastTemplateRVAdapter(Context context, ISelectDaoAdapter dao,DeleteToolbarViewHolder deleteToolbar) {
         super(context, dao, deleteToolbar);
     }
 
@@ -22,6 +22,17 @@ public class SelectFastTemplateRVAdapter extends SelectRecycleViewAdapter<FastTe
 
     @Override
     public void onBindViewHolder(SelectRecycleViewAdapter.ViewHolder holder, int position) {
-        holder.descriptionTv.setText(mData.get(position).getTemplate());
+        holder.configure(position,mData.get(position).getTemplate());
+    }
+
+    @Override
+    public void onCreateButtonClick(String content) {
+        FastTemplate fastTemplate = new FastTemplate();
+        fastTemplate.setTemplate(content);
+        fastTemplate.setEventType(((FastTemplateSelectDaoAdapter)mDao).getEventType());
+        mDao.insert(fastTemplate);
+        mData.add(0,fastTemplate);
+        mListitemsSelectedStatus.add(0,false);
+        this.notifyDataSetChanged();
     }
 }

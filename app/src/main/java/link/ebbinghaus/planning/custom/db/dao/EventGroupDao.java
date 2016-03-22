@@ -19,22 +19,28 @@ public class EventGroupDao extends BaseDao<EventGroup> {
     }
 
     @Override
-    protected void _insert(EventGroup eventGroup) {
+    protected long _insert(EventGroup eventGroup) {
         ContentValues values = new ContentValues();
         eventGroup.convertToContentValues(values);
-        db.insert(DBConfig.Table.EVENT_GROUP, null, values);
+        return db.insert(DBConfig.Table.EVENT_GROUP, null, values);
     }
 
     @Override
-    protected void _delete(String where, String[] args) {
-        db.delete(DBConfig.Table.EVENT_GROUP, where, args);
+    protected int _delete(String where, String[] args) {
+        return db.delete(DBConfig.Table.EVENT_GROUP, where, args);
     }
 
     @Override
-    protected void _update(EventGroup eventGroup, String where, String[] args) {
+    protected int _update(EventGroup eventGroup, String where, String[] args) {
         ContentValues values = new ContentValues();
         eventGroup.convertToContentValues(values);
-        db.update(DBConfig.Table.EVENT_GROUP, values, where, args);
+        return db.update(DBConfig.Table.EVENT_GROUP, values, where, args);
+    }
+
+    @Override
+    public long insert(EventGroup eventGroup) {
+        eventGroup.setPkEventGroupId(_insert(eventGroup));
+        return eventGroup.getPkEventGroupId();
     }
 
     @Override
@@ -54,6 +60,14 @@ public class EventGroupDao extends BaseDao<EventGroup> {
         cursor.close();
         return eventGroup;
     }
+
+    @Override
+    public void insertSome(List<EventGroup> eventGroups) {
+        for (EventGroup eventGroup : eventGroups) {
+            eventGroup.setPkEventGroupId(_insert(eventGroup));
+        }
+    }
+
 
     @Override
     public List<EventGroup> selectAll() {

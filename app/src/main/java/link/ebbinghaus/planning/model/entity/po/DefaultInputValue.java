@@ -13,19 +13,19 @@ import link.ebbinghaus.planning.custom.constant.entity.EventConstant;
  * Created by WINFIELD on 2016/2/29.
  */
 public class DefaultInputValue {
-    private Integer pkDefaultInputValueId;
+    private Long pkDefaultInputValueId;
     private Integer maxWidth;   //预设值:5
-    private boolean isGreekAlphabetMarked;  //预设值: false
-    private boolean isRemind;   //预设值: false
-    private long remindTime;    //预设值: 19:00
+    private Boolean isGreekAlphabetMarked;  //预设值: false
+    private Boolean isRemind;   //预设值: false
+    private Long remindTime;    //预设值: 19:00
     private Integer strategy;   //1:理解型 2:记忆型 3:强记型 4:永久型   //预设值: 1
-    private boolean isShowEventSequence;    //预设值: false
+    private Boolean isShowEventSequence;    //预设值: false
 
-    public Integer getPkDefaultInputValueId() {
+    public Long getPkDefaultInputValueId() {
         return pkDefaultInputValueId;
     }
 
-    public void setPkDefaultInputValueId(Integer pkDefaultInputValueId) {
+    public void setPkDefaultInputValueId(Long pkDefaultInputValueId) {
         this.pkDefaultInputValueId = pkDefaultInputValueId;
     }
 
@@ -118,7 +118,7 @@ public class DefaultInputValue {
     }
 
     public void filledByCursor(Cursor cursor){
-        setPkDefaultInputValueId(cursor.getInt(cursor.getColumnIndex(DBConfig.DefaultInputValueColumn.PK_DEFAULT_INPUT_VALUE_ID)));
+        setPkDefaultInputValueId(cursor.getLong(cursor.getColumnIndex(DBConfig.DefaultInputValueColumn.PK_DEFAULT_INPUT_VALUE_ID)));
         setMaxWidth(cursor.getInt(cursor.getColumnIndex(DBConfig.DefaultInputValueColumn.MAX_WIDTH)));
         setIsGreekAlphabetMarked(cursor.getInt(cursor.getColumnIndex(DBConfig.DefaultInputValueColumn.IS_GREEK_ALPHABET_MARKED)));
         setIsRemind(cursor.getInt(cursor.getColumnIndex(DBConfig.DefaultInputValueColumn.IS_REMIND)));

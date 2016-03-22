@@ -11,15 +11,15 @@ import link.ebbinghaus.planning.custom.constant.config.DBConfig;
  * Created by WINFIELD on 2016/2/29.
  */
 public class FastTemplate implements Parcelable{
-    private Integer pkFastTemplateId;
+    private Long pkFastTemplateId;
     private String template;
     private Integer eventType;  //1:学习型 2:普通型 3:模糊型
 
-    public Integer getPkFastTemplateId() {
+    public Long getPkFastTemplateId() {
         return pkFastTemplateId;
     }
 
-    public void setPkFastTemplateId(Integer pkFastTemplateId) {
+    public void setPkFastTemplateId(Long pkFastTemplateId) {
         this.pkFastTemplateId = pkFastTemplateId;
     }
 
@@ -48,7 +48,7 @@ public class FastTemplate implements Parcelable{
     }
     
     public void filledByCursor(Cursor cursor){
-        setPkFastTemplateId(cursor.getInt(cursor.getColumnIndex(DBConfig.FastTemplateColumn.PK_FAST_TEMPLATE_ID)));
+        setPkFastTemplateId(cursor.getLong(cursor.getColumnIndex(DBConfig.FastTemplateColumn.PK_FAST_TEMPLATE_ID)));
         setTemplate(cursor.getString(cursor.getColumnIndex(DBConfig.FastTemplateColumn.TEMPLATE)));
         setEventType(cursor.getInt(cursor.getColumnIndex(DBConfig.FastTemplateColumn.EVENT_TYPE)));
     }

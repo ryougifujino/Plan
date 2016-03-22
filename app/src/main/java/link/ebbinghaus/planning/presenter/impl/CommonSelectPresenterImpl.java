@@ -16,6 +16,7 @@ public class CommonSelectPresenterImpl implements CommonSelectPresenter {
     @Override
     public void configureToolbar() {
         mCommonSelectView.setToolbar();
+        mCommonSelectView.initToolbarAddDialog();
     }
 
     @Override
@@ -27,6 +28,12 @@ public class CommonSelectPresenterImpl implements CommonSelectPresenter {
     public void configureRecyclerView() {
         mCommonSelectView.chooseRecyclerViewAdapter();
         mCommonSelectView.setRecyclerView();
+        mCommonSelectView.setOnCreateButtonClickListener();
+    }
+
+    @Override
+    public void addNewItemToDatabaseAndRefreshUi(String content) {
+
     }
 
 }

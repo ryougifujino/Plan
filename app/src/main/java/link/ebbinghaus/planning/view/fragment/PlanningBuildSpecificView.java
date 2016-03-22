@@ -2,6 +2,7 @@ package link.ebbinghaus.planning.view.fragment;
 
 import link.ebbinghaus.planning.model.entity.po.DefaultInputValue;
 import link.ebbinghaus.planning.model.entity.po.Event;
+import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
 
 /**
@@ -33,8 +34,9 @@ public interface PlanningBuildSpecificView {
 
     /**
      * 设置快速模板到描述EditText里面
+     * @param template 模板
      */
-    void setFastTemplate();
+    void setFastTemplate(String template);
 
     /**
      * 设置学习计划的方案(策略)
@@ -68,6 +70,7 @@ public interface PlanningBuildSpecificView {
 
     /**
      * 设置计划组
+     * @param eventGroup
      */
-    void setEventGroup();
+    void setEventGroup(EventGroup eventGroup);
 }

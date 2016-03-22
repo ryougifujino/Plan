@@ -7,8 +7,8 @@ import link.ebbinghaus.planning.custom.db.decorator.IBaseDaoDecorator;
 /**
  * ISelectDaoAdapter的默认实现
  */
-public class DefaultSelectDaoAdapter implements ISelectDaoAdapter{
-    private IBaseDaoDecorator baseDao;
+public class DefaultSelectDaoAdapter<T> implements ISelectDaoAdapter<T>{
+    private IBaseDaoDecorator<T> baseDao;
 
     public DefaultSelectDaoAdapter(IBaseDaoDecorator baseDao) {
         this.baseDao = baseDao;
@@ -16,13 +16,18 @@ public class DefaultSelectDaoAdapter implements ISelectDaoAdapter{
 
 
     @Override
-    public List selectAll() {
+    public List<T> selectAll() {
         return baseDao.selectAll();
     }
 
     @Override
-    public void deleteByPrimaryKey(Integer pk) {
+    public void deleteByPrimaryKey(Long pk) {
         baseDao.deleteByPrimaryKey(pk);
+    }
+
+    @Override
+    public void insert(T t) {
+        baseDao.insert(t);
     }
 
     @Override

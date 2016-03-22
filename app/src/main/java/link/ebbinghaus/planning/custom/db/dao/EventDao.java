@@ -16,22 +16,28 @@ public class EventDao extends BaseDao <Event>{
     }
 
     @Override
-    protected void _insert(Event event) {
+    protected long _insert(Event event) {
         ContentValues values = new ContentValues();
         event.convertToContentValues(values);
-        db.insert(DBConfig.Table.EVENT, null, values);
+        return db.insert(DBConfig.Table.EVENT, null, values);
     }
 
     @Override
-    protected void _delete(String where, String[] args) {
-        db.delete(DBConfig.Table.EVENT, where, args);
+    protected int _delete(String where, String[] args) {
+        return db.delete(DBConfig.Table.EVENT, where, args);
     }
 
     @Override
-    protected void _update(Event event, String where, String[] args) {
+    protected int _update(Event event, String where, String[] args) {
         ContentValues values = new ContentValues();
         event.convertToContentValues(values);
-        db.update(DBConfig.Table.EVENT, values, where, args);
+        return db.update(DBConfig.Table.EVENT, values, where, args);
+    }
+
+    @Override
+    public long insert(Event event) {
+        event.setPkEventId(_insert(event));
+        return event.getPkEventId();
     }
 
 
@@ -52,6 +58,14 @@ public class EventDao extends BaseDao <Event>{
         cursor.close();
         return event;
     }
+
+    @Override
+    public void insertSome(List<Event> events) {
+        for (Event event : events) {
+            event.setPkEventId(_insert(event));
+        }
+    }
+
 
     @Override
     public List<Event> selectAll() {

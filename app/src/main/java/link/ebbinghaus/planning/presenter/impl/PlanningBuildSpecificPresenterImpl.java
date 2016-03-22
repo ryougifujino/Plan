@@ -4,6 +4,7 @@ import com.yurikami.lib.util.DateUtils;
 
 import link.ebbinghaus.planning.model.PlanningBuildModel;
 import link.ebbinghaus.planning.model.entity.po.DefaultInputValue;
+import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
 import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
 import link.ebbinghaus.planning.model.impl.PlanningBuildModelImpl;
@@ -47,8 +48,10 @@ public class PlanningBuildSpecificPresenterImpl implements PlanningBuildSpecific
     }
 
     @Override
-    public void configureFastTemplate() {
-        mPlanningBuildSpecificView.setFastTemplate();
+    public void configureDescription(String template) {
+        if(template != null) {
+            mPlanningBuildSpecificView.setFastTemplate(template);
+        }
     }
 
     @Override
@@ -82,8 +85,8 @@ public class PlanningBuildSpecificPresenterImpl implements PlanningBuildSpecific
     }
 
     @Override
-    public void configureEventGroup() {
-        mPlanningBuildSpecificView.setEventGroup();
+    public void configureEventGroup(EventGroup eventGroup) {
+        mPlanningBuildSpecificView.setEventGroup(eventGroup);
     }
 
     @Override

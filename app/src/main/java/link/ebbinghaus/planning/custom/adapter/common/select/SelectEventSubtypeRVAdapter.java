@@ -24,4 +24,14 @@ public class SelectEventSubtypeRVAdapter extends SelectRecycleViewAdapter<EventS
     public void onBindViewHolder(SelectRecycleViewAdapter.ViewHolder holder, int position) {
         holder.configure(position, mData.get(position).getEventSubtype());
     }
+
+    @Override
+    public void onCreateButtonClick(String content) {
+        EventSubtype eventSubtype = new EventSubtype();
+        eventSubtype.setEventSubtype(content);
+        mDao.insert(eventSubtype);
+        mData.add(0, eventSubtype);
+        mListitemsSelectedStatus.add(0,false);
+        this.notifyDataSetChanged();
+    }
 }

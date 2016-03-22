@@ -19,22 +19,28 @@ public class FastTemplateDao extends BaseDao<FastTemplate> {
     }
 
     @Override
-    protected void _insert(FastTemplate fastTemplate) {
+    protected long _insert(FastTemplate fastTemplate) {
         ContentValues values = new ContentValues();
         fastTemplate.convertToContentValues(values);
-        db.insert(DBConfig.Table.FAST_TEMPLATE, null, values);
+        return db.insert(DBConfig.Table.FAST_TEMPLATE, null, values);
     }
 
     @Override
-    protected void _delete(String where, String[] args) {
-        db.delete(DBConfig.Table.FAST_TEMPLATE, where, args);
+    protected int _delete(String where, String[] args) {
+        return db.delete(DBConfig.Table.FAST_TEMPLATE, where, args);
     }
 
     @Override
-    protected void _update(FastTemplate fastTemplate, String where, String[] args) {
+    protected int _update(FastTemplate fastTemplate, String where, String[] args) {
         ContentValues values = new ContentValues();
         fastTemplate.convertToContentValues(values);
-        db.update(DBConfig.Table.FAST_TEMPLATE, values, where, args);
+        return db.update(DBConfig.Table.FAST_TEMPLATE, values, where, args);
+    }
+
+    @Override
+    public long insert(FastTemplate fastTemplate) {
+        fastTemplate.setPkFastTemplateId(_insert(fastTemplate));
+        return fastTemplate.getPkFastTemplateId();
     }
 
     @Override
@@ -54,6 +60,14 @@ public class FastTemplateDao extends BaseDao<FastTemplate> {
         cursor.close();
         return fastTemplate;
     }
+
+    @Override
+    public void insertSome(List<FastTemplate> fastTemplates) {
+        for (FastTemplate fastTemplate : fastTemplates) {
+            fastTemplate.setPkFastTemplateId(_insert(fastTemplate));
+        }
+    }
+
 
     @Override
     public List<FastTemplate> selectAll() {

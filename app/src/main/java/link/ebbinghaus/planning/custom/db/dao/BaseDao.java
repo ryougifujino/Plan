@@ -44,9 +44,9 @@ public abstract class BaseDao<T> implements IBaseDaoDecorator<T> {
      * 这个系列的底层方法可以由insert delete update select开头的系列方法调用,<br>
      * 比起直接使用db,操作要简化一些
      */
-    protected abstract void _insert(T t);
-    protected abstract void _delete(String where, String[] args);
-    protected abstract void _update(T t, String where, String[] args);
+    protected abstract long _insert(T t);
+    protected abstract int _delete(String where, String[] args);
+    protected abstract int _update(T t, String where, String[] args);
 
     /**
      * 以下按顺序为单条记录操作,批量操作,所有记录操作,<br>
@@ -55,20 +55,19 @@ public abstract class BaseDao<T> implements IBaseDaoDecorator<T> {
      /* 单条记录操作 */
 
     /**
-     * 增方法
+     * 增方法,并把添加后的id填入实体中
      * @param t 欲添加的实体
+     * @return 插入记录的id
      */
     @Override
-    public void insert(T t){
-        _insert(t);
-    }
+    public abstract long insert(T t);
 
     /**
      * 删方法
      * @param pk 要删除记录的主键
      */
     @Override
-    public void deleteByPrimaryKey(Integer pk){
+    public void deleteByPrimaryKey(Long pk){
         String whereClause = pkColumn + " = ?";
         _delete(whereClause, new String[]{pk.toString()});
     }
@@ -91,23 +90,19 @@ public abstract class BaseDao<T> implements IBaseDaoDecorator<T> {
     /* 批量记录操作 */
 
     /**
-     * 批量增加
+     * 批量增加,并把添加后的id添加的各自的实体中
      * @param ts 要增加记录的实体集
      */
     @Override
-    public void insertSome(List<T> ts){
-        for (T t:ts){
-            _insert(t);
-        }
-    }
+    public abstract void insertSome(List<T> ts);
 
     /**
      * 根据主键批量删除
      * @param pks 要删除记录的主键集
      */
     @Override
-    public void deleteSomeByPrimaryKeys(List<Integer> pks){
-        for (Integer pk: pks){
+    public void deleteSomeByPrimaryKeys(List<Long> pks){
+        for (Long pk: pks){
             deleteByPrimaryKey(pk);
         }
     }
@@ -129,8 +124,8 @@ public abstract class BaseDao<T> implements IBaseDaoDecorator<T> {
      * 删除所有记录
      */
     @Override
-    public void deleteAll(){
-        _delete(null, null);
+    public int deleteAll(){
+         return _delete("1", null);
     }
 
     /**

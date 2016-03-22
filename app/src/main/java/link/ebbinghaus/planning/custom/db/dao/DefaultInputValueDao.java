@@ -12,7 +12,7 @@ import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 import link.ebbinghaus.planning.model.entity.po.DefaultInputValue;
 
 /**
- * !此类的增方法不能调用(虽然实现了)<br>
+ * !此类的增方法不能调用(虽然实现了)
  * 因为按照业务逻辑,默认输入值只应该有一条记录
  */
 public class DefaultInputValueDao extends BaseDao<DefaultInputValue> {
@@ -22,22 +22,28 @@ public class DefaultInputValueDao extends BaseDao<DefaultInputValue> {
     }
 
     @Override
-    protected void _insert(DefaultInputValue defaultInputValue) {
+    protected long _insert(DefaultInputValue defaultInputValue) {
         ContentValues values = new ContentValues();
         defaultInputValue.convertToContentValues(values);
-        db.insert(DBConfig.Table.DEFAULT_INPUT_VALUE, null, values);
+        return db.insert(DBConfig.Table.DEFAULT_INPUT_VALUE, null, values);
     }
 
     @Override
-    protected void _delete(String where, String[] args) {
-        db.delete(DBConfig.Table.DEFAULT_INPUT_VALUE, where, args);
+    protected int _delete(String where, String[] args) {
+        return db.delete(DBConfig.Table.DEFAULT_INPUT_VALUE, where, args);
     }
 
     @Override
-    protected void _update(DefaultInputValue defaultInputValue, String where, String[] args) {
+    protected int _update(DefaultInputValue defaultInputValue, String where, String[] args) {
         ContentValues values = new ContentValues();
         defaultInputValue.convertToContentValues(values);
-        db.update(DBConfig.Table.DEFAULT_INPUT_VALUE, values, where, args);
+        return db.update(DBConfig.Table.DEFAULT_INPUT_VALUE, values, where, args);
+    }
+
+    @Override
+    public long insert(DefaultInputValue defaultInputValue) {
+        defaultInputValue.setPkDefaultInputValueId(_insert(defaultInputValue));
+        return defaultInputValue.getPkDefaultInputValueId();
     }
 
     @Override
@@ -57,6 +63,14 @@ public class DefaultInputValueDao extends BaseDao<DefaultInputValue> {
         cursor.close();
         return defaultInputValue;
     }
+
+    @Override
+    public void insertSome(List<DefaultInputValue> defaultInputValues) {
+        for (DefaultInputValue defaultInputValue : defaultInputValues) {
+            defaultInputValue.setPkDefaultInputValueId(_insert(defaultInputValue));
+        }
+    }
+
 
     @Override
     public List<DefaultInputValue> selectAll() {

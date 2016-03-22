@@ -12,7 +12,10 @@ public interface ISelectDaoAdapter<T>{
 
     List<T> selectAll();
 
-    void deleteByPrimaryKey(Integer pk);
+    void deleteByPrimaryKey(Long pk);
+
+    void insert(T t);
 
     void closeDB();
+
 }

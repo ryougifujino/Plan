@@ -11,15 +11,15 @@ import link.ebbinghaus.planning.custom.constant.config.DBConfig;
  * Created by WINFIELD on 2016/2/29.
  */
 public class EventSubtype implements Parcelable{
-    private Integer pkEventSubtypeId;
+    private Long pkEventSubtypeId;
     private String eventSubtype;
 
 
-    public Integer getPkEventSubtypeId() {
+    public Long getPkEventSubtypeId() {
         return pkEventSubtypeId;
     }
 
-    public void setPkEventSubtypeId(Integer pkEventSubtypeId) {
+    public void setPkEventSubtypeId(Long pkEventSubtypeId) {
         this.pkEventSubtypeId = pkEventSubtypeId;
     }
 
@@ -39,7 +39,7 @@ public class EventSubtype implements Parcelable{
     }
 
     public void filledByCursor(Cursor cursor){
-        setPkEventSubtypeId(cursor.getInt(cursor.getColumnIndex(DBConfig.EventSubtypeColumn.PK_EVENT_SUBTYPE_ID)));
+        setPkEventSubtypeId(cursor.getLong(cursor.getColumnIndex(DBConfig.EventSubtypeColumn.PK_EVENT_SUBTYPE_ID)));
         setEventSubtype(cursor.getString(cursor.getColumnIndex(DBConfig.EventSubtypeColumn.EVENT_SUBTYPE)));
     }
 

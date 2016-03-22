@@ -12,45 +12,45 @@ import link.ebbinghaus.planning.custom.constant.config.DBConfig;
  * Created by WINFIELD on 2016/2/29.
  */
 public class Event {
-    private Integer pkEventId;
-    private Integer learningEventGroupId;
-    private Integer eventGroupId;
+    private Long pkEventId;
+    private Long learningEventGroupId;
+    private Long eventGroupId;
     private String description;
     private String summary;
     private Integer eventType;   //1:学习型 2:普通型 3:模糊型
-    private Integer eventSubtypeId;
+    private Long eventSubtypeId;
     private Integer eventSequence;
-    private boolean isShowEventSequence;   //1:true 0:false
-    private long createTime; //精确到秒
-    private long eventExpectedFinishedDate;   //精确到日
-    private long eventFinishedTime;
-    private boolean isEventFinished;
-    private boolean isGreekAlphabetMarked;
-    private boolean isRemind;
-    private long remindTime;
+    private Boolean isShowEventSequence;   //1:true 0:false
+    private Long createTime; //精确到秒
+    private Long eventExpectedFinishedDate;   //精确到日
+    private Long eventFinishedTime;
+    private Boolean isEventFinished;
+    private Boolean isGreekAlphabetMarked;
+    private Boolean isRemind;
+    private Long remindTime;
     private Integer eventProcess; //1:未开始 2:进行中/待办 3:成功/完成 4:失败/过期
 
-    public Integer getPkEventId() {
+    public Long getPkEventId() {
         return pkEventId;
     }
 
-    public void setPkEventId(Integer pkEventId) {
+    public void setPkEventId(Long pkEventId) {
         this.pkEventId = pkEventId;
     }
 
-    public Integer getLearningEventGroupId() {
+    public Long getLearningEventGroupId() {
         return learningEventGroupId;
     }
 
-    public void setLearningEventGroupId(Integer learningEventGroupId) {
+    public void setLearningEventGroupId(Long learningEventGroupId) {
         this.learningEventGroupId = learningEventGroupId;
     }
 
-    public Integer getEventGroupId() {
+    public Long getEventGroupId() {
         return eventGroupId;
     }
 
-    public void setEventGroupId(Integer eventGroupId) {
+    public void setEventGroupId(Long eventGroupId) {
         this.eventGroupId = eventGroupId;
     }
 
@@ -78,11 +78,11 @@ public class Event {
         this.eventType = eventType;
     }
 
-    public Integer getEventSubtypeId() {
+    public Long getEventSubtypeId() {
         return eventSubtypeId;
     }
 
-    public void setEventSubtypeId(Integer eventSubtypeId) {
+    public void setEventSubtypeId(Long eventSubtypeId) {
         this.eventSubtypeId = eventSubtypeId;
     }
 
@@ -207,13 +207,13 @@ public class Event {
     }
     
     public void filledByCursor(Cursor cursor){
-        setPkEventId(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.PK_EVENT_ID)));
-        setLearningEventGroupId(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.LEARNING_EVENT_GROUP_ID)));
-        setEventGroupId(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_GROUP_ID)));
+        setPkEventId(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.PK_EVENT_ID)));
+        setLearningEventGroupId(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.LEARNING_EVENT_GROUP_ID)));
+        setEventGroupId(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_GROUP_ID)));
         setDescription(cursor.getString(cursor.getColumnIndex(DBConfig.EventColumn.DESCRIPTION)));
         setSummary(cursor.getString(cursor.getColumnIndex(DBConfig.EventColumn.SUMMARY)));
         setEventType(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_TYPE)));
-        setEventSubtypeId(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_SUBTYPE_ID)));
+        setEventSubtypeId(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_SUBTYPE_ID)));
         setEventSequence(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_SEQUENCE)));
         setIsShowEventSequence(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.IS_SHOW_EVENT_SEQUENCE)));
         setCreateTime(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.CREATE_TIME)));
