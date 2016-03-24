@@ -13,4 +13,19 @@ public class Utils {
     public static boolean int2Bool(int value){
         return value == 1 ? true : false;
     }
+
+    /**
+     * 判断目标对象是否包含有为null的对象
+     * @param objs 目标对象
+     * @return 如果目标对象有任何一个为null,则返回true,否则返回false
+     */
+    public static boolean isAnyNull(Object... objs){
+        for (Object obj : objs) {
+            if (obj == null){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

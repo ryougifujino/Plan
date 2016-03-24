@@ -23,4 +23,9 @@ public interface PlanningBuildPresenter {
      * 完成(保存并退出Activity)Event(普通或学习)
      */
     void doneSpecificEvent();
+
+    /**
+     * 关闭数据库
+     */
+    void closeDB();
 }

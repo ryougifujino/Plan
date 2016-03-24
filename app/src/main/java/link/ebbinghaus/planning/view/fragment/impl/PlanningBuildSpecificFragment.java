@@ -23,12 +23,11 @@ import com.yurikami.lib.widget.RadioSelectDialog;
 import java.util.Calendar;
 
 import link.ebbinghaus.planning.custom.constant.Constant;
-import link.ebbinghaus.planning.custom.constant.entity.EventConstant;
-import link.ebbinghaus.planning.custom.constant.entity.FastTemplateConstant;
+import link.ebbinghaus.planning.custom.constant.config.entity.FastTemplateConfig;
+import link.ebbinghaus.planning.custom.constant.config.entity.LearningEventGroupConfig;
 import link.ebbinghaus.planning.custom.constant.module.PlanningBuildConstant;
 import link.ebbinghaus.planning.custom.viewholder.planning.build.SpecificViewHolder;
 import link.ebbinghaus.planning.model.entity.po.DefaultInputValue;
-import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
 import link.ebbinghaus.planning.model.entity.po.FastTemplate;
@@ -45,9 +44,9 @@ import link.ebbinhaus.planning.R;
  */
 public class PlanningBuildSpecificFragment extends BaseFragment implements PlanningBuildSpecificView,
         View.OnClickListener,CompoundButton.OnCheckedChangeListener,
-        PlanningBuildActivity.OnBuildMenuItemClickListener,
-        RadialTimePickerDialogFragment.OnTimeSetListener,
-        CalendarDatePickerDialogFragment.OnDateSetListener, RadioSelectDialog.OnRadioSelectListener {
+        PlanningBuildActivity.OnBuildMenuItemClickListener,PlanningBuildActivity.OnEventSaveListener,
+        RadialTimePickerDialogFragment.OnTimeSetListener, CalendarDatePickerDialogFragment.OnDateSetListener,
+        RadioSelectDialog.OnRadioSelectListener {
 
     //requestCode
     public static final int FLAG_EVENT_SUBTYPE = R.id.tv_planning_build_subtype & CommonSelectActivity.FLAG_MASK;
@@ -57,7 +56,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     /** Intent的name */
     public static final String INTENT_NAME_FAST_TEMPLATE_TYPE = Constant.PACKAGE_NAME + ".FastTemplateType";
 
-    private PlanningBuildSpecificPresenter mPlanningBuildSpecificPresenter;
+    private PlanningBuildSpecificPresenter mPresenter;
 
     private SpecificViewHolder vh;
     private LayoutInflater mLayoutInflater;
@@ -81,15 +80,10 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
                              Bundle savedInstanceState) {
         this.mLayoutInflater = inflater;
         View v = mLayoutInflater.inflate(R.layout.fragment_planning_build_specific, container, false);
-        mPlanningBuildSpecificPresenter = new PlanningBuildSpecificPresenterImpl(this);
+        mPresenter = new PlanningBuildSpecificPresenterImpl(this);
         vh = new SpecificViewHolder(v);
-        vh.setOnclickListener(this);
-        vh.setOnCheckedChangeListener(this);
-
-        //注册OnBuildMenuItemClickListener监听器
-        ((PlanningBuildActivity)mActivity).setOnBuildMenuItemClickListener(this);
-
-        mPlanningBuildSpecificPresenter.getAndSetDefaultInputValues(mInputEvent);
+        mPresenter.registerListeners();
+        mPresenter.getAndSetDefaultInputValues(mInputEvent);
 
         return v;
     }
@@ -100,36 +94,47 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
             case FLAG_EVENT_SUBTYPE:
                 if (resultCode == mActivity.RESULT_OK) {
                     EventSubtype eventSubtype = data.getParcelableExtra(CommonSelectActivity.INTENT_NAME_RESULT);
-                    mPlanningBuildSpecificPresenter.configureEventSubtype(eventSubtype);
+                    mPresenter.configureEventSubtype(eventSubtype);
                 }else {
                     EventSubtype eventSubtype = new EventSubtype();
                     eventSubtype.setEventSubtype(getString(R.string.common_none));
-                    mPlanningBuildSpecificPresenter.configureEventSubtype(eventSubtype);
+                    mPresenter.configureEventSubtype(eventSubtype);
                 }
                 break;
             case FLAG_FAST_TEMPLATE:
                 if (resultCode == mActivity.RESULT_OK) {
                     FastTemplate fastTemplate = data.getParcelableExtra(CommonSelectActivity.INTENT_NAME_RESULT);
-                    mPlanningBuildSpecificPresenter.configureDescription(fastTemplate.getTemplate());
+                    mPresenter.configureDescription(fastTemplate.getTemplate());
                 }else {
-                    mPlanningBuildSpecificPresenter.configureDescription(null);
+                    mPresenter.configureDescription(null);
                 }
                 break;
             case FLAG_EVENT_GROUP:
                 if (resultCode == mActivity.RESULT_OK) {
                     EventGroup eventGroup = data.getParcelableExtra(CommonSelectActivity.INTENT_NAME_RESULT);
-                    mPlanningBuildSpecificPresenter.configureEventGroup(eventGroup);
+                    mPresenter.configureEventGroup(eventGroup);
                 }else {
                     EventGroup eventGroup = new EventGroup();
                     eventGroup.setDescription(getString(R.string.common_none));
-                    mPlanningBuildSpecificPresenter.configureEventGroup(eventGroup);
+                    mPresenter.configureEventGroup(eventGroup);
                 }
                 break;
         }
     }
 
     @Override
-    public Event getInputEvent() {
+    public void setListeners() {
+        //批量注册form里面控件的监听器
+        vh.setOnclickListener(this);
+        vh.setOnCheckedChangeListener(this);
+
+        //注册PlanningBuildActivity里面的监听器
+        ((PlanningBuildActivity)mActivity).setOnBuildMenuItemClickListener(this);
+        ((PlanningBuildActivity)mActivity).setOnEventSaveListener(this);
+    }
+
+    @Override
+    public InputEventVo getInputEvent() {
         mInputEvent.setDescription(vh.descriptionEt.getText().toString());
         return mInputEvent;
     }
@@ -137,7 +142,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     @Override
     public void setDefaultInputValue(DefaultInputValue defaultInputValue) {
         // step1. 给mInputValue设置获取到的默认值(在presenter里做了大部分)
-        mInputEvent.setEventType(mPanelShowEventType ? FastTemplateConstant.SPEC_LEARNING_TYPE : FastTemplateConstant.SPEC_NORMAL_TYPE);
+        mInputEvent.setEventType(mPanelShowEventType ? FastTemplateConfig.TYPE_SPEC_LEARNING : FastTemplateConfig.TYPE_SPEC_NORMAL);
         // step2. 给控件设置默认值
         vh.eventSubtypeTv.setText(getString(R.string.common_none));
         vh.strategyTv.setText(defaultInputValue.getChnStrategy());
@@ -157,9 +162,9 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
                 .setOnDateSetListener(this)
                 .setFirstDayOfWeek(Calendar.SUNDAY)
                 .setPreselectedDate(mNowDate.getYear(), mNowDate.getMonth() - 1, mNowDate.getDay())
-                .setDateRange(new MonthAdapter.CalendarDay(), null)
+                .setDateRange(new MonthAdapter.CalendarDay(System.currentTimeMillis()), null)
                 .setThemeLight();
-        mRadioSelectDialog = RadioSelectDialog.newInstance(EventConstant.STRATEGYS, getString(R.string.planning_build_spec_event_strategy_select_dialog_title));
+        mRadioSelectDialog = RadioSelectDialog.newInstance(LearningEventGroupConfig.DESCRIPTIONS_STRATEGY, getString(R.string.planning_build_spec_event_strategy_select_dialog_title));
         mRadioSelectDialog.setOnRadioSelectListener(this);
     }
 
@@ -179,7 +184,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
             vh.showLearningPanel();
         }
         mPanelShowEventType = !mPanelShowEventType;
-        mInputEvent.setEventType(mPanelShowEventType ? FastTemplateConstant.SPEC_LEARNING_TYPE : FastTemplateConstant.SPEC_NORMAL_TYPE);
+        mInputEvent.setEventType(mPanelShowEventType ? FastTemplateConfig.TYPE_SPEC_LEARNING : FastTemplateConfig.TYPE_SPEC_NORMAL);
     }
 
     @Override
@@ -196,12 +201,12 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     @Override
     public void selectStrategy() {
         //选择计划方案(实际上是弹出dialog后,最后再下面的onRadioSelected返回结果)
-        mRadioSelectDialog.show(getFragmentManager(),this.getTag());
+        mRadioSelectDialog.show(getFragmentManager(), this.getTag());
     }
     @Override
     public void onRadioSelected(int index) {
         mInputEvent.setStrategy(index + 1);
-        vh.strategyTv.setText(EventConstant.STRATEGYS[index]);
+        vh.strategyTv.setText(LearningEventGroupConfig.DESCRIPTIONS_STRATEGY[index]);
         mRadioSelectDialog.dismiss();
     }
 
@@ -258,11 +263,21 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         mInputEvent.setEventGroupId(eventGroup.getPkEventGroupId());
     }
 
+    //回调函数,在这里面执行form的重置工作
+    @Override
+    public void onEventSavedSuccessfully() {
+        mInputEvent = new InputEventVo();
+        mPresenter.getAndSetDefaultInputValues(mInputEvent);
+        vh.descriptionEt.setText("");
+        mSnackbar.setText(getString(R.string.common_save_succeed));
+        mSnackbar.show();
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_planning_build_switch_event_type:
-                mPlanningBuildSpecificPresenter.switchBuildPanel();
+                mPresenter.switchBuildPanel();
                 break;
             case R.id.tv_planning_build_subtype:
                 jumpToSelectActivityForResult(PlanningBuildConstant.TITLE_SELECT_SUBTYPE , FLAG_EVENT_SUBTYPE);
@@ -270,19 +285,19 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
             case R.id.btn_planning_build_fast_template:
                 startActivityForResult(
                         newIntent(CommonSelectActivity.class)
-                                .putExtra(INTENT_NAME_FAST_TEMPLATE_TYPE, mPanelShowEventType ? FastTemplateConstant.SPEC_LEARNING_TYPE : FastTemplateConstant.SPEC_NORMAL_TYPE)
+                                .putExtra(INTENT_NAME_FAST_TEMPLATE_TYPE, mPanelShowEventType ? FastTemplateConfig.TYPE_SPEC_LEARNING : FastTemplateConfig.TYPE_SPEC_NORMAL)
                                 .putExtra(CommonSelectActivity.INTENT_NAME_TITLE, PlanningBuildConstant.TITLE_SELECT_FAST_TEMPLATE)
                                 .putExtra(CommonSelectActivity.INTENT_NAME_FLAG, FLAG_FAST_TEMPLATE),
                         FLAG_FAST_TEMPLATE);
                 break;
             case R.id.tv_planning_build_strategy:
-                mPlanningBuildSpecificPresenter.configureStrategy();
+                mPresenter.configureStrategy();
                 break;
             case R.id.tv_planning_build_expected_finish_date:
-                mPlanningBuildSpecificPresenter.configureExpectedFinishDate();
+                mPresenter.configureExpectedFinishDate();
                 break;
             case R.id.tv_planning_build_remind_time:
-                mPlanningBuildSpecificPresenter.configureRemindTime();
+                mPresenter.configureRemindTime();
                 break;
             case R.id.tv_planning_build_event_group:
                 jumpToSelectActivityForResult(PlanningBuildConstant.TITLE_SELECT_EVENT_GROUP ,FLAG_EVENT_GROUP);
@@ -301,27 +316,28 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         switch (buttonView.getId()){
             case R.id.switch_planning_build_is_remind:
-                mPlanningBuildSpecificPresenter.configureRemind(isChecked);
+                mPresenter.configureRemind(isChecked);
                 break;
             case R.id.switch_planning_build_is_show_event_sequence:
-                mPlanningBuildSpecificPresenter.configureSequence(isChecked);
+                mPresenter.configureSequence(isChecked);
                 break;
             case R.id.switch_planning_build_is_greek_alphabet_marked:
-                mPlanningBuildSpecificPresenter.configureGreekAlphabet(isChecked);
+                mPresenter.configureGreekAlphabet(isChecked);
                 break;
         }
     }
 
     @Override
-    public boolean onBuildMenuClick(Event event) {
+    public boolean onBuildMenuClick(InputEventVo inputEvent) {
         //提取页面数据到event中
         //step 1.验证填写完整性
         if (TextUtils.isEmpty(vh.descriptionEt.getText().toString().trim())) {
+            mSnackbar.setText(getString(R.string.planning_build_spec_description_validate_info));
             mSnackbar.show();
             return false;
         }
-        //step 2.填入event
-        event.copyFrom(getInputEvent());
+        //step 2.拷贝填入
+        inputEvent.copyFrom(getInputEvent());
         return true;
         /*
         event.setLearningEventGroupId(1L);

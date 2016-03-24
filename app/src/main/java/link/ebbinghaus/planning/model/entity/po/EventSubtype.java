@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.yurikami.lib.util.NonNullContentValues;
+
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 
 /**
@@ -33,8 +35,9 @@ public class EventSubtype implements Parcelable{
     /** 辅助方法 */
 
     public void convertToContentValues(ContentValues values){
-        values.put(DBConfig.EventSubtypeColumn.PK_EVENT_SUBTYPE_ID, pkEventSubtypeId);
-        values.put(DBConfig.EventSubtypeColumn.EVENT_SUBTYPE, eventSubtype);
+        NonNullContentValues nonNullValues = new NonNullContentValues(values);
+        nonNullValues.put(DBConfig.EventSubtypeColumn.PK_EVENT_SUBTYPE_ID, pkEventSubtypeId);
+        nonNullValues.put(DBConfig.EventSubtypeColumn.EVENT_SUBTYPE, eventSubtype);
     }
 
     public void filledByCursor(Cursor cursor){
@@ -51,22 +54,6 @@ public class EventSubtype implements Parcelable{
 
     public EventSubtype(){}
 
-    protected EventSubtype(Parcel in) {
-        eventSubtype = in.readString();
-    }
-
-    public static final Creator<EventSubtype> CREATOR = new Creator<EventSubtype>() {
-        @Override
-        public EventSubtype createFromParcel(Parcel in) {
-            return new EventSubtype(in);
-        }
-
-        @Override
-        public EventSubtype[] newArray(int size) {
-            return new EventSubtype[size];
-        }
-    };
-
     @Override
     public int describeContents() {
         return 0;
@@ -74,6 +61,24 @@ public class EventSubtype implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(eventSubtype);
+        dest.writeValue(this.pkEventSubtypeId);
+        dest.writeString(this.eventSubtype);
     }
+
+    protected EventSubtype(Parcel in) {
+        this.pkEventSubtypeId = (Long) in.readValue(Long.class.getClassLoader());
+        this.eventSubtype = in.readString();
+    }
+
+    public static final Creator<EventSubtype> CREATOR = new Creator<EventSubtype>() {
+        @Override
+        public EventSubtype createFromParcel(Parcel source) {
+            return new EventSubtype(source);
+        }
+
+        @Override
+        public EventSubtype[] newArray(int size) {
+            return new EventSubtype[size];
+        }
+    };
 }

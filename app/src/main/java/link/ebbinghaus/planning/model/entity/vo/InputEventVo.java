@@ -27,4 +27,26 @@ public class InputEventVo extends Event {
     public void setStrategy(Integer strategy) {
         this.strategy = strategy;
     }
+
+    public void copyFrom(InputEventVo inputEvent){
+        setPkEventId(inputEvent.getPkEventId());
+        setLearningEventGroupId(inputEvent.getLearningEventGroupId());
+        setEventGroupId(inputEvent.getEventGroupId());
+        setDescription(inputEvent.getDescription());
+        setSummary(inputEvent.getSummary());
+        setEventType(inputEvent.getEventType());
+        setEventSubtypeId(inputEvent.getEventSubtypeId());
+        setEventSequence(inputEvent.getEventSequence());
+        setIsShowEventSequence(inputEvent.getIsShowEventSequence());
+        setCreateTime(inputEvent.getCreateTime());
+        setEventExpectedFinishedDate(inputEvent.getEventExpectedFinishedDate());
+        setEventFinishedTime(inputEvent.getEventFinishedTime());
+        setIsEventFinished(inputEvent.getIsEventFinished());
+        setIsGreekAlphabetMarked(inputEvent.getIsGreekAlphabetMarked());
+        setIsRemind(inputEvent.getIsRemind());
+        setRemindTime(inputEvent.getRemindTime());
+        setEventProcess(inputEvent.getEventProcess());
+        setMaxWidth(inputEvent.getMaxWidth());
+        setStrategy(inputEvent.getStrategy());
+    }
 }

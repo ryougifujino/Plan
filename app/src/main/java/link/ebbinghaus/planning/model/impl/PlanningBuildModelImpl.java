@@ -1,8 +1,12 @@
 package link.ebbinghaus.planning.model.impl;
 
+import com.yurikami.lib.util.DateUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import link.ebbinghaus.planning.custom.constant.config.entity.EventConfig;
+import link.ebbinghaus.planning.custom.constant.config.entity.LearningEventGroupConfig;
 import link.ebbinghaus.planning.custom.constant.module.PlanningBuildConstant;
 import link.ebbinghaus.planning.custom.db.decorator.impl.DefaultInputValueDaoDecorator;
 import link.ebbinghaus.planning.custom.db.decorator.impl.EventDaoDecorator;
@@ -16,6 +20,7 @@ import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
 import link.ebbinghaus.planning.model.entity.po.FastTemplate;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
+import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningBuildAbstractFragment;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningBuildSpecificFragment;
 
@@ -27,6 +32,7 @@ public class PlanningBuildModelImpl implements PlanningBuildModel {
     private EventSubtypeDaoDecorator mEventSubtypeDao = new EventSubtypeDaoDecorator();
     private FastTemplateDaoDecorator mFastTemplateDao = new FastTemplateDaoDecorator();
     private EventGroupDaoDecorator mEventGroupDao = new EventGroupDaoDecorator();
+    private EventDaoDecorator mEventDao = new EventDaoDecorator();
 
     @Override
     public List<Tab> makePlanningBuildTabs() {
@@ -37,15 +43,31 @@ public class PlanningBuildModelImpl implements PlanningBuildModel {
     }
 
     @Override
-    public void addLearningEvent(Event event) {
-        EventDaoDecorator eventDao = new EventDaoDecorator();
-        eventDao.insert(event);
-        eventDao.closeDB();
+    public void addLearningEvent(InputEventVo inputEvent) {
+        switch (inputEvent.getStrategy()){
+            case LearningEventGroupConfig.TYPE_COMPREHENSIVE:
+                mEventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_COMPREHENSIVE);
+                break;
+            case LearningEventGroupConfig.TYPE_MEMORIAL:
+                mEventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_MEMORIAL);
+                break;
+            case LearningEventGroupConfig.TYPE_MEMORIAL_PRO:
+                mEventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_MEMORIAL_PRO);
+                break;
+            case LearningEventGroupConfig.TYPE_PERSISTENT:
+                mEventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_PERSISTENT);
+                break;
+        }
     }
 
     @Override
-    public void addEvent(Event event, EventSubtype eventSubtype, EventGroup eventGroup) {
-
+    public void addNormalEvent(Event event) {
+        event.setEventSequence(null);
+        event.setEventProcess(
+                DateUtils.isInSameDate(DateUtils.currentDateTimestamp(), event.getEventExpectedFinishedDate())
+                        ? EventConfig.PROCESS_TODO
+                        : EventConfig.PROCESS_NOT_STARTED);
+        mEventDao.insert(event);
     }
 
     @Override
@@ -89,5 +111,6 @@ public class PlanningBuildModelImpl implements PlanningBuildModel {
         mEventSubtypeDao.closeDB();
         mFastTemplateDao.closeDB();
         mEventGroupDao.closeDB();
+        mEventDao.closeDB();
     }
 }

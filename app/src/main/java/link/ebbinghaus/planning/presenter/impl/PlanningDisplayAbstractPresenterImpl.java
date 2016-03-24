@@ -12,18 +12,18 @@ import link.ebbinghaus.planning.view.fragment.PlanningDisplayAbstractView;
  * Created by WINFIELD on 2016/3/1.
  */
 public class PlanningDisplayAbstractPresenterImpl implements PlanningDisplayAbstractPresenter {
-    private PlanningDisplayAbstractView mPlanningDisplayAbstractView;
+    private PlanningDisplayAbstractView mView;
     private PlanningDisplayAbstractModel mPlanningDisplayAbstractModel;
 
     public PlanningDisplayAbstractPresenterImpl(PlanningDisplayAbstractView planningDisplayAbstractView) {
-        this.mPlanningDisplayAbstractView = planningDisplayAbstractView;
+        this.mView = planningDisplayAbstractView;
         mPlanningDisplayAbstractModel = new PlanningDisplayAbstractModelImpl();
     }
 
     @Override
     public void configureRelatedViewPagerTabLayout() {
         List<Tab> tabs = mPlanningDisplayAbstractModel.makePlanningDisplayAbstractTabs();
-        mPlanningDisplayAbstractView.bindViewPagerToTabLayout(tabs);
+        mView.bindViewPagerToTabLayout(tabs);
     }
 
 

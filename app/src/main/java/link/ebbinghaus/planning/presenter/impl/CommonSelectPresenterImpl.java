@@ -7,28 +7,28 @@ import link.ebbinghaus.planning.view.activity.CommonSelectView;
  * Created by WINFIELD on 2016/3/17.
  */
 public class CommonSelectPresenterImpl implements CommonSelectPresenter {
-    private CommonSelectView mCommonSelectView;
+    private CommonSelectView mView;
 
     public CommonSelectPresenterImpl(CommonSelectView commonSelectView) {
-        this.mCommonSelectView = commonSelectView;
+        this.mView = commonSelectView;
     }
 
     @Override
     public void configureToolbar() {
-        mCommonSelectView.setToolbar();
-        mCommonSelectView.initToolbarAddDialog();
+        mView.setToolbar();
+        mView.initToolbarAddDialog();
     }
 
     @Override
     public void getAndSetSenderData() {
-        mCommonSelectView.setSenderData();
+        mView.setSenderData();
     }
 
     @Override
     public void configureRecyclerView() {
-        mCommonSelectView.chooseRecyclerViewAdapter();
-        mCommonSelectView.setRecyclerView();
-        mCommonSelectView.setOnCreateButtonClickListener();
+        mView.chooseRecyclerViewAdapter();
+        mView.setRecyclerView();
+        mView.setOnCreateButtonClickListener();
     }
 
     @Override

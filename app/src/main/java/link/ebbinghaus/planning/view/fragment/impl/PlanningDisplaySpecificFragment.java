@@ -28,7 +28,7 @@ import link.ebbinhaus.planning.R;
  */
 public class PlanningDisplaySpecificFragment extends BaseFragment implements PlanningDisplaySpecificView,
         ViewPager.OnPageChangeListener{
-    private PlanningDisplaySpecificPresenter mPlanningDisplaySpecificPresenter;
+    private PlanningDisplaySpecificPresenter mPresenter;
 
     @Bind(R.id.vp_planning_display_specific) ViewPager mViewPager;
     @Bind(R.id.tl_planning_display_specific) TabLayout mTabLayout;
@@ -40,10 +40,10 @@ public class PlanningDisplaySpecificFragment extends BaseFragment implements Pla
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_planning_display_specific, container, false);
         ButterKnife.bind(this,v);
-        mPlanningDisplaySpecificPresenter = new PlanningDisplaySpecificPresenterImpl(this);
+        mPresenter = new PlanningDisplaySpecificPresenterImpl(this);
 
         mViewPager.addOnPageChangeListener(this);
-        mPlanningDisplaySpecificPresenter.configureRelatedViewPagerTabLayout();
+        mPresenter.configureRelatedViewPagerTabLayout();
 
         return v;
     }

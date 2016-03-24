@@ -15,18 +15,23 @@ import link.ebbinghaus.planning.view.fragment.PlanningBuildSpecificView;
  * Created by WINFIELD on 2016/3/14.
  */
 public class PlanningBuildSpecificPresenterImpl implements PlanningBuildSpecificPresenter {
-    private PlanningBuildSpecificView mPlanningBuildSpecificView;
+    private PlanningBuildSpecificView mView;
     private PlanningBuildModel mPlanningBuildModel;
 
     public PlanningBuildSpecificPresenterImpl(PlanningBuildSpecificView planningBuildSpecificView) {
-        this.mPlanningBuildSpecificView = planningBuildSpecificView;
+        this.mView = planningBuildSpecificView;
         this.mPlanningBuildModel = new PlanningBuildModelImpl();
+    }
+
+    @Override
+    public void registerListeners() {
+        mView.setListeners();
     }
 
     @Override
     public void getAndSetDefaultInputValues(InputEventVo inputEvent) {
         DefaultInputValue value = mPlanningBuildModel.findDefaultInputValue();
-        mPlanningBuildSpecificView.setDefaultInputValue(value);
+        mView.setDefaultInputValue(value);
         inputEvent.setMaxWidth(value.getMaxWidth());
         inputEvent.setIsGreekAlphabetMarked(value.getIsGreekAlphabetMarked());
         inputEvent.setIsRemind(value.getIsRemind());
@@ -39,54 +44,54 @@ public class PlanningBuildSpecificPresenterImpl implements PlanningBuildSpecific
 
     @Override
     public void switchBuildPanel() {
-        mPlanningBuildSpecificView.setBuildPanel();
+        mView.setBuildPanel();
     }
 
     @Override
     public void configureEventSubtype(EventSubtype result) {
-        mPlanningBuildSpecificView.setSubtype(result);
+        mView.setSubtype(result);
     }
 
     @Override
     public void configureDescription(String template) {
         if(template != null) {
-            mPlanningBuildSpecificView.setFastTemplate(template);
+            mView.setFastTemplate(template);
         }
     }
 
     @Override
     public void configureStrategy() {
-        mPlanningBuildSpecificView.selectStrategy();
+        mView.selectStrategy();
     }
 
     @Override
     public void configureExpectedFinishDate() {
-        mPlanningBuildSpecificView.setExpectedFinishDate();
+        mView.setExpectedFinishDate();
     }
 
     @Override
     public void configureRemind(boolean isChecked) {
-        mPlanningBuildSpecificView.setRemind(isChecked);
+        mView.setRemind(isChecked);
     }
 
     @Override
     public void configureRemindTime() {
-        mPlanningBuildSpecificView.setRemindTime();
+        mView.setRemindTime();
     }
 
     @Override
     public void configureSequence(boolean isChecked) {
-        mPlanningBuildSpecificView.setSequence(isChecked);
+        mView.setSequence(isChecked);
     }
 
     @Override
     public void configureGreekAlphabet(boolean isChecked) {
-        mPlanningBuildSpecificView.setGreekAlphabet(isChecked);
+        mView.setGreekAlphabet(isChecked);
     }
 
     @Override
     public void configureEventGroup(EventGroup eventGroup) {
-        mPlanningBuildSpecificView.setEventGroup(eventGroup);
+        mView.setEventGroup(eventGroup);
     }
 
     @Override

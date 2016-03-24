@@ -11,9 +11,24 @@ import java.util.Date;
  * Created by WINFIELD on 2016/2/29.
  */
 public class DateUtils {
-    public final long MINUTE_SECONDS = 60;
-    public final long HOUR_SECONDS = MINUTE_SECONDS * 60;
-    public final long DAY_SECONDS = HOUR_SECONDS * 24;
+    public static final long MINUTE_MILLISECONDS = 60 * 1000;
+    public static final long HOUR_MILLISECONDS = MINUTE_MILLISECONDS * 60;
+    public static final long DAY_MILLISECONDS = HOUR_MILLISECONDS * 24;
+
+    public static final long _31_MS = DAY_MILLISECONDS * 31;
+    public static final long _30_MS = DAY_MILLISECONDS * 30;
+    public static final long JAN_MS = _31_MS;
+    public static final long MAR_MS = _31_MS;
+    public static final long APR_MS = _30_MS;
+    public static final long MAY_MS = _31_MS;
+    public static final long JUN_MS = _30_MS;
+    public static final long JUL_MS = _31_MS;
+    public static final long AUG_MS = _31_MS;
+    public static final long SEPT_MS = _30_MS;
+    public static final long OCT_MS = _31_MS;
+    public static final long NOV_MS = _30_MS;
+    public static final long DEC_MS = _31_MS;
+
 
     private static long sLastTimestamp = 0l;
     private static Calendar sLastCalendar;
@@ -143,6 +158,51 @@ public class DateUtils {
         return date;
     }
 
+
+    public static boolean isLeapYear(int year){
+        return ( (year % 4 == 0) && (year % 100 != 0) ) || (year % 400 == 0);
+    }
+
+    /** 计算出某年的毫秒数 */
+    public static long millisecondsOfYear(int year) {
+        return isLeapYear(year) ? 366 * DAY_MILLISECONDS : 365 * DAY_MILLISECONDS;
+    }
+    /** 计算某年二月的毫秒数 */
+    public static long millisecondsOfYearInFeb(int year){
+        return isLeapYear(year) ? 29 * DAY_MILLISECONDS : 28 * DAY_MILLISECONDS;
+    }
+    /** 计算某年某月的毫秒数 */
+    public static long millisecondsOfMonth(int year,int month){
+        switch (month){
+            case 1:
+                return JAN_MS;
+            case 2:
+                return millisecondsOfYearInFeb(year);
+            case 3:
+                return MAR_MS;
+            case 4:
+                return APR_MS;
+            case 5:
+                return MAY_MS;
+            case 6:
+                return JUN_MS;
+            case 7:
+                return JUL_MS;
+            case 8:
+                return AUG_MS;
+            case 9:
+                return SEPT_MS;
+            case 10:
+                return OCT_MS;
+            case 11:
+                return NOV_MS;
+            case 12:
+                return DEC_MS;
+            default:
+                return -1;
+        }
+    }
+
     /**
      * 获取到今天日期0点的时间戳
      * @return 今天日期0点的时间戳
@@ -198,6 +258,16 @@ public class DateUtils {
     }
 
     /**
+     * 将指定时间戳转换为Datetime格式
+     * @param timestamp 指定的时间戳
+     * @return 转换好的Datetime实例
+     */
+    public static Datetime convertTimestamp2Datetime(long timestamp){
+        return Datetime.buildDatetime(year(timestamp),month(timestamp),day(timestamp),
+                hour(timestamp),minute(timestamp),second(timestamp));
+    }
+
+    /**
      * 将时间戳转换为形如HH:mm
      * @param timestamp 时间戳
      * @return 形如HH:mm的字符串
@@ -205,4 +275,38 @@ public class DateUtils {
     public static String formatTimestamp2HourMinute(long timestamp){
         return hourMinuteFormat.format(timestamp);
     }
+
+    /**
+     * 获取目标日期x天后的时间戳
+     * @param timestamp 目标日期的时间戳
+     * @param day 天数差
+     * @return 目标日期+day天后那天的时间戳
+     */
+    public static long timestampAfter(long timestamp, int day){
+        return timestamp + (day * DAY_MILLISECONDS);
+    }
+
+    /**
+     * 获取目标日期x天前的时间戳
+     * @param timestamp 目标日期的时间戳
+     * @param day 天数差
+     * @return
+     */
+    public static long timestampBefore(long timestamp, int day){
+        return timestamp - (day * DAY_MILLISECONDS);
+    }
+
+    /**
+     * 判断两个时间戳是否在同一天
+     * @param timestamp1
+     * @param timestamp2
+     * @return 在同一天返回true,否则返回false
+     */
+    public static boolean isInSameDate(long timestamp1, long timestamp2){
+        Datetime datetime1 = convertTimestamp2Datetime(timestamp1);
+        Datetime datetime2 = convertTimestamp2Datetime(timestamp2);
+        return datetime1.isSameWith(datetime2);
+    }
+
+
 }

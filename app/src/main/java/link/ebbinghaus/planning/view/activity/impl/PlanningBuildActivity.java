@@ -16,8 +16,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.custom.adapter.SimpleFragmentPagerAdapter;
-import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
+import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
 import link.ebbinghaus.planning.presenter.PlanningBuildPresenter;
 import link.ebbinghaus.planning.presenter.impl.PlanningBuildPresenterImpl;
 import link.ebbinghaus.planning.view.activity.PlanningBuildView;
@@ -30,9 +30,10 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
     @Bind(R.id.tl_planning_build) TabLayout mTabLayout;
     @Bind(R.id.vp_planning_build) ViewPager mViewPager;
     private OnBuildMenuItemClickListener mOnBuildMenuItemClickListener;
-    private PlanningBuildPresenter mPlanningBuildPresenter;
+    private PlanningBuildPresenter mPresenter;
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private int mViewPagerPosition;
+    private OnEventSaveListener mOnEventSaveListener;
 
 
     @Override
@@ -40,10 +41,10 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planning_build);
         ButterKnife.bind(this);
-        mPlanningBuildPresenter = new PlanningBuildPresenterImpl(this);
-        mPlanningBuildPresenter.configureToolbar();
+        mPresenter = new PlanningBuildPresenterImpl(this);
+        mPresenter.configureToolbar();
 
-        mPlanningBuildPresenter.configureRelatedViewPagerTabLayout();
+        mPresenter.configureRelatedViewPagerTabLayout();
 
 
     }
@@ -63,11 +64,12 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
     }
 
     @Override
-    public void obtainSpecificEvent(Event event) {
+    public boolean obtainSpecificInputEvent(InputEventVo inputEvent) {
         Fragment son = nowVPFragment(mViewPager.getId(), mViewPagerPosition);
         if( son instanceof OnBuildMenuItemClickListener) {
-            mOnBuildMenuItemClickListener.onBuildMenuClick(event);
+            return mOnBuildMenuItemClickListener.onBuildMenuClick(inputEvent);
         }
+        return false;
     }
 
     @Override
@@ -76,8 +78,13 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
     }
 
     @Override
-    public void exitPlanningBuildActivity() {
+    public void resetSpecForm() {
+        mOnEventSaveListener.onEventSavedSuccessfully();
+    }
 
+    @Override
+    public void exitPlanningBuildActivity() {
+        finish();
     }
 
 
@@ -91,13 +98,19 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_planning_build_save:
-                mPlanningBuildPresenter.saveSpecificEvent();
+                mPresenter.saveSpecificEvent();
                 return true;
             case R.id.item_planning_build_done:
-                mPlanningBuildPresenter.doneSpecificEvent();
+                mPresenter.doneSpecificEvent();
                 return true;
         }
         return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.closeDB();
     }
 
     @Override
@@ -115,13 +128,31 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
         /**
          * 当制定计划Toolbar上的save和done按钮点击时调用此方法
          * 目的是为了从ViewPager中正在显示的Fragment里面提取相应的数据到形参event中
-         * @param event 用于保存提取的数据
-         * @return 如果event获取完整的话返回true,否则false
+         * @param inputEvent 用于保存提取的数据
+         * @return 如果event通过验证的话返回true,否则false
          */
-        boolean onBuildMenuClick(Event event);
+        boolean onBuildMenuClick(InputEventVo inputEvent);
     }
 
     public void setOnBuildMenuItemClickListener(OnBuildMenuItemClickListener l){
         this.mOnBuildMenuItemClickListener = l;
     }
+
+
+    /**
+     * Event保存入数据库的监听器
+     */
+    public interface OnEventSaveListener{
+
+        /**
+         * 当Event顺利地被保存入数据库时调用,<br>
+         * 这里用来重置输入form
+         */
+        void onEventSavedSuccessfully();
+    }
+
+    public void setOnEventSaveListener(OnEventSaveListener l){
+        mOnEventSaveListener = l;
+    }
+
 }

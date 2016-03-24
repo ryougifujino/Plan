@@ -1,9 +1,9 @@
 package link.ebbinghaus.planning.view.fragment;
 
 import link.ebbinghaus.planning.model.entity.po.DefaultInputValue;
-import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
+import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
 
 /**
  * Created by WINFIELD on 2016/3/14.
@@ -11,10 +11,15 @@ import link.ebbinghaus.planning.model.entity.po.EventSubtype;
 public interface PlanningBuildSpecificView {
 
     /**
+     * 设置一些监听器
+     */
+    void setListeners();
+
+    /**
      * 获取控件中的值,并以Event对象的形式返回
      * @return 控件中的值
      */
-    Event getInputEvent();
+    InputEventVo getInputEvent();
 
     /**
      * 设置数据库里存放的输入预设值

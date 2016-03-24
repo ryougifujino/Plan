@@ -4,10 +4,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.yurikami.lib.util.DateUtils;
+import com.yurikami.lib.util.NonNullContentValues;
 import com.yurikami.lib.util.Utils;
 
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
-import link.ebbinghaus.planning.custom.constant.entity.EventConstant;
+import link.ebbinghaus.planning.custom.constant.config.entity.LearningEventGroupConfig;
 
 /**
  * Created by WINFIELD on 2016/2/29.
@@ -92,13 +93,13 @@ public class DefaultInputValue {
     public String getChnStrategy(){
         switch (strategy){
             case 1:
-                return EventConstant.STRATEGY_COMPREHENSIVE;
+                return LearningEventGroupConfig.COMPREHENSIVE;
             case 2:
-                return EventConstant.STRATEGY_MEMORIAL;
+                return LearningEventGroupConfig.MEMORIAL;
             case 3:
-                return EventConstant.STRATEGY_MEMORIAL_PRO;
+                return LearningEventGroupConfig.MEMORIAL_PRO;
             case 4:
-                return EventConstant.STRATEGY_PERSISTENT;
+                return LearningEventGroupConfig.PERSISTENT;
         }
         return "";
     }
@@ -109,12 +110,13 @@ public class DefaultInputValue {
 
 
     public void convertToContentValues(ContentValues values){
-        values.put(DBConfig.DefaultInputValueColumn.MAX_WIDTH, maxWidth);
-        values.put(DBConfig.DefaultInputValueColumn.IS_GREEK_ALPHABET_MARKED, isGreekAlphabetMarked);
-        values.put(DBConfig.DefaultInputValueColumn.IS_REMIND, isRemind);
-        values.put(DBConfig.DefaultInputValueColumn.REMIND_TIME, remindTime);
-        values.put(DBConfig.DefaultInputValueColumn.STRATEGY, strategy);
-        values.put(DBConfig.DefaultInputValueColumn.IS_SHOW_EVENT_SEQUENCE, isShowEventSequence);
+        NonNullContentValues nonNullValues = new NonNullContentValues(values);
+        nonNullValues.put(DBConfig.DefaultInputValueColumn.MAX_WIDTH, maxWidth);
+        nonNullValues.put(DBConfig.DefaultInputValueColumn.IS_GREEK_ALPHABET_MARKED, isGreekAlphabetMarked);
+        nonNullValues.put(DBConfig.DefaultInputValueColumn.IS_REMIND, isRemind);
+        nonNullValues.put(DBConfig.DefaultInputValueColumn.REMIND_TIME, remindTime);
+        nonNullValues.put(DBConfig.DefaultInputValueColumn.STRATEGY, strategy);
+        nonNullValues.put(DBConfig.DefaultInputValueColumn.IS_SHOW_EVENT_SEQUENCE, isShowEventSequence);
     }
 
     public void filledByCursor(Cursor cursor){

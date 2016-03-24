@@ -4,6 +4,7 @@ package link.ebbinghaus.planning.model.entity.po;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.yurikami.lib.util.NonNullContentValues;
 import com.yurikami.lib.util.Utils;
 
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
@@ -186,23 +187,24 @@ public class Event {
 
 
     public void convertToContentValues(ContentValues values){
-        values.put(DBConfig.EventColumn.PK_EVENT_ID, pkEventId);
-        values.put(DBConfig.EventColumn.LEARNING_EVENT_GROUP_ID, learningEventGroupId);
-        values.put(DBConfig.EventColumn.EVENT_GROUP_ID, eventGroupId);
-        values.put(DBConfig.EventColumn.DESCRIPTION, description);
-        values.put(DBConfig.EventColumn.SUMMARY, summary);
-        values.put(DBConfig.EventColumn.EVENT_TYPE, eventType);
-        values.put(DBConfig.EventColumn.EVENT_SUBTYPE_ID, eventSubtypeId);
-        values.put(DBConfig.EventColumn.EVENT_SEQUENCE, eventSequence);
-        values.put(DBConfig.EventColumn.IS_SHOW_EVENT_SEQUENCE, isShowEventSequence);
-        values.put(DBConfig.EventColumn.CREATE_TIME, createTime);
-        values.put(DBConfig.EventColumn.EVENT_EXPECTED_FINISHED_DATE, eventExpectedFinishedDate);
-        values.put(DBConfig.EventColumn.EVENT_FINISHED_TIME, eventFinishedTime);
-        values.put(DBConfig.EventColumn.IS_EVENT_FINISHED, isEventFinished);
-        values.put(DBConfig.EventColumn.IS_GREEK_ALPHABET_MARKED, isGreekAlphabetMarked);
-        values.put(DBConfig.EventColumn.IS_REMIND, isRemind);
-        values.put(DBConfig.EventColumn.REMIND_TIME, remindTime);
-        values.put(DBConfig.EventColumn.EVENT_PROCESS, eventProcess);
+        NonNullContentValues nonNullValues = new NonNullContentValues(values);
+        nonNullValues.put(DBConfig.EventColumn.PK_EVENT_ID, pkEventId);
+        nonNullValues.put(DBConfig.EventColumn.LEARNING_EVENT_GROUP_ID, learningEventGroupId);
+        nonNullValues.put(DBConfig.EventColumn.EVENT_GROUP_ID, eventGroupId);
+        nonNullValues.put(DBConfig.EventColumn.DESCRIPTION, description);
+        nonNullValues.put(DBConfig.EventColumn.SUMMARY, summary);
+        nonNullValues.put(DBConfig.EventColumn.EVENT_TYPE, eventType);
+        nonNullValues.put(DBConfig.EventColumn.EVENT_SUBTYPE_ID, eventSubtypeId);
+        nonNullValues.put(DBConfig.EventColumn.EVENT_SEQUENCE, eventSequence);
+        nonNullValues.put(DBConfig.EventColumn.IS_SHOW_EVENT_SEQUENCE, isShowEventSequence);
+        nonNullValues.put(DBConfig.EventColumn.CREATE_TIME, createTime);
+        nonNullValues.put(DBConfig.EventColumn.EVENT_EXPECTED_FINISHED_DATE, eventExpectedFinishedDate);
+        nonNullValues.put(DBConfig.EventColumn.EVENT_FINISHED_TIME, eventFinishedTime);
+        nonNullValues.put(DBConfig.EventColumn.IS_EVENT_FINISHED, isEventFinished);
+        nonNullValues.put(DBConfig.EventColumn.IS_GREEK_ALPHABET_MARKED, isGreekAlphabetMarked);
+        nonNullValues.put(DBConfig.EventColumn.IS_REMIND, isRemind);
+        nonNullValues.put(DBConfig.EventColumn.REMIND_TIME, remindTime);
+        nonNullValues.put(DBConfig.EventColumn.EVENT_PROCESS, eventProcess);
     }
     
     public void filledByCursor(Cursor cursor){

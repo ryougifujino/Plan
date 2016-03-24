@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.yurikami.lib.db.SqlBuilder;
+import com.yurikami.lib.util.LogUtils;
+
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 import link.ebbinghaus.planning.custom.db.dao.DefaultInputValueDao;
 
@@ -36,6 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(DBConfig.CREATE_TABLE_EVENT_SUBTYPE);
         db.execSQL(DBConfig.CREATE_TABLE_FAST_TEMPLATE);
         db.execSQL(DBConfig.CREATE_TABLE_DEFAULT_INPUT_VALUE);
+        SqlBuilder.release();
 
         //向表中插入一些默认数据
         db.beginTransaction();
@@ -45,7 +49,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }finally {
             db.endTransaction();
         }
-
+        LogUtils.d(getClass().getSimpleName(),"Database Created!");
     }
 
     @Override
@@ -68,6 +72,5 @@ public class DBHelper extends SQLiteOpenHelper {
         DBManager.getInstance().openDB();
         DBManager.getInstance().closeDB();
     }
-
 
 }

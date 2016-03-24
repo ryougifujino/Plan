@@ -8,6 +8,7 @@ import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
 import link.ebbinghaus.planning.model.entity.po.FastTemplate;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
+import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
 
 /**
  * Created by WINFIELD on 2016/3/14.
@@ -21,18 +22,16 @@ public interface PlanningBuildModel {
     List<Tab> makePlanningBuildTabs();
 
     /**
-     * 向数据库保存一个制定好的学习计划
-     * @param event 学习计划分项
+     * 根据参数里的策略,向数据库添加相应的Event和LearningEventGroup
+     * @param inputEvent 学习计划分项
      */
-    void addLearningEvent(Event event);
+    void addLearningEvent(InputEventVo inputEvent);
 
     /**
-     * 向数据库保存一个制定好的普通计划
+     * 向数据库保存一个制定好的普通计划,会把和普通计划无关的属性设null
      * @param event 普通计划
-     * @param eventSubtype 计划子类型
-     * @param eventGroup 计划组
      */
-    void addEvent(Event event, EventSubtype eventSubtype, EventGroup eventGroup);
+    void addNormalEvent(Event event);
 
     /**
      * 向数据库保存一个制定好的模糊计划

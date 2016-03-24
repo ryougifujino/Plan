@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.yurikami.lib.util.NonNullContentValues;
+
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 
 /**
@@ -70,12 +72,13 @@ public class EventGroup implements Parcelable{
     /** 辅助方法 */
 
     public void convertToContentValues(ContentValues values){
-        values.put(DBConfig.EventGroupColumn.PK_EVENT_GROUP_ID, pkEventGroupId);
-        values.put(DBConfig.EventGroupColumn.CREATE_TIME, createTime);
-        values.put(DBConfig.EventGroupColumn.DESCRIPTION, description);
-        values.put(DBConfig.EventGroupColumn.LEARNING_EVENT_COUNT, learningEventCount);
-        values.put(DBConfig.EventGroupColumn.NORMAL_EVENT_COUNT, normalEventCount);
-        values.put(DBConfig.EventGroupColumn.ABSTRACT_EVENT_COUNT, abstractEventCount);
+        NonNullContentValues nonNullValues = new NonNullContentValues(values);
+        nonNullValues.put(DBConfig.EventGroupColumn.PK_EVENT_GROUP_ID, pkEventGroupId);
+        nonNullValues.put(DBConfig.EventGroupColumn.CREATE_TIME, createTime);
+        nonNullValues.put(DBConfig.EventGroupColumn.DESCRIPTION, description);
+        nonNullValues.put(DBConfig.EventGroupColumn.LEARNING_EVENT_COUNT, learningEventCount);
+        nonNullValues.put(DBConfig.EventGroupColumn.NORMAL_EVENT_COUNT, normalEventCount);
+        nonNullValues.put(DBConfig.EventGroupColumn.ABSTRACT_EVENT_COUNT, abstractEventCount);
     }
     
     public void filledByCursor(Cursor cursor){
@@ -100,23 +103,6 @@ public class EventGroup implements Parcelable{
 
     public EventGroup(){}
 
-    protected EventGroup(Parcel in) {
-        createTime = in.readLong();
-        description = in.readString();
-    }
-
-    public static final Creator<EventGroup> CREATOR = new Creator<EventGroup>() {
-        @Override
-        public EventGroup createFromParcel(Parcel in) {
-            return new EventGroup(in);
-        }
-
-        @Override
-        public EventGroup[] newArray(int size) {
-            return new EventGroup[size];
-        }
-    };
-
     @Override
     public int describeContents() {
         return 0;
@@ -124,7 +110,32 @@ public class EventGroup implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(createTime);
-        dest.writeString(description);
+        dest.writeValue(this.pkEventGroupId);
+        dest.writeValue(this.createTime);
+        dest.writeString(this.description);
+        dest.writeValue(this.learningEventCount);
+        dest.writeValue(this.normalEventCount);
+        dest.writeValue(this.abstractEventCount);
     }
+
+    protected EventGroup(Parcel in) {
+        this.pkEventGroupId = (Long) in.readValue(Long.class.getClassLoader());
+        this.createTime = (Long) in.readValue(Long.class.getClassLoader());
+        this.description = in.readString();
+        this.learningEventCount = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.normalEventCount = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.abstractEventCount = (Integer) in.readValue(Integer.class.getClassLoader());
+    }
+
+    public static final Creator<EventGroup> CREATOR = new Creator<EventGroup>() {
+        @Override
+        public EventGroup createFromParcel(Parcel source) {
+            return new EventGroup(source);
+        }
+
+        @Override
+        public EventGroup[] newArray(int size) {
+            return new EventGroup[size];
+        }
+    };
 }

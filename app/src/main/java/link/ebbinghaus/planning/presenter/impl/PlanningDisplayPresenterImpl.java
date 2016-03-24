@@ -12,11 +12,11 @@ import link.ebbinghaus.planning.view.fragment.PlanningDisplayView;
  * Created by WINFIELD on 2016/2/29.
  */
 public class PlanningDisplayPresenterImpl implements PlanningDisplayPresenter {
-    private PlanningDisplayView mPlanningDisplayView;
+    private PlanningDisplayView mView;
     private PlanningDisplayModel mPlanningDisplayModel;
 
     public PlanningDisplayPresenterImpl(PlanningDisplayView planningDisplayView) {
-        this.mPlanningDisplayView = planningDisplayView;
+        this.mView = planningDisplayView;
         mPlanningDisplayModel = new PlanningDisplayModelImpl();
     }
 
@@ -24,15 +24,15 @@ public class PlanningDisplayPresenterImpl implements PlanningDisplayPresenter {
     @Override
     public void configureRelatedViewPagerTabLayout() {
         List<Tab> tabs = mPlanningDisplayModel.makePlanningDisplayTabs();
-        mPlanningDisplayView.bindViewPagerToTabLayout(tabs);
+        mView.bindViewPagerToTabLayout(tabs);
     }
 
     @Override
-    public void preprocessToolbarDate() { mPlanningDisplayView.presetToolbarDate();}
+    public void preprocessToolbarDate() { mView.presetToolbarDate();}
 
     @Override
     public void configureToolbarDate() {
-        mPlanningDisplayView.setToolbarDate();
+        mView.setToolbarDate();
     }
 
 }

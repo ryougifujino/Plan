@@ -10,6 +10,11 @@ import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
 public interface PlanningBuildSpecificPresenter {
 
     /**
+     * 初始化地注册一些必要的监听器
+     */
+    void registerListeners();
+
+    /**
      * 从数据库里获取输入默认值,然后再设置
      * @param inputEvent 输入界面的底层值
      */

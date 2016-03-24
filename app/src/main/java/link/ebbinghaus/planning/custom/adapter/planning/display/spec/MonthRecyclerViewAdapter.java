@@ -38,7 +38,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
     private Context mContext;
     private LayoutInflater mInflater;
     //某一个月所有的Event
-    private List<Event> mEvents;
+    private List<Event> mSpecEvents;
     private Datetime mDatetime;
     //某一个月按日归类的Event
     private List<Event>[] mBlocks;
@@ -52,7 +52,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
 
     public MonthRecyclerViewAdapter(Context context, List<Event> events, Datetime datetime) {
         this.mContext = context;
-        this.mEvents = events;
+        this.mSpecEvents = events;
         this.mDatetime = datetime;
         this.mInflater = LayoutInflater.from(this.mContext);
         this.mDayInMonth = DateUtils.dayInMonth(mDatetime);
@@ -60,7 +60,21 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         mPlanningDisplaySpecificModel = new PlanningDisplaySpecificModelImpl();
 
         mPlanningDisplaySpecificModel.makeDayWeekListitems(mDayWeekListitems, mDayInMonth, datetime);
-        mBlocks = mPlanningDisplaySpecificModel.eventsToBlocks(mEvents, mDayInMonth);
+        mBlocks = mPlanningDisplaySpecificModel.eventsToBlocks(mSpecEvents, mDayInMonth);
+    }
+
+    /**
+     * 刷新按月视图
+     * @param newDatetime
+     * @param newSpecEvents
+     */
+    public void refresh(Datetime newDatetime,List<Event> newSpecEvents){
+        mDayWeekListitems.clear();
+        mDayInMonth = DateUtils.dayInMonth(newDatetime);
+        mPlanningDisplaySpecificModel.makeDayWeekListitems(mDayWeekListitems,mDayInMonth,newDatetime);
+        mBlocks = mPlanningDisplaySpecificModel.eventsToBlocks(newSpecEvents, mDayInMonth);
+        mViewCachePool.clearCaches();
+        this.notifyDataSetChanged();
     }
 
     @Override

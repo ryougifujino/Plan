@@ -37,7 +37,7 @@ import link.ebbinhaus.planning.R;
 public class PlanningDisplayFragment extends BaseFragment implements PlanningDisplayView,
         ViewPager.OnPageChangeListener, View.OnClickListener, CalendarDatePickerDialogFragment.OnDateSetListener {
 
-    private PlanningDisplayPresenter mPlanningDisplayPresenter;
+    private PlanningDisplayPresenter mPresenter;
 
     @Bind(R.id.abl_planning_display) AppBarLayout mAppBarLayout;
     @Bind(R.id.tb_common_head) Toolbar mToolbar;
@@ -58,16 +58,16 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
         this.mLayoutInflater = inflater;
         View v = mLayoutInflater.inflate(R.layout.fragment_planning_display, container, false);
         ButterKnife.bind(this, v);
-        mPlanningDisplayPresenter = new PlanningDisplayPresenterImpl(this);
+        mPresenter = new PlanningDisplayPresenterImpl(this);
 
         mViewPager.addOnPageChangeListener(this);
-        mPlanningDisplayPresenter.configureRelatedViewPagerTabLayout();
+        mPresenter.configureRelatedViewPagerTabLayout();
 
         mActivity.setSupportActionBar(mToolbar);
         //设置此,toolbar上的menu才能显示
         setHasOptionsMenu(true);
 
-        mPlanningDisplayPresenter.preprocessToolbarDate();
+        mPresenter.preprocessToolbarDate();
 
 
         return v;
@@ -91,7 +91,7 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
                 .setOnDateSetListener(this)
                 .setFirstDayOfWeek(Calendar.SUNDAY)
                 .setPreselectedDate(mNowDate.getYear(), mNowDate.getMonth() - 1, mNowDate.getDay())
-                .setDateRange(new MonthAdapter.CalendarDay(), null)
+                .setDateRange(new MonthAdapter.CalendarDay(0), null)
                 .setThemeLight();
     }
 
@@ -137,7 +137,7 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_planning_display_toolbar_date:
-                mPlanningDisplayPresenter.configureToolbarDate();
+                mPresenter.configureToolbarDate();
                 break;
         }
     }

@@ -93,6 +93,7 @@ public class DefaultInputValueDao extends BaseDao<DefaultInputValue> {
      */
     public static ContentValues presetDefaultInputValue(){
         DefaultInputValue defaultInputValue = new DefaultInputValue();
+        defaultInputValue.setPkDefaultInputValueId(1L);
         defaultInputValue.setMaxWidth(5);
         defaultInputValue.setIsGreekAlphabetMarked(false);
         defaultInputValue.setIsRemind(false);

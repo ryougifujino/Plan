@@ -11,11 +11,11 @@ import link.ebbinghaus.planning.view.activity.MainView;
  * Created by WINFIELD on 2016/2/19.
  */
 public class MainPresenterImpl implements MainPresenter {
-    private MainView mainView;
+    private MainView mView;
     private MainModel mainModel;
 
     public MainPresenterImpl(MainView mainView) {
-        this.mainView = mainView;
+        this.mView = mainView;
         mainModel = new MainModelImpl();
     }
 

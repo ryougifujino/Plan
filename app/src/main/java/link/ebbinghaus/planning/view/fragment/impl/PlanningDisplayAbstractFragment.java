@@ -27,7 +27,7 @@ import link.ebbinhaus.planning.R;
  * A simple {@link Fragment} subclass.
  */
 public class PlanningDisplayAbstractFragment extends BaseFragment implements PlanningDisplayAbstractView{
-    private PlanningDisplayAbstractPresenter mPlanningDisplayAbstractPresenter;
+    private PlanningDisplayAbstractPresenter mPresenter;
 
     @Bind(R.id.vp_planning_display_abstract) ViewPager mViewPager;
     @Bind(R.id.tl_planning_display_abstract) TabLayout mTabLayout;
@@ -38,9 +38,9 @@ public class PlanningDisplayAbstractFragment extends BaseFragment implements Pla
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_planning_display_abstract, container, false);
         ButterKnife.bind(this,v);
-        mPlanningDisplayAbstractPresenter = new PlanningDisplayAbstractPresenterImpl(this);
+        mPresenter = new PlanningDisplayAbstractPresenterImpl(this);
 
-        mPlanningDisplayAbstractPresenter.configureRelatedViewPagerTabLayout();
+        mPresenter.configureRelatedViewPagerTabLayout();
 
         return v;
     }

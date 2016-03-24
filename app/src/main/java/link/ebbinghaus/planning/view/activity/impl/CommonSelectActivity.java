@@ -51,7 +51,7 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
     /** 发送者接收返回信息时所用到的Intent Name */
     public static final String INTENT_NAME_RESULT = Constant.PACKAGE_NAME + ".Result";
 
-    private CommonSelectPresenter mCommonSelectPresenter;
+    private CommonSelectPresenter mPresenter;
     private SelectRecycleViewAdapter mAdapter;
     private SingleInputDialog mAddDialog;
     private Intent mIntent;
@@ -66,10 +66,10 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
         setContentView(R.layout.activity_common_select);
         ButterKnife.bind(this);
         mDeleteToolbar = new DeleteToolbarViewHolder(this);
-        mCommonSelectPresenter = new CommonSelectPresenterImpl(this);
-        mCommonSelectPresenter.configureToolbar();
-        mCommonSelectPresenter.getAndSetSenderData();
-        mCommonSelectPresenter.configureRecyclerView();
+        mPresenter = new CommonSelectPresenterImpl(this);
+        mPresenter.configureToolbar();
+        mPresenter.getAndSetSenderData();
+        mPresenter.configureRecyclerView();
 
     }
 

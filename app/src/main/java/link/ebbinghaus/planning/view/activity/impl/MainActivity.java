@@ -27,7 +27,7 @@ public class MainActivity extends BaseActivity implements MainView,
     @Bind(R.id.nv_main_drawer) NavigationView mNVDrawer;
     @Bind(R.id.dl_main_whole) DrawerLayout mDrawerLayout;
 
-    private MainPresenter mMainPresenter;
+    private MainPresenter mPresenter;
 
     private SparseArray<Class> mFragmentMap = new SparseArray<>();
     private int mNowFragmentId;
@@ -41,7 +41,7 @@ public class MainActivity extends BaseActivity implements MainView,
         mNVDrawer.setNavigationItemSelectedListener(this);
         mDrawerLayout.addDrawerListener(this);
 
-        mMainPresenter.cacheMainDrawerFragmentMap(mFragmentMap);
+        mPresenter.cacheMainDrawerFragmentMap(mFragmentMap);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity implements MainView,
     private void init() {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        mMainPresenter = new MainPresenterImpl(this);
+        mPresenter = new MainPresenterImpl(this);
     }
 
     @Override

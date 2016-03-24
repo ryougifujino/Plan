@@ -1,6 +1,7 @@
 package com.yurikami.lib.entity;
 
 import com.yurikami.lib.util.DateUtils;
+import com.yurikami.lib.util.Utils;
 
 /**
  * Created by WINFIELD on 2016/3/6.
@@ -108,5 +109,16 @@ public class Datetime {
 
     public void setChnWeek(String chnWeek) {
         this.chnWeek = chnWeek;
+    }
+
+    public boolean isSameWith(Datetime t){
+        if(Utils.isAnyNull(t, t.getYear(), t.getMonth(), t.getDay(), year, month, day)){
+            return false;
+        }
+        if (year.intValue() == t.getYear() && month.intValue() == t.getMonth() && day.intValue() == t.getDay()) {
+            return true;
+        }else {
+            return false;
+        }
     }
 }

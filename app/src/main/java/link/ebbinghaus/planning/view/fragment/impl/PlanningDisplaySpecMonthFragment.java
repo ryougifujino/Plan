@@ -11,15 +11,16 @@ import android.view.ViewGroup;
 
 import com.yurikami.lib.base.BaseFragment;
 import com.yurikami.lib.entity.Datetime;
+import com.yurikami.lib.util.DateUtils;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.custom.adapter.planning.display.spec.MonthRecyclerViewAdapter;
-import link.ebbinghaus.planning.custom.other.mock.MonthEventsMock;
-import link.ebbinghaus.planning.custom.util.CommonUtils;
 import link.ebbinghaus.planning.model.entity.po.Event;
+import link.ebbinghaus.planning.presenter.PlanningDisplaySpecMonthPresenter;
+import link.ebbinghaus.planning.presenter.impl.PlanningDisplaySpecMonthPresenterImpl;
 import link.ebbinghaus.planning.view.fragment.PlanningDisplaySpecMonthView;
 import link.ebbinhaus.planning.R;
 
@@ -30,30 +31,46 @@ public class PlanningDisplaySpecMonthFragment extends BaseFragment implements Pl
         PlanningDisplayFragment.OnToolbarDateChangeListener{
 
     @Bind(R.id.rv_planning_display_spec_month) RecyclerView mRecyclerView;
+    private PlanningDisplaySpecMonthPresenter mPresenter;
+    private MonthRecyclerViewAdapter mMonthRecyclerViewAdapter;
+    private Datetime mDateOfToday;
+    private List<Event> mEvents;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_planning_display_spec_month, container, false);
         ButterKnife.bind(this, v);
+        mPresenter = new PlanningDisplaySpecMonthPresenterImpl(this);
+        mEvents = mPresenter.obtainSpecEvents( mDateOfToday = DateUtils.dateOfToday());
+        mPresenter.renderMonthView();
 
-
-        List<Event> events = MonthEventsMock.getOneMonthEvents();
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        Datetime datetime = Datetime.buildDate(2016, 4, null);
-        MonthRecyclerViewAdapter adapter = new MonthRecyclerViewAdapter(mActivity,events,datetime);
-        mRecyclerView.setAdapter(adapter);
-        setOnFragmentDestroyListener(adapter);
 
         PlanningDisplayFragment planningDisplayFragment = (PlanningDisplayFragment) getParentFragment().getParentFragment();
         planningDisplayFragment.setOnToolbarDateChangeListener(this);
-
 
         return v;
     }
 
 
     @Override
+    public void setRecyclerView() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mMonthRecyclerViewAdapter = new MonthRecyclerViewAdapter(mActivity, mEvents, mDateOfToday);
+        mRecyclerView.setAdapter(mMonthRecyclerViewAdapter);
+        setOnFragmentDestroyListener(mMonthRecyclerViewAdapter);
+    }
+
+    @Override
     public void onDateChanged(Datetime datetime) {
-        CommonUtils.showLongToast(" MONTH "+datetime.getYear() + "  " + datetime.getMonth() + "  " + datetime.getDay());
+        mEvents = mPresenter.obtainSpecEvents(datetime);
+        mMonthRecyclerViewAdapter.refresh(datetime, mEvents);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mEvents = mPresenter.obtainSpecEvents(mDateOfToday);
+        mMonthRecyclerViewAdapter.refresh(mDateOfToday, mEvents);
     }
 }

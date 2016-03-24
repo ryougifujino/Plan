@@ -34,4 +34,16 @@ public interface PlanningDisplaySpecificModel {
      */
     void makeDayWeekListitems(List<Datetime> dayWeekListitems, int dayInMonth, Datetime datetime);
 
+    /**
+     * 查找某年某月的具体计划信息
+     * @param datetime 某年某月
+     * @return 某年某月的具体计划信息
+     */
+    List<Event> findSpecEvents(Datetime datetime);
+
+    /**
+     * 关闭数据库
+     */
+    void closeDB();
+
 }

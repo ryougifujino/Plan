@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.yurikami.lib.util.NonNullContentValues;
+
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 
 /**
@@ -42,9 +44,10 @@ public class FastTemplate implements Parcelable{
     /** 辅助方法 */
 
     public void convertToContentValues(ContentValues values){
-        values.put(DBConfig.FastTemplateColumn.PK_FAST_TEMPLATE_ID, pkFastTemplateId);
-        values.put(DBConfig.FastTemplateColumn.TEMPLATE, template);
-        values.put(DBConfig.FastTemplateColumn.EVENT_TYPE, eventType);
+        NonNullContentValues nonNullValues = new NonNullContentValues(values);
+        nonNullValues.put(DBConfig.FastTemplateColumn.PK_FAST_TEMPLATE_ID, pkFastTemplateId);
+        nonNullValues.put(DBConfig.FastTemplateColumn.TEMPLATE, template);
+        nonNullValues.put(DBConfig.FastTemplateColumn.EVENT_TYPE, eventType);
     }
     
     public void filledByCursor(Cursor cursor){
@@ -63,22 +66,6 @@ public class FastTemplate implements Parcelable{
 
     public FastTemplate(){}
 
-    protected FastTemplate(Parcel in) {
-        template = in.readString();
-    }
-
-    public static final Creator<FastTemplate> CREATOR = new Creator<FastTemplate>() {
-        @Override
-        public FastTemplate createFromParcel(Parcel in) {
-            return new FastTemplate(in);
-        }
-
-        @Override
-        public FastTemplate[] newArray(int size) {
-            return new FastTemplate[size];
-        }
-    };
-
     @Override
     public int describeContents() {
         return 0;
@@ -86,6 +73,26 @@ public class FastTemplate implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(template);
+        dest.writeValue(this.pkFastTemplateId);
+        dest.writeString(this.template);
+        dest.writeValue(this.eventType);
     }
+
+    protected FastTemplate(Parcel in) {
+        this.pkFastTemplateId = (Long) in.readValue(Long.class.getClassLoader());
+        this.template = in.readString();
+        this.eventType = (Integer) in.readValue(Integer.class.getClassLoader());
+    }
+
+    public static final Creator<FastTemplate> CREATOR = new Creator<FastTemplate>() {
+        @Override
+        public FastTemplate createFromParcel(Parcel source) {
+            return new FastTemplate(source);
+        }
+
+        @Override
+        public FastTemplate[] newArray(int size) {
+            return new FastTemplate[size];
+        }
+    };
 }

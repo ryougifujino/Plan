@@ -3,6 +3,8 @@ package link.ebbinghaus.planning.model.entity.po;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.yurikami.lib.util.NonNullContentValues;
+
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 
 /**
@@ -83,14 +85,15 @@ public class LearningEventGroup {
     }
 
     public void convertToContentValues(ContentValues values){
-        values.put(DBConfig.LearningEventGroupColumn.PK_LEARNING_EVENT_GROUP_ID, pkLearningEventGroupId);
-        values.put(DBConfig.LearningEventGroupColumn.KNOWLEDGE_QUANTITY, knowledgeQuantity);
-        values.put(DBConfig.LearningEventGroupColumn.STRATEGY, strategy);
-        values.put(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_TOTAL, learningEventTotal);
-        values.put(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_FINISHED_COUNT, learningEventFinishedCount);
-        values.put(DBConfig.LearningEventGroupColumn.WORKLOAD, workload);
-        values.put(DBConfig.LearningEventGroupColumn.EFFICIENCY, efficiency);
-        values.put(DBConfig.LearningEventGroupColumn.UNDERSTANDING_DEGREE, understandingDegree);
+        NonNullContentValues nonNullValues = new NonNullContentValues(values);
+        nonNullValues.put(DBConfig.LearningEventGroupColumn.PK_LEARNING_EVENT_GROUP_ID, pkLearningEventGroupId);
+        nonNullValues.put(DBConfig.LearningEventGroupColumn.KNOWLEDGE_QUANTITY, knowledgeQuantity);
+        nonNullValues.put(DBConfig.LearningEventGroupColumn.STRATEGY, strategy);
+        nonNullValues.put(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_TOTAL, learningEventTotal);
+        nonNullValues.put(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_FINISHED_COUNT, learningEventFinishedCount);
+        nonNullValues.put(DBConfig.LearningEventGroupColumn.WORKLOAD, workload);
+        nonNullValues.put(DBConfig.LearningEventGroupColumn.EFFICIENCY, efficiency);
+        nonNullValues.put(DBConfig.LearningEventGroupColumn.UNDERSTANDING_DEGREE, understandingDegree);
     }
     
     public void filledByCursor(Cursor cursor){

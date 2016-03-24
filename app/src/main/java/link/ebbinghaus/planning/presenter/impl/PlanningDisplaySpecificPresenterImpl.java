@@ -12,18 +12,18 @@ import link.ebbinghaus.planning.view.fragment.PlanningDisplaySpecificView;
  * Created by WINFIELD on 2016/3/1.
  */
 public class PlanningDisplaySpecificPresenterImpl implements PlanningDisplaySpecificPresenter {
-    private PlanningDisplaySpecificView mPlanningDisplaySpecificView;
+    private PlanningDisplaySpecificView mView;
     private PlanningDisplaySpecificModel mPlanningDisplaySpecificModel;
 
     public PlanningDisplaySpecificPresenterImpl(PlanningDisplaySpecificView planningDisplaySpecificView) {
-        this.mPlanningDisplaySpecificView = planningDisplaySpecificView;
+        this.mView = planningDisplaySpecificView;
         mPlanningDisplaySpecificModel = new PlanningDisplaySpecificModelImpl();
     }
 
     @Override
     public void configureRelatedViewPagerTabLayout() {
         List<Tab> tabs = mPlanningDisplaySpecificModel.makePlanningDisplaySpecificTabs();
-        mPlanningDisplaySpecificView.bindViewPagerToTabLayout(tabs);
+        mView.bindViewPagerToTabLayout(tabs);
     }
 
 }

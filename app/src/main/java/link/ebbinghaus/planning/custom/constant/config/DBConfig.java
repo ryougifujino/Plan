@@ -1,6 +1,7 @@
 package link.ebbinghaus.planning.custom.constant.config;
 
 import com.yurikami.lib.db.SqlBuilder;
+import com.yurikami.lib.util.DateUtils;
 
 /**
  * Created by WINFIELD on 2016/2/28.
@@ -9,42 +10,61 @@ public class DBConfig {
     public static final String DB_NAME = "planning.db3";
     public static final int DB_VERSION = 1;
 
-    private static SqlBuilder sql = new SqlBuilder();
-    public static final String CREATE_TABLE_EVENT = sql.create(Table.EVENT)
+    public static final String CREATE_TABLE_EVENT = SqlBuilder.build().create(Table.EVENT)
             .pk(EventColumn.PK_EVENT_ID)
-            .integer(EventColumn.LEARNING_EVENT_GROUP_ID).integer(EventColumn.EVENT_GROUP_ID)
-            .text(EventColumn.DESCRIPTION).text(EventColumn.SUMMARY)
-            .integer(EventColumn.EVENT_TYPE).integer(EventColumn.EVENT_SUBTYPE_ID)
-            .integer(EventColumn.EVENT_SEQUENCE).integer(EventColumn.IS_SHOW_EVENT_SEQUENCE)
-            .integer(EventColumn.CREATE_TIME)
-            .integer(EventColumn.EVENT_EXPECTED_FINISHED_DATE).integer(EventColumn.EVENT_FINISHED_TIME)
-            .integer(EventColumn.IS_EVENT_FINISHED).integer(EventColumn.IS_GREEK_ALPHABET_MARKED)
-            .integer(EventColumn.IS_REMIND).integer(EventColumn.REMIND_TIME)
-            .last(EventColumn.EVENT_PROCESS,sql.INTEGER).sql();
-    public static final String CREATE_TABLE_LEARNING_EVENT_GROUP = sql.create(Table.LEARNING_EVENT_GROUP)
+            .integer(EventColumn.LEARNING_EVENT_GROUP_ID)
+            .integer(EventColumn.EVENT_GROUP_ID)
+            .text(EventColumn.DESCRIPTION)
+            .text(EventColumn.SUMMARY)
+            .integer(EventColumn.EVENT_TYPE)
+            .integer(EventColumn.EVENT_SUBTYPE_ID)
+            .integer(EventColumn.EVENT_SEQUENCE)
+            .integer(EventColumn.IS_SHOW_EVENT_SEQUENCE)
+            .integer(EventColumn.CREATE_TIME).defaultCurrTimestamp()
+            .integer(EventColumn.EVENT_EXPECTED_FINISHED_DATE)
+            .integer(EventColumn.EVENT_FINISHED_TIME)
+            .integer(EventColumn.IS_EVENT_FINISHED)._default(0)
+            .integer(EventColumn.IS_GREEK_ALPHABET_MARKED)
+            .integer(EventColumn.IS_REMIND)
+            .integer(EventColumn.REMIND_TIME)
+            .integer(EventColumn.EVENT_PROCESS)
+            .sql();
+    public static final String CREATE_TABLE_LEARNING_EVENT_GROUP = SqlBuilder.build().create(Table.LEARNING_EVENT_GROUP)
             .pk(LearningEventGroupColumn.PK_LEARNING_EVENT_GROUP_ID)
-            .integer(LearningEventGroupColumn.KNOWLEDGE_QUANTITY).integer(LearningEventGroupColumn.STRATEGY)
-            .integer(LearningEventGroupColumn.LEARNING_EVENT_TOTAL).integer(LearningEventGroupColumn.LEARNING_EVENT_FINISHED_COUNT)
-            .integer(LearningEventGroupColumn.WORKLOAD).real(LearningEventGroupColumn.EFFICIENCY)
-            .last(LearningEventGroupColumn.UNDERSTANDING_DEGREE,sql.REAL).sql();
-    public static final String CREATE_TABLE_EVENT_GROUP = sql.create(Table.EVENT_GROUP)
+            .integer(LearningEventGroupColumn.KNOWLEDGE_QUANTITY)
+            .integer(LearningEventGroupColumn.STRATEGY)
+            .integer(LearningEventGroupColumn.LEARNING_EVENT_TOTAL)
+            .integer(LearningEventGroupColumn.LEARNING_EVENT_FINISHED_COUNT)._default(0)
+            .integer(LearningEventGroupColumn.WORKLOAD)
+            .real(LearningEventGroupColumn.EFFICIENCY)
+            .real(LearningEventGroupColumn.UNDERSTANDING_DEGREE)
+            .sql();
+    public static final String CREATE_TABLE_EVENT_GROUP = SqlBuilder.build().create(Table.EVENT_GROUP)
             .pk(EventGroupColumn.PK_EVENT_GROUP_ID)
-            .integer(EventGroupColumn.CREATE_TIME).text(EventGroupColumn.DESCRIPTION)
-            .integer(EventGroupColumn.LEARNING_EVENT_COUNT)
-            .integer(EventGroupColumn.NORMAL_EVENT_COUNT)
-            .last(EventGroupColumn.ABSTRACT_EVENT_COUNT,sql.INTEGER).sql();
-    public static final String CREATE_TABLE_EVENT_SUBTYPE = sql.create(Table.EVENT_SUBTYPE)
+            .integer(EventGroupColumn.CREATE_TIME).defaultCurrTimestamp()
+            .text(EventGroupColumn.DESCRIPTION)
+            .integer(EventGroupColumn.LEARNING_EVENT_COUNT)._default(0)
+            .integer(EventGroupColumn.NORMAL_EVENT_COUNT)._default(0)
+            .integer(EventGroupColumn.ABSTRACT_EVENT_COUNT)._default(0)
+            .sql();
+    public static final String CREATE_TABLE_EVENT_SUBTYPE = SqlBuilder.build().create(Table.EVENT_SUBTYPE)
             .pk(EventSubtypeColumn.PK_EVENT_SUBTYPE_ID)
-            .last(EventSubtypeColumn.EVENT_SUBTYPE,sql.TEXT).sql();
-    public static final String CREATE_TABLE_FAST_TEMPLATE = sql.create(Table.FAST_TEMPLATE)
+            .text(EventSubtypeColumn.EVENT_SUBTYPE)
+            .sql();
+    public static final String CREATE_TABLE_FAST_TEMPLATE = SqlBuilder.build().create(Table.FAST_TEMPLATE)
             .pk(FastTemplateColumn.PK_FAST_TEMPLATE_ID)
-            .text(FastTemplateColumn.TEMPLATE).last(FastTemplateColumn.EVENT_TYPE,sql.INTEGER).sql();
-    public static final String CREATE_TABLE_DEFAULT_INPUT_VALUE = sql.create(Table.DEFAULT_INPUT_VALUE)
-            .pk(DefaultInputValueColumn.PK_DEFAULT_INPUT_VALUE_ID)
-            .integer(DefaultInputValueColumn.MAX_WIDTH)
-            .integer(DefaultInputValueColumn.IS_GREEK_ALPHABET_MARKED).integer(DefaultInputValueColumn.IS_REMIND)
-            .integer(DefaultInputValueColumn.REMIND_TIME).integer(DefaultInputValueColumn.STRATEGY)
-            .last(DefaultInputValueColumn.IS_SHOW_EVENT_SEQUENCE,sql.INTEGER).sql();
+            .text(FastTemplateColumn.TEMPLATE)
+            .integer(FastTemplateColumn.EVENT_TYPE)
+            .sql();
+    public static final String CREATE_TABLE_DEFAULT_INPUT_VALUE = SqlBuilder.build().create(Table.DEFAULT_INPUT_VALUE)
+            .pk(DefaultInputValueColumn.PK_DEFAULT_INPUT_VALUE_ID)._default(1)
+            .integer(DefaultInputValueColumn.MAX_WIDTH)._default(5)
+            .integer(DefaultInputValueColumn.IS_GREEK_ALPHABET_MARKED)._default(0)
+            .integer(DefaultInputValueColumn.IS_REMIND)._default(0)
+            .integer(DefaultInputValueColumn.REMIND_TIME)._default(DateUtils.convertHourMinute2Timestamp("19:00"))
+            .integer(DefaultInputValueColumn.STRATEGY)._default(1)
+            .integer(DefaultInputValueColumn.IS_SHOW_EVENT_SEQUENCE)._default(0)
+            .sql();
 
     public interface Table{
         String EVENT = "event";

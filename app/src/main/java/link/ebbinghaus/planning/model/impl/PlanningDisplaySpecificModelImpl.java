@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import link.ebbinghaus.planning.custom.constant.module.PlanningDisplayConstant;
+import link.ebbinghaus.planning.custom.db.decorator.impl.EventDaoDecorator;
 import link.ebbinghaus.planning.model.PlanningDisplaySpecificModel;
 import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
@@ -18,6 +19,7 @@ import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecWeekFragme
  * Created by WINFIELD on 2016/3/1.
  */
 public class PlanningDisplaySpecificModelImpl implements PlanningDisplaySpecificModel {
+    private EventDaoDecorator mEventDao = new EventDaoDecorator();
 
     @Override
     public List<Tab> makePlanningDisplaySpecificTabs() {
@@ -45,9 +47,6 @@ public class PlanningDisplaySpecificModelImpl implements PlanningDisplaySpecific
 
     @Override
     public void makeDayWeekListitems(List<Datetime> dayWeekListitems, int dayInMonth, Datetime datetime) {
-        if (dayWeekListitems == null){
-            dayWeekListitems = new ArrayList<>();
-        }
         Datetime startDate = Datetime.buildDate(datetime.getYear(), datetime.getMonth(), 1);
         int startWeek = DateUtils.dayOfWeek(startDate);
         for (int day = 1; day <= dayInMonth ;day++){
@@ -56,6 +55,16 @@ public class PlanningDisplaySpecificModelImpl implements PlanningDisplaySpecific
             dayWeek.setWeek( (w == 0) ? 7 : w );
             dayWeekListitems.add(dayWeek);
         }
+    }
+
+    @Override
+    public List<Event> findSpecEvents(Datetime datetime) {
+        return mEventDao.selectSpecEvents(datetime);
+    }
+
+    @Override
+    public void closeDB() {
+        mEventDao.closeDB();
     }
 
 }
