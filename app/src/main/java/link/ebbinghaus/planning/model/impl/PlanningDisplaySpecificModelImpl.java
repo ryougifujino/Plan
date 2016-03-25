@@ -11,7 +11,7 @@ import link.ebbinghaus.planning.custom.db.decorator.impl.EventDaoDecorator;
 import link.ebbinghaus.planning.model.PlanningDisplaySpecificModel;
 import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
-import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecGroupFragment;
+import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplayEventGroupFragment;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecMonthFragment;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecWeekFragment;
 
@@ -19,14 +19,13 @@ import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecWeekFragme
  * Created by WINFIELD on 2016/3/1.
  */
 public class PlanningDisplaySpecificModelImpl implements PlanningDisplaySpecificModel {
-    private EventDaoDecorator mEventDao = new EventDaoDecorator();
 
     @Override
     public List<Tab> makePlanningDisplaySpecificTabs() {
         List<Tab> tabs = new ArrayList<>();
         tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_SPEC_MONTH, new PlanningDisplaySpecMonthFragment()));
         tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_SPEC_WEEK, new PlanningDisplaySpecWeekFragment()));
-        tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_SPEC_GROUP, new PlanningDisplaySpecGroupFragment()));
+        tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_SPEC_GROUP, new PlanningDisplayEventGroupFragment()));
         return tabs;
 
     }
@@ -59,12 +58,11 @@ public class PlanningDisplaySpecificModelImpl implements PlanningDisplaySpecific
 
     @Override
     public List<Event> findSpecEvents(Datetime datetime) {
-        return mEventDao.selectSpecEvents(datetime);
+        EventDaoDecorator dao = new EventDaoDecorator();
+        List<Event> events = dao.selectSpecEvents(datetime);
+        dao.closeDB();
+        return events;
     }
 
-    @Override
-    public void closeDB() {
-        mEventDao.closeDB();
-    }
 
 }

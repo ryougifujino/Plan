@@ -21,11 +21,11 @@ public class FastTemplateSelectDaoAdapter implements ISelectDaoAdapter<FastTempl
     public List<FastTemplate> selectAll() {
         switch (flag){
             case FastTemplateConfig.TYPE_SPEC_LEARNING:
-                return dao.findSpecLearningAll();
+                return dao.selectSpecLearningAll();
             case FastTemplateConfig.TYPE_SPEC_NORMAL:
-                return dao.findSpecNormalAll();
+                return dao.selectSpecNormalAll();
             case FastTemplateConfig.TYPE_ABSTRACT:
-                 return dao.findAbstractAll();
+                 return dao.selectAbstractAll();
             default:
                 throw new IllegalArgumentException("传递的快速模板类型不正确");
         }

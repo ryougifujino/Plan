@@ -1,13 +1,13 @@
 package link.ebbinghaus.planning.custom.adapter.planning.display.spec;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,19 +26,20 @@ import link.ebbinghaus.planning.custom.other.App;
 import link.ebbinghaus.planning.model.PlanningDisplaySpecificModel;
 import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.impl.PlanningDisplaySpecificModelImpl;
+import link.ebbinghaus.planning.view.activity.impl.PlanningDisplaySpecEventDetailActivity;
 import link.ebbinhaus.planning.R;
 
 /**
  * Created by WINFIELD on 2016/3/2.
  */
 public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecyclerViewAdapter.ViewHolder>
-        implements BaseFragment.OnFragmentDestroyListener {
+        implements BaseFragment.OnFragmentStopListener {
     private final int ROW_EVENT_COUNT = 3;
 
     private Context mContext;
     private LayoutInflater mInflater;
     //某一个月所有的Event
-    private List<Event> mSpecEvents;
+    private List<Event> mSpecMonthEvents;
     private Datetime mDatetime;
     //某一个月按日归类的Event
     private List<Event>[] mBlocks;
@@ -52,7 +53,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
 
     public MonthRecyclerViewAdapter(Context context, List<Event> events, Datetime datetime) {
         this.mContext = context;
-        this.mSpecEvents = events;
+        this.mSpecMonthEvents = events;
         this.mDatetime = datetime;
         this.mInflater = LayoutInflater.from(this.mContext);
         this.mDayInMonth = DateUtils.dayInMonth(mDatetime);
@@ -60,7 +61,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         mPlanningDisplaySpecificModel = new PlanningDisplaySpecificModelImpl();
 
         mPlanningDisplaySpecificModel.makeDayWeekListitems(mDayWeekListitems, mDayInMonth, datetime);
-        mBlocks = mPlanningDisplaySpecificModel.eventsToBlocks(mSpecEvents, mDayInMonth);
+        mBlocks = mPlanningDisplaySpecificModel.eventsToBlocks(mSpecMonthEvents, mDayInMonth);
     }
 
     /**
@@ -116,7 +117,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         }
 
         holder.setDayWeek(mDayWeekListitems.get(position));
-
+        holder.countTv.setText(blockEventCount > 999 ? "999+" : blockEventCount + "");
 
     }
 
@@ -130,16 +131,16 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
     }
 
     @Override
-    public void onDestroy() {
+    public void onStop() {
         //Fragment的生命周期结束后,释放View缓存池所占用的内存
         mViewCachePool.destroyCachePool();
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @Bind(R.id.tv_planning_display_spec_month_day_of_month) TextView dayOfMonthTv;
         @Bind(R.id.tv_planning_display_spec_month_day_of_week) TextView dayOfWeekTv;
-        @Bind(R.id.iv_planning_display_spec_month_add_event) ImageView addEventIv;
+        @Bind(R.id.tv_planning_display_spec_month_listitem_count) TextView countTv;
         @Bind(R.id.fl_planning_display_spec_month_block) FrameLayout blockFl;
 
         public ViewHolder(View itemView) {
@@ -160,7 +161,16 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
                 eventTv.setBackgroundResource(R.drawable.planning_display_spec_month_event_normal);
             }
             eventTv.setWidth(width);
+            eventTv.setOnClickListener(this);
+            eventTv.setTag(event);
         }
 
+        @Override
+        public void onClick(View v) {
+            Event event = (Event) v.getTag();
+            Intent intent = new Intent(mContext, PlanningDisplaySpecEventDetailActivity.class);
+            intent.putExtra(PlanningDisplaySpecEventDetailActivity.INTENT_NAME_EVENT,event);
+            mContext.startActivity(intent);
+        }
     }
 }

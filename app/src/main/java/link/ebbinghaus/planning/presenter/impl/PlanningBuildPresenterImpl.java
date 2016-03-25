@@ -68,8 +68,4 @@ public class PlanningBuildPresenterImpl implements PlanningBuildPresenter {
         }
     }
 
-    @Override
-    public void closeDB() {
-        mPlanningBuildModel.closeDB();
-    }
 }

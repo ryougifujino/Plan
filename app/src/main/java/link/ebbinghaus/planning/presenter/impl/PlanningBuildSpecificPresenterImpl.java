@@ -94,8 +94,4 @@ public class PlanningBuildSpecificPresenterImpl implements PlanningBuildSpecific
         mView.setEventGroup(eventGroup);
     }
 
-    @Override
-    public void closeDB() {
-        mPlanningBuildModel.closeDB();
-    }
 }

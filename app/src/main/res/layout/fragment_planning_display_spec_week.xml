@@ -4,12 +4,10 @@
              android:layout_height="match_parent"
              tools:context="link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecWeekFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_planning_display_spec_week"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New CheckBox"
-        android:id="@+id/checkBox"
-        android:layout_gravity="left|top"/>
 </FrameLayout>

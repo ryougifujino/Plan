@@ -39,7 +39,7 @@ import link.ebbinhaus.planning.R;
  * @param <T>
  */
 public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends RecyclerView.Adapter<SelectRecycleViewAdapter.ViewHolder>
-        implements BaseActivity.OnActivityDestroyListener,View.OnClickListener,
+        implements BaseActivity.OnActivityStopListener,View.OnClickListener,
         View.OnLongClickListener, SingleInputDialog.OnDialogConfirmListener {
 
     protected Context mContext;
@@ -169,7 +169,7 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
 
     /** 关闭数据库 */
     @Override
-    public void onDestroy() {
+    public void onStop() {
         mDao.closeDB();
     }
 

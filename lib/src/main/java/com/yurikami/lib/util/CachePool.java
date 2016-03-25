@@ -21,7 +21,7 @@ public class CachePool<K,V> {
         return instance;
     }
 
-    public void clearCaches(){
+    public synchronized void clearCaches(){
         mCaches.clear();
     }
 

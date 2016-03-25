@@ -73,9 +73,4 @@ public interface PlanningBuildModel {
      * @return 所有计划组
      */
     List<EventGroup> findAllEventGroup();
-
-    /**
-     * 关闭数据库
-     */
-    void closeDB();
 }

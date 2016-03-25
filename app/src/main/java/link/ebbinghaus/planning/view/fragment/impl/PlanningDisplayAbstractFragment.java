@@ -47,7 +47,7 @@ public class PlanningDisplayAbstractFragment extends BaseFragment implements Pla
 
     @Override
     public void bindViewPagerToTabLayout(List<Tab> tabs) {
-        mFragmentPagerAdapter = new SimpleFragmentPagerAdapter(getChildFragmentManager(), getActivity() ,tabs);
+        mFragmentPagerAdapter = new SimpleFragmentPagerAdapter(getChildFragmentManager(), mActivity ,tabs);
         mViewPager.setAdapter(mFragmentPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }

@@ -2,34 +2,23 @@ package link.ebbinghaus.planning.presenter;
 
 import com.yurikami.lib.entity.Datetime;
 
-import java.util.List;
-
-import link.ebbinghaus.planning.model.entity.po.Event;
-
 /**
  * Created by WINFIELD on 2016/3/1.
  */
 public interface PlanningDisplaySpecMonthPresenter {
 
     /**
-     * 获取某个月的具体计划
-     * @param datetime 某个月(但有年月日)
-     * @return 某个月的具体计划
+     * 第一次渲染按月显示视图,<br>
+     * 将会做一些初始化工作(如设置RecyclerVie的Adapter之类)
+     * @param datetime 目标日期
      */
-    List<Event> obtainSpecEvents(Datetime datetime);
+    void initMonthView(Datetime datetime);
 
     /**
-     * 根据获得的具体计划渲染出按月显示视图
+     * 渲染目标日期的那个月的按月视图,<br>
+     * 调用此方法之前必须先调用过一次initMonthView方法
+     * @param datetime 目标日期
      */
-    void renderMonthView();
+    void renderMonthView(Datetime datetime);
 
-    /**
-     * 根据改变的数据刷新按月显示视图
-     */
-    void refreshMonthView();
-
-    /**
-     * 关闭数据库
-     */
-    void closeDB();
 }

@@ -28,11 +28,6 @@ import link.ebbinghaus.planning.view.fragment.impl.PlanningBuildSpecificFragment
  * Created by WINFIELD on 2016/3/14.
  */
 public class PlanningBuildModelImpl implements PlanningBuildModel {
-    private DefaultInputValueDaoDecorator mDefaultInputValueDao = new DefaultInputValueDaoDecorator();
-    private EventSubtypeDaoDecorator mEventSubtypeDao = new EventSubtypeDaoDecorator();
-    private FastTemplateDaoDecorator mFastTemplateDao = new FastTemplateDaoDecorator();
-    private EventGroupDaoDecorator mEventGroupDao = new EventGroupDaoDecorator();
-    private EventDaoDecorator mEventDao = new EventDaoDecorator();
 
     @Override
     public List<Tab> makePlanningBuildTabs() {
@@ -44,30 +39,34 @@ public class PlanningBuildModelImpl implements PlanningBuildModel {
 
     @Override
     public void addLearningEvent(InputEventVo inputEvent) {
+        EventDaoDecorator eventDao = new EventDaoDecorator();
         switch (inputEvent.getStrategy()){
             case LearningEventGroupConfig.TYPE_COMPREHENSIVE:
-                mEventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_COMPREHENSIVE);
+                eventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_COMPREHENSIVE);
                 break;
             case LearningEventGroupConfig.TYPE_MEMORIAL:
-                mEventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_MEMORIAL);
+                eventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_MEMORIAL);
                 break;
             case LearningEventGroupConfig.TYPE_MEMORIAL_PRO:
-                mEventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_MEMORIAL_PRO);
+                eventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_MEMORIAL_PRO);
                 break;
             case LearningEventGroupConfig.TYPE_PERSISTENT:
-                mEventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_PERSISTENT);
+                eventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_PERSISTENT);
                 break;
         }
+        eventDao.closeDB();
     }
 
     @Override
     public void addNormalEvent(Event event) {
+        EventDaoDecorator dao = new EventDaoDecorator();
         event.setEventSequence(null);
         event.setEventProcess(
                 DateUtils.isInSameDate(DateUtils.currentDateTimestamp(), event.getEventExpectedFinishedDate())
                         ? EventConfig.PROCESS_TODO
                         : EventConfig.PROCESS_NOT_STARTED);
-        mEventDao.insert(event);
+        dao.insert(event);
+        dao.closeDB();
     }
 
     @Override
@@ -77,40 +76,50 @@ public class PlanningBuildModelImpl implements PlanningBuildModel {
 
     @Override
     public DefaultInputValue findDefaultInputValue() {
-        return mDefaultInputValueDao.selectAll().get(0);
+        DefaultInputValueDaoDecorator dao = new DefaultInputValueDaoDecorator();
+        DefaultInputValue defaultInputValue = dao.selectAll().get(0);
+        dao.closeDB();
+        return defaultInputValue;
     }
 
     @Override
     public List<EventSubtype> findAllEventSubtype() {
-        return mEventSubtypeDao.selectAll();
+        EventSubtypeDaoDecorator dao = new EventSubtypeDaoDecorator();
+        List<EventSubtype> eventSubtypes = dao.selectAll();
+        dao.closeDB();
+        return eventSubtypes;
     }
 
     @Override
     public List<FastTemplate> findAllSpecLearningFastTemplate() {
-        return mFastTemplateDao.findSpecLearningAll();
+        FastTemplateDaoDecorator dao = new FastTemplateDaoDecorator();
+        List<FastTemplate> fastTemplates = dao.selectSpecLearningAll();
+        dao.closeDB();
+        return fastTemplates;
     }
 
     @Override
     public List<FastTemplate> findAllSpecNormalFastTemplate() {
-        return mFastTemplateDao.findSpecNormalAll();
+        FastTemplateDaoDecorator dao = new FastTemplateDaoDecorator();
+        List<FastTemplate> fastTemplates = dao.selectSpecNormalAll();
+        dao.closeDB();
+        return fastTemplates;
     }
 
     @Override
     public List<FastTemplate> findAllAbstFastTemplate() {
-        return mFastTemplateDao.findAbstractAll();
+        FastTemplateDaoDecorator dao = new FastTemplateDaoDecorator();
+        List<FastTemplate> fastTemplates = dao.selectAbstractAll();
+        dao.closeDB();
+        return fastTemplates;
     }
 
     @Override
     public List<EventGroup> findAllEventGroup() {
-        return mEventGroupDao.selectAll();
+        EventGroupDaoDecorator dao = new EventGroupDaoDecorator();
+        List<EventGroup> eventGroups = dao.selectAll();
+        dao.closeDB();
+        return eventGroups;
     }
 
-    @Override
-    public void closeDB() {
-        mDefaultInputValueDao.closeDB();
-        mEventSubtypeDao.closeDB();
-        mFastTemplateDao.closeDB();
-        mEventGroupDao.closeDB();
-        mEventDao.closeDB();
-    }
 }

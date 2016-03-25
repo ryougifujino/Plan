@@ -20,6 +20,8 @@
         </activity>
         <activity android:name="link.ebbinghaus.planning.view.activity.impl.CommonSelectActivity">
         </activity>
+        <activity android:name="link.ebbinghaus.planning.view.activity.impl.PlanningDisplaySpecEventDetailActivity">
+        </activity>
     </application>
 
 </manifest>

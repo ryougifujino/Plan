@@ -3,6 +3,8 @@ package link.ebbinghaus.planning.model.entity.po;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.yurikami.lib.util.NonNullContentValues;
 import com.yurikami.lib.util.Utils;
@@ -12,7 +14,7 @@ import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 /**
  * Created by WINFIELD on 2016/2/29.
  */
-public class Event {
+public class Event implements Parcelable {
     private Long pkEventId;
     private Long learningEventGroupId;
     private Long eventGroupId;
@@ -246,4 +248,67 @@ public class Event {
         setRemindTime(event.getRemindTime());
         setEventProcess(event.getEventProcess());
     }
+
+    /* Parcelable */
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.pkEventId);
+        dest.writeValue(this.learningEventGroupId);
+        dest.writeValue(this.eventGroupId);
+        dest.writeString(this.description);
+        dest.writeString(this.summary);
+        dest.writeValue(this.eventType);
+        dest.writeValue(this.eventSubtypeId);
+        dest.writeValue(this.eventSequence);
+        dest.writeValue(this.isShowEventSequence);
+        dest.writeValue(this.createTime);
+        dest.writeValue(this.eventExpectedFinishedDate);
+        dest.writeValue(this.eventFinishedTime);
+        dest.writeValue(this.isEventFinished);
+        dest.writeValue(this.isGreekAlphabetMarked);
+        dest.writeValue(this.isRemind);
+        dest.writeValue(this.remindTime);
+        dest.writeValue(this.eventProcess);
+    }
+
+    public Event() {
+    }
+
+    protected Event(Parcel in) {
+        this.pkEventId = (Long) in.readValue(Long.class.getClassLoader());
+        this.learningEventGroupId = (Long) in.readValue(Long.class.getClassLoader());
+        this.eventGroupId = (Long) in.readValue(Long.class.getClassLoader());
+        this.description = in.readString();
+        this.summary = in.readString();
+        this.eventType = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.eventSubtypeId = (Long) in.readValue(Long.class.getClassLoader());
+        this.eventSequence = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.isShowEventSequence = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.createTime = (Long) in.readValue(Long.class.getClassLoader());
+        this.eventExpectedFinishedDate = (Long) in.readValue(Long.class.getClassLoader());
+        this.eventFinishedTime = (Long) in.readValue(Long.class.getClassLoader());
+        this.isEventFinished = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.isGreekAlphabetMarked = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.isRemind = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.remindTime = (Long) in.readValue(Long.class.getClassLoader());
+        this.eventProcess = (Integer) in.readValue(Integer.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel source) {
+            return new Event(source);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
 }

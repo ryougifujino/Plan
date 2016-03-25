@@ -41,9 +41,5 @@ public interface PlanningDisplaySpecificModel {
      */
     List<Event> findSpecEvents(Datetime datetime);
 
-    /**
-     * 关闭数据库
-     */
-    void closeDB();
 
 }

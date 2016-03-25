@@ -23,22 +23,15 @@ public class PlanningDisplaySpecMonthPresenterImpl implements PlanningDisplaySpe
     }
 
     @Override
-    public List<Event> obtainSpecEvents(Datetime datetime) {
-        return mPlanningDisplaySpecificModel.findSpecEvents(datetime);
+    public void initMonthView(Datetime datetime) {
+        List<Event> events = mPlanningDisplaySpecificModel.findSpecEvents(datetime);
+        mView.setRecyclerView(events);
     }
 
     @Override
-    public void renderMonthView() {
-        mView.setRecyclerView();
+    public void renderMonthView(Datetime datetime) {
+        List<Event> events = mPlanningDisplaySpecificModel.findSpecEvents(datetime);
+        mView.refreshRecyclerView(datetime,events);
     }
 
-    @Override
-    public void refreshMonthView() {
-
-    }
-
-    @Override
-    public void closeDB() {
-        mPlanningDisplaySpecificModel.closeDB();
-    }
 }

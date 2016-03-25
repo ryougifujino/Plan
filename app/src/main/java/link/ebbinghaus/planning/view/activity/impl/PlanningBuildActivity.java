@@ -108,12 +108,6 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mPresenter.closeDB();
-    }
-
-    @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
     @Override
     public void onPageSelected(int position) { mViewPagerPosition = position; }

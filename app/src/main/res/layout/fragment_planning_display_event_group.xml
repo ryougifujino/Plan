@@ -2,13 +2,12 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecMonthFragment">
+             tools:context="link.ebbinghaus.planning.view.fragment.impl.PlanningDisplayEventGroupFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_planning_display_spec_month"
+        android:id="@+id/rv_planning_display_event_group"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

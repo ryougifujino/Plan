@@ -74,8 +74,4 @@ public interface PlanningBuildSpecificPresenter {
      */
     void configureEventGroup(EventGroup eventGroup);
 
-    /**
-     * 关闭数据库
-     */
-    void closeDB();
 }

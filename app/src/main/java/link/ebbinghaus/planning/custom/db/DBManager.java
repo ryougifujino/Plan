@@ -43,7 +43,6 @@ public class DBManager {
     public synchronized void closeDB(){
         if(counter.decrementAndGet() == 0){
             db.close();
-            instance = null;
         }
     }
 }

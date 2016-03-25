@@ -201,6 +201,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     @Override
     public void selectStrategy() {
         //选择计划方案(实际上是弹出dialog后,最后再下面的onRadioSelected返回结果)
+        //FIXME:快速点击时,这里有可能会崩溃
         mRadioSelectDialog.show(getFragmentManager(), this.getTag());
     }
     @Override

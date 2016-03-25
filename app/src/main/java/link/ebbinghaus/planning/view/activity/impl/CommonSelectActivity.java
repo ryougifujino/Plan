@@ -101,7 +101,7 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
         mAddDialog = SingleInputDialog.newInstance(getString(R.string.common_select_add_dialog_title));
     }
     private void showDialog() {
-        mAddDialog.show(getSupportFragmentManager(),getClass().getName());
+        mAddDialog.show(getSupportFragmentManager(), getClass().getName());
     }
 
     @Override
@@ -137,7 +137,7 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
     public void setRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        setOnActivityDestroyListener(mAdapter);
+        setOnActivityStopListener(mAdapter);
         mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
     }

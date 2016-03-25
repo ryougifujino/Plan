@@ -24,8 +24,4 @@ public interface PlanningBuildPresenter {
      */
     void doneSpecificEvent();
 
-    /**
-     * 关闭数据库
-     */
-    void closeDB();
 }

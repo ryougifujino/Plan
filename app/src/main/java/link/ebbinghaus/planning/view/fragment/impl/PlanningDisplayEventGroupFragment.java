@@ -2,23 +2,22 @@ package link.ebbinghaus.planning.view.fragment.impl;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.yurikami.lib.base.BaseFragment;
 
-import link.ebbinghaus.planning.view.fragment.PlanningDisplaySpecGroupView;
+import link.ebbinghaus.planning.view.fragment.PlanningDisplayEventGroupView;
 import link.ebbinhaus.planning.R;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 具体计划和抽象计划<strong>共用</strong>的计划组Activity
  */
-public class PlanningDisplaySpecGroupFragment extends BaseFragment implements PlanningDisplaySpecGroupView {
+public class PlanningDisplayEventGroupFragment extends BaseFragment implements PlanningDisplayEventGroupView {
 
 
-    public PlanningDisplaySpecGroupFragment() {
+    public PlanningDisplayEventGroupFragment() {
         // Required empty public constructor
     }
 
@@ -27,7 +26,7 @@ public class PlanningDisplaySpecGroupFragment extends BaseFragment implements Pl
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_planning_display_spec_group, container, false);
+        return inflater.inflate(R.layout.fragment_planning_display_event_group, container, false);
     }
 
 }

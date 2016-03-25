@@ -21,15 +21,15 @@ public class FastTemplateDaoDecorator extends BaseDaoDecorator<FastTemplate> {
         super.closeDB();
     }
 
-    public List<FastTemplate> findSpecLearningAll() {
+    public List<FastTemplate> selectSpecLearningAll() {
         return dao.selectSpecLearningAll();
     }
 
-    public List<FastTemplate> findSpecNormalAll() {
+    public List<FastTemplate> selectSpecNormalAll() {
         return dao.selectSpecNormalAll();
     }
 
-    public List<FastTemplate> findAbstractAll() {
+    public List<FastTemplate> selectAbstractAll() {
         return dao.selectAbstractAll();
     }
 }
