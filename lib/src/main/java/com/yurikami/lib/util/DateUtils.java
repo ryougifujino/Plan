@@ -58,7 +58,7 @@ public class DateUtils {
         }
         if("year".equals(part)){ return c.get(Calendar.YEAR); }
         else if("month".equals(part)){ return c.get(Calendar.MONTH) + 1; }
-        else if("week".equals(part)){ return c.get(Calendar.DAY_OF_WEEK); }
+        else if("week".equals(part)){ return formatWeek(c.get(Calendar.DAY_OF_WEEK)); }
         else if("day".equals(part)){ return c.get(Calendar.DAY_OF_MONTH); }
         else if("hour".equals(part)){ return c.get(Calendar.HOUR_OF_DAY); }
         else if("minute".equals(part)){ return c.get(Calendar.MINUTE); }
@@ -67,7 +67,7 @@ public class DateUtils {
     }
     public static Integer year(long timestamp){ return extractTimestamp(timestamp, "year"); }
     public static Integer month(long timestamp){ return extractTimestamp(timestamp, "month"); }
-    public static Integer week(long timestamp){ return formatWeek(extractTimestamp(timestamp, "week")); }
+    public static Integer week(long timestamp){ return extractTimestamp(timestamp, "week"); }
     public static Integer day(long timestamp){ return extractTimestamp(timestamp, "day"); }
     public static Integer hour(long timestamp){ return extractTimestamp(timestamp, "hour"); }
     public static Integer minute(long timestamp){ return extractTimestamp(timestamp, "minute");}
@@ -127,9 +127,9 @@ public class DateUtils {
      * @return 星期数,星期一到日用1~7来表示
      */
     public static int formatWeek(int week){
-        if(week > 6 || week < 0)
+        if(week > 7 || week < 1)
             return -1;
-        return week == 0 ? 7 : week;
+        return week == 1 ? 7 : week - 1;
     }
 
     /**
@@ -209,7 +209,7 @@ public class DateUtils {
      */
     public static long currentDateTimestamp(){
         Datetime date = dateOfToday();
-        return newDateTimestamp(date.getYear(),date.getMonth(),date.getDay());
+        return newDateTimestamp(date.getYear(), date.getMonth(), date.getDay());
     }
 
     /**
@@ -260,11 +260,12 @@ public class DateUtils {
     /**
      * 将指定时间戳转换为Datetime格式
      * @param timestamp 指定的时间戳
-     * @return 转换好的Datetime实例
+     * @return 转换好的Datetime实例(包含年月星期日时分秒)
      */
     public static Datetime convertTimestamp2Datetime(long timestamp){
-        return Datetime.buildDatetime(year(timestamp),month(timestamp),day(timestamp),
-                hour(timestamp),minute(timestamp),second(timestamp));
+        return Datetime.buildDatetime(
+                year(timestamp), month(timestamp), week(timestamp), day(timestamp),
+                hour(timestamp), minute(timestamp), second(timestamp));
     }
 
     /**
@@ -297,6 +298,56 @@ public class DateUtils {
     }
 
     /**
+     * 目标时间戳距今天的天数
+     * @param timestamp
+     * @return 正代表距未来的天数,负代表距过去的天数
+     */
+    public static int days2TimestampToday(long timestamp){
+        long offset = timestamp - currentDateTimestamp();
+        if (offset > 0){
+            return (int) (offset / DAY_MILLISECONDS);
+        }else {
+            return (int) Math.ceil(offset / (DAY_MILLISECONDS * 1.0));
+        }
+    }
+
+    /**
+     * 获取目标日期偏移offset(可正可负)后的日期
+     * @param datetime 目标日期
+     * @param offset 偏移天数
+     * @return 目标日期偏移offset(可正可负)后的日期
+     */
+    public static Datetime datetimeOffset(Datetime datetime,int offset){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(datetime.getYear(), datetime.getMonth() - 1, datetime.getDay() + offset);
+        datetime.setYear(calendar.get(Calendar.YEAR));
+        datetime.setMonth(calendar.get(Calendar.MONTH) + 1);
+        datetime.setWeek(formatWeek(calendar.get(Calendar.DAY_OF_WEEK)));
+        datetime.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+        return datetime;
+    }
+
+    /**
+     * 获取目标日期after天后的日期
+     * @param datetime 目标日期(包含年月日)
+     * @param after
+     * @return 目标日期after天后的日期
+     */
+    public static Datetime datetimeAfter(Datetime datetime,int after){
+        return datetimeOffset(datetime,after);
+    }
+
+    /**
+     * 获取目标日期before前的日期
+     * @param datetime 目标日期(包含年月日)
+     * @param before
+     * @return 目标日期before前的日期
+     */
+    public static Datetime datetimeBefore(Datetime datetime,int before){
+        return datetimeOffset(datetime,-before);
+    }
+
+    /**
      * 判断两个时间戳是否在同一天
      * @param timestamp1
      * @param timestamp2
@@ -308,5 +359,36 @@ public class DateUtils {
         return datetime1.isSameWith(datetime2);
     }
 
+    /**
+     * 查找某一个日期所在周的始终日期
+     * @param year
+     * @param month
+     * @param day
+     * @return 某一个日期所在周的起始日期 index0:起 index1:终(结果包含年月日星期)
+     */
+    public static Datetime[] startEndDatetimeOfWeek(int year,int month,int day){
+        Datetime[] startEnd = new Datetime[2];
+        Datetime targetDatetime = Datetime.buildDate(year, month, day);
+        int dayOfWeek = dayOfWeek(targetDatetime);
+        startEnd[0] = datetimeBefore(targetDatetime, dayOfWeek - 1);
+        startEnd[1] = datetimeAfter(targetDatetime, 7 - dayOfWeek);
+        return startEnd;
+    }
+
+    /**
+     * 查找某一个日期所在周的始终日期时间戳
+     * @param year
+     * @param month
+     * @param day
+     * @return 某一个日期所在周的起始日期 index0:起 index1:终
+     */
+    public static long[] startEndTimestampOfWeek(int year,int month,int day){
+        int dayOfWeek = dayOfWeek(Datetime.buildDate(year,month,day));
+        long targetTimestamp = newDateTimestamp(year,month,day);
+        long startEnd[] = new long[2];
+        startEnd[0] = timestampBefore(targetTimestamp, dayOfWeek - 1);
+        startEnd[1] = timestampAfter(targetTimestamp, 7 - dayOfWeek);
+        return startEnd;
+    }
 
 }

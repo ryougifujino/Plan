@@ -61,4 +61,15 @@ public class SelectHelper {
         return "( ? >= "+ start +" AND ? < "+ end +" )";
     }
 
+    /**
+     * 生成条件子句,将目标时间戳字段包含(前闭后闭)在指定范围中
+     * @param timestamp 目标时间戳字段
+     * @param start 起始时间戳
+     * @param end 结束时间戳
+     * @return
+     */
+    public static String in(String timestamp,long start, long end){
+        return "( "+ timestamp +" >= "+ start +" AND "+ timestamp +" <= "+ end +")";
+    }
+
 }

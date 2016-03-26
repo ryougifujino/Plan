@@ -6,8 +6,18 @@ package link.ebbinghaus.planning.view.fragment;
 public interface PlanningDisplaySpecWeekView {
 
     /**
-     * 设置RecyclerView相关的东西
+     * 初始化RecyclerView
      */
-    void setRecyclerView();
+    void initRecyclerView();
+
+    /**
+     * 注册ToolbarDateChangeListener监听器
+     */
+    void registerToolbarDateChangeListener();
+
+    /**
+     * 为是否调用onCreateView设置标记
+     */
+    void setOnCreateViewFlag();
 
 }

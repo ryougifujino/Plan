@@ -21,12 +21,14 @@ import com.codetroopers.betterpickers.calendardatepicker.MonthAdapter;
 import com.yurikami.lib.base.BaseFragment;
 import com.yurikami.lib.entity.Datetime;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.custom.adapter.SimpleFragmentPagerAdapter;
+import link.ebbinghaus.planning.custom.util.CommonUtils;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
 import link.ebbinghaus.planning.presenter.PlanningDisplayPresenter;
 import link.ebbinghaus.planning.presenter.impl.PlanningDisplayPresenterImpl;
@@ -46,7 +48,7 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
     private LayoutInflater mLayoutInflater;
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private int mViewPagerPosition;
-    private OnToolbarDateChangeListener mOnToolbarDateChangeListener;
+    private List<OnToolbarDateChangeListener> mOnToolbarDateChangeListeners = new ArrayList<>();
     private TextView mToolbarDateTv;
     private CalendarDatePickerDialogFragment mCalendarDatePicker;
     Datetime mNowDate = Datetime.buildTodayDate();
@@ -104,13 +106,21 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
 
             if (grandson instanceof OnToolbarDateChangeListener) {
                 mCalendarDatePicker.show(getChildFragmentManager(), this.getTag());
+            }else {
+                CommonUtils.showLongToast(getString(R.string.planning_display_date_select_hint));
             }
+        }else {
+            CommonUtils.showLongToast(getString(R.string.planning_display_date_select_hint));
         }
     }
 
     @Override
     public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
-        mOnToolbarDateChangeListener.onDateChanged(Datetime.buildDate(year, monthOfYear + 1, dayOfMonth));
+        for (OnToolbarDateChangeListener onToolbarDateChangeListener : mOnToolbarDateChangeListeners) {
+            if (onToolbarDateChangeListener != null) {
+                onToolbarDateChangeListener.onDateChanged(Datetime.buildDate(year, monthOfYear + 1, dayOfMonth));
+            }
+        }
         mToolbarDateTv.setText(String.format(getString(R.string.planning_display_toolbar_date), year, monthOfYear + 1, dayOfMonth));
         //TODO:可以有一个全局变量的设置控制重新开启是今天还是上一次的日期
         dialog.setPreselectedDate(mNowDate.getYear(), mNowDate.getMonth() - 1, mNowDate.getDay());
@@ -129,7 +139,7 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_planning_display,menu);
+        inflater.inflate(R.menu.menu_planning_display, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -168,8 +178,8 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
      * 注册一个监听器,它监听Toolbar上Date的变化
      * @param l 回调函数的监听器
      */
-    public void setOnToolbarDateChangeListener(OnToolbarDateChangeListener l){
-        this.mOnToolbarDateChangeListener = l;
+    public void addOnToolbarDateChangeListener(OnToolbarDateChangeListener l){
+        this.mOnToolbarDateChangeListeners.add(l);
     }
 
 

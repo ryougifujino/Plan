@@ -5,6 +5,7 @@ import java.util.List;
 
 import link.ebbinghaus.planning.custom.constant.module.PlanningDisplayConstant;
 import link.ebbinghaus.planning.model.PlanningDisplayAbstractModel;
+import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplayAbstAllFragment;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplayEventGroupFragment;
@@ -17,7 +18,13 @@ public class PlanningDisplayAbstractModelImpl implements PlanningDisplayAbstract
     public List<Tab> makePlanningDisplayAbstractTabs() {
         List<Tab> tabs = new ArrayList<>();
         tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_ABST_ALL, new PlanningDisplayAbstAllFragment()));
-        tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_ABST_GROUP, new PlanningDisplayEventGroupFragment()));
+        tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_ABST_GROUP, PlanningDisplayEventGroupFragment.newInstance(false)));
         return tabs;
+    }
+
+    @Override
+    public List<Event> findAllAbstEvent() {
+
+        return null;
     }
 }

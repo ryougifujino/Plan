@@ -18,4 +18,5 @@ public class EventGroupDaoDecorator extends BaseDaoDecorator<EventGroup> {
     public void closeDB() {
         super.closeDB();
     }
+
 }

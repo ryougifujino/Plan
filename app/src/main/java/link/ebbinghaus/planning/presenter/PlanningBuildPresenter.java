@@ -24,4 +24,14 @@ public interface PlanningBuildPresenter {
      */
     void doneSpecificEvent();
 
+    /**
+     * 保存(不退出本Activity,但要清空)Event(模糊)
+     */
+    void saveAbstractEvent();
+
+    /**
+     * 完成(保存并退出Activity)Event(模糊)
+     */
+    void doneAbstractEvent();
+
 }

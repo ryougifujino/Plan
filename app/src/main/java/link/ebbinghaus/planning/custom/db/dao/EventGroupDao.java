@@ -84,5 +84,4 @@ public class EventGroupDao extends BaseDao<EventGroup> {
 
     /* 以下方法为非通用方法 */
 
-
 }

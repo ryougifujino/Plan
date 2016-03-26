@@ -28,7 +28,7 @@ public interface PlanningDisplaySpecificModel {
 
     /**
      * 制作某一个月的日和星期的集合
-     * @param dayWeekListitems 日和星期的集合
+     * @param dayWeekListitems (存放用)日和星期的集合
      * @param dayInMonth 这个月的天数
      * @param datetime 某年某月,必有 year month
      */
@@ -39,7 +39,13 @@ public interface PlanningDisplaySpecificModel {
      * @param datetime 某年某月
      * @return 某年某月的具体计划信息
      */
-    List<Event> findSpecEvents(Datetime datetime);
+    List<Event> findSpecMonthEvents(Datetime datetime);
 
+    /**
+     * 查找某一天所在星期的具体计划信息
+     * @param datetime 某一天
+     * @return 某一天所在星期的具体计划信息
+     */
+    List<Event> findSpecWeekEvents(Datetime datetime);
 
 }

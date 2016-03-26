@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.yurikami.lib.db.SelectHelper;
+import com.yurikami.lib.util.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,25 +88,50 @@ public class EventDao extends BaseDao <Event>{
     /* 以下方法为非通用方法 */
 
     /**
-     * 查找某年某月的具体计划
+     * 查找某年某个月的具体计划
      * @param year
      * @param month
      * @return 某年某月的具体计划
      */
-    public List<Event> selectSpecEvents(int year, int month){
+    public List<Event> selectSpecMonthEvents(int year, int month){
         String eventType = DBConfig.EventColumn.EVENT_TYPE;
         String querySql = "SELECT * FROM " + DBConfig.Table.EVENT
                 + " WHERE (" + eventType + " = "+ EventConfig.TYPE_SPEC_LEARNING + " OR " + eventType + " = "+ EventConfig.TYPE_SPEC_NORMAL + ")"
                 + " AND " + SelectHelper.in(DBConfig.EventColumn.EVENT_EXPECTED_FINISHED_DATE, year, month);
-        List<Event> specEvents = new ArrayList<>();
+        List<Event> specMonthEvents = new ArrayList<>();
         Cursor cursor = db.rawQuery(querySql, null);
         while (cursor.moveToNext()){
-            Event specEvent = new Event();
-            specEvent.filledByCursor(cursor);
-            specEvents.add(specEvent);
+            Event specMonthEvent = new Event();
+            specMonthEvent.filledByCursor(cursor);
+            specMonthEvents.add(specMonthEvent);
         }
         cursor.close();
-        return specEvents;
+        return specMonthEvents;
+    }
+
+    /**
+     * 查找某一天所在周的具体计划
+     * @param year
+     * @param month
+     * @param day
+     * @return 某一天所在周的具体计划
+     */
+    public List<Event> selectSpecWeekEvents(int year, int month,int day){
+        long[] startEnd = DateUtils.startEndTimestampOfWeek(year,month,day);
+        String eventType = DBConfig.EventColumn.EVENT_TYPE;
+        String querySql = "SELECT * FROM " + DBConfig.Table.EVENT
+                + " WHERE (" + eventType + " = "+ EventConfig.TYPE_SPEC_LEARNING + " OR " + eventType + " = "+ EventConfig.TYPE_SPEC_NORMAL + ")"
+                + " AND " + SelectHelper.in(DBConfig.EventColumn.EVENT_EXPECTED_FINISHED_DATE, startEnd[0], startEnd[1])
+                + " ORDER BY " + DBConfig.EventColumn.EVENT_EXPECTED_FINISHED_DATE + " ASC";
+        List<Event> specWeekEvents = new ArrayList<>();
+        Cursor cursor = db.rawQuery(querySql, null);
+        while (cursor.moveToNext()){
+            Event specWeekEvent = new Event();
+            specWeekEvent.filledByCursor(cursor);
+            specWeekEvents.add(specWeekEvent);
+        }
+        cursor.close();
+        return specWeekEvents;
     }
 
 }

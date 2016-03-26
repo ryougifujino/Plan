@@ -1,11 +1,6 @@
 package link.ebbinghaus.planning.presenter.impl;
 
-import com.yurikami.lib.entity.Datetime;
-
-import java.util.List;
-
 import link.ebbinghaus.planning.model.PlanningDisplaySpecificModel;
-import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.impl.PlanningDisplaySpecificModelImpl;
 import link.ebbinghaus.planning.presenter.PlanningDisplaySpecWeekPresenter;
 import link.ebbinghaus.planning.view.fragment.PlanningDisplaySpecWeekView;
@@ -22,19 +17,12 @@ public class PlanningDisplaySpecWeekPresenterImpl implements PlanningDisplaySpec
         mPlanningDisplaySpecificModel = new PlanningDisplaySpecificModelImpl();
     }
 
-    @Override
-    public List<Event> obtainSpecWeekEvents(Datetime datetime) {
-        return null;
-    }
 
     @Override
-    public void renderWeekView() {
-
-    }
-
-    @Override
-    public void refreshWeekView() {
-
+    public void initWeekView() {
+        mView.initRecyclerView();
+        mView.registerToolbarDateChangeListener();
+        mView.setOnCreateViewFlag();
     }
 
 }

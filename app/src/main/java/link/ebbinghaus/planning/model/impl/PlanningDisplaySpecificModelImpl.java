@@ -25,7 +25,7 @@ public class PlanningDisplaySpecificModelImpl implements PlanningDisplaySpecific
         List<Tab> tabs = new ArrayList<>();
         tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_SPEC_MONTH, new PlanningDisplaySpecMonthFragment()));
         tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_SPEC_WEEK, new PlanningDisplaySpecWeekFragment()));
-        tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_SPEC_GROUP, new PlanningDisplayEventGroupFragment()));
+        tabs.add(new Tab(PlanningDisplayConstant.SUB_TAB_NAME_SPEC_GROUP, PlanningDisplayEventGroupFragment.newInstance(true)));
         return tabs;
 
     }
@@ -57,9 +57,17 @@ public class PlanningDisplaySpecificModelImpl implements PlanningDisplaySpecific
     }
 
     @Override
-    public List<Event> findSpecEvents(Datetime datetime) {
+    public List<Event> findSpecMonthEvents(Datetime datetime) {
         EventDaoDecorator dao = new EventDaoDecorator();
-        List<Event> events = dao.selectSpecEvents(datetime);
+        List<Event> events = dao.selectSpecMonthEvents(datetime);
+        dao.closeDB();
+        return events;
+    }
+
+    @Override
+    public List<Event> findSpecWeekEvents(Datetime datetime) {
+        EventDaoDecorator dao = new EventDaoDecorator();
+        List<Event> events = dao.selectSpecWeekEvents(datetime);
         dao.closeDB();
         return events;
     }

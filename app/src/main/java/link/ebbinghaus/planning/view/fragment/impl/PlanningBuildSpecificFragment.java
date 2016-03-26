@@ -59,7 +59,6 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     private PlanningBuildSpecificPresenter mPresenter;
 
     private SpecificViewHolder vh;
-    private LayoutInflater mLayoutInflater;
     private RadialTimePickerDialogFragment mRadialTimePicker;
     private CalendarDatePickerDialogFragment mCalendarDatePicker;
     private RadioSelectDialog mRadioSelectDialog;
@@ -78,10 +77,9 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        this.mLayoutInflater = inflater;
-        View v = mLayoutInflater.inflate(R.layout.fragment_planning_build_specific, container, false);
-        mPresenter = new PlanningBuildSpecificPresenterImpl(this);
+        View v = inflater.inflate(R.layout.fragment_planning_build_specific, container, false);
         vh = new SpecificViewHolder(v);
+        mPresenter = new PlanningBuildSpecificPresenterImpl(this);
         mPresenter.registerListeners();
         mPresenter.getAndSetDefaultInputValues(mInputEvent);
 
@@ -129,8 +127,10 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         vh.setOnCheckedChangeListener(this);
 
         //注册PlanningBuildActivity里面的监听器
-        ((PlanningBuildActivity)mActivity).setOnBuildMenuItemClickListener(this);
-        ((PlanningBuildActivity)mActivity).setOnEventSaveListener(this);
+        //!省略,由父Activity在Page切换的时候获取子类实例进行注册
+        //直接注册的话会导致监听器覆盖
+//        ((PlanningBuildActivity)mActivity).setOnBuildMenuItemClickListener(this);
+//        ((PlanningBuildActivity)mActivity).setOnEventSaveListener(this);
     }
 
     @Override

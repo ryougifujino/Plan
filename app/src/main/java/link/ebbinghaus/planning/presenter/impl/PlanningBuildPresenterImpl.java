@@ -68,4 +68,14 @@ public class PlanningBuildPresenterImpl implements PlanningBuildPresenter {
         }
     }
 
+    @Override
+    public void saveAbstractEvent() {
+
+    }
+
+    @Override
+    public void doneAbstractEvent() {
+
+    }
+
 }

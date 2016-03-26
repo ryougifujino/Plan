@@ -1,26 +1,23 @@
 package link.ebbinghaus.planning.view.fragment;
 
-import com.yurikami.lib.entity.Datetime;
-
-import java.util.List;
-
-import link.ebbinghaus.planning.model.entity.po.Event;
-
 /**
  * Created by WINFIELD on 2016/3/1.
  */
 public interface PlanningDisplaySpecMonthView {
 
     /**
-     * 设置RecyclerView相关的东西
-     * @param events 设置RecyclerView用到的数据
+     * 初始化RecyclerView
      */
-    void setRecyclerView(List<Event> events);
+    void initRecyclerView();
 
     /**
-     * 根据获取的新数据刷新RecyclerView
-     * @param datetime 根据这个日期获取的刷新的数据
-     * @param events 刷新的数据
+     * 注册ToolbarDateChangeListener监听器
      */
-    void refreshRecyclerView(Datetime datetime,List<Event> events);
+    void registerToolbarDateChangeListener();
+
+    /**
+     * 为是否调用onCreateView设置标记
+     */
+    void setOnCreateViewFlag();
+
 }

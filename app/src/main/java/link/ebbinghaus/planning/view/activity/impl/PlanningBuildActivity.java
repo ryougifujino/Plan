@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.yurikami.lib.base.BaseActivity;
+import com.yurikami.lib.util.LogUtils;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
 import link.ebbinghaus.planning.presenter.PlanningBuildPresenter;
 import link.ebbinghaus.planning.presenter.impl.PlanningBuildPresenterImpl;
 import link.ebbinghaus.planning.view.activity.PlanningBuildView;
+import link.ebbinghaus.planning.view.fragment.impl.PlanningBuildAbstractFragment;
+import link.ebbinghaus.planning.view.fragment.impl.PlanningBuildSpecificFragment;
 import link.ebbinhaus.planning.R;
 
 public class PlanningBuildActivity extends BaseActivity implements PlanningBuildView,
@@ -43,7 +46,6 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
         ButterKnife.bind(this);
         mPresenter = new PlanningBuildPresenterImpl(this);
         mPresenter.configureToolbar();
-
         mPresenter.configureRelatedViewPagerTabLayout();
 
 
@@ -60,26 +62,31 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
     public void bindViewPagerToTabLayout(List<Tab> tabs) {
         mFragmentPagerAdapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), this, tabs);
         mViewPager.setAdapter(mFragmentPagerAdapter);
+        mViewPager.addOnPageChangeListener(this);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
     public boolean obtainSpecificInputEvent(InputEventVo inputEvent) {
-        Fragment son = nowVPFragment(mViewPager.getId(), mViewPagerPosition);
-        if( son instanceof OnBuildMenuItemClickListener) {
-            return mOnBuildMenuItemClickListener.onBuildMenuClick(inputEvent);
+        if (mOnBuildMenuItemClickListener == null){
+            throw new IllegalStateException("保存按钮监听器没有被注册");
         }
-        return false;
+        return mOnBuildMenuItemClickListener.onBuildMenuClick(inputEvent);
     }
 
     @Override
-    public void obtainAbstractEvent() {
-
+    public boolean obtainAbstractEvent(InputEventVo inputEventVo) {
+        return obtainSpecificInputEvent(inputEventVo);
     }
 
     @Override
     public void resetSpecForm() {
         mOnEventSaveListener.onEventSavedSuccessfully();
+    }
+
+    @Override
+    public void resetAbstForm() {
+
     }
 
     @Override
@@ -96,21 +103,46 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        //true:PlanningBuildSpecificFragment false:PlanningBuildAbstractFragment
+        boolean flag;
+        Fragment son = nowVPFragment(mViewPager.getId(), mViewPagerPosition);
+        if( son instanceof PlanningBuildSpecificFragment) {
+            flag = true;
+        }else if (son instanceof PlanningBuildAbstractFragment){
+            flag = false;
+        }else {
+            return false;
+        }
+        setOnBuildMenuItemClickListener((OnBuildMenuItemClickListener) son);
+        setOnEventSaveListener((OnEventSaveListener) son);
+
         switch (item.getItemId()){
             case R.id.item_planning_build_save:
-                mPresenter.saveSpecificEvent();
+                if (flag) {
+                    mPresenter.saveSpecificEvent();
+                }else {
+                    mPresenter.saveAbstractEvent();
+                }
                 return true;
             case R.id.item_planning_build_done:
-                mPresenter.doneSpecificEvent();
+                if (flag) {
+                    mPresenter.doneSpecificEvent();
+                }else {
+                    mPresenter.doneAbstractEvent();
+                }
                 return true;
         }
+
         return false;
     }
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
     @Override
-    public void onPageSelected(int position) { mViewPagerPosition = position; }
+    public void onPageSelected(int position) {
+        mViewPagerPosition = position;
+        LogUtils.d(TAG, "Page Position is : " + mViewPagerPosition);
+    }
     @Override
     public void onPageScrollStateChanged(int state) { }
 
@@ -126,6 +158,8 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
          * @return 如果event通过验证的话返回true,否则false
          */
         boolean onBuildMenuClick(InputEventVo inputEvent);
+
+
     }
 
     public void setOnBuildMenuItemClickListener(OnBuildMenuItemClickListener l){

@@ -3,6 +3,7 @@ package link.ebbinghaus.planning.custom.adapter.planning.display.spec;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.support.v4.util.LruCache;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 
 import com.yurikami.lib.base.BaseFragment;
 import com.yurikami.lib.entity.Datetime;
-import com.yurikami.lib.util.CachePool;
 import com.yurikami.lib.util.DateUtils;
 import com.yurikami.lib.util.ViewGroupUtils;
 
@@ -48,33 +48,32 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
     //存储这个月的日和星期的集合
     private List<Datetime> mDayWeekListitems = new ArrayList<>();
 
-    private CachePool<Integer, LinearLayout> mViewCachePool = CachePool.getInstance();
+    private LruCache<Integer, LinearLayout> mBlocksCache = new LruCache<>((int) (Runtime.getRuntime().maxMemory() / 1024 / 8));
     private PlanningDisplaySpecificModel mPlanningDisplaySpecificModel;
 
-    public MonthRecyclerViewAdapter(Context context, List<Event> events, Datetime datetime) {
+    public MonthRecyclerViewAdapter(Context context, Datetime datetime) {
         this.mContext = context;
-        this.mSpecMonthEvents = events;
         this.mDatetime = datetime;
-        this.mInflater = LayoutInflater.from(this.mContext);
-        this.mDayInMonth = DateUtils.dayInMonth(mDatetime);
-
+        mInflater = LayoutInflater.from(mContext);
+        mDayInMonth = DateUtils.dayInMonth(mDatetime);
         mPlanningDisplaySpecificModel = new PlanningDisplaySpecificModelImpl();
 
         mPlanningDisplaySpecificModel.makeDayWeekListitems(mDayWeekListitems, mDayInMonth, datetime);
+        mSpecMonthEvents = mPlanningDisplaySpecificModel.findSpecMonthEvents(mDatetime);
         mBlocks = mPlanningDisplaySpecificModel.eventsToBlocks(mSpecMonthEvents, mDayInMonth);
     }
 
     /**
      * 刷新按月视图
      * @param newDatetime
-     * @param newSpecEvents
      */
-    public void refresh(Datetime newDatetime,List<Event> newSpecEvents){
+    public void refresh(Datetime newDatetime){
         mDayWeekListitems.clear();
+        mBlocksCache.evictAll();
         mDayInMonth = DateUtils.dayInMonth(newDatetime);
-        mPlanningDisplaySpecificModel.makeDayWeekListitems(mDayWeekListitems,mDayInMonth,newDatetime);
-        mBlocks = mPlanningDisplaySpecificModel.eventsToBlocks(newSpecEvents, mDayInMonth);
-        mViewCachePool.clearCaches();
+        mPlanningDisplaySpecificModel.makeDayWeekListitems(mDayWeekListitems, mDayInMonth, newDatetime);
+        List<Event> newSpecMonthEvents = mPlanningDisplaySpecificModel.findSpecMonthEvents(newDatetime);
+        mBlocks = mPlanningDisplaySpecificModel.eventsToBlocks(newSpecMonthEvents, mDayInMonth);
         this.notifyDataSetChanged();
     }
 
@@ -92,7 +91,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         int blockEventCount = blockEvents.size();
 
         if (blockEventCount != 0) {
-            LinearLayout block = mViewCachePool.getCache(position);
+            LinearLayout block = mBlocksCache.get(position);
             if (block == null) {
                 ViewGroup.LayoutParams lp = ViewGroupUtils.genMatchWrapLP();
                 block = ViewGroupUtils.newVerticalLl(mContext, lp);
@@ -110,7 +109,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
                         row = ViewGroupUtils.newHorizontalLl(mContext, lp);
                     }
                 }
-                mViewCachePool.putCache(position, block);
+                mBlocksCache.put(position, block);
             }
             ViewGroupUtils.snipParent(block);
             holder.blockFl.addView(block);
@@ -132,8 +131,8 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
 
     @Override
     public void onStop() {
-        //Fragment的生命周期结束后,释放View缓存池所占用的内存
-        mViewCachePool.destroyCachePool();
+        //Fragment执行到onStop时,清除缓存
+        mBlocksCache.evictAll();
     }
 
 

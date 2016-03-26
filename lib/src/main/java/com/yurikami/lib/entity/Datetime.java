@@ -20,9 +20,10 @@ public class Datetime {
 
     public Datetime(){ }
 
-    private Datetime(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second) {
+    private Datetime(Integer year, Integer month, Integer week, Integer day, Integer hour, Integer minute, Integer second) {
         this.year = year;
         this.month = month;
+        this.week = week;
         this.day = day;
         this.hour = hour;
         this.minute = minute;
@@ -30,7 +31,10 @@ public class Datetime {
     }
 
     public static Datetime buildDatetime(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second){
-        return new Datetime(year, month, day, hour, minute, second);
+        return new Datetime(year, month,null, day, hour, minute, second);
+    }
+    public static Datetime buildDatetime(Integer year, Integer month,Integer week, Integer day, Integer hour, Integer minute, Integer second){
+        return new Datetime(year, month,week, day, hour, minute, second);
     }
 
     public static Datetime buildDate(Integer year, Integer month, Integer day){

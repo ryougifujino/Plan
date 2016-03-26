@@ -29,13 +29,20 @@ public interface PlanningBuildView {
 
     /**
      * 获取填写的模糊计划信息
+     * @param inputEventVo 获取得模糊计划的信息
+     * @return 获取的信息是否合法(即是否通过验证)
      */
-    void obtainAbstractEvent();
+    boolean obtainAbstractEvent(InputEventVo inputEventVo);
 
     /**
      * 用于保存成功后调用,重置具体制定的form以准备下一次保存
      */
     void resetSpecForm();
+
+    /**
+     * 用于保存成功后调用,重置模糊制定的form以准备下一次保存
+     */
+    void resetAbstForm();
 
     /**
      * 退出计划制定Activity

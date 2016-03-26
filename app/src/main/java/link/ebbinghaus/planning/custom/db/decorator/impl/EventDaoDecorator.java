@@ -71,11 +71,20 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
     }
 
     /**
-     * 查找某年某月的具体计划
+     * 查找某年某个月的具体计划
      * @param datetime 包含某年某月
      * @return 某年某月的具体计划
      */
-    public List<Event> selectSpecEvents(Datetime datetime){
-        return dao.selectSpecEvents(datetime.getYear(), datetime.getMonth());
+    public List<Event> selectSpecMonthEvents(Datetime datetime){
+        return dao.selectSpecMonthEvents(datetime.getYear(), datetime.getMonth());
+    }
+
+    /**
+     * 查找某一天所在周的具体计划
+     * @param datetime 某一天
+     * @return 某一天所在周的具体计划
+     */
+    public List<Event> selectSpecWeekEvents(Datetime datetime){
+        return dao.selectSpecWeekEvents(datetime.getYear(),datetime.getMonth(),datetime.getDay());
     }
 }

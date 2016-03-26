@@ -2,6 +2,7 @@ package link.ebbinghaus.planning.model;
 
 import java.util.List;
 
+import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
 
 /**
@@ -14,4 +15,10 @@ public interface PlanningDisplayAbstractModel {
      * @return PlanningBuildAbstract的tabs
      */
     List<Tab> makePlanningDisplayAbstractTabs();
+
+    /**
+     * 找出所有的模糊计划
+     * @return
+     */
+    List<Event> findAllAbstEvent();
 }
