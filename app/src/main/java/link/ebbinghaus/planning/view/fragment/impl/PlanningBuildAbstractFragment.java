@@ -1,10 +1,12 @@
 package link.ebbinghaus.planning.view.fragment.impl;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +21,9 @@ import butterknife.ButterKnife;
 import link.ebbinghaus.planning.custom.constant.Constant;
 import link.ebbinghaus.planning.custom.constant.config.entity.FastTemplateConfig;
 import link.ebbinghaus.planning.custom.constant.module.PlanningBuildConstant;
-import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
+import link.ebbinghaus.planning.model.entity.po.EventGroup;
+import link.ebbinghaus.planning.model.entity.po.FastTemplate;
+import link.ebbinghaus.planning.model.entity.vo.planning.build.InputEventVo;
 import link.ebbinghaus.planning.presenter.PlanningBuildAbstractPresenter;
 import link.ebbinghaus.planning.presenter.impl.PlanningBuildAbstractPresenterImpl;
 import link.ebbinghaus.planning.view.activity.impl.CommonSelectActivity;
@@ -34,9 +38,11 @@ public class PlanningBuildAbstractFragment extends BaseFragment implements Plann
         View.OnClickListener,
         PlanningBuildActivity.OnBuildMenuItemClickListener,PlanningBuildActivity.OnEventSaveListener{
 
-    //requestCode
-    public static final int FLAG_EVENT_GROUP = R.id.tv_planning_build_event_group & CommonSelectActivity.FLAG_MASK;
-    public static final int FLAG_FAST_TEMPLATE = R.id.btn_planning_build_fast_template & CommonSelectActivity.FLAG_MASK;
+    //requestCode(将会被用作在CommonSelectActivity识别类型的Flag)
+    //在这里使用PlanningBuildSpecificFragment的requestCode,
+    //代表在CommonSelectActivity的chooseRecyclerViewAdapter方法中走同一个分支
+    public static final int FLAG_EVENT_GROUP = PlanningBuildSpecificFragment.FLAG_EVENT_GROUP;
+    public static final int FLAG_FAST_TEMPLATE = PlanningBuildSpecificFragment.FLAG_FAST_TEMPLATE;
     /** Intent的name */
     public static final String INTENT_NAME_FAST_TEMPLATE_TYPE = Constant.PACKAGE_NAME + ".FastTemplateType";
 
@@ -46,6 +52,8 @@ public class PlanningBuildAbstractFragment extends BaseFragment implements Plann
 
     private PlanningBuildAbstractPresenter mPresenter;
     private Snackbar mSnackbar;
+    /** 用来记录具体计划输入值的变量 */
+    private InputEventVo mInputEvent = new InputEventVo();
 
 
     @Override
@@ -55,14 +63,32 @@ public class PlanningBuildAbstractFragment extends BaseFragment implements Plann
         ButterKnife.bind(this,v);
         mPresenter = new PlanningBuildAbstractPresenterImpl(this);
         mPresenter.registerListeners();
+        mPresenter.setDefaultValues();
 
         return v;
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == FLAG_EVENT_GROUP){
-
+        switch (requestCode){
+            case FLAG_FAST_TEMPLATE:
+                if (resultCode == Activity.RESULT_OK){
+                    FastTemplate fastTemplate = data.getParcelableExtra(CommonSelectActivity.INTENT_NAME_RESULT);
+                    mPresenter.configureDescription(fastTemplate.getTemplate());
+                }else {
+                    mPresenter.configureDescription(null);
+                }
+                break;
+            case FLAG_EVENT_GROUP:
+                if (resultCode == Activity.RESULT_OK){
+                    EventGroup eventGroup = data.getParcelableExtra(CommonSelectActivity.INTENT_NAME_RESULT);
+                    mPresenter.configureEventGroup(eventGroup);
+                }else {
+                    EventGroup eventGroup = new EventGroup();
+                    eventGroup.setDescription(getString(R.string.common_none));
+                    mPresenter.configureEventGroup(eventGroup);
+                }
+                break;
         }
     }
 
@@ -76,6 +102,44 @@ public class PlanningBuildAbstractFragment extends BaseFragment implements Plann
         //直接注册的话会导致监听器覆盖
 //        ((PlanningBuildActivity)mActivity).setOnBuildMenuItemClickListener(this);
 //        ((PlanningBuildActivity)mActivity).setOnEventSaveListener(this);
+    }
+
+    @Override
+    public InputEventVo getInputEvent() {
+        mInputEvent.setDescription(descriptionEt.getText().toString());
+        return mInputEvent;
+    }
+
+    @Override
+    public void setDefaultEventGroupText(){
+        eventGroupTv.setText(getString(R.string.common_none));
+    }
+
+    @Override
+    public void setFastTemplate(String template) {
+        descriptionEt.setText(template);
+    }
+
+    @Override
+    public void setEventGroup(EventGroup eventGroup) {
+        eventGroupTv.setText(eventGroup.getDescription());
+        mInputEvent.setEventGroupId(eventGroup.getPkEventGroupId());
+    }
+
+    //回调函数,在这里面执行form的重置工作
+    @Override
+    public void onEventSavedSuccessfully() {
+        mInputEvent = new InputEventVo();
+        descriptionEt.setText("");
+        eventGroupTv.setText(getString(R.string.common_none));
+        mSnackbar.setText(getString(R.string.planning_build_abst_saved_successfully_info));
+        mSnackbar.show();
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mSnackbar = Snackbar.make(getView(), getString(R.string.planning_build_spec_description_validate_info), Snackbar.LENGTH_LONG);
     }
 
     @Override
@@ -101,12 +165,16 @@ public class PlanningBuildAbstractFragment extends BaseFragment implements Plann
 
     @Override
     public boolean onBuildMenuClick(InputEventVo inputEvent) {
-        return false;
-    }
-
-    @Override
-    public void onEventSavedSuccessfully() {
-
+        //提取页面数据到event中
+        //step 1.验证填写完整性
+        if (TextUtils.isEmpty(descriptionEt.getText().toString().trim())) {
+            mSnackbar.setText(getString(R.string.planning_build_spec_description_validate_info));
+            mSnackbar.show();
+            return false;
+        }
+        //step 2.填入
+        inputEvent.copyFrom(getInputEvent());
+        return true;
     }
 
 

@@ -20,7 +20,9 @@
             app:title="App Title"
             app:layout_scrollFlags="scroll|snap"
             android:minHeight="?attr/actionBarSize"
-            android:background="?attr/colorPrimary">
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
@@ -44,7 +46,7 @@
                 android:id="@+id/tv_planning_display_event_detail_delete"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/bpRed"
+                android:background="@drawable/ripple_red_bg"
                 android:gravity="center"
                 android:text="删除"
                 android:textColor="@color/bpWhite"/>
@@ -120,6 +122,7 @@
                         android:layout_alignBaseline="@id/label_planning_display_event_detail_description"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
+                        android:gravity="right"
                         android:text="描述描述描述描述描述描述描述描述描述描述描述描述"
                         android:ellipsize="end"
                         android:maxLength="30"
@@ -282,25 +285,10 @@
                         android:text="59人分"/>
 
                     <TextView
-                        android:id="@+id/label_planning_display_event_detail_is_remind"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_workload"
-                        android:padding="15dp"
-                        android:text="提醒"/>
-                    <Switch
-                        android:id="@+id/switch_planning_display_event_detail_is_remind"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_is_remind"
-                        android:layout_alignParentRight="true"
-                        android:padding="15dp"/>
-
-                    <TextView
                         android:id="@+id/label_planning_display_event_detail_remind_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_is_remind"
+                        android:layout_below="@id/label_planning_display_event_detail_workload"
                         android:padding="15dp"
                         android:text="提醒时间"
                         android:visibility="visible"/>
@@ -312,7 +300,7 @@
                         android:layout_alignParentRight="true"
                         android:background="?android:attr/selectableItemBackground"
                         android:padding="15dp"
-                        android:text="15:30"
+                        android:text="15:30/不提醒"
                         android:visibility="visible"/>
 
                     <TextView

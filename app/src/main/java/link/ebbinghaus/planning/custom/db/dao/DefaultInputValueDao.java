@@ -2,6 +2,7 @@ package link.ebbinghaus.planning.custom.db.dao;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import com.yurikami.lib.util.DateUtils;
 
@@ -18,64 +19,12 @@ import link.ebbinghaus.planning.model.entity.po.DefaultInputValue;
 public class DefaultInputValueDao extends BaseDao<DefaultInputValue> {
 
     public DefaultInputValueDao() {
-        super(DBConfig.DefaultInputValueColumn.PK_DEFAULT_INPUT_VALUE_ID);
+        super(DBConfig.DefaultInputValueColumn.PK_DEFAULT_INPUT_VALUE_ID, DBConfig.Table.DEFAULT_INPUT_VALUE);
     }
 
     @Override
-    protected long _insert(DefaultInputValue defaultInputValue) {
-        ContentValues values = new ContentValues();
-        defaultInputValue.convertToContentValues(values);
-        return db.insert(DBConfig.Table.DEFAULT_INPUT_VALUE, null, values);
-    }
-
-    @Override
-    protected int _delete(String where, String[] args) {
-        return db.delete(DBConfig.Table.DEFAULT_INPUT_VALUE, where, args);
-    }
-
-    @Override
-    protected int _update(DefaultInputValue defaultInputValue, String where, String[] args) {
-        ContentValues values = new ContentValues();
-        defaultInputValue.convertToContentValues(values);
-        return db.update(DBConfig.Table.DEFAULT_INPUT_VALUE, values, where, args);
-    }
-
-    @Override
-    public long insert(DefaultInputValue defaultInputValue) {
-        defaultInputValue.setPkDefaultInputValueId(_insert(defaultInputValue));
-        return defaultInputValue.getPkDefaultInputValueId();
-    }
-
-    @Override
-    public void updateByPrimaryKey(DefaultInputValue defaultInputValue) {
-        String whereClause = pkColumn + " = ?";
-        _update(defaultInputValue, whereClause, new String[]{defaultInputValue.getPkDefaultInputValueId().toString()});
-    }
-
-    @Override
-    public DefaultInputValue selectByPrimaryKey(Integer pk) {
-        String querySql = "SELECT * FROM " + DBConfig.Table.DEFAULT_INPUT_VALUE + " WHERE " +
-                pkColumn + " = ?";
-        Cursor cursor = db.rawQuery(querySql, new String[]{pk.toString()});
-        cursor.moveToFirst();
-        DefaultInputValue defaultInputValue = new DefaultInputValue();
-        defaultInputValue.filledByCursor(cursor);
-        cursor.close();
-        return defaultInputValue;
-    }
-
-    @Override
-    public void insertSome(List<DefaultInputValue> defaultInputValues) {
-        for (DefaultInputValue defaultInputValue : defaultInputValues) {
-            defaultInputValue.setPkDefaultInputValueId(_insert(defaultInputValue));
-        }
-    }
-
-
-    @Override
-    public List<DefaultInputValue> selectAll() {
-        String querySql = "SELECT * FROM " + DBConfig.Table.DEFAULT_INPUT_VALUE;
-        Cursor cursor = db.rawQuery(querySql, null);
+    protected List<DefaultInputValue> _select(String querySql, String[] selectionArgs) {
+        Cursor cursor = db.rawQuery(querySql, selectionArgs);
         List<DefaultInputValue> defaultInputValues = new ArrayList<>();
         while (cursor.moveToNext()){
             DefaultInputValue defaultInputValue = new DefaultInputValue();
@@ -86,12 +35,46 @@ public class DefaultInputValueDao extends BaseDao<DefaultInputValue> {
         return defaultInputValues;
     }
 
+    @Override
+    protected long _insert(DefaultInputValue defaultInputValue) {
+        ContentValues values = new ContentValues();
+        defaultInputValue.convertToContentValues(values);
+        return db.insert(mTableName, null, values);
+    }
+
+    @Override
+    protected int _update(DefaultInputValue defaultInputValue, String where, String[] args) {
+        ContentValues values = new ContentValues();
+        defaultInputValue.convertToContentValues(values);
+        return db.update(mTableName, values, where, args);
+    }
+
+    @Override
+    public long insert(DefaultInputValue defaultInputValue) {
+        defaultInputValue.setPkDefaultInputValueId(_insert(defaultInputValue));
+        return defaultInputValue.getPkDefaultInputValueId();
+    }
+
+    @Override
+    public void updateByPrimaryKey(DefaultInputValue defaultInputValue) {
+        String whereClause = mPkColumn + " = ?";
+        _update(defaultInputValue, whereClause, new String[]{defaultInputValue.getPkDefaultInputValueId().toString()});
+    }
+
+    @Override
+    public void insertSome(List<DefaultInputValue> defaultInputValues) {
+        for (DefaultInputValue defaultInputValue : defaultInputValues) {
+            defaultInputValue.setPkDefaultInputValueId(_insert(defaultInputValue));
+        }
+    }
+
+
     /**
      * !只可以再创建此表时可调用此方法
      * !这张表里面只能有一条数据
-     * 此方法的作用是获取一条预设的默认输入值方案
+     * 此方法的作用是插入默认值
      */
-    public static ContentValues presetDefaultInputValue(){
+    public static void presetDefaultInputValue(SQLiteDatabase db){
         DefaultInputValue defaultInputValue = new DefaultInputValue();
         defaultInputValue.setPkDefaultInputValueId(1L);
         defaultInputValue.setMaxWidth(5);
@@ -103,7 +86,15 @@ public class DefaultInputValueDao extends BaseDao<DefaultInputValue> {
 
         ContentValues values = new ContentValues();
         defaultInputValue.convertToContentValues(values);
-        return values;
+
+        db.beginTransaction();
+        try {
+            db.insert(DBConfig.Table.DEFAULT_INPUT_VALUE, null, values);
+            db.setTransactionSuccessful();
+        }finally {
+            db.endTransaction();
+        }
+
     }
 
     /* 以下方法为非通用方法 */

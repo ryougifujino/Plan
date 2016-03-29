@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.yurikami.lib.base.BaseActivity;
 import com.yurikami.lib.util.LogUtils;
+import com.yurikami.lib.util.MenuTint;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.custom.adapter.SimpleFragmentPagerAdapter;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
-import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
+import link.ebbinghaus.planning.model.entity.vo.planning.build.InputEventVo;
 import link.ebbinghaus.planning.presenter.PlanningBuildPresenter;
 import link.ebbinghaus.planning.presenter.impl.PlanningBuildPresenterImpl;
 import link.ebbinghaus.planning.view.activity.PlanningBuildView;
@@ -81,12 +82,15 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
 
     @Override
     public void resetSpecForm() {
+        if (mOnEventSaveListener == null ){
+            throw new IllegalStateException("重置监听器没有被注册");
+        }
         mOnEventSaveListener.onEventSavedSuccessfully();
     }
 
     @Override
     public void resetAbstForm() {
-
+        resetSpecForm();
     }
 
     @Override
@@ -97,7 +101,9 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_planning_build,menu);
+        getMenuInflater().inflate(R.menu.menu_planning_build, menu);
+        //noinspection deprecation
+        MenuTint.colorIcons(this,menu, getResources().getColor(R.color.md_white_1000));
         return true;
     }
 

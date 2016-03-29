@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.yurikami.lib.base.BaseActivity;
+import com.yurikami.lib.util.MenuTint;
 import com.yurikami.lib.widget.SingleInputDialog;
 
 import butterknife.Bind;
@@ -76,6 +77,8 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_common_select, menu);
+        //noinspection deprecation
+        MenuTint.colorIcons(this,menu,getResources().getColor(R.color.md_white_1000));
         return true;
     }
 
@@ -90,6 +93,7 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
         return false;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void setToolbar() {
         setSupportActionBar(mToolbar);
@@ -118,7 +122,7 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
     public void chooseRecyclerViewAdapter() {
         switch (mFlag){
             case PlanningBuildSpecificFragment.FLAG_EVENT_SUBTYPE:
-                mAdapter = new SelectEventSubtypeRVAdapter(this, new DefaultSelectDaoAdapter(new EventSubtypeDaoDecorator()),mDeleteToolbar);
+                mAdapter = new SelectEventSubtypeRVAdapter(this, new DefaultSelectDaoAdapter<>(EventSubtypeDaoDecorator.class),mDeleteToolbar);
                 break;
             case PlanningBuildSpecificFragment.FLAG_FAST_TEMPLATE:
                 //单独获取FastTemplate类型(普通、学习、模糊)
@@ -126,10 +130,10 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
                 mAdapter = new SelectFastTemplateRVAdapter(this, new FastTemplateSelectDaoAdapter(fastTemplateType),mDeleteToolbar);
                 break;
             case PlanningBuildSpecificFragment.FLAG_EVENT_GROUP:
-                mAdapter = new SelectEventGroupRVAdapter(this, new DefaultSelectDaoAdapter(new EventGroupDaoDecorator()),mDeleteToolbar);
+                mAdapter = new SelectEventGroupRVAdapter(this, new DefaultSelectDaoAdapter<>(EventGroupDaoDecorator.class),mDeleteToolbar);
                 break;
             default:
-                throw new IllegalArgumentException("发送者传递的requestCode的Flag不正确");
+                throw new IllegalArgumentException("发送者传递的requestCode(Flag)不正确");
         }
     }
 
@@ -137,7 +141,6 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
     public void setRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        setOnActivityStopListener(mAdapter);
         mAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
     }

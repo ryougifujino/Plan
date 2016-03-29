@@ -86,8 +86,4 @@ public class SpecificViewHolder extends BaseFragmentViewHolder{
     public void hideRemindTime(){
         controlRemindTime(View.GONE);
     }
-    
-    public void resetAll(){
-        
-    }
 }

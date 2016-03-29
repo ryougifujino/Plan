@@ -6,7 +6,7 @@ import link.ebbinghaus.planning.model.PlanningBuildModel;
 import link.ebbinghaus.planning.model.entity.po.DefaultInputValue;
 import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
-import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
+import link.ebbinghaus.planning.model.entity.vo.planning.build.InputEventVo;
 import link.ebbinghaus.planning.model.impl.PlanningBuildModelImpl;
 import link.ebbinghaus.planning.presenter.PlanningBuildSpecificPresenter;
 import link.ebbinghaus.planning.view.fragment.PlanningBuildSpecificView;

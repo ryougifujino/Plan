@@ -32,6 +32,7 @@ public class App extends Application {
         wm.getDefaultDisplay().getSize(point);
         sSystemInfo.setWindowWidth(point.x);
         sSystemInfo.setWindowHeight(point.y);
+
     }
 
 

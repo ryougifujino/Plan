@@ -19,7 +19,7 @@ public class MonthEventsMock {
                 Event event = new Event();
                 event.setDescription("描述" + i + j);
                 event.setEventExpectedFinishedDate(DateUtils.newDateTimestamp(2016, 4, 6 + i));
-                event.setIsEventFinished(j % 2 == 0 ? true : false);
+                event.setIsEventFinished(j % 2 == 0);
                 event.setEventType(j % 2 == 0 ? 1 : 2);
                 oneMonthEvents.add(event);
             }

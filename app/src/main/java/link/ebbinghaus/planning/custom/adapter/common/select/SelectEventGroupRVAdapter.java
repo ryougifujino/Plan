@@ -10,13 +10,13 @@ import link.ebbinghaus.planning.model.entity.po.EventGroup;
  */
 public class SelectEventGroupRVAdapter extends SelectRecycleViewAdapter<EventGroup> {
 
-    public SelectEventGroupRVAdapter(Context context, ISelectDaoAdapter dao, DeleteToolbarViewHolder deleteToolbar) {
-        super(context, dao, deleteToolbar);
+    public SelectEventGroupRVAdapter(Context context, ISelectDaoAdapter<EventGroup> daoAdapter, DeleteToolbarViewHolder deleteToolbar) {
+        super(context, daoAdapter, deleteToolbar);
     }
 
     @Override
     protected void deleteFromDatabase(EventGroup eventGroup) {
-        mDao.deleteByPrimaryKey(eventGroup.getPkEventGroupId());
+        mDaoAdapter.deleteByPrimaryKey(eventGroup.getPkEventGroupId());
     }
 
 
@@ -30,7 +30,7 @@ public class SelectEventGroupRVAdapter extends SelectRecycleViewAdapter<EventGro
         EventGroup eventGroup = new EventGroup();
         eventGroup.setDescription(content);
         eventGroup.setCreateTime(System.currentTimeMillis());
-        mDao.insert(eventGroup);
+        mDaoAdapter.insert(eventGroup);
         mData.add(0, eventGroup);
         mListitemsSelectedStatus.add(0,false);
         this.notifyDataSetChanged();

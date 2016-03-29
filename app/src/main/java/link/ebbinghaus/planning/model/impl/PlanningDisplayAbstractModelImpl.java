@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import link.ebbinghaus.planning.custom.constant.module.PlanningDisplayConstant;
+import link.ebbinghaus.planning.custom.db.decorator.impl.EventDaoDecorator;
 import link.ebbinghaus.planning.model.PlanningDisplayAbstractModel;
 import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
@@ -24,7 +25,10 @@ public class PlanningDisplayAbstractModelImpl implements PlanningDisplayAbstract
 
     @Override
     public List<Event> findAllAbstEvent() {
-
-        return null;
+        EventDaoDecorator dao = new EventDaoDecorator();
+        List<Event> events = dao.selectAbstAllEvents();
+        dao.closeDB();
+        return events;
     }
+
 }

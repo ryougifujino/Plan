@@ -77,7 +77,7 @@ public class PlanningDisplaySpecMonthFragment extends BaseFragment implements Pl
     public void onResume() {
         super.onResume();
         if (!isCallOnCreateView) {
-            mMonthRecyclerViewAdapter.refresh(mDateOfToday);
+            mMonthRecyclerViewAdapter.refresh();
         }
     }
 

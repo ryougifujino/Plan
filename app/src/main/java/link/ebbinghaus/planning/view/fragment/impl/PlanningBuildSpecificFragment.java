@@ -1,6 +1,7 @@
 package link.ebbinghaus.planning.view.fragment.impl;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -31,7 +32,7 @@ import link.ebbinghaus.planning.model.entity.po.DefaultInputValue;
 import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
 import link.ebbinghaus.planning.model.entity.po.FastTemplate;
-import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
+import link.ebbinghaus.planning.model.entity.vo.planning.build.InputEventVo;
 import link.ebbinghaus.planning.presenter.PlanningBuildSpecificPresenter;
 import link.ebbinghaus.planning.presenter.impl.PlanningBuildSpecificPresenterImpl;
 import link.ebbinghaus.planning.view.activity.impl.CommonSelectActivity;
@@ -48,7 +49,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         RadialTimePickerDialogFragment.OnTimeSetListener, CalendarDatePickerDialogFragment.OnDateSetListener,
         RadioSelectDialog.OnRadioSelectListener {
 
-    //requestCode
+    //requestCode(同时也将会被用作在CommonSelectActivity识别类型的Flag)
     public static final int FLAG_EVENT_SUBTYPE = R.id.tv_planning_build_subtype & CommonSelectActivity.FLAG_MASK;
     public static final int FLAG_FAST_TEMPLATE = R.id.btn_planning_build_fast_template & CommonSelectActivity.FLAG_MASK;
     public static final int FLAG_EVENT_GROUP = R.id.tv_planning_build_event_group & CommonSelectActivity.FLAG_MASK;
@@ -90,7 +91,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case FLAG_EVENT_SUBTYPE:
-                if (resultCode == mActivity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK) {
                     EventSubtype eventSubtype = data.getParcelableExtra(CommonSelectActivity.INTENT_NAME_RESULT);
                     mPresenter.configureEventSubtype(eventSubtype);
                 }else {
@@ -100,7 +101,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
                 }
                 break;
             case FLAG_FAST_TEMPLATE:
-                if (resultCode == mActivity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK) {
                     FastTemplate fastTemplate = data.getParcelableExtra(CommonSelectActivity.INTENT_NAME_RESULT);
                     mPresenter.configureDescription(fastTemplate.getTemplate());
                 }else {
@@ -108,7 +109,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
                 }
                 break;
             case FLAG_EVENT_GROUP:
-                if (resultCode == mActivity.RESULT_OK) {
+                if (resultCode == Activity.RESULT_OK) {
                     EventGroup eventGroup = data.getParcelableExtra(CommonSelectActivity.INTENT_NAME_RESULT);
                     mPresenter.configureEventGroup(eventGroup);
                 }else {
@@ -169,8 +170,8 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mSnackbar = Snackbar.make(getView(), getString(R.string.planning_build_spec_description_validate_info), Snackbar.LENGTH_LONG);
     }
 
@@ -270,7 +271,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         mInputEvent = new InputEventVo();
         mPresenter.getAndSetDefaultInputValues(mInputEvent);
         vh.descriptionEt.setText("");
-        mSnackbar.setText(getString(R.string.common_save_succeed));
+        mSnackbar.setText(getString(R.string.planning_build_spec_saved_successfully_info));
         mSnackbar.show();
     }
 

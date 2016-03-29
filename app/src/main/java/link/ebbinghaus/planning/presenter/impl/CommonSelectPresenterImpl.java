@@ -31,9 +31,4 @@ public class CommonSelectPresenterImpl implements CommonSelectPresenter {
         mView.setOnCreateButtonClickListener();
     }
 
-    @Override
-    public void addNewItemToDatabaseAndRefreshUi(String content) {
-
-    }
-
 }

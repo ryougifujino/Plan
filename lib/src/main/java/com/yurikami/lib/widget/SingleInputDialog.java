@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -74,7 +75,7 @@ public class SingleInputDialog extends DialogFragment
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         String content = mInputEt.getText().toString();
-        if(content.length() == 0){
+        if(TextUtils.isEmpty(content.trim())){
             mPositiveButton.setEnabled(false);      //FIXME:若要适配横屏,则这里要修复
         }else{
             mPositiveButton.setEnabled(true);

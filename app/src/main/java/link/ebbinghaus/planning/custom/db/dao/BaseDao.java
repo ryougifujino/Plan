@@ -32,20 +32,24 @@ import link.ebbinghaus.planning.custom.db.decorator.IBaseDaoDecorator;
  */
 public abstract class BaseDao<T> implements IBaseDaoDecorator<T> {
     protected SQLiteDatabase db;
-    protected String pkColumn;
+    protected String mTableName;
+    protected String mPkColumn;
 
-    public BaseDao(String pkColumn) {
+    public BaseDao(String pkColumn,String table) {
         db = DBManager.getInstance().openDB();
-        this.pkColumn = pkColumn;
+        this.mTableName = table;
+        this.mPkColumn = pkColumn;
     }
 
     /**
-     * 底层抽象方法增删改(没有查找,查找直接用sql语句实现),由子类实现后可以确定对哪张表进行操作;<br>
+     * 底层抽象方法增删改,由子类实现后可以确定对哪张表进行操作;<br>
      * 这个系列的底层方法可以由insert delete update select开头的系列方法调用,<br>
      * 比起直接使用db,操作要简化一些
      */
+    protected abstract List<T> _select(String querySql,String[] selectionArgs);
+    protected List<T> _select(String querySql){ return _select(querySql, null); }
     protected abstract long _insert(T t);
-    protected abstract int _delete(String where, String[] args);
+    protected int _delete(String where, String[] args){ return db.delete(mTableName, where, args); }
     protected abstract int _update(T t, String where, String[] args);
 
     /**
@@ -68,7 +72,7 @@ public abstract class BaseDao<T> implements IBaseDaoDecorator<T> {
      */
     @Override
     public void deleteByPrimaryKey(Long pk){
-        String whereClause = pkColumn + " = ?";
+        String whereClause = mPkColumn + " = ?";
         _delete(whereClause, new String[]{pk.toString()});
     }
 
@@ -85,7 +89,12 @@ public abstract class BaseDao<T> implements IBaseDaoDecorator<T> {
      * @return 返回查找到的结果的实体
      */
     @Override
-    public abstract T selectByPrimaryKey(Integer pk);
+    public T selectByPrimaryKey(Long pk){
+        String querySql = "SELECT * FROM " + mTableName + " WHERE " +
+                mPkColumn + " = " + pk;
+        List<T> ts = _select(querySql);
+        return ts.size() == 0 ? null : ts.get(0);
+    }
 
     /* 批量记录操作 */
 
@@ -132,7 +141,10 @@ public abstract class BaseDao<T> implements IBaseDaoDecorator<T> {
      * 查找所有记录
      */
     @Override
-    public abstract List<T> selectAll();
+    public List<T> selectAll() {
+        String querySql = "SELECT * FROM " + mTableName;
+        return _select(querySql);
+    }
 
     /* --- */
 

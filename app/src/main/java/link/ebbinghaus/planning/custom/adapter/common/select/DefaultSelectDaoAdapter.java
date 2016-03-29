@@ -7,31 +7,56 @@ import link.ebbinghaus.planning.custom.db.decorator.IBaseDaoDecorator;
 /**
  * ISelectDaoAdapter的默认实现
  */
+@SuppressWarnings({"TryWithIdenticalCatches", "ConstantConditions"})
 public class DefaultSelectDaoAdapter<T> implements ISelectDaoAdapter<T>{
-    private IBaseDaoDecorator<T> baseDao;
+    private Class<? extends IBaseDaoDecorator<T>> daoClass;
 
-    public DefaultSelectDaoAdapter(IBaseDaoDecorator baseDao) {
-        this.baseDao = baseDao;
+    public DefaultSelectDaoAdapter(Class<? extends IBaseDaoDecorator<T>> daoClass) {
+        this.daoClass = daoClass;
     }
 
 
     @Override
     public List<T> selectAll() {
-        return baseDao.selectAll();
+        IBaseDaoDecorator<T> dao = null;
+        try {
+            dao = daoClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        List<T> ts = dao.selectAll();
+        dao.closeDB();
+        return ts;
     }
 
     @Override
     public void deleteByPrimaryKey(Long pk) {
-        baseDao.deleteByPrimaryKey(pk);
+        IBaseDaoDecorator<T> dao = null;
+        try {
+            dao = daoClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        dao.deleteByPrimaryKey(pk); //TODO:删除计划组和子类型的时候,要把相应的event置null
+        dao.closeDB();
     }
 
     @Override
     public void insert(T t) {
-        baseDao.insert(t);
+        IBaseDaoDecorator<T> dao = null;
+        try {
+            dao = daoClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        dao.insert(t);
+        dao.closeDB();
     }
 
-    @Override
-    public void closeDB() {
-        baseDao.closeDB();
-    }
 }

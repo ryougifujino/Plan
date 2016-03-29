@@ -9,6 +9,7 @@ import com.yurikami.lib.util.LogUtils;
 
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
 import link.ebbinghaus.planning.custom.db.dao.DefaultInputValueDao;
+import link.ebbinghaus.planning.custom.db.dao.GreekAlphabetDao;
 
 /**
  * !禁止直接获取本类实例后调用getWritableDatabase
@@ -34,6 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DBConfig.CREATE_TABLE_EVENT);
+        db.execSQL(DBConfig.CREATE_TABLE_GREEK_ALPHABET);
         db.execSQL(DBConfig.CREATE_TABLE_LEARNING_EVENT_GROUP);
         db.execSQL(DBConfig.CREATE_TABLE_EVENT_GROUP);
         db.execSQL(DBConfig.CREATE_TABLE_EVENT_SUBTYPE);
@@ -42,13 +44,9 @@ public class DBHelper extends SQLiteOpenHelper {
         SqlBuilder.release();
 
         //向表中插入一些默认数据
-        db.beginTransaction();
-        try {
-            db.insert(DBConfig.Table.DEFAULT_INPUT_VALUE, null, DefaultInputValueDao.presetDefaultInputValue());
-            db.setTransactionSuccessful();
-        }finally {
-            db.endTransaction();
-        }
+        DefaultInputValueDao.presetDefaultInputValue(db);
+        GreekAlphabetDao.presetGreekAlphabetValues(db);
+
         LogUtils.d(getClass().getSimpleName(),"Database Created!");
     }
 

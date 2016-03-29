@@ -2,7 +2,7 @@ package link.ebbinghaus.planning.presenter;
 
 import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
-import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
+import link.ebbinghaus.planning.model.entity.vo.planning.build.InputEventVo;
 
 /**
  * Created by WINFIELD on 2016/3/14.

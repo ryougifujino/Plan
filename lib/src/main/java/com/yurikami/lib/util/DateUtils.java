@@ -34,6 +34,7 @@ public class DateUtils {
     private static Calendar sLastCalendar;
 
     private static SimpleDateFormat chnDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+    private static SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     private static SimpleDateFormat hourMinuteFormat = new SimpleDateFormat("HH:mm");
 
     private static Date now() { return new Date(); }
@@ -82,7 +83,8 @@ public class DateUtils {
                                      int hour, int minute, int second){
         Calendar c = Calendar.getInstance();
         c.set(year,month - 1,day,hour,minute,second);
-        return c.getTimeInMillis();
+        // "/1000 * 1000"消除毫秒
+        return c.getTimeInMillis() /1000 * 1000;
     }
     public static long newDateTimestamp(int year, int month, int day){
         return newTimestamp(year, month, day, 0, 0, 0);
@@ -243,6 +245,15 @@ public class DateUtils {
     }
 
     /**
+     * 将时间戳转换为形如1999-09-19 20:23:23
+     * @param timestamp 时间戳
+     * @return 日期时间字符串
+     */
+    public static String formatTimestamp2Datetime(long timestamp){
+        return datetimeFormat.format(timestamp);
+    }
+
+    /**
      * 将形如HH:mm的时分字符串转换为时间戳
      * @param hourMinute 时分字符串
      * @return 正确返回时间戳,错误返回-1
@@ -302,12 +313,12 @@ public class DateUtils {
      * @param timestamp
      * @return 正代表距未来的天数,负代表距过去的天数
      */
-    public static int days2TimestampToday(long timestamp){
+    public static int daysTimestamp2Today(long timestamp){
         long offset = timestamp - currentDateTimestamp();
         if (offset > 0){
             return (int) (offset / DAY_MILLISECONDS);
         }else {
-            return (int) Math.ceil(offset / (DAY_MILLISECONDS * 1.0));
+            return (int) Math.floor(offset / (DAY_MILLISECONDS * 1.0));
         }
     }
 

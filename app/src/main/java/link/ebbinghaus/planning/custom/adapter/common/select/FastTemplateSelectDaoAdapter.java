@@ -10,44 +10,49 @@ import link.ebbinghaus.planning.model.entity.po.FastTemplate;
  * Created by WINFIELD on 2016/3/21.
  */
 public class FastTemplateSelectDaoAdapter implements ISelectDaoAdapter<FastTemplate> {
-    private FastTemplateDaoDecorator dao = new FastTemplateDaoDecorator();
-    private int flag;
+    private int mFlag;
 
     public FastTemplateSelectDaoAdapter(int flag) {
-        this.flag = flag;
+        this.mFlag = flag;
     }
 
     @Override
     public List<FastTemplate> selectAll() {
-        switch (flag){
+        FastTemplateDaoDecorator dao = new FastTemplateDaoDecorator();
+        List<FastTemplate> fastTemplates;
+        switch (mFlag){
             case FastTemplateConfig.TYPE_SPEC_LEARNING:
-                return dao.selectSpecLearningAll();
+                fastTemplates = dao.selectSpecLearningAll();
+                break;
             case FastTemplateConfig.TYPE_SPEC_NORMAL:
-                return dao.selectSpecNormalAll();
+                fastTemplates = dao.selectSpecNormalAll();
+                break;
             case FastTemplateConfig.TYPE_ABSTRACT:
-                 return dao.selectAbstractAll();
+                 fastTemplates =  dao.selectAbstractAll();
+                break;
             default:
                 throw new IllegalArgumentException("传递的快速模板类型不正确");
         }
+        dao.closeDB();
+        return fastTemplates;
     }
 
     @Override
     public void deleteByPrimaryKey(Long pk) {
+        FastTemplateDaoDecorator dao = new FastTemplateDaoDecorator();
         dao.deleteByPrimaryKey(pk);
+        dao.closeDB();
     }
 
     @Override
     public void insert(FastTemplate fastTemplate) {
+        FastTemplateDaoDecorator dao = new FastTemplateDaoDecorator();
         dao.insert(fastTemplate);
-    }
-
-    @Override
-    public void closeDB() {
         dao.closeDB();
     }
 
     public Integer getEventType(){
-        switch (flag){
+        switch (mFlag){
             case FastTemplateConfig.TYPE_SPEC_LEARNING:
                 return FastTemplateConfig.TYPE_SPEC_LEARNING;
             case FastTemplateConfig.TYPE_SPEC_NORMAL:

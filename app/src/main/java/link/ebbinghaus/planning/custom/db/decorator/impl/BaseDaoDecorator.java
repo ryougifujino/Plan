@@ -5,7 +5,6 @@ import java.util.List;
 import link.ebbinghaus.planning.custom.db.dao.BaseDao;
 import link.ebbinghaus.planning.custom.db.decorator.IBaseDaoDecorator;
 
-//TODO: 操作数据库改为多线程,在DaoAdapter的方法层面上进行使用!!change->考虑只应该在用的地方再用,不然有不同步的可能
 /**
  * DaoDecorator的基类
  * @param <T>
@@ -53,7 +52,7 @@ public class BaseDaoDecorator<T> implements IBaseDaoDecorator<T> {
     }
 
     @Override
-    public T selectByPrimaryKey(Integer pk) {
+    public T selectByPrimaryKey(Long pk) {
         return dao.selectByPrimaryKey(pk);
     }
 

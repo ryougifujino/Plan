@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.yurikami.lib.base.BaseActivity;
 import com.yurikami.lib.util.LogUtils;
 import com.yurikami.lib.widget.SingleInputDialog;
 
@@ -39,15 +38,16 @@ import link.ebbinhaus.planning.R;
  * @param <T>
  */
 public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends RecyclerView.Adapter<SelectRecycleViewAdapter.ViewHolder>
-        implements BaseActivity.OnActivityStopListener,View.OnClickListener,
-        View.OnLongClickListener, SingleInputDialog.OnDialogConfirmListener {
+        implements View.OnClickListener, View.OnLongClickListener,
+        SingleInputDialog.OnDialogConfirmListener {
 
     protected Context mContext;
     protected LayoutInflater mLayoutInflater;
     protected OnItemClickListener mOnItemClickListener;
     protected DeleteToolbarViewHolder mDeleteToolbar;
     protected List<T> mData;
-    protected ISelectDaoAdapter<T> mDao;
+    //DaoAdapter为方法级数据库关闭
+    protected ISelectDaoAdapter<T> mDaoAdapter;
 
     /** 用于记录每个listitem的选中情况 */
     protected List<Boolean> mListitemsSelectedStatus = new ArrayList<>();
@@ -58,13 +58,13 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
     /** 是否选中了所有 */
     protected boolean mIsSelectedAll = false;
 
-    public SelectRecycleViewAdapter(Context context, ISelectDaoAdapter<T> dao,DeleteToolbarViewHolder deleteToolbar) {
+    public SelectRecycleViewAdapter(Context context, ISelectDaoAdapter<T> daoAdapter,DeleteToolbarViewHolder deleteToolbar) {
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(this.mContext);
-        this.mDao = dao;
+        this.mDaoAdapter = daoAdapter;
         this.mDeleteToolbar = deleteToolbar;
 
-        this.mData = mDao.selectAll();
+        this.mData = mDaoAdapter.selectAll();
         Collections.reverse(mData);
         initListitemsSelectedStatus();
 
@@ -166,12 +166,6 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
 
     /** 从数据库中删除 */
     protected abstract void deleteFromDatabase(T t);
-
-    /** 关闭数据库 */
-    @Override
-    public void onStop() {
-        mDao.closeDB();
-    }
 
     //以下为辅助方法
 

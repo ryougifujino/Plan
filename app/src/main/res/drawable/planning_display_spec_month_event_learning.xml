@@ -21,7 +21,7 @@
 		    
 		    <!-- 填充 -->
 		    <solid 
-		        android:color="#80deea"/>
+		        android:color="@color/md_grey_500"/>
 		</shape>        
     </item>
 
@@ -46,7 +46,7 @@
 		    
 		    <!-- 填充 -->
 		    <solid 
-		        android:color="#4dd0e1"/>
+		        android:color="@color/md_green_700"/>
 		   
 		    </shape>
     </item>

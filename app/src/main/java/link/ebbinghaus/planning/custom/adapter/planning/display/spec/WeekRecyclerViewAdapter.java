@@ -20,9 +20,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.custom.constant.entity.EventConstant;
-import link.ebbinghaus.planning.model.PlanningDisplaySpecificModel;
 import link.ebbinghaus.planning.model.entity.po.Event;
-import link.ebbinghaus.planning.model.impl.PlanningDisplaySpecificModelImpl;
 import link.ebbinghaus.planning.view.activity.impl.PlanningDisplaySpecEventDetailActivity;
 import link.ebbinhaus.planning.R;
 
@@ -33,20 +31,18 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
 
     private Context mContext;
     private List<Event> mSpecWeekEvents;
-    private PlanningDisplaySpecificModel mPlanningDisplaySpecificModel;
 
-    public WeekRecyclerViewAdapter(Context context, Datetime datetime) {
+    public WeekRecyclerViewAdapter(Context context, List<Event> specWeekEvents) {
         this.mContext = context;
-        mPlanningDisplaySpecificModel = new PlanningDisplaySpecificModelImpl();
-        mSpecWeekEvents = mPlanningDisplaySpecificModel.findSpecWeekEvents(datetime);
+        mSpecWeekEvents = specWeekEvents;
     }
 
     /**
      * 刷新按月视图
-     * @param newDatetime
+     * @param specWeekEvents 新数据
      */
-    public void refresh(Datetime newDatetime) {
-        mSpecWeekEvents = mPlanningDisplaySpecificModel.findSpecWeekEvents(newDatetime);
+    public void refresh(List<Event> specWeekEvents) {
+        mSpecWeekEvents = specWeekEvents;
         this.notifyDataSetChanged();
     }
 

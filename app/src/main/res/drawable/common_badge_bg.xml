@@ -21,7 +21,7 @@
 		    
 		    <!-- 填充 -->
 		    <solid 
-		        android:color="#7F7F7F"/>
+		        android:color="@color/md_pink_300"/>
 		</shape>        
     </item>
 

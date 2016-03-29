@@ -68,13 +68,17 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
      * @param newDatetime
      */
     public void refresh(Datetime newDatetime){
+        mDatetime = newDatetime;
         mDayWeekListitems.clear();
         mBlocksCache.evictAll();
-        mDayInMonth = DateUtils.dayInMonth(newDatetime);
-        mPlanningDisplaySpecificModel.makeDayWeekListitems(mDayWeekListitems, mDayInMonth, newDatetime);
-        List<Event> newSpecMonthEvents = mPlanningDisplaySpecificModel.findSpecMonthEvents(newDatetime);
+        mDayInMonth = DateUtils.dayInMonth(mDatetime);
+        mPlanningDisplaySpecificModel.makeDayWeekListitems(mDayWeekListitems, mDayInMonth, mDatetime);
+        List<Event> newSpecMonthEvents = mPlanningDisplaySpecificModel.findSpecMonthEvents(mDatetime);
         mBlocks = mPlanningDisplaySpecificModel.eventsToBlocks(newSpecMonthEvents, mDayInMonth);
         this.notifyDataSetChanged();
+    }
+    public void refresh(){
+        refresh(mDatetime);
     }
 
     @Override

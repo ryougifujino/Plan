@@ -10,14 +10,14 @@ import link.ebbinghaus.planning.model.entity.po.EventSubtype;
  */
 public class SelectEventSubtypeRVAdapter extends SelectRecycleViewAdapter<EventSubtype> {
 
-    public SelectEventSubtypeRVAdapter(Context context, ISelectDaoAdapter dao, DeleteToolbarViewHolder deleteToolbar) {
-        super(context, dao, deleteToolbar);
+    public SelectEventSubtypeRVAdapter(Context context, ISelectDaoAdapter<EventSubtype> daoAdapter, DeleteToolbarViewHolder deleteToolbar) {
+        super(context, daoAdapter, deleteToolbar);
     }
 
 
     @Override
     protected void deleteFromDatabase(EventSubtype eventSubtype) {
-        mDao.deleteByPrimaryKey(eventSubtype.getPkEventSubtypeId());
+        mDaoAdapter.deleteByPrimaryKey(eventSubtype.getPkEventSubtypeId());
     }
 
     @Override
@@ -29,7 +29,7 @@ public class SelectEventSubtypeRVAdapter extends SelectRecycleViewAdapter<EventS
     public void onDialogConfirm(String content) {
         EventSubtype eventSubtype = new EventSubtype();
         eventSubtype.setEventSubtype(content);
-        mDao.insert(eventSubtype);
+        mDaoAdapter.insert(eventSubtype);
         mData.add(0, eventSubtype);
         mListitemsSelectedStatus.add(0,false);
         this.notifyDataSetChanged();

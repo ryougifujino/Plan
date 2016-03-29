@@ -20,6 +20,7 @@ import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialo
 import com.codetroopers.betterpickers.calendardatepicker.MonthAdapter;
 import com.yurikami.lib.base.BaseFragment;
 import com.yurikami.lib.entity.Datetime;
+import com.yurikami.lib.util.MenuTint;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -141,6 +142,8 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_planning_display, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        //noinspection deprecation
+        MenuTint.colorIcons(mActivity, menu, getResources().getColor(R.color.md_white_1000));
     }
 
     @Override

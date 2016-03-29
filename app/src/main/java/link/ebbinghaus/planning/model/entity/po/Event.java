@@ -28,6 +28,7 @@ public class Event implements Parcelable {
     private Long eventExpectedFinishedDate;   //精确到日
     private Long eventFinishedTime;
     private Boolean isEventFinished;
+    private Long greekAlphabetId;
     private Boolean isGreekAlphabetMarked;
     private Boolean isRemind;
     private Long remindTime;
@@ -169,6 +170,14 @@ public class Event implements Parcelable {
         this.eventProcess = eventProcess;
     }
 
+    public Long getGreekAlphabetId() {
+        return greekAlphabetId;
+    }
+
+    public void setGreekAlphabetId(Long greekAlphabetId) {
+        this.greekAlphabetId = greekAlphabetId;
+    }
+
     /* --- */
 
     public void setIsShowEventSequence(Integer isShowEventSequence){
@@ -203,6 +212,7 @@ public class Event implements Parcelable {
         nonNullValues.put(DBConfig.EventColumn.EVENT_EXPECTED_FINISHED_DATE, eventExpectedFinishedDate);
         nonNullValues.put(DBConfig.EventColumn.EVENT_FINISHED_TIME, eventFinishedTime);
         nonNullValues.put(DBConfig.EventColumn.IS_EVENT_FINISHED, isEventFinished);
+        nonNullValues.put(DBConfig.EventColumn.GREEK_ALPHABET_ID, greekAlphabetId);
         nonNullValues.put(DBConfig.EventColumn.IS_GREEK_ALPHABET_MARKED, isGreekAlphabetMarked);
         nonNullValues.put(DBConfig.EventColumn.IS_REMIND, isRemind);
         nonNullValues.put(DBConfig.EventColumn.REMIND_TIME, remindTime);
@@ -223,6 +233,7 @@ public class Event implements Parcelable {
         setEventExpectedFinishedDate(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_EXPECTED_FINISHED_DATE)));
         setEventFinishedTime(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.EVENT_FINISHED_TIME)));
         setIsEventFinished(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.IS_EVENT_FINISHED)));
+        setGreekAlphabetId(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.GREEK_ALPHABET_ID)));
         setIsGreekAlphabetMarked(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.IS_GREEK_ALPHABET_MARKED)));
         setIsRemind(cursor.getInt(cursor.getColumnIndex(DBConfig.EventColumn.IS_REMIND)));
         setRemindTime(cursor.getLong(cursor.getColumnIndex(DBConfig.EventColumn.REMIND_TIME)));
@@ -243,6 +254,7 @@ public class Event implements Parcelable {
         setEventExpectedFinishedDate(event.getEventExpectedFinishedDate());
         setEventFinishedTime(event.getEventFinishedTime());
         setIsEventFinished(event.getIsEventFinished());
+        setGreekAlphabetId(event.getGreekAlphabetId());
         setIsGreekAlphabetMarked(event.getIsGreekAlphabetMarked());
         setIsRemind(event.getIsRemind());
         setRemindTime(event.getRemindTime());
@@ -250,6 +262,21 @@ public class Event implements Parcelable {
     }
 
     /* Parcelable */
+
+    public Event() {
+    }
+
+    public static final Creator<Event> CREATOR = new Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel in) {
+            return new Event(in);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
 
     @Override
     public int describeContents() {
@@ -271,13 +298,11 @@ public class Event implements Parcelable {
         dest.writeValue(this.eventExpectedFinishedDate);
         dest.writeValue(this.eventFinishedTime);
         dest.writeValue(this.isEventFinished);
+        dest.writeValue(this.greekAlphabetId);
         dest.writeValue(this.isGreekAlphabetMarked);
         dest.writeValue(this.isRemind);
         dest.writeValue(this.remindTime);
         dest.writeValue(this.eventProcess);
-    }
-
-    public Event() {
     }
 
     protected Event(Parcel in) {
@@ -294,21 +319,11 @@ public class Event implements Parcelable {
         this.eventExpectedFinishedDate = (Long) in.readValue(Long.class.getClassLoader());
         this.eventFinishedTime = (Long) in.readValue(Long.class.getClassLoader());
         this.isEventFinished = (Boolean) in.readValue(Boolean.class.getClassLoader());
+        this.greekAlphabetId = (Long) in.readValue(Long.class.getClassLoader());
         this.isGreekAlphabetMarked = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.isRemind = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.remindTime = (Long) in.readValue(Long.class.getClassLoader());
         this.eventProcess = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Event> CREATOR = new Parcelable.Creator<Event>() {
-        @Override
-        public Event createFromParcel(Parcel source) {
-            return new Event(source);
-        }
-
-        @Override
-        public Event[] newArray(int size) {
-            return new Event[size];
-        }
-    };
 }

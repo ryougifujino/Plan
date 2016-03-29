@@ -8,9 +8,13 @@ import java.util.List;
 
 import link.ebbinghaus.planning.custom.constant.module.PlanningDisplayConstant;
 import link.ebbinghaus.planning.custom.db.decorator.impl.EventDaoDecorator;
+import link.ebbinghaus.planning.custom.db.decorator.impl.EventGroupDaoDecorator;
+import link.ebbinghaus.planning.custom.db.decorator.impl.EventSubtypeDaoDecorator;
+import link.ebbinghaus.planning.custom.db.decorator.impl.LearningEventGroupDaoDecorator;
 import link.ebbinghaus.planning.model.PlanningDisplaySpecificModel;
 import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
+import link.ebbinghaus.planning.model.entity.vo.planning.display.SpecEventDetailVo;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplayEventGroupFragment;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecMonthFragment;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecWeekFragment;
@@ -70,6 +74,25 @@ public class PlanningDisplaySpecificModelImpl implements PlanningDisplaySpecific
         List<Event> events = dao.selectSpecWeekEvents(datetime);
         dao.closeDB();
         return events;
+    }
+
+    @Override
+    public void findSpecEventDetailTo(SpecEventDetailVo specEventDetail) {
+        LearningEventGroupDaoDecorator learningEventGroupDao = new LearningEventGroupDaoDecorator();
+        EventGroupDaoDecorator eventGroupDao = new EventGroupDaoDecorator();
+        EventSubtypeDaoDecorator eventSubtypeDao = new EventSubtypeDaoDecorator();
+
+        Long learningEventGroupId = specEventDetail.event.getLearningEventGroupId();
+        Long eventGroupId = specEventDetail.event.getEventGroupId();
+        Long eventSubtypeId = specEventDetail.event.getEventSubtypeId();
+
+        specEventDetail.learningEventGroup = learningEventGroupDao.selectByPrimaryKey(learningEventGroupId);
+        specEventDetail.eventGroup = eventGroupDao.selectByPrimaryKey(eventGroupId);
+        specEventDetail.eventSubtype = eventSubtypeDao.selectByPrimaryKey(eventSubtypeId);
+
+        eventSubtypeDao.closeDB();
+        eventGroupDao.closeDB();
+        learningEventGroupDao.closeDB();
     }
 
 

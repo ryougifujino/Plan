@@ -11,7 +11,6 @@ import java.util.List;
  * 1. 隐藏一些Dao的底层方法<br>
  * 2. 组合Dao的方法构成新的方法,提高复用性<br>
  * 3. 为Dao的操作添加事务<br>
- * 4. 为Dao的操作添加多线程<br>
  * <br>
  *
  * 术语定义(与Dao一致)<br>
@@ -21,7 +20,6 @@ import java.util.List;
  * 查询对象 select<br>
  * <br>
  * !在DaoDecorator的每个有增、删、改的方法中,记得使用事务<br>
- * !DaoDecorator中的每个方法都建议开启子线程进行执行<br>
  * !DaoDecorator实现类的方法通常会比接口定义的方法多<br>
  * !实际使用中直接使用相应的实现类,而不使用接口接收,这样方法会更完整<br>
  * !DaoDecorator代替Dao直接与外部交互
@@ -55,7 +53,7 @@ public interface IBaseDaoDecorator<T>{
      * @param pk 要查找记录的主键
      * @return 返回查找到的结果的实体
      */
-    T selectByPrimaryKey(Integer pk);
+    T selectByPrimaryKey(Long pk);
 
     /* 批量记录操作 */
 

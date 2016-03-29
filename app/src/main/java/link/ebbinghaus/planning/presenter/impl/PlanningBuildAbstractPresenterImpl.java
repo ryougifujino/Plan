@@ -1,5 +1,6 @@
 package link.ebbinghaus.planning.presenter.impl;
 
+import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.presenter.PlanningBuildAbstractPresenter;
 import link.ebbinghaus.planning.view.fragment.PlanningBuildAbstractView;
 
@@ -17,5 +18,22 @@ public class PlanningBuildAbstractPresenterImpl implements PlanningBuildAbstract
     @Override
     public void registerListeners() {
         mView.setListeners();
+    }
+
+    @Override
+    public void configureDescription(String template) {
+        if (template != null) {
+            mView.setFastTemplate(template);
+        }
+    }
+
+    @Override
+    public void configureEventGroup(EventGroup eventGroup) {
+        mView.setEventGroup(eventGroup);
+    }
+
+    @Override
+    public void setDefaultValues() {
+        mView.setDefaultEventGroupText();
     }
 }

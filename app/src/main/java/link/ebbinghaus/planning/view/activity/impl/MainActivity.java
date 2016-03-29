@@ -47,10 +47,12 @@ public class MainActivity extends BaseActivity implements MainView,
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            //noinspection deprecation
             window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
         }
 
         LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_EVENT);
+        LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_GREEK_ALPHABET);
         LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_LEARNING_EVENT_GROUP);
         LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_DEFAULT_INPUT_VALUE);
         LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_EVENT_GROUP);

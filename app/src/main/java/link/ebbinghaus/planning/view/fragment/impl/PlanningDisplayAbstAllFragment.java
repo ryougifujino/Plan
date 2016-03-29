@@ -13,7 +13,7 @@ import com.yurikami.lib.base.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.custom.adapter.planning.display.abst.AllRecylerViewAdapter;
+import link.ebbinghaus.planning.custom.adapter.planning.display.abst.AllRecyclerViewAdapter;
 import link.ebbinghaus.planning.presenter.PlanningDisplayAbstAllPresenter;
 import link.ebbinghaus.planning.presenter.impl.PlanningDisplayAbstAllPresenterImpl;
 import link.ebbinghaus.planning.view.fragment.PlanningDisplayAbstAllView;
@@ -26,7 +26,7 @@ public class PlanningDisplayAbstAllFragment extends BaseFragment implements Plan
 
     @Bind(R.id.rv_planning_display_abst_all) RecyclerView mRecyclerView;
     private PlanningDisplayAbstAllPresenter mPresenter;
-    private AllRecylerViewAdapter mAllRecylerViewAdapter;
+    private AllRecyclerViewAdapter mAllRecyclerViewAdapter;
     //标识变量,用于控制当执行了onCreateView后,onResume不再重复执行渲染工作
     private boolean isCallOnCreateView = false;
 
@@ -45,8 +45,8 @@ public class PlanningDisplayAbstAllFragment extends BaseFragment implements Plan
     @Override
     public void initRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mAllRecylerViewAdapter = new AllRecylerViewAdapter(mActivity);
-        mRecyclerView.setAdapter(mAllRecylerViewAdapter);
+        mAllRecyclerViewAdapter = new AllRecyclerViewAdapter(mActivity,mPresenter.obtainAllAbstractEvents());
+        mRecyclerView.setAdapter(mAllRecyclerViewAdapter);
 
     }
 
@@ -59,7 +59,7 @@ public class PlanningDisplayAbstAllFragment extends BaseFragment implements Plan
     public void onResume() {
         super.onResume();
         if (!isCallOnCreateView){
-            mAllRecylerViewAdapter.refresh();
+            mAllRecyclerViewAdapter.refresh(mPresenter.obtainAllAbstractEvents());
         }
     }
 

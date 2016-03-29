@@ -21,4 +21,5 @@ public interface PlanningDisplayAbstractModel {
      * @return
      */
     List<Event> findAllAbstEvent();
+
 }

@@ -6,6 +6,7 @@ import java.util.List;
 
 import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
+import link.ebbinghaus.planning.model.entity.vo.planning.display.SpecEventDetailVo;
 
 /**
  * Created by WINFIELD on 2016/3/1.
@@ -47,5 +48,11 @@ public interface PlanningDisplaySpecificModel {
      * @return 某一天所在星期的具体计划信息
      */
     List<Event> findSpecWeekEvents(Datetime datetime);
+
+    /**
+     * 查找完整的具体计划详情(已有event信息)
+     * @param specEventDetail 具体计划详情(已有event)
+     */
+    void findSpecEventDetailTo(SpecEventDetailVo specEventDetail);
 
 }

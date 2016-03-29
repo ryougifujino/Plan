@@ -28,4 +28,14 @@ public class Utils {
         return false;
     }
 
+    /**
+     * 参数可为null的布尔值相等判断
+     * @param boolean1
+     * @param boolean2
+     * @return true:两个值的布尔值一致或都为null false:两个值的布尔值不一致或者其中一个为null
+     */
+    public static boolean equals(Boolean boolean1,Boolean boolean2){
+        return boolean1 == boolean2;
+    }
+
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import link.ebbinghaus.planning.custom.constant.config.DBConfig;
+import link.ebbinghaus.planning.custom.constant.config.entity.FastTemplateConfig;
 import link.ebbinghaus.planning.model.entity.po.FastTemplate;
 
 /**
@@ -15,70 +16,12 @@ import link.ebbinghaus.planning.model.entity.po.FastTemplate;
 public class FastTemplateDao extends BaseDao<FastTemplate> {
 
     public FastTemplateDao() {
-        super(DBConfig.FastTemplateColumn.PK_FAST_TEMPLATE_ID);
+        super(DBConfig.FastTemplateColumn.PK_FAST_TEMPLATE_ID, DBConfig.Table.FAST_TEMPLATE);
     }
 
     @Override
-    protected long _insert(FastTemplate fastTemplate) {
-        ContentValues values = new ContentValues();
-        fastTemplate.convertToContentValues(values);
-        return db.insert(DBConfig.Table.FAST_TEMPLATE, null, values);
-    }
-
-    @Override
-    protected int _delete(String where, String[] args) {
-        return db.delete(DBConfig.Table.FAST_TEMPLATE, where, args);
-    }
-
-    @Override
-    protected int _update(FastTemplate fastTemplate, String where, String[] args) {
-        ContentValues values = new ContentValues();
-        fastTemplate.convertToContentValues(values);
-        return db.update(DBConfig.Table.FAST_TEMPLATE, values, where, args);
-    }
-
-    @Override
-    public long insert(FastTemplate fastTemplate) {
-        fastTemplate.setPkFastTemplateId(_insert(fastTemplate));
-        return fastTemplate.getPkFastTemplateId();
-    }
-
-    @Override
-    public void updateByPrimaryKey(FastTemplate fastTemplate) {
-        String whereClause = pkColumn + " = ?";
-        _update(fastTemplate, whereClause, new String[]{fastTemplate.getPkFastTemplateId().toString()});
-    }
-
-    @Override
-    public FastTemplate selectByPrimaryKey(Integer pk) {
-        String querySql = "SELECT * FROM " + DBConfig.Table.FAST_TEMPLATE + " WHERE " +
-                pkColumn + " = ?";
-        Cursor cursor = db.rawQuery(querySql, new String[]{pk.toString()});
-        cursor.moveToFirst();
-        FastTemplate fastTemplate = new FastTemplate();
-        fastTemplate.filledByCursor(cursor);
-        cursor.close();
-        return fastTemplate;
-    }
-
-    @Override
-    public void insertSome(List<FastTemplate> fastTemplates) {
-        for (FastTemplate fastTemplate : fastTemplates) {
-            fastTemplate.setPkFastTemplateId(_insert(fastTemplate));
-        }
-    }
-
-
-    @Override
-    public List<FastTemplate> selectAll() {
-        return selectAll("");
-    }
-
-    /* 以下方法为非通用方法 */
-
-    private List<FastTemplate> selectAll(String whereClause){
-        String querySql = "SELECT * FROM " + DBConfig.Table.FAST_TEMPLATE + whereClause;
-        Cursor cursor = db.rawQuery(querySql, null);
+    protected List<FastTemplate> _select(String querySql, String[] selectionArgs) {
+        Cursor cursor = db.rawQuery(querySql, selectionArgs);
         List<FastTemplate> fastTemplates = new ArrayList<>();
         while (cursor.moveToNext()){
             FastTemplate fastTemplate = new FastTemplate();
@@ -89,15 +32,57 @@ public class FastTemplateDao extends BaseDao<FastTemplate> {
         return fastTemplates;
     }
 
+    @Override
+    protected long _insert(FastTemplate fastTemplate) {
+        ContentValues values = new ContentValues();
+        fastTemplate.convertToContentValues(values);
+        return db.insert(mTableName, null, values);
+    }
+
+    @Override
+    protected int _update(FastTemplate fastTemplate, String where, String[] args) {
+        ContentValues values = new ContentValues();
+        fastTemplate.convertToContentValues(values);
+        return db.update(mTableName, values, where, args);
+    }
+
+    @Override
+    public long insert(FastTemplate fastTemplate) {
+        fastTemplate.setPkFastTemplateId(_insert(fastTemplate));
+        return fastTemplate.getPkFastTemplateId();
+    }
+
+    @Override
+    public void updateByPrimaryKey(FastTemplate fastTemplate) {
+        String whereClause = mPkColumn + " = ?";
+        _update(fastTemplate, whereClause, new String[]{fastTemplate.getPkFastTemplateId().toString()});
+    }
+
+    @Override
+    public void insertSome(List<FastTemplate> fastTemplates) {
+        for (FastTemplate fastTemplate : fastTemplates) {
+            fastTemplate.setPkFastTemplateId(_insert(fastTemplate));
+        }
+    }
+
+
+    /* 以下方法为非通用方法 */
+
+    public final List<FastTemplate> selectAllByEventType(int eventType){
+        String querySql = "SELECT * FROM " + mTableName
+                + " WHERE " + DBConfig.FastTemplateColumn.EVENT_TYPE + " = " + eventType;
+        return _select(querySql);
+    }
+
     public List<FastTemplate> selectSpecLearningAll() {
-        return selectAll(" WHERE " + DBConfig.FastTemplateColumn.EVENT_TYPE + " = 1");
+        return selectAllByEventType(FastTemplateConfig.TYPE_SPEC_LEARNING);
     }
 
     public List<FastTemplate> selectSpecNormalAll() {
-        return selectAll(" WHERE " + DBConfig.FastTemplateColumn.EVENT_TYPE + " = 2");
+        return selectAllByEventType(FastTemplateConfig.TYPE_SPEC_NORMAL);
     }
 
     public List<FastTemplate> selectAbstractAll() {
-        return selectAll(" WHERE " + DBConfig.FastTemplateColumn.EVENT_TYPE + " = 3");
+        return selectAllByEventType(FastTemplateConfig.TYPE_ABSTRACT);
     }
 }

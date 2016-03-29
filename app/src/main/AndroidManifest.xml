@@ -22,6 +22,8 @@
         </activity>
         <activity android:name="link.ebbinghaus.planning.view.activity.impl.PlanningDisplaySpecEventDetailActivity">
         </activity>
+        <activity android:name="link.ebbinghaus.planning.view.activity.impl.PlanningDisplayEventGroupDetailActivity">
+        </activity>
     </application>
 
 </manifest>

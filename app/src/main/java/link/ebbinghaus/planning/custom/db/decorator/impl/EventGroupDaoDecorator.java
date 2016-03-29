@@ -1,5 +1,7 @@
 package link.ebbinghaus.planning.custom.db.decorator.impl;
 
+import java.util.List;
+
 import link.ebbinghaus.planning.custom.db.dao.EventGroupDao;
 import link.ebbinghaus.planning.model.entity.po.EventGroup;
 
@@ -19,4 +21,19 @@ public class EventGroupDaoDecorator extends BaseDaoDecorator<EventGroup> {
         super.closeDB();
     }
 
+    /**
+     * 查找所有的具体计划组
+     * @return 所有的具体计划组
+     */
+    public List<EventGroup> selectAllSpectEventGroup(){
+        return dao.selectAllSpectEventGroup();
+    }
+
+    /**
+     * 查找所有的模糊计划组
+     * @return 所有的模糊计划组
+     */
+    public List<EventGroup> selectAllAbstEventGroup(){
+        return dao.selectAllAbstEventGroup();
+    }
 }

@@ -15,32 +15,28 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.model.PlanningDisplayAbstractModel;
 import link.ebbinghaus.planning.model.entity.po.Event;
-import link.ebbinghaus.planning.model.impl.PlanningDisplayAbstractModelImpl;
 import link.ebbinhaus.planning.R;
 
 /**
  * Created by WINFIELD on 2016/3/2.
  */
-public class AllRecylerViewAdapter extends RecyclerView.Adapter<AllRecylerViewAdapter.ViewHolder>{
+public class AllRecyclerViewAdapter extends RecyclerView.Adapter<AllRecyclerViewAdapter.ViewHolder>{
 
     private Context mContext;
     private List<Event> mEvents;
-    private PlanningDisplayAbstractModel mPlanningDisplayAbstractModel;
 
-    public AllRecylerViewAdapter(Context context) {
+    public AllRecyclerViewAdapter(Context context, List<Event> events) {
         this.mContext = context;
-        this.mPlanningDisplayAbstractModel = new PlanningDisplayAbstractModelImpl();
-
-        mEvents = mPlanningDisplayAbstractModel.findAllAbstEvent();
+        mEvents = events;
     }
 
     /**
      * 刷新列表
+     * @param events 新数据
      */
-    public void refresh(){
-        mEvents = mPlanningDisplayAbstractModel.findAllAbstEvent();
+    public void refresh(List<Event> events){
+        mEvents = events;
         this.notifyDataSetChanged();
     }
 
@@ -78,11 +74,20 @@ public class AllRecylerViewAdapter extends RecyclerView.Adapter<AllRecylerViewAd
             //TODO:try cache
             long createTime = event.getCreateTime();
             Datetime datetime = DateUtils.convertTimestamp2Datetime(createTime);
-            int daysBeforeToday = DateUtils.days2TimestampToday(createTime);
+
+            int daysBeforeToday = -DateUtils.daysTimestamp2Today(createTime);
+            String beforeDayStr;
+            if (daysBeforeToday == 0){
+                beforeDayStr = mContext.getString(R.string.planning_display_today);
+            }else if (daysBeforeToday < 999){
+                beforeDayStr = daysBeforeToday + mContext.getString(R.string.planning_display_before_day);
+            }else {
+                beforeDayStr = "999+";
+            }
+
             createTimeTv.setText(String.format(mContext.getString(R.string.planning_display_create_time),
                     datetime.getYear(), datetime.getMonth(), datetime.getDay(),
-                    datetime.getHour(),datetime.getMinute(),
-                    daysBeforeToday < 999 ? daysBeforeToday + "" : "999+"));
+                    datetime.getHour(),datetime.getMinute(), beforeDayStr));
             weekTv.setText(mContext.getString(ConstRes.WEEK[datetime.getWeek() - 1]));
             descriptionTv.setText(event.getDescription());
         }

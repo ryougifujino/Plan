@@ -49,7 +49,7 @@ public class PlanningDisplaySpecWeekFragment extends BaseFragment implements Pla
     @Override
     public void initRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mWeekRecyclerViewAdapter = new WeekRecyclerViewAdapter(mActivity, mDateOfToday);
+        mWeekRecyclerViewAdapter = new WeekRecyclerViewAdapter(mActivity,mPresenter.obtainSpecWeekEvents(mDateOfToday));
         mRecyclerView.setAdapter(mWeekRecyclerViewAdapter);
 
     }
@@ -67,7 +67,8 @@ public class PlanningDisplaySpecWeekFragment extends BaseFragment implements Pla
 
     @Override
     public void onDateChanged(Datetime datetime) {
-        mWeekRecyclerViewAdapter.refresh(datetime);
+        mDateOfToday = datetime;
+        mWeekRecyclerViewAdapter.refresh(mPresenter.obtainSpecWeekEvents(mDateOfToday));
         LogUtils.d(TAG,"onDateChanged");
     }
 
@@ -75,7 +76,7 @@ public class PlanningDisplaySpecWeekFragment extends BaseFragment implements Pla
     public void onResume() {
         super.onResume();
         if (!isCallOnCreateView){
-            mWeekRecyclerViewAdapter.refresh(mDateOfToday);
+            mWeekRecyclerViewAdapter.refresh(mPresenter.obtainSpecWeekEvents(mDateOfToday));
         }
     }
 

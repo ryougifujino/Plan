@@ -3,7 +3,7 @@ package link.ebbinghaus.planning.view.activity;
 import java.util.List;
 
 import link.ebbinghaus.planning.model.entity.sys.Tab;
-import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
+import link.ebbinghaus.planning.model.entity.vo.planning.build.InputEventVo;
 
 /**
  * Created by WINFIELD on 2016/3/8.

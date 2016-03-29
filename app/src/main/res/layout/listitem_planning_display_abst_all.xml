@@ -34,17 +34,11 @@
             android:layout_height="wrap_content"
             android:text="2016年3月25日 7:21 25天前"/>
 
-        <View
-            android:id="@+id/label_planning_display_abst_all_line"
-            android:layout_margin="10dp"
-            android:layout_below="@id/tv_planning_display_abst_all_week"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/bpDark_gray" />
 
         <TextView
             android:id="@+id/tv_planning_display_abst_all_description"
-            android:layout_below="@id/label_planning_display_abst_all_line"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/tv_planning_display_abst_all_create_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="组描述组描述组"/>

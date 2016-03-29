@@ -1,11 +1,8 @@
 package link.ebbinghaus.planning.model.impl;
 
-import com.yurikami.lib.util.DateUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import link.ebbinghaus.planning.custom.constant.config.entity.EventConfig;
 import link.ebbinghaus.planning.custom.constant.config.entity.LearningEventGroupConfig;
 import link.ebbinghaus.planning.custom.constant.module.PlanningBuildConstant;
 import link.ebbinghaus.planning.custom.db.decorator.impl.DefaultInputValueDaoDecorator;
@@ -20,7 +17,7 @@ import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.model.entity.po.EventSubtype;
 import link.ebbinghaus.planning.model.entity.po.FastTemplate;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
-import link.ebbinghaus.planning.model.entity.vo.InputEventVo;
+import link.ebbinghaus.planning.model.entity.vo.planning.build.InputEventVo;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningBuildAbstractFragment;
 import link.ebbinghaus.planning.view.fragment.impl.PlanningBuildSpecificFragment;
 
@@ -60,18 +57,15 @@ public class PlanningBuildModelImpl implements PlanningBuildModel {
     @Override
     public void addNormalEvent(Event event) {
         EventDaoDecorator dao = new EventDaoDecorator();
-        event.setEventSequence(null);
-        event.setEventProcess(
-                DateUtils.isInSameDate(DateUtils.currentDateTimestamp(), event.getEventExpectedFinishedDate())
-                        ? EventConfig.PROCESS_TODO
-                        : EventConfig.PROCESS_NOT_STARTED);
-        dao.insert(event);
+        dao.insertNormalEvent(event);
         dao.closeDB();
     }
 
     @Override
     public void addAbstractEvent(Event event) {
-
+        EventDaoDecorator dao = new EventDaoDecorator();
+        dao.insertAbstractEvent(event);
+        dao.closeDB();
     }
 
     @Override

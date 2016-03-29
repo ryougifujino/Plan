@@ -65,7 +65,7 @@ public class BaseActivity extends AppCompatActivity {
         LogUtils.i(TAG, "onCreate");
         ActivityCollector.addActivity(this);
         mActivity = this;
-//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);  //全局竖屏
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);  //全局强制竖屏
     }
 
     @Override

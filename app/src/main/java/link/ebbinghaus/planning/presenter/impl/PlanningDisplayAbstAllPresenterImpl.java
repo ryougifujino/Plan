@@ -1,6 +1,9 @@
 package link.ebbinghaus.planning.presenter.impl;
 
+import java.util.List;
+
 import link.ebbinghaus.planning.model.PlanningDisplayAbstractModel;
+import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.impl.PlanningDisplayAbstractModelImpl;
 import link.ebbinghaus.planning.presenter.PlanningDisplayAbstAllPresenter;
 import link.ebbinghaus.planning.view.fragment.PlanningDisplayAbstAllView;
@@ -22,4 +25,11 @@ public class PlanningDisplayAbstAllPresenterImpl implements PlanningDisplayAbstA
         mView.initRecyclerView();
         mView.setOnCreateViewFlag();
     }
+
+    @Override
+    public List<Event> obtainAllAbstractEvents() {
+        return mPlanningDisplayAbstractModel.findAllAbstEvent();
+    }
+
+
 }

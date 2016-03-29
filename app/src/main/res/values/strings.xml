@@ -14,7 +14,9 @@
     <!-- planning_display -->
     <string name="planning_display_toolbar_date">%1$d年%2$d月%3$d日</string>
     <string name="planning_display_date_select_hint">只有按月和按周窗口才能选择日期</string>
-    <string name="planning_display_create_time">%1$d年%2$d月%3$d日%4$3d:%5$d%6$4s天前</string>
+    <string name="planning_display_create_time">%1$d年%2$d月%3$d日%4$3d:%5$d%6$6s</string>
+    <string name="planning_display_before_day">天前</string>
+    <string name="planning_display_today">今天</string>
 
     <string name="planning_display_event_group_event_count">%1$d个计划</string>
 
@@ -25,11 +27,18 @@
     <string name="planning_display_spec_week_listitem_normal">普</string>
     <string name="planning_display_spec_week_listitem_date">%1$d月%2$d日</string>
 
+    <string name="planning_display_spec_event_detail_no_prompt">不提醒</string>
+    <string name="planning_display_spec_event_detail_unfinished">未完成</string>
+
+    <string name="planning_display_event_group_detail_create_time">创建于%1$s</string>
+
     <!-- planning_build -->
     <string name="planning_build_spec_normal_event">普通计划</string>
     <string name="planning_build_spec_learning_event">学习计划</string>
     <string name="planning_build_spec_description_validate_info">描述不能为空</string>
     <string name="planning_build_spec_event_strategy_select_dialog_title">选择计划方案</string>
+    <string name="planning_build_spec_saved_successfully_info">具体计划保存成功</string>
+    <string name="planning_build_abst_saved_successfully_info">模糊计划保存成功</string>
 
     <!-- common_select -->
     <string name="common_select_delete_toolbar_select_info">已选择%1$d个</string>
@@ -47,6 +56,17 @@
     <string name="event_process_normal_todo">待办</string>
     <string name="event_process_normal_finished">完成</string>
     <string name="event_process_normal_expire">过期</string>
+
+    <string name="event_type_spec_learning">学习计划</string>
+    <string name="event_type_spec_normal">普通计划</string>
+    <string name="event_type_abstract">模糊计划</string>
+    <!-- learning_event_group -->
+    <string name="learning_event_group_workload">%1$d人分</string>
+
+    <string name="learning_event_group_strategy_comprehensive">理解型</string>
+    <string name="learning_event_group_strategy_memorial">记忆型</string>
+    <string name="learning_event_group_strategy_memorial_pro">强记型</string>
+    <string name="learning_event_group_strategy_persistent">永久型</string>
 
     <!-- ______________________entity#end______________________ -->
 

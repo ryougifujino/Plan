@@ -15,6 +15,7 @@
 
     <RelativeLayout
         android:id="@+id/rl_planning_display_event_group"
+        android:background="?attr/selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp">

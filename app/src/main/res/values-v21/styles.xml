@@ -2,10 +2,10 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <!-- 原statusBar透明,自己画 -->
+        <!-- 改在MainActivity中设置 -->
         <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
         <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
-
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 
 </resources>

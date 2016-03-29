@@ -15,26 +15,33 @@ import link.ebbinghaus.planning.model.entity.po.EventGroup;
 public class EventGroupDao extends BaseDao<EventGroup> {
 
     public EventGroupDao() {
-        super(DBConfig.EventGroupColumn.PK_EVENT_GROUP_ID);
+        super(DBConfig.EventGroupColumn.PK_EVENT_GROUP_ID,DBConfig.Table.EVENT_GROUP);
+    }
+
+    @Override
+    protected List<EventGroup> _select(String querySql,String[] selectionArgs) {
+        Cursor cursor = db.rawQuery(querySql, selectionArgs);
+        List<EventGroup> eventGroups = new ArrayList<>();
+        while (cursor.moveToNext()){
+            EventGroup eventGroup = new EventGroup();
+            eventGroup.filledByCursor(cursor);
+            eventGroups.add(eventGroup);
+        }
+        return eventGroups;
     }
 
     @Override
     protected long _insert(EventGroup eventGroup) {
         ContentValues values = new ContentValues();
         eventGroup.convertToContentValues(values);
-        return db.insert(DBConfig.Table.EVENT_GROUP, null, values);
-    }
-
-    @Override
-    protected int _delete(String where, String[] args) {
-        return db.delete(DBConfig.Table.EVENT_GROUP, where, args);
+        return db.insert(mTableName, null, values);
     }
 
     @Override
     protected int _update(EventGroup eventGroup, String where, String[] args) {
         ContentValues values = new ContentValues();
         eventGroup.convertToContentValues(values);
-        return db.update(DBConfig.Table.EVENT_GROUP, values, where, args);
+        return db.update(mTableName, values, where, args);
     }
 
     @Override
@@ -45,20 +52,8 @@ public class EventGroupDao extends BaseDao<EventGroup> {
 
     @Override
     public void updateByPrimaryKey(EventGroup eventGroup) {
-        String whereClause = pkColumn + " = ?";
+        String whereClause = mPkColumn + " = ?";
         _update(eventGroup, whereClause, new String[]{eventGroup.getPkEventGroupId().toString()});
-    }
-
-    @Override
-    public EventGroup selectByPrimaryKey(Integer pk) {
-        String querySql = "SELECT * FROM " + DBConfig.Table.EVENT_GROUP + " WHERE " +
-                pkColumn + " = ?";
-        Cursor cursor = db.rawQuery(querySql, new String[]{pk.toString()});
-        cursor.moveToFirst();
-        EventGroup eventGroup = new EventGroup();
-        eventGroup.filledByCursor(cursor);
-        cursor.close();
-        return eventGroup;
     }
 
     @Override
@@ -68,20 +63,62 @@ public class EventGroupDao extends BaseDao<EventGroup> {
         }
     }
 
+    /* 以下方法为非通用方法 */
 
-    @Override
-    public List<EventGroup> selectAll() {
-        String querySql = "SELECT * FROM " + DBConfig.Table.EVENT_GROUP;
-        Cursor cursor = db.rawQuery(querySql, null);
-        List<EventGroup> eventGroups = new ArrayList<>();
-        while (cursor.moveToNext()){
-            EventGroup eventGroup = new EventGroup();
-            eventGroup.filledByCursor(cursor);
-            eventGroups.add(eventGroup);
-        }
-        return eventGroups;
+    /**
+     * 更新(增加)学习计划个数
+     * @param pk 计划组主键
+     * @param increment 增加的个数
+     */
+    public void updateLearningEventCount(Long pk, int increment){
+        String updateSql = "UPDATE "+ mTableName
+                +" SET "+ DBConfig.EventGroupColumn.LEARNING_EVENT_COUNT +" = ("+ DBConfig.EventGroupColumn.LEARNING_EVENT_COUNT +" + ?) "
+                + "WHERE "+ DBConfig.EventGroupColumn.PK_EVENT_GROUP_ID +" = ?";
+        db.execSQL(updateSql,new Object[]{increment,pk});
     }
 
-    /* 以下方法为非通用方法 */
+    /**
+     * 更新(增加)普通计划个数
+     * @param pk 计划组主键
+     * @param increment 增加的个数
+     */
+    public void updateNormalEventCount(Long pk, int increment){
+        String updateSql = "UPDATE "+ mTableName
+                +" SET "+ DBConfig.EventGroupColumn.NORMAL_EVENT_COUNT +" = ("+ DBConfig.EventGroupColumn.NORMAL_EVENT_COUNT +" + ?) "
+                + "WHERE "+ DBConfig.EventGroupColumn.PK_EVENT_GROUP_ID +" = ?";
+        db.execSQL(updateSql,new Object[]{increment,pk});
+    }
+
+    /**
+     * 更新(增加)模糊计划个数
+     * @param pk 计划组主键
+     * @param increment 增加的个数
+     */
+    public void updateAbstractEventCount(Long pk, int increment){
+        String updateSql = "UPDATE "+ mTableName
+                +" SET "+ DBConfig.EventGroupColumn.ABSTRACT_EVENT_COUNT +" = ("+ DBConfig.EventGroupColumn.ABSTRACT_EVENT_COUNT +" + ?) "
+                + "WHERE "+ DBConfig.EventGroupColumn.PK_EVENT_GROUP_ID +" = ?";
+        db.execSQL(updateSql,new Object[]{increment,pk});
+    }
+
+    /**
+     * 查找所有的具体计划组
+     * @return 所有的具体计划组 TODO:继续完成
+     */
+    public List<EventGroup> selectAllSpectEventGroup(){
+        String querySql = "SELECT * FROM "+ mTableName
+                +" WHERE ("+ DBConfig.EventGroupColumn.LEARNING_EVENT_COUNT +" + "+ DBConfig.EventGroupColumn.NORMAL_EVENT_COUNT +") > 0";
+        return _select(querySql);
+    }
+
+    /**
+     * 查找所有的模糊计划组
+     * @return 所有的模糊计划组
+     */
+    public List<EventGroup> selectAllAbstEventGroup(){
+        String querySql = "SELECT * FROM "+ mTableName
+                +" WHERE "+ DBConfig.EventGroupColumn.ABSTRACT_EVENT_COUNT +" > 0";
+        return _select(querySql);
+    }
 
 }
