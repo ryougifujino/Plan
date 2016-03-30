@@ -160,6 +160,14 @@ public class DateUtils {
         return date;
     }
 
+    /**
+     * 计算出今天0点的时间戳
+     * @return 今天0点的时间戳
+     */
+    public static long dateTimestampOfToday(){
+        Datetime dateOfToday = dateOfToday();
+        return newDateTimestamp(dateOfToday.getYear(),dateOfToday.getMonth(),dateOfToday.getDay());
+    }
 
     public static boolean isLeapYear(int year){
         return ( (year % 4 == 0) && (year % 100 != 0) ) || (year % 400 == 0);
@@ -387,7 +395,8 @@ public class DateUtils {
     }
 
     /**
-     * 查找某一个日期所在周的始终日期时间戳
+     * 查找某一个日期所在周的始终日期时间戳<br>
+     * 前闭后开,返回星期一0点的时间戳和下星期一0点的时间戳
      * @param year
      * @param month
      * @param day
@@ -398,7 +407,7 @@ public class DateUtils {
         long targetTimestamp = newDateTimestamp(year,month,day);
         long startEnd[] = new long[2];
         startEnd[0] = timestampBefore(targetTimestamp, dayOfWeek - 1);
-        startEnd[1] = timestampAfter(targetTimestamp, 7 - dayOfWeek);
+        startEnd[1] = timestampAfter(targetTimestamp, 8 - dayOfWeek);
         return startEnd;
     }
 

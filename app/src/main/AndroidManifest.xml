@@ -24,6 +24,8 @@
         </activity>
         <activity android:name="link.ebbinghaus.planning.view.activity.impl.PlanningDisplayEventGroupDetailActivity">
         </activity>
+        <activity android:name="link.ebbinghaus.planning.view.activity.impl.PlanningDoneFinishActivity">
+        </activity>
     </application>
 
 </manifest>

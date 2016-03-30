@@ -8,6 +8,7 @@
     <string name="common_create">创建</string>
     <string name="common_confirm">确认</string>
     <string name="common_cancel">取消</string>
+    <string name="common_finish">完成</string>
     <string name="common_save_succeed">保存成功</string>
 
     <string name="common_monday">星期一</string>
@@ -17,5 +18,9 @@
     <string name="common_friday">星期五</string>
     <string name="common_saturday">星期六</string>
     <string name="common_sunday">星期日</string>
+
+    <string name="common_hour">时</string>
+    <string name="common_minute">分钟</string>
+    <string name="common_second">秒</string>
 
 </resources>

@@ -94,7 +94,7 @@ public class EventDao extends BaseDao <Event>{
         String eventType = DBConfig.EventColumn.EVENT_TYPE;
         String querySql = "SELECT * FROM " + mTableName
                 + " WHERE (" + eventType + " = "+ EventConfig.TYPE_SPEC_LEARNING + " OR " + eventType + " = "+ EventConfig.TYPE_SPEC_NORMAL + ")"
-                + " AND " + SelectHelper.in(DBConfig.EventColumn.EVENT_EXPECTED_FINISHED_DATE, startEnd[0], startEnd[1])
+                + " AND " + SelectHelper.between(DBConfig.EventColumn.EVENT_EXPECTED_FINISHED_DATE, startEnd[0], startEnd[1])
                 + " ORDER BY " + DBConfig.EventColumn.EVENT_EXPECTED_FINISHED_DATE + " ASC";
         return _select(querySql);
     }
@@ -130,5 +130,18 @@ public class EventDao extends BaseDao <Event>{
                     "ORDER BY e.PK_EVENT_ID DESC";
         }
         return _select(querySql,new String[]{ eventGroupId + "" });
+    }
+
+    /**
+     * 查找从今天算起的过去两天的具体计划
+     * @return 从今天(包括今天)算起的过去两天的具体计划
+     */
+    public List<Event> selectLast2DaysSpecEvents(){
+        long todayTimestamp = DateUtils.dateTimestampOfToday();
+        long start = DateUtils.timestampBefore(todayTimestamp, 1);
+        long end = DateUtils.timestampAfter(todayTimestamp,1);
+        String querySql = "SELECT * FROM event WHERE "
+                + SelectHelper.between(DBConfig.EventColumn.EVENT_EXPECTED_FINISHED_DATE,start,end);
+        return _select(querySql);
     }
 }

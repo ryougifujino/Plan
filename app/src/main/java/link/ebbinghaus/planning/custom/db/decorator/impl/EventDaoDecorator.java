@@ -154,4 +154,13 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
     public List<Event> selectEventGroupDetail(boolean eventGroupType, Long eventGroupId){
         return dao.selectEventGroupDetail(eventGroupType,eventGroupId);
     }
+
+    /**
+     * 查找从今天算起的过去两天的具体计划
+     * @return 从今天(包括今天)算起的过去两天的具体计划
+     */
+    public List<Event> selectLast2DaysSpecEvents(){
+        return dao.selectLast2DaysSpecEvents();
+    }
+
 }

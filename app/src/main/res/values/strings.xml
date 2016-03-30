@@ -40,6 +40,13 @@
     <string name="planning_build_spec_saved_successfully_info">具体计划保存成功</string>
     <string name="planning_build_abst_saved_successfully_info">模糊计划保存成功</string>
 
+    <!-- planning_done -->
+    <string name="planning_done_expected_finished_time">计划应于%1$d年%2$d月%3$d日完成</string>
+    <string name="planning_done_event_not_finished">计划尚未完成</string>
+    <string name="planning_done_finished_time">计划完成于%1$d年%2$d月%3$d日</string>
+
+    <string name="planning_done_finish_learning_time">%1$d分钟</string>
+
     <!-- common_select -->
     <string name="common_select_delete_toolbar_select_info">已选择%1$d个</string>
     <string name="common_select_add_dialog_title">创建新条目</string>

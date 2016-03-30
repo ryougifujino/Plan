@@ -97,7 +97,9 @@ public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implem
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    @SuppressLint("SetTextI18n")
+    //TODO:删除后刷新列表
+
+    @SuppressLint("SetTextI18n")    //TODO:收纳入ViewHolder
     public void setSpecificHeader(RecyclerViewHeader view) {
         TextView createTimeTv = (TextView) view.findViewById(R.id.tv_planning_display_event_spec_group_create_time);
         TextView learningCountTv = (TextView) view.findViewById(R.id.tv_planning_display_event_spec_group_learning_count);
@@ -114,7 +116,7 @@ public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implem
         progressTv.setText(finishedCount + "/" + mEvents.size());
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n")    //TODO:收纳入ViewHolder
     public void setAbstractHeader(RecyclerViewHeader view) {
         TextView createTime = (TextView) view.findViewById(R.id.tv_planning_display_event_abst_group_create_time);
         TextView eventCount = (TextView) view.findViewById(R.id.tv_planning_display_event_abst_group_event_count);

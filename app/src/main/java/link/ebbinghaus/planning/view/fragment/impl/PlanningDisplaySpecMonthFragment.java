@@ -51,7 +51,7 @@ public class PlanningDisplaySpecMonthFragment extends BaseFragment implements Pl
     @Override
     public void initRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mMonthRecyclerViewAdapter = new MonthRecyclerViewAdapter(mActivity, mDateOfToday);
+        mMonthRecyclerViewAdapter = new MonthRecyclerViewAdapter(mActivity, mDateOfToday);  //FIXME:5.0以下要报错,检查Cursor column -1
         mRecyclerView.setAdapter(mMonthRecyclerViewAdapter);
         setOnFragmentStopListener(mMonthRecyclerViewAdapter);
     }
