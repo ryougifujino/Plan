@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="link.ebbinghaus.planning.view.activity.impl.PlanningDoneFinishActivity">
+    tools:context="link.ebbinghaus.planning.view.planning.done.activity.PlanningDoneFinishActivity">
 
     <include layout="@layout/head_common"/>
 
@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:padding="15dp"
-                    android:text="30分钟"/>
+                    android:text="0分钟"/>
             </RelativeLayout>
 
             <RelativeLayout

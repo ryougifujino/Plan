@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/dl_main_whole"
     android:fitsSystemWindows="true"
-    tools:context="link.ebbinghaus.planning.view.activity.impl.MainActivity">
+    tools:context="link.ebbinghaus.planning.view.main.activity.MainActivity">
 
 
     <LinearLayout
@@ -29,8 +29,8 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_main_drawer"
         app:menu="@menu/menu_main_drawer"
-        app:itemIconTint="@color/color_main_drawer_item"
-        app:itemTextColor="@color/color_main_drawer_item">
+        app:itemIconTint="@color/main_drawer_item"
+        app:itemTextColor="@color/main_drawer_item">
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

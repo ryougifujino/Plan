@@ -6,6 +6,11 @@
     <color name="foreground_material_light">#d91919</color>
     <color name="black">#ef3e3e</color>
 
+    <!-- 稀有程度 -->
+    <color name="rarity_blue">#4B69FF</color>
+    <color name="legend_purple">#D32CE6</color>
+    <color name="immortality_orange">#E4AE39</color>
+
     <!--reds-->
     <color name="md_red_50">#FFEBEE</color>
     <color name="md_red_100">#FFCDD2</color>

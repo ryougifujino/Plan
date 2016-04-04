@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item_planning_done_filter"
+        android:orderInCategory="100"
+        android:title="过滤器"
+        android:icon="@drawable/planning_done_filter"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/sub_item_planning_done_filter_unfinished"
+                android:showAsAction="withText"
+                android:title="未完成"/>
+            <item
+                android:id="@+id/sub_item_planning_done_filter_finished"
+                android:showAsAction="withText"
+                android:title="已完成"/>
+            <item
+                android:id="@+id/sub_item_planning_done_filter_all"
+                android:showAsAction="withText"
+                android:title="全部"/>
+        </menu>
+    </item>
+</menu>

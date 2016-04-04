@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="link.ebbinhaus.planning"
+<manifest package="link.ebbinghaus.planning"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:name="link.ebbinghaus.planning.custom.other.App"
+        android:name="link.ebbinghaus.planning.ebbinghaus.other.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="link.ebbinghaus.planning.view.activity.impl.MainActivity">
+        <activity android:name="link.ebbinghaus.planning.view.main.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="link.ebbinghaus.planning.view.activity.impl.PlanningBuildActivity">
+        <activity android:name="link.ebbinghaus.planning.view.planning.build.activity.PlanningBuildActivity">
         </activity>
-        <activity android:name="link.ebbinghaus.planning.view.activity.impl.CommonSelectActivity">
+        <activity android:name="link.ebbinghaus.planning.view.common.activity.CommonSelectActivity">
         </activity>
-        <activity android:name="link.ebbinghaus.planning.view.activity.impl.PlanningDisplaySpecEventDetailActivity">
+        <activity android:name="link.ebbinghaus.planning.view.planning.display.activity.PlanningDisplaySpecEventDetailActivity">
         </activity>
-        <activity android:name="link.ebbinghaus.planning.view.activity.impl.PlanningDisplayEventGroupDetailActivity">
+        <activity android:name="link.ebbinghaus.planning.view.planning.display.activity.PlanningDisplayEventGroupDetailActivity">
         </activity>
-        <activity android:name="link.ebbinghaus.planning.view.activity.impl.PlanningDoneFinishActivity">
+        <activity android:name="link.ebbinghaus.planning.view.planning.done.activity.PlanningDoneFinishActivity">
         </activity>
     </application>
 

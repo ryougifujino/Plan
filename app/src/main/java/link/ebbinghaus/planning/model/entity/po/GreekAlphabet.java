@@ -5,7 +5,7 @@ import android.database.Cursor;
 
 import com.yurikami.lib.util.NonNullContentValues;
 
-import link.ebbinghaus.planning.custom.constant.config.DBConfig;
+import link.ebbinghaus.planning.ebbinghaus.constant.config.DBConfig;
 
 /**
  * Created by WINFIELD on 2016/3/28.

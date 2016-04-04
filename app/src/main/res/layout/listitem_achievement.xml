@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/md_white_1000"
+    app:cardElevation="2dp"
+    android:layout_marginTop="10dp">
+<RelativeLayout
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_achievement_badge"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:backgroundTintMode="src_over"
+
+        android:src="@mipmap/common_monday"/>
+
+    <TextView
+        android:id="@+id/tv_achievement_name"
+        android:layout_toRightOf="@id/iv_achievement_badge"
+        android:layout_marginLeft="10dp"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:textColor="@color/rarity_blue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="略有成就"/>
+
+    <TextView
+        android:id="@+id/tv_achievement_status"
+        android:layout_marginRight="10dp"
+        android:layout_alignBaseline="@id/tv_achievement_name"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="未达成"/>
+
+
+    <View
+        android:id="@+id/label_view_achievement_line"
+        android:layout_toRightOf="@id/iv_achievement_badge"
+        android:layout_below="@id/tv_achievement_name"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@color/md_grey_300"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <TextView
+        android:id="@+id/tv_achievement_description"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_toRightOf="@id/iv_achievement_badge"
+        android:layout_below="@id/label_view_achievement_line"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="成功完成100组学习计划"/>
+
+</RelativeLayout>
+</android.support.v7.widget.CardView>

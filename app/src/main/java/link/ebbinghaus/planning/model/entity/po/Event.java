@@ -9,7 +9,7 @@ import android.os.Parcelable;
 import com.yurikami.lib.util.NonNullContentValues;
 import com.yurikami.lib.util.Utils;
 
-import link.ebbinghaus.planning.custom.constant.config.DBConfig;
+import link.ebbinghaus.planning.ebbinghaus.constant.config.DBConfig;
 
 /**
  * Created by WINFIELD on 2016/2/29.

@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecWeekFragment">
+             tools:context="link.ebbinghaus.planning.view.planning.display.fragment.PlanningDisplaySpecWeekFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_planning_display_spec_week"

@@ -3,15 +3,15 @@ package link.ebbinghaus.planning.model.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import link.ebbinghaus.planning.custom.constant.module.PlanningDisplayConstant;
-import link.ebbinghaus.planning.custom.db.decorator.impl.EventDaoDecorator;
-import link.ebbinghaus.planning.custom.db.decorator.impl.EventGroupDaoDecorator;
+import link.ebbinghaus.planning.ebbinghaus.constant.module.PlanningDisplayConstant;
+import link.ebbinghaus.planning.ebbinghaus.db.decorator.impl.EventDaoDecorator;
+import link.ebbinghaus.planning.ebbinghaus.db.decorator.impl.EventGroupDaoDecorator;
 import link.ebbinghaus.planning.model.PlanningDisplayModel;
 import link.ebbinghaus.planning.model.entity.po.Event;
 import link.ebbinghaus.planning.model.entity.po.EventGroup;
 import link.ebbinghaus.planning.model.entity.sys.Tab;
-import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplayAbstractFragment;
-import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplaySpecificFragment;
+import link.ebbinghaus.planning.view.planning.display.fragment.PlanningDisplayAbstractFragment;
+import link.ebbinghaus.planning.view.planning.display.fragment.PlanningDisplaySpecificFragment;
 
 /**
  * Created by WINFIELD on 2016/2/29.
@@ -31,7 +31,7 @@ public class PlanningDisplayModelImpl implements PlanningDisplayModel {
         List<EventGroup> eventGroups;
         EventGroupDaoDecorator dao = new EventGroupDaoDecorator();
         if (flag){
-            eventGroups = dao.selectAllSpectEventGroup();
+            eventGroups = dao.selectAllSpecEventGroup();
         }else {
             eventGroups = dao.selectAllAbstEventGroup();
         }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:textColor="#fff"
+          android:textColor="@color/planning_display_spec_month_event_text"
           android:clickable="true"
           android:singleLine="true"
           android:layout_marginLeft="10dp"
@@ -8,8 +8,8 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:textSize="15sp"
-          android:padding="3dp"
           android:background="@drawable/planning_display_spec_month_event_learning"
+          android:padding="5dp"
           android:text="ddd">
 
 

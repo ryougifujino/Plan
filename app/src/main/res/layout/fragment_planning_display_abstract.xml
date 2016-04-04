@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
-              tools:context="link.ebbinghaus.planning.view.fragment.impl.PlanningDisplayAbstractFragment">
+              tools:context="link.ebbinghaus.planning.view.planning.display.fragment.PlanningDisplayAbstractFragment">
 
     <android.support.design.widget.TabLayout
         app:tabMode="fixed"

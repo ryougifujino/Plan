@@ -38,4 +38,12 @@ public class Utils {
         return boolean1 == boolean2;
     }
 
+    /**
+     * 获取LruCache缓存用的推荐内存大小(单位KB)
+     * @return LruCache缓存用的推荐内存大小
+     */
+    public static int cacheMemory(){
+        return (int) (Runtime.getRuntime().maxMemory() / 1024 / 8);
+    }
+
 }

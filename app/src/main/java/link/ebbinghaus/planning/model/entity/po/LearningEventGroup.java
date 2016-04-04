@@ -5,7 +5,7 @@ import android.database.Cursor;
 
 import com.yurikami.lib.util.NonNullContentValues;
 
-import link.ebbinghaus.planning.custom.constant.config.DBConfig;
+import link.ebbinghaus.planning.ebbinghaus.constant.config.DBConfig;
 
 /**
  * Created by WINFIELD on 2016/2/29.
@@ -16,7 +16,7 @@ public class LearningEventGroup {
     private Integer strategy;   //1:理解型 2:记忆型 3:强记型 4:永久型
     private Integer learningEventTotal;   //这个学习计划组的总数量
     private Integer learningEventFinishedCount;
-    private Integer workload;   //工作量,单位:人分
+    private Integer learningDuration;   //学习时长,单位:分
     private Float efficiency;   //效率 0.3:差 0.6:一般 0.9:高效 1:非常高效
     private Float understandingDegree;   //理解情况 0.3:不太理解 0.7:大致理解 1:完全理解
 
@@ -60,12 +60,12 @@ public class LearningEventGroup {
         this.learningEventFinishedCount = learningEventFinishedCount;
     }
 
-    public Integer getWorkload() {
-        return workload;
+    public Integer getLearningDuration() {
+        return learningDuration;
     }
 
-    public void setWorkload(Integer workload) {
-        this.workload = workload;
+    public void setLearningDuration(Integer learningDuration) {
+        this.learningDuration = learningDuration;
     }
 
     public Float getEfficiency() {
@@ -91,7 +91,7 @@ public class LearningEventGroup {
         nonNullValues.put(DBConfig.LearningEventGroupColumn.STRATEGY, strategy);
         nonNullValues.put(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_TOTAL, learningEventTotal);
         nonNullValues.put(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_FINISHED_COUNT, learningEventFinishedCount);
-        nonNullValues.put(DBConfig.LearningEventGroupColumn.WORKLOAD, workload);
+        nonNullValues.put(DBConfig.LearningEventGroupColumn.LEARNING_DURATION, learningDuration);
         nonNullValues.put(DBConfig.LearningEventGroupColumn.EFFICIENCY, efficiency);
         nonNullValues.put(DBConfig.LearningEventGroupColumn.UNDERSTANDING_DEGREE, understandingDegree);
     }
@@ -102,7 +102,7 @@ public class LearningEventGroup {
         setStrategy(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.STRATEGY)));
         setLearningEventTotal(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_TOTAL)));
         setLearningEventFinishedCount(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.LEARNING_EVENT_FINISHED_COUNT)));
-        setWorkload(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.WORKLOAD)));
+        setLearningDuration(cursor.getInt(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.LEARNING_DURATION)));
         setEfficiency(cursor.getFloat(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.EFFICIENCY)));
         setUnderstandingDegree(cursor.getFloat(cursor.getColumnIndex(DBConfig.LearningEventGroupColumn.UNDERSTANDING_DEGREE)));
     }
@@ -113,7 +113,7 @@ public class LearningEventGroup {
         setStrategy(learningEventGroup.getStrategy());
         setLearningEventTotal(learningEventGroup.getLearningEventTotal());
         setLearningEventFinishedCount(learningEventGroup.getLearningEventFinishedCount());
-        setWorkload(learningEventGroup.getWorkload());
+        setLearningDuration(learningEventGroup.getLearningDuration());
         setEfficiency(learningEventGroup.getEfficiency());
         setUnderstandingDegree(learningEventGroup.getUnderstandingDegree());
     }

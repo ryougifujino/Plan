@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="link.ebbinghaus.planning.view.activity.impl.PlanningBuildActivity">
+    tools:context="link.ebbinghaus.planning.view.planning.build.activity.PlanningBuildActivity">
 
     <android.support.v7.widget.Toolbar
        android:id="@+id/tb_common_head"

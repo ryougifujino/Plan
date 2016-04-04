@@ -3,14 +3,14 @@ package link.ebbinghaus.planning.model.impl;
 import android.util.SparseArray;
 
 import link.ebbinghaus.planning.model.MainModel;
-import link.ebbinghaus.planning.view.fragment.impl.AchievementFragment;
-import link.ebbinghaus.planning.view.fragment.impl.HistoryFragment;
-import link.ebbinghaus.planning.view.fragment.impl.PlanningDoneFragment;
-import link.ebbinghaus.planning.view.fragment.impl.SettingsFragment;
-import link.ebbinghaus.planning.view.fragment.impl.StoreFragment;
-import link.ebbinhaus.planning.R;
-import link.ebbinghaus.planning.view.fragment.impl.ExtensionFragment;
-import link.ebbinghaus.planning.view.fragment.impl.PlanningDisplayFragment;
+import link.ebbinghaus.planning.view.achievement.fragment.AchievementFragment;
+import link.ebbinghaus.planning.view.history.fragment.HistoryFragment;
+import link.ebbinghaus.planning.view.planning.done.fragment.PlanningDoneFragment;
+import link.ebbinghaus.planning.view.setting.fragment.SettingsFragment;
+import link.ebbinghaus.planning.view.store.fragment.StoreFragment;
+import link.ebbinghaus.planning.R;
+import link.ebbinghaus.planning.view.extension.fragment.ExtensionFragment;
+import link.ebbinghaus.planning.view.planning.display.fragment.PlanningDisplayFragment;
 
 /**
  * Created by WINFIELD on 2016/2/19.

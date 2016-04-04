@@ -12,7 +12,7 @@
         android:id="@+id/item_planning_build_done"
         android:orderInCategory="100"
         android:title="action_settings"
-        android:icon="@drawable/planning_build_done"
+        android:icon="@drawable/common_done"
         app:showAsAction="always">
     </item>
 </menu>
