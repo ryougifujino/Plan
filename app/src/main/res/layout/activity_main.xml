@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/dl_main_whole"
     android:fitsSystemWindows="true"
-    tools:context="link.ebbinghaus.planning.view.main.activity.MainActivity">
+    tools:context=".ui.view.main.activity.MainActivity">
 
 
     <LinearLayout
@@ -28,7 +28,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_main_drawer"
-        app:menu="@menu/menu_main_drawer"
+        app:menu="@menu/main_drawer"
         app:itemIconTint="@color/main_drawer_item"
         app:itemTextColor="@color/main_drawer_item">
     </android.support.design.widget.NavigationView>

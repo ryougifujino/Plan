@@ -51,10 +51,16 @@
     <string name="planning_done_finish_dialog_efficiency_title">选择效率</string>
     <string name="planning_done_finish_dialog_understand_degree_title">选择理解程度</string>
     <string name="planning_done_finish_learning_duration_validation_message">请填写学习时长</string>
-    
+
     <!-- achievement -->
     <string name="achievement_status_achieved">达成</string>
     <string name="achievement_status_not_achieved">未达成</string>
+
+    <!-- extension -->
+    <string name="extension_title">扩展</string>
+    <string name="extension_read_title">阅读计划</string>
+    <string name="extension_read_search_view_hint">搜索图书...</string>
+    <string name="extension_read_load_prompt">没有更多图书了</string>
 
     <!-- common_select -->
     <string name="common_select_delete_toolbar_select_info">已选择%1$d个</string>
@@ -93,7 +99,6 @@
     <string name="learning_event_group_understanding_degree_little">不太理解</string>
     <string name="learning_event_group_understanding_degree_mostly">大致理解</string>
     <string name="learning_event_group_understanding_degree_totally">完全理解</string>
-
 
 
     <!-- ______________________entity#end______________________ -->

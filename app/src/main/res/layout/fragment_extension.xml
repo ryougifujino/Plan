@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="link.ebbinghaus.planning.view.extension.fragment.ExtensionFragment">
+    tools:context=".ui.view.extension.fragment.ExtensionFragment">
 
     <include layout="@layout/head_common"/>
 

@@ -2,29 +2,33 @@
 <manifest package="link.ebbinghaus.planning"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
-        android:name="link.ebbinghaus.planning.ebbinghaus.other.App"
+        android:name=".common.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="link.ebbinghaus.planning.view.main.activity.MainActivity">
+        <activity android:name=".ui.view.main.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="link.ebbinghaus.planning.view.planning.build.activity.PlanningBuildActivity">
+        <activity android:name=".ui.view.planning.build.activity.PlanningBuildActivity">
         </activity>
-        <activity android:name="link.ebbinghaus.planning.view.common.activity.CommonSelectActivity">
+        <activity android:name=".ui.view.common.activity.CommonSelectActivity">
         </activity>
-        <activity android:name="link.ebbinghaus.planning.view.planning.display.activity.PlanningDisplaySpecEventDetailActivity">
+        <activity android:name=".ui.view.planning.display.activity.PlanningDisplaySpecEventDetailActivity">
         </activity>
-        <activity android:name="link.ebbinghaus.planning.view.planning.display.activity.PlanningDisplayEventGroupDetailActivity">
+        <activity android:name=".ui.view.planning.display.activity.PlanningDisplayEventGroupDetailActivity">
         </activity>
-        <activity android:name="link.ebbinghaus.planning.view.planning.done.activity.PlanningDoneFinishActivity">
+        <activity android:name=".ui.view.planning.done.activity.PlanningDoneFinishActivity">
+        </activity>
+        <activity android:name=".ui.view.extension.activity.ExtensionReadActivity">
         </activity>
     </application>
 
