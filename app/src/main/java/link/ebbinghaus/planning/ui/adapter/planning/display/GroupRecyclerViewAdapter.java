@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.yurikami.lib.entity.Datetime;
+import com.yurikami.lib.model.Datetime;
 import com.yurikami.lib.util.DateUtils;
 import com.yurikami.lib.util.LogUtils;
 
@@ -17,7 +17,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.core.service.PlanningDisplayService;
-import link.ebbinghaus.planning.core.model.po.EventGroup;
+import link.ebbinghaus.planning.core.model.local.po.EventGroup;
 import link.ebbinghaus.planning.core.service.impl.PlanningDisplayServiceImpl;
 import link.ebbinghaus.planning.ui.view.planning.display.activity.PlanningDisplayEventGroupDetailActivity;
 import link.ebbinghaus.planning.R;

@@ -1,12 +1,12 @@
 package link.ebbinghaus.planning.core.service;
 
-import com.yurikami.lib.entity.Datetime;
+import com.yurikami.lib.model.Datetime;
 
 import java.util.List;
 
-import link.ebbinghaus.planning.core.model.sys.Tab;
-import link.ebbinghaus.planning.core.model.vo.planning.display.SpecEventDetailVo;
-import link.ebbinghaus.planning.core.model.po.Event;
+import link.ebbinghaus.planning.core.model.local.sys.Tab;
+import link.ebbinghaus.planning.core.model.local.vo.planning.display.SpecEventDetailVo;
+import link.ebbinghaus.planning.core.model.local.po.Event;
 
 /**
  * Created by WINFIELD on 2016/3/1.
@@ -54,5 +54,13 @@ public interface PlanningDisplaySpecificService {
      * @param specEventDetail 具体计划详情(已有event)
      */
     void findSpecEventDetailTo(SpecEventDetailVo specEventDetail);
+
+    /**
+     * 删除具体计划<br>
+     * 这个具体计划可能是学习计划，也可能是普通计划<br>
+     * 并且会处理其相关的计划组、希腊字母表、学习计划组
+     * @param event 要删除的计划信息
+     */
+    void removeSpecEventAndProcessRelated(Event event);
 
 }

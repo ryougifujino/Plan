@@ -1,20 +1,21 @@
 package link.ebbinghaus.planning.core.service.impl;
 
-import com.yurikami.lib.entity.Datetime;
+import com.yurikami.lib.model.Datetime;
 import com.yurikami.lib.util.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
 import link.ebbinghaus.planning.common.constant.module.PlanningDisplayConstant;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventSubtypeDaoDecorator;
-import link.ebbinghaus.planning.core.model.vo.planning.display.SpecEventDetailVo;
+import link.ebbinghaus.planning.core.model.local.vo.planning.display.SpecEventDetailVo;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventDaoDecorator;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventGroupDaoDecorator;
 import link.ebbinghaus.planning.core.db.decorator.impl.LearningEventGroupDaoDecorator;
 import link.ebbinghaus.planning.core.service.PlanningDisplaySpecificService;
-import link.ebbinghaus.planning.core.model.po.Event;
-import link.ebbinghaus.planning.core.model.sys.Tab;
+import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.core.model.local.sys.Tab;
 import link.ebbinghaus.planning.ui.view.planning.display.fragment.PlanningDisplayEventGroupFragment;
 import link.ebbinghaus.planning.ui.view.planning.display.fragment.PlanningDisplaySpecMonthFragment;
 import link.ebbinghaus.planning.ui.view.planning.display.fragment.PlanningDisplaySpecWeekFragment;
@@ -93,6 +94,17 @@ public class PlanningDisplaySpecificServiceImpl implements PlanningDisplaySpecif
         eventSubtypeDao.closeDB();
         eventGroupDao.closeDB();
         learningEventGroupDao.closeDB();
+    }
+
+    @Override
+    public void removeSpecEventAndProcessRelated(Event event) {
+        EventDaoDecorator dao = new EventDaoDecorator();
+        if (event.getEventType() == EventConfig.TYPE_SPEC_LEARNING){
+            dao.deleteLearningEvents(event.getLearningEventGroupId(),event.getEventGroupId(),event.getGreekAlphabetId());
+        }else if (event.getEventType() == EventConfig.TYPE_SPEC_NORMAL){
+            dao.deleteNormalEvent(event.getPkEventId(),event.getEventGroupId(),event.getGreekAlphabetId());
+        }
+        dao.closeDB();
     }
 
 

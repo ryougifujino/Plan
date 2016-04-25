@@ -4,7 +4,7 @@ import java.util.List;
 
 import link.ebbinghaus.planning.common.constant.config.entity.FastTemplateConfig;
 import link.ebbinghaus.planning.core.db.decorator.impl.FastTemplateDaoDecorator;
-import link.ebbinghaus.planning.core.model.po.FastTemplate;
+import link.ebbinghaus.planning.core.model.local.po.FastTemplate;
 
 /**
  * Created by WINFIELD on 2016/3/21.

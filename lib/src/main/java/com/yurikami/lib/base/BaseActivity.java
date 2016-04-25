@@ -38,6 +38,14 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     /**
+     * 跳转到某个Activity
+     * @param cls 目标class
+     */
+    protected void startActivity(Class<?> cls) {
+        startActivity(newIntent(cls));
+    }
+
+    /**
      * !必须在接口里所有方法的生命周期之前调用此方法,否则将可能不执行
      */
     protected void setOnActivityStopListener(OnActivityStopListener listener){

@@ -2,9 +2,9 @@ package link.ebbinghaus.planning.core.service;
 
 import java.util.List;
 
-import link.ebbinghaus.planning.core.model.po.Event;
-import link.ebbinghaus.planning.core.model.sys.Tab;
-import link.ebbinghaus.planning.core.model.po.EventGroup;
+import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.core.model.local.sys.Tab;
+import link.ebbinghaus.planning.core.model.local.po.EventGroup;
 
 /**
  * Created by WINFIELD on 2016/2/29.

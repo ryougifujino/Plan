@@ -1,6 +1,6 @@
 package link.ebbinghaus.planning.ui.presenter.planning.build;
 
-import link.ebbinghaus.planning.core.model.po.EventGroup;
+import link.ebbinghaus.planning.core.model.local.po.EventGroup;
 
 /**
  * Created by WINFIELD on 2016/3/14.

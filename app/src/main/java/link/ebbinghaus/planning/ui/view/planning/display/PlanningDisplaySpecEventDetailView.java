@@ -24,4 +24,9 @@ public interface PlanningDisplaySpecEventDetailView {
      * 用整理好的视图数据填充视图
      */
     void fillViewWithData();
+
+    /**
+     * 离开此视图
+     */
+    void exitThisView();
 }

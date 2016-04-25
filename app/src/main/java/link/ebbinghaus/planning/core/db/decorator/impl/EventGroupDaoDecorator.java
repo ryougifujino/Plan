@@ -3,7 +3,7 @@ package link.ebbinghaus.planning.core.db.decorator.impl;
 import java.util.List;
 
 import link.ebbinghaus.planning.core.db.dao.EventGroupDao;
-import link.ebbinghaus.planning.core.model.po.EventGroup;
+import link.ebbinghaus.planning.core.model.local.po.EventGroup;
 
 /**
  * Created by WINFIELD on 2016/3/17.

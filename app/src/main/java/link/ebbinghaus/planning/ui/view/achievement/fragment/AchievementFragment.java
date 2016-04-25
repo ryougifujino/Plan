@@ -47,6 +47,7 @@ public class AchievementFragment extends BaseFragment implements AchievementView
     @Override
     public void initAchievement() {
         mActivity.setSupportActionBar(mToolbar);
+        mToolbar.setTitle(R.string.achievement_title);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mRecyclerView.setAdapter(new AchievementRecyclerViewAdapter(mActivity,mPresenter.obtainAchievements()));
     }

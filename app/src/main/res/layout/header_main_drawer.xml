@@ -6,25 +6,32 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
-        android:id="@+id/id_link"
+        android:id="@+id/tv_main_drawer_signature"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"
-        android:text="xxx"/>
+        android:text='"从里到外,由外及里"'/>
 
     <TextView
-        android:id="@+id/id_username"
+        android:id="@+id/tv_main_drawer_nickname"
+        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/id_link"
+        android:layout_above="@id/tv_main_drawer_signature"
+        android:layout_marginBottom="5dp"
         android:text="昵称"/>
 
     <ImageView
+        android:id="@+id/iv_main_drawer_avatar"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:layout_above="@id/id_username"
-        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="20dp"
+        android:tint="@color/md_light_blue_500"
+        android:layout_above="@id/tv_main_drawer_nickname"
+        android:layout_marginBottom="5dp"
+        android:clickable="true"
         android:src="@drawable/main_drawer_default_portrait"/>
 
 </RelativeLayout>

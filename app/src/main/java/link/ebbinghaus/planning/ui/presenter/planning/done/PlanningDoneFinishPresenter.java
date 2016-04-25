@@ -1,7 +1,7 @@
 package link.ebbinghaus.planning.ui.presenter.planning.done;
 
-import link.ebbinghaus.planning.core.model.po.Event;
-import link.ebbinghaus.planning.core.model.po.LearningEventGroup;
+import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.core.model.local.po.LearningEventGroup;
 
 /**
  * Created by WINFIELD on 2016/3/30.

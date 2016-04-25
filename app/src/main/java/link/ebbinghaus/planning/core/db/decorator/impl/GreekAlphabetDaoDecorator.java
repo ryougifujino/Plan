@@ -1,7 +1,7 @@
 package link.ebbinghaus.planning.core.db.decorator.impl;
 
 import link.ebbinghaus.planning.core.db.dao.GreekAlphabetDao;
-import link.ebbinghaus.planning.core.model.po.GreekAlphabet;
+import link.ebbinghaus.planning.core.model.local.po.GreekAlphabet;
 
 /**
  * Created by WINFIELD on 2016/3/28.

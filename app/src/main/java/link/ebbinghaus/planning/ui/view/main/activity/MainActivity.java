@@ -10,22 +10,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.yurikami.lib.base.BaseActivity;
 import com.yurikami.lib.util.LogUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.common.constant.config.DBConfig;
 import link.ebbinghaus.planning.ui.presenter.main.MainPresenter;
 import link.ebbinghaus.planning.ui.presenter.main.impl.MainPresenterImpl;
 import link.ebbinghaus.planning.ui.view.main.MainView;
-import link.ebbinghaus.planning.R;
 
 public class MainActivity extends BaseActivity implements MainView,
-        NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerListener{
+        NavigationView.OnNavigationItemSelectedListener, DrawerLayout.DrawerListener,View.OnClickListener{
     @Bind(R.id.nv_main_drawer) NavigationView mNVDrawer;
     @Bind(R.id.dl_main_whole) DrawerLayout mDrawerLayout;
+    private ImageView mAvatarIv;
 
     private MainPresenter mPresenter;
 
@@ -37,19 +39,6 @@ public class MainActivity extends BaseActivity implements MainView,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
-
-        mNVDrawer.setNavigationItemSelectedListener(this);
-        mDrawerLayout.addDrawerListener(this);
-
-        mPresenter.cacheMainDrawerFragmentMap(mFragmentMap);
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            //noinspection deprecation
-            window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
-        }
 
         LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_EVENT);
         LogUtils.d("DBConfig", DBConfig.CREATE_TABLE_GREEK_ALPHABET);
@@ -65,6 +54,21 @@ public class MainActivity extends BaseActivity implements MainView,
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mPresenter = new MainPresenterImpl(this);
+
+        mNVDrawer.setNavigationItemSelectedListener(this);
+        mDrawerLayout.addDrawerListener(this);
+        mAvatarIv = (ImageView) mNVDrawer.getHeaderView(0).findViewById(R.id.iv_main_drawer_avatar);
+        mAvatarIv.setOnClickListener(this);
+
+        mPresenter.cacheMainDrawerFragmentMap(mFragmentMap);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            //noinspection deprecation
+            window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
+        }
     }
 
     @Override
@@ -77,6 +81,15 @@ public class MainActivity extends BaseActivity implements MainView,
         mDrawerLayout.closeDrawer(mNVDrawer);
         return true;
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.iv_main_drawer_avatar:
+                startActivity(LoginActivity.class);
+        }
+    }
+
 
     @Override
     public void onDrawerSlide(View drawerView, float slideOffset) { }

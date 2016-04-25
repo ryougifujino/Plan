@@ -1,7 +1,7 @@
 package link.ebbinghaus.planning.core.db.decorator.impl;
 
 import link.ebbinghaus.planning.core.db.dao.EventSubtypeDao;
-import link.ebbinghaus.planning.core.model.po.EventSubtype;
+import link.ebbinghaus.planning.core.model.local.po.EventSubtype;
 
 /**
  * Created by WINFIELD on 2016/3/17.

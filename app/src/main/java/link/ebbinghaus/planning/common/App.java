@@ -6,7 +6,7 @@ import android.graphics.Point;
 import android.view.WindowManager;
 
 import link.ebbinghaus.planning.core.db.DBHelper;
-import link.ebbinghaus.planning.core.model.sys.SystemInfo;
+import link.ebbinghaus.planning.core.model.local.sys.SystemInfo;
 
 /**
  * Created by WINFIELD on 2016/2/17.

@@ -1,11 +1,11 @@
 package link.ebbinghaus.planning.ui.presenter.planning.display.impl;
 
-import com.yurikami.lib.entity.Datetime;
+import com.yurikami.lib.model.Datetime;
 
 import java.util.List;
 
 import link.ebbinghaus.planning.core.service.PlanningDisplaySpecificService;
-import link.ebbinghaus.planning.core.model.po.Event;
+import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.core.service.impl.PlanningDisplaySpecificServiceImpl;
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplaySpecWeekPresenter;
 import link.ebbinghaus.planning.ui.view.planning.display.PlanningDisplaySpecWeekView;

@@ -2,7 +2,7 @@ package link.ebbinghaus.planning.ui.view.planning.display;
 
 import java.util.List;
 
-import link.ebbinghaus.planning.core.model.sys.Tab;
+import link.ebbinghaus.planning.core.model.local.sys.Tab;
 
 /**
  * Created by WINFIELD on 2016/2/29.

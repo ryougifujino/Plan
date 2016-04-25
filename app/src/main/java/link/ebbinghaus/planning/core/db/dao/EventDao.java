@@ -11,7 +11,7 @@ import java.util.List;
 
 import link.ebbinghaus.planning.common.constant.config.DBConfig;
 import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
-import link.ebbinghaus.planning.core.model.po.Event;
+import link.ebbinghaus.planning.core.model.local.po.Event;
 
 public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
 
@@ -144,4 +144,25 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
                 + SelectHelper.between(EVENT_EXPECTED_FINISHED_DATE,start,end);
         return _select(querySql);
     }
+
+    /**
+     * 查找所有已经完成的具体计划
+     * @return 所有已经完成的具体计划
+     */
+    public List<Event> selectAllDoneSpecEvents(){
+        String querySql = "SELECT * FROM "+ mTableName +" WHERE ("+ EVENT_TYPE +" = ? OR "+ EVENT_TYPE +" = ?) AND "+ IS_EVENT_FINISHED +" = ?";
+        return _select(querySql,new String[]{EventConfig.TYPE_SPEC_LEARNING + "",EventConfig.TYPE_SPEC_NORMAL + "","1"});
+    }
+
+    /**
+     * 通过学习计划组id删除计划(实际上删的是学习计划)
+     * @param learningEventGroupId 学习计划组id
+     * @return 删除计划的个数
+     */
+    public int deleteEventsByLearningEventGroupId(Long learningEventGroupId){
+        String whereClause = LEARNING_EVENT_GROUP_ID + " = " + learningEventGroupId;
+        return _delete(whereClause,null);
+    }
+
+
 }

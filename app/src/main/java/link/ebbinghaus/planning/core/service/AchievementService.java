@@ -2,7 +2,7 @@ package link.ebbinghaus.planning.core.service;
 
 import java.util.List;
 
-import link.ebbinghaus.planning.core.model.po.Achievement;
+import link.ebbinghaus.planning.core.model.local.po.Achievement;
 
 /**
  * Created by WINFIELD on 2016/4/2.

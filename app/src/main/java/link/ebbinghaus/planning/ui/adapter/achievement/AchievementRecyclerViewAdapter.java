@@ -19,7 +19,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.common.constant.Assets;
-import link.ebbinghaus.planning.core.model.po.Achievement;
+import link.ebbinghaus.planning.core.model.local.po.Achievement;
 import link.ebbinghaus.planning.R;
 
 /**

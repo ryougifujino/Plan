@@ -1,7 +1,7 @@
 package link.ebbinghaus.planning.ui.presenter.extension;
 
-import link.ebbinghaus.planning.common.callback.DataCallback;
-import link.ebbinghaus.planning.core.model.vo.extension.douban.book.Result;
+import com.yurikami.lib.net.NetCallback;
+import okhttp3.Call;
 
 /**
  * Created by WINFIELD on 2016/4/4.
@@ -13,6 +13,7 @@ public interface ExtensionReadPresenter {
      * @param key 关键字
      * @param start 取结果的offset
      * @param callback 数据回调函数
+     * @return 网络连接
      */
-    void obtainBooks(String key,int start,DataCallback<Result> callback);
+    Call obtainBooks(String key, int start, NetCallback callback);
 }

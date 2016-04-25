@@ -2,8 +2,8 @@ package link.ebbinghaus.planning.ui.presenter.planning.display;
 
 import java.util.List;
 
-import link.ebbinghaus.planning.core.model.po.Event;
-import link.ebbinghaus.planning.core.model.po.EventGroup;
+import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.core.model.local.po.EventGroup;
 
 /**
  * Created by WINFIELD on 2016/3/29.

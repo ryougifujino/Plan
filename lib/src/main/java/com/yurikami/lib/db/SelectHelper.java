@@ -1,6 +1,6 @@
 package com.yurikami.lib.db;
 
-import com.yurikami.lib.entity.Datetime;
+import com.yurikami.lib.model.Datetime;
 import com.yurikami.lib.util.DateUtils;
 
 /**

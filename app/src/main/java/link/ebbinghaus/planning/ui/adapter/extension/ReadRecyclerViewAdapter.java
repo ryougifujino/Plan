@@ -16,8 +16,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.common.util.CommonUtils;
-import link.ebbinghaus.planning.core.model.vo.extension.douban.book.Book;
-import link.ebbinghaus.planning.core.model.vo.extension.douban.book.Result;
+import link.ebbinghaus.planning.core.model.local.vo.extension.douban.book.Book;
+import link.ebbinghaus.planning.core.model.local.vo.extension.douban.book.Result;
 
 /**
  * Created by WINFIELD on 2016/4/4.
@@ -59,6 +59,7 @@ public class ReadRecyclerViewAdapter extends RecyclerView.Adapter<ReadRecyclerVi
         //prompt
         if (newBooks.getCount() == 0){
             CommonUtils.showLongToast(R.string.extension_read_load_prompt);
+            return;
         }
         this.notifyDataSetChanged();
     }

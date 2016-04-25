@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialogFragment;
 import com.codetroopers.betterpickers.calendardatepicker.MonthAdapter;
 import com.yurikami.lib.base.BaseFragment;
-import com.yurikami.lib.entity.Datetime;
+import com.yurikami.lib.model.Datetime;
 import com.yurikami.lib.util.MenuTint;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.ui.adapter.SimpleFragmentPagerAdapter;
 import link.ebbinghaus.planning.common.util.CommonUtils;
-import link.ebbinghaus.planning.core.model.sys.Tab;
+import link.ebbinghaus.planning.core.model.local.sys.Tab;
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplayPresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.display.impl.PlanningDisplayPresenterImpl;
 import link.ebbinghaus.planning.ui.view.planning.build.activity.PlanningBuildActivity;
@@ -67,6 +67,7 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
         mPresenter.configureRelatedViewPagerTabLayout();
 
         mActivity.setSupportActionBar(mToolbar);
+        mToolbar.setTitle(R.string.planning_display_title);
         //设置此,toolbar上的menu才能显示
         setHasOptionsMenu(true);
 

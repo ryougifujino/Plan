@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import link.ebbinghaus.planning.common.constant.config.DBConfig;
-import link.ebbinghaus.planning.core.model.po.EventSubtype;
+import link.ebbinghaus.planning.core.model.local.po.EventSubtype;
 
 /**
  * Created by WINFIELD on 2016/3/14.

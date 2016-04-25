@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import link.ebbinghaus.planning.common.constant.module.PlanningDisplayConstant;
-import link.ebbinghaus.planning.core.model.po.Event;
-import link.ebbinghaus.planning.core.model.sys.Tab;
+import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.core.model.local.sys.Tab;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventDaoDecorator;
 import link.ebbinghaus.planning.core.service.PlanningDisplayAbstractService;
 import link.ebbinghaus.planning.ui.view.planning.display.fragment.PlanningDisplayAbstAllFragment;

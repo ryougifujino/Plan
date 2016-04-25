@@ -11,7 +11,13 @@
     <string name="main_drawer_store">商店</string>
     <string name="main_drawer_settings">设置</string>
 
+    <!-- login -->
+    <string name="login_title">登录</string>
+    <string name="login_account_error">用户名不符合规范</string>
+    <string name="login_password_error">密码至少6位</string>
+
     <!-- planning_display -->
+    <string name="planning_display_title">浏览计划</string>
     <string name="planning_display_toolbar_date">%1$d年%2$d月%3$d日</string>
     <string name="planning_display_date_select_hint">只有按月和按周窗口才能选择日期</string>
     <string name="planning_display_create_time">%1$d年%2$d月%3$d日%4$3d:%5$d%6$6s</string>
@@ -27,6 +33,7 @@
     <string name="planning_display_spec_week_listitem_normal">普</string>
     <string name="planning_display_spec_week_listitem_date">%1$d月%2$d日</string>
 
+    <string name="planning_display_spec_event_detail_title">具体计划详情</string>
     <string name="planning_display_spec_event_detail_no_prompt">不提醒</string>
     <string name="planning_display_spec_event_detail_unfinished">未完成</string>
 
@@ -52,7 +59,11 @@
     <string name="planning_done_finish_dialog_understand_degree_title">选择理解程度</string>
     <string name="planning_done_finish_learning_duration_validation_message">请填写学习时长</string>
 
+    <!-- history -->
+    <string name="history_title">@string/main_drawer_history</string>
+
     <!-- achievement -->
+    <string name="achievement_title">@string/main_drawer_achievement</string>
     <string name="achievement_status_achieved">达成</string>
     <string name="achievement_status_not_achieved">未达成</string>
 
@@ -61,6 +72,9 @@
     <string name="extension_read_title">阅读计划</string>
     <string name="extension_read_search_view_hint">搜索图书...</string>
     <string name="extension_read_load_prompt">没有更多图书了</string>
+
+    <!-- settings -->
+    <string name="settings_title">设置</string>
 
     <!-- common_select -->
     <string name="common_select_delete_toolbar_select_info">已选择%1$d个</string>
@@ -100,9 +114,6 @@
     <string name="learning_event_group_understanding_degree_mostly">大致理解</string>
     <string name="learning_event_group_understanding_degree_totally">完全理解</string>
 
-
     <!-- ______________________entity#end______________________ -->
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

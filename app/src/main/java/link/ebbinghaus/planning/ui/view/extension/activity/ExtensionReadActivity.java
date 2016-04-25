@@ -8,29 +8,33 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import com.yurikami.lib.base.BaseActivity;
+import com.yurikami.lib.net.NetCallback;
 import com.yurikami.lib.util.LogUtils;
 import com.yurikami.lib.util.MenuTint;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.R;
+import link.ebbinghaus.planning.core.model.local.vo.extension.douban.book.Result;
 import link.ebbinghaus.planning.ui.adapter.extension.ReadRecyclerViewAdapter;
-import link.ebbinghaus.planning.common.callback.DataCallback;
-import link.ebbinghaus.planning.common.util.CommonUtils;
-import link.ebbinghaus.planning.core.model.vo.extension.douban.book.Result;
 import link.ebbinghaus.planning.ui.presenter.extension.ExtensionReadPresenter;
 import link.ebbinghaus.planning.ui.presenter.extension.impl.ExtensionReadPresenterImpl;
 import link.ebbinghaus.planning.ui.view.extension.ExtensionReadView;
+import okhttp3.Call;
 
 public class ExtensionReadActivity extends BaseActivity implements ExtensionReadView,
-        ReadRecyclerViewAdapter.Callback{
+        ReadRecyclerViewAdapter.Callback,NetCallback{
 
     @Bind(R.id.tb_common_head) Toolbar mToolbar;
     @Bind(R.id.rv_extension_read) RecyclerView mRecyclerView;
     private ReadRecyclerViewAdapter mReadRecyclerViewAdapter;
     private SearchView mSearchView;
+    //关键字
     private String mKey;
     private ExtensionReadPresenter mPresenter;
+
+    private Call mRefreshCall;
+    private Call mAppendCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,29 +73,16 @@ public class ExtensionReadActivity extends BaseActivity implements ExtensionRead
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                CommonUtils.showLongToast("submit");
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
+            public boolean onQueryTextChange(String newText) {  // TODO: 2016/4/20 延迟加载优化
                 mKey = newText;
-                mPresenter.obtainBooks(newText, 0,new DataCallback<Result>() {    // TODO: 2016/4/5 流量优化
-                    @Override
-                    public void onSuccess(final Result result) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mReadRecyclerViewAdapter.refresh(result);
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailure(String msg) {
-                        LogUtils.i(TAG,"Loading books failed : " + msg);
-                    }
-                });
+                if (mRefreshCall != null){
+                    mRefreshCall.cancel();
+                }
+                mRefreshCall = mPresenter.obtainBooks(newText, 0, ExtensionReadActivity.this); // TODO: 2016/4/20 流量优化
                 return false;
             }
         });
@@ -99,21 +90,23 @@ public class ExtensionReadActivity extends BaseActivity implements ExtensionRead
 
     @Override
     public void requestNewData(int start) {
-        mPresenter.obtainBooks(mKey, start,new DataCallback<Result>() {    // TODO: 2016/4/5 流量优化
-            @Override
-            public void onSuccess(final Result result) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mReadRecyclerViewAdapter.appendRefresh(result);
-                    }
-                });
-            }
+        mAppendCall = mPresenter.obtainBooks(mKey, start,this);
+    }
 
-            @Override
-            public void onFailure(String msg) {
-                LogUtils.i(TAG,"Loading books failed : " + msg);
-            }
-        });
+    @Override
+    public void onSuccess(Object result, Call call) {
+        LogUtils.d(TAG,"execute");
+        if (call == mRefreshCall) {
+            mReadRecyclerViewAdapter.refresh((Result) result);
+        }else if (call == mAppendCall){
+            mReadRecyclerViewAdapter.appendRefresh((Result) result);
+        }
+        mRefreshCall = null;
+        mAppendCall = null;
+    }
+
+    @Override
+    public void onFailure(String errorMsg, Call call) {
+
     }
 }

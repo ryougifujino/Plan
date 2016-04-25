@@ -3,8 +3,8 @@ package link.ebbinghaus.planning.ui.presenter.planning.display.impl;
 import java.util.List;
 
 import link.ebbinghaus.planning.core.service.PlanningDisplayService;
-import link.ebbinghaus.planning.core.model.po.Event;
-import link.ebbinghaus.planning.core.model.po.EventGroup;
+import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.core.model.local.po.EventGroup;
 import link.ebbinghaus.planning.core.service.impl.PlanningDisplayServiceImpl;
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplayEventGroupDetailPresenter;
 import link.ebbinghaus.planning.ui.view.planning.display.PlanningDisplayEventGroupDetailView;

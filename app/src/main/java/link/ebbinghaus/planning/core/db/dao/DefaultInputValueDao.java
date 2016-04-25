@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import link.ebbinghaus.planning.common.constant.config.DBConfig;
-import link.ebbinghaus.planning.core.model.po.DefaultInputValue;
+import link.ebbinghaus.planning.core.model.local.po.DefaultInputValue;
 
 /**
  * !此类的增方法不能调用(虽然实现了)

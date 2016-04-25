@@ -2,8 +2,8 @@ package link.ebbinghaus.planning.ui.view.planning.build;
 
 import java.util.List;
 
-import link.ebbinghaus.planning.core.model.sys.Tab;
-import link.ebbinghaus.planning.core.model.vo.planning.build.InputEventVo;
+import link.ebbinghaus.planning.core.model.local.sys.Tab;
+import link.ebbinghaus.planning.core.model.local.vo.planning.build.InputEventVo;
 
 /**
  * Created by WINFIELD on 2016/3/8.

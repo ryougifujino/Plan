@@ -3,7 +3,7 @@ package link.ebbinghaus.planning.ui.presenter.planning.display.impl;
 import java.util.List;
 
 import link.ebbinghaus.planning.core.service.PlanningDisplaySpecificService;
-import link.ebbinghaus.planning.core.model.sys.Tab;
+import link.ebbinghaus.planning.core.model.local.sys.Tab;
 import link.ebbinghaus.planning.core.service.impl.PlanningDisplaySpecificServiceImpl;
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplaySpecificPresenter;
 import link.ebbinghaus.planning.ui.view.planning.display.PlanningDisplaySpecificView;

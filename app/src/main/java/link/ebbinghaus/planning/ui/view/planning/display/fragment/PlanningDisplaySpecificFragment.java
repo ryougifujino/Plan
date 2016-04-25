@@ -17,7 +17,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.ui.adapter.SimpleFragmentPagerAdapter;
-import link.ebbinghaus.planning.core.model.sys.Tab;
+import link.ebbinghaus.planning.core.model.local.sys.Tab;
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplaySpecificPresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.display.impl.PlanningDisplaySpecificPresenterImpl;
 import link.ebbinghaus.planning.ui.view.planning.display.PlanningDisplaySpecificView;

@@ -1,6 +1,6 @@
 package com.yurikami.lib.util;
 
-import com.yurikami.lib.entity.Datetime;
+import com.yurikami.lib.model.Datetime;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -3,10 +3,10 @@ package link.ebbinghaus.planning.ui.presenter.planning.build.impl;
 import com.yurikami.lib.util.DateUtils;
 
 import link.ebbinghaus.planning.core.service.PlanningBuildService;
-import link.ebbinghaus.planning.core.model.po.DefaultInputValue;
-import link.ebbinghaus.planning.core.model.po.EventGroup;
-import link.ebbinghaus.planning.core.model.po.EventSubtype;
-import link.ebbinghaus.planning.core.model.vo.planning.build.InputEventVo;
+import link.ebbinghaus.planning.core.model.local.po.DefaultInputValue;
+import link.ebbinghaus.planning.core.model.local.po.EventGroup;
+import link.ebbinghaus.planning.core.model.local.po.EventSubtype;
+import link.ebbinghaus.planning.core.model.local.vo.planning.build.InputEventVo;
 import link.ebbinghaus.planning.core.service.impl.PlanningBuildServiceImpl;
 import link.ebbinghaus.planning.ui.presenter.planning.build.PlanningBuildSpecificPresenter;
 import link.ebbinghaus.planning.ui.view.planning.build.PlanningBuildSpecificView;

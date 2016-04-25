@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.yurikami.lib.constant.ConstRes;
-import com.yurikami.lib.entity.Datetime;
+import com.yurikami.lib.model.Datetime;
 import com.yurikami.lib.util.DateUtils;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.core.model.po.Event;
+import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.R;
 
 /**

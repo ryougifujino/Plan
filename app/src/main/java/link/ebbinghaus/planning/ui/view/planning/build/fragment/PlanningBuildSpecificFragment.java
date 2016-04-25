@@ -16,7 +16,7 @@ import com.codetroopers.betterpickers.calendardatepicker.CalendarDatePickerDialo
 import com.codetroopers.betterpickers.calendardatepicker.MonthAdapter;
 import com.codetroopers.betterpickers.radialtimepicker.RadialTimePickerDialogFragment;
 import com.yurikami.lib.base.BaseFragment;
-import com.yurikami.lib.entity.Datetime;
+import com.yurikami.lib.model.Datetime;
 import com.yurikami.lib.util.DateUtils;
 import com.yurikami.lib.util.StringUtils;
 import com.yurikami.lib.widget.RadioSelectDialog;
@@ -28,11 +28,11 @@ import link.ebbinghaus.planning.common.constant.config.entity.FastTemplateConfig
 import link.ebbinghaus.planning.common.constant.config.entity.LearningEventGroupConfig;
 import link.ebbinghaus.planning.common.constant.module.PlanningBuildConstant;
 import link.ebbinghaus.planning.ui.viewholder.planning.build.SpecificViewHolder;
-import link.ebbinghaus.planning.core.model.po.DefaultInputValue;
-import link.ebbinghaus.planning.core.model.po.EventGroup;
-import link.ebbinghaus.planning.core.model.po.EventSubtype;
-import link.ebbinghaus.planning.core.model.po.FastTemplate;
-import link.ebbinghaus.planning.core.model.vo.planning.build.InputEventVo;
+import link.ebbinghaus.planning.core.model.local.po.DefaultInputValue;
+import link.ebbinghaus.planning.core.model.local.po.EventGroup;
+import link.ebbinghaus.planning.core.model.local.po.EventSubtype;
+import link.ebbinghaus.planning.core.model.local.po.FastTemplate;
+import link.ebbinghaus.planning.core.model.local.vo.planning.build.InputEventVo;
 import link.ebbinghaus.planning.ui.presenter.planning.build.PlanningBuildSpecificPresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.build.impl.PlanningBuildSpecificPresenterImpl;
 import link.ebbinghaus.planning.ui.view.planning.build.activity.PlanningBuildActivity;
@@ -243,7 +243,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     }
     @Override
     public void onTimeSet(RadialTimePickerDialogFragment dialog, int hourOfDay, int minute) {
-        String hourMinute = hourOfDay + ":" + minute;
+        String hourMinute = hourOfDay + ":" + minute;   // FIXME: 2016/4/24 末尾为0时只显示一个0
         mInputEvent.setRemindTime(DateUtils.convertHourMinute2Timestamp(hourMinute));
         vh.remindTimeTv.setText(hourMinute);
         mRadialTimePicker.setStartTime(hourOfDay, minute);

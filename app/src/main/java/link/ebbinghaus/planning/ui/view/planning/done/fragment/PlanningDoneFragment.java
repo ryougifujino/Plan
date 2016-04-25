@@ -20,7 +20,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.ui.adapter.planning.done.FinishRecyclerViewAdapter;
-import link.ebbinghaus.planning.core.model.po.Event;
+import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.ui.presenter.planning.done.PlanningDonePresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.done.impl.PlanningDonePresenterImpl;
 import link.ebbinghaus.planning.ui.view.planning.done.PlanningDoneView;

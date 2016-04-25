@@ -5,8 +5,8 @@ import java.util.List;
 import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
 import link.ebbinghaus.planning.core.service.PlanningDoneService;
 import link.ebbinghaus.planning.core.db.decorator.impl.LearningEventGroupDaoDecorator;
-import link.ebbinghaus.planning.core.model.po.Event;
-import link.ebbinghaus.planning.core.model.po.LearningEventGroup;
+import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.core.model.local.po.LearningEventGroup;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventDaoDecorator;
 
 /**

@@ -3,7 +3,7 @@ package link.ebbinghaus.planning.core.db.decorator.impl;
 import java.util.List;
 
 import link.ebbinghaus.planning.core.db.dao.FastTemplateDao;
-import link.ebbinghaus.planning.core.model.po.FastTemplate;
+import link.ebbinghaus.planning.core.model.local.po.FastTemplate;
 
 /**
  * Created by WINFIELD on 2016/3/17.

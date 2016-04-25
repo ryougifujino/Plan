@@ -2,6 +2,7 @@ package link.ebbinghaus.planning.ui.view.planning.display.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -10,15 +11,14 @@ import com.yurikami.lib.base.BaseActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.common.constant.Constant;
 import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
-import link.ebbinghaus.planning.common.util.CommonUtils;
-import link.ebbinghaus.planning.ui.viewholder.planning.display.SpecEventDetailViewHolder;
-import link.ebbinghaus.planning.core.model.vo.planning.display.SpecEventDetailVo;
+import link.ebbinghaus.planning.core.model.local.vo.planning.display.SpecEventDetailVo;
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplaySpecEventDetailPresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.display.impl.PlanningDisplaySpecEventDetailPresenterImpl;
 import link.ebbinghaus.planning.ui.view.planning.display.PlanningDisplaySpecEventDetailView;
-import link.ebbinghaus.planning.R;
+import link.ebbinghaus.planning.ui.viewholder.planning.display.SpecEventDetailViewHolder;
 
 /**
  * 具体计划详情的显示页面
@@ -28,6 +28,7 @@ public class PlanningDisplaySpecEventDetailActivity extends BaseActivity impleme
     public static final String INTENT_NAME_EVENT = Constant.PACKAGE_NAME + "Event";
 
     @Bind(R.id.tv_planning_display_event_detail_delete) TextView deleteTv;
+    @Bind(R.id.tb_common_head) Toolbar mToolbar;
     private PlanningDisplaySpecEventDetailPresenter mPresenter;
     //service and view
     private SpecEventDetailVo vo = new SpecEventDetailVo();
@@ -39,9 +40,18 @@ public class PlanningDisplaySpecEventDetailActivity extends BaseActivity impleme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planning_display_spec_event_detail);
         ButterKnife.bind(this);
+        init();
+
+    }
+
+    private void init() {
         vh = new SpecEventDetailViewHolder(this);
         mPresenter = new PlanningDisplaySpecEventDetailPresenterImpl(this);
         mPresenter.initSpecEventDetail(vo);
+
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitle(R.string.planning_display_spec_event_detail_title);
+
     }
 
 
@@ -90,8 +100,17 @@ public class PlanningDisplaySpecEventDetailActivity extends BaseActivity impleme
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.tv_planning_display_event_detail_delete){
-            CommonUtils.showLongToast("删除逻辑");
+        switch (v.getId()){
+            case R.id.tv_planning_display_event_detail_delete:
+                mPresenter.deleteThisEventAndProcessRelated(vo.event);
+                break;
         }
+    }
+
+
+
+    @Override
+    public void exitThisView() {
+        finish();
     }
 }

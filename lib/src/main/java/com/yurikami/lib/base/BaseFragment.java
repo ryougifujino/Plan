@@ -25,7 +25,7 @@ public class BaseFragment extends Fragment {
      */
     protected void setOnFragmentStopListener(OnFragmentStopListener listener){
         this.mOnFragmentStopListener = listener;
-    }
+    }   
 
     /**
      * 定义接口,这个接口里有一个回调函数,当Fragment的生命周期执行到onStop时调用

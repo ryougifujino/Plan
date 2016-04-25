@@ -1,7 +1,8 @@
 package link.ebbinghaus.planning.ui.presenter.planning.display.impl;
 
+import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.core.service.PlanningDisplaySpecificService;
-import link.ebbinghaus.planning.core.model.vo.planning.display.SpecEventDetailVo;
+import link.ebbinghaus.planning.core.model.local.vo.planning.display.SpecEventDetailVo;
 import link.ebbinghaus.planning.core.service.impl.PlanningDisplaySpecificServiceImpl;
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplaySpecEventDetailPresenter;
 import link.ebbinghaus.planning.ui.view.planning.display.PlanningDisplaySpecEventDetailView;
@@ -29,5 +30,11 @@ public class PlanningDisplaySpecEventDetailPresenterImpl implements PlanningDisp
         mView.selectViewMode();
         mView.registerViewListener();
         mView.fillViewWithData();
+    }
+
+    @Override
+    public void deleteThisEventAndProcessRelated(Event event) {
+        mPlanningDisplaySpecificService.removeSpecEventAndProcessRelated(event);
+        mView.exitThisView();
     }
 }

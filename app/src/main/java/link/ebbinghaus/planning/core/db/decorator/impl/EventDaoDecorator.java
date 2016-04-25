@@ -1,6 +1,9 @@
 package link.ebbinghaus.planning.core.db.decorator.impl;
 
-import com.yurikami.lib.entity.Datetime;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import com.yurikami.lib.model.Datetime;
 import com.yurikami.lib.util.DateUtils;
 
 import java.util.List;
@@ -8,10 +11,11 @@ import java.util.List;
 import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
 import link.ebbinghaus.planning.core.db.dao.EventDao;
 import link.ebbinghaus.planning.core.db.dao.EventGroupDao;
+import link.ebbinghaus.planning.core.db.dao.GreekAlphabetDao;
 import link.ebbinghaus.planning.core.db.dao.LearningEventGroupDao;
-import link.ebbinghaus.planning.core.model.po.Event;
-import link.ebbinghaus.planning.core.model.po.LearningEventGroup;
-import link.ebbinghaus.planning.core.model.vo.planning.build.InputEventVo;
+import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.core.model.local.po.LearningEventGroup;
+import link.ebbinghaus.planning.core.model.local.vo.planning.build.InputEventVo;
 
 /**
  * Created by WINFIELD on 2016/3/17.
@@ -20,12 +24,14 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
     private EventDao dao;
     private LearningEventGroupDao learningEventGroupDao;
     private EventGroupDao eventGroupDao;
+    private GreekAlphabetDao greekAlphabetDao;
 
     public EventDaoDecorator(){
         super(new EventDao());
         dao = (EventDao) super.dao;
         learningEventGroupDao = new LearningEventGroupDao();
         eventGroupDao = new EventGroupDao();
+        greekAlphabetDao = new GreekAlphabetDao();
     }
 
     @Override
@@ -161,6 +167,56 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
      */
     public List<Event> selectLast2DaysSpecEvents(){
         return dao.selectLast2DaysSpecEvents();
+    }
+
+    /**
+     * 查找所有已经完成的具体计划
+     * @return 所有已经完成的具体计划
+     */
+    public List<Event> selectAllDoneSpecEvents(){
+        return dao.selectAllDoneSpecEvents();
+    }
+
+    /**
+     * 删除学习计划<br>
+     * 并且会删除相关的学习计划组；处理相关的计划组、希腊字母
+     * @param learningEventGroupId 学习计划组id
+     * @param eventGroupId  计划组id
+     * @param greekAlphabetId 希腊字母id
+     */
+    public void deleteLearningEvents(@NonNull Long learningEventGroupId, @Nullable Long eventGroupId,
+                                     @Nullable Long greekAlphabetId){
+        dao.beginTransaction();
+        try {
+            int decreaseCount = dao.deleteEventsByLearningEventGroupId(learningEventGroupId);
+            learningEventGroupDao.deleteByPrimaryKey(learningEventGroupId);
+            eventGroupDao.updateLearningEventCount(eventGroupId, -decreaseCount);
+            greekAlphabetDao.updateUsage(greekAlphabetId,-1);
+            dao.setTransactionSuccessful();
+        }finally {
+            dao.endTransaction();
+        }
+    }
+
+    /**
+     * 删除普通计划<br>
+     * 并且会处理相关的计划组、希腊字母
+     * @param normalEventId 普通计划id
+     * @param eventGroupId 学习计划组id
+     * @param greekAlphabetId 希腊字母id
+     */
+    public void deleteNormalEvent(@NonNull Long normalEventId, @Nullable Long eventGroupId,
+                                  @Nullable Long greekAlphabetId) {
+        dao.beginTransaction();
+        try {
+            dao.deleteByPrimaryKey(normalEventId);
+            eventGroupDao.updateNormalEventCount(eventGroupId,-1);
+            greekAlphabetDao.updateUsage(greekAlphabetId,-1);
+            dao.setTransactionSuccessful();
+        }finally {
+            dao.endTransaction();
+        }
+
     }
 
 }

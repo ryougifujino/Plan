@@ -1,7 +1,7 @@
 package link.ebbinghaus.planning.core.db.decorator.impl;
 
 import link.ebbinghaus.planning.core.db.dao.AchievementDao;
-import link.ebbinghaus.planning.core.model.po.Achievement;
+import link.ebbinghaus.planning.core.model.local.po.Achievement;
 
 /**
  * Created by WINFIELD on 2016/4/1.

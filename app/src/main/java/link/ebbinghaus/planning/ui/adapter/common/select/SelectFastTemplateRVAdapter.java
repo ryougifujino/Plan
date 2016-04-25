@@ -3,7 +3,7 @@ package link.ebbinghaus.planning.ui.adapter.common.select;
 import android.content.Context;
 
 import link.ebbinghaus.planning.ui.viewholder.common.select.DeleteToolbarViewHolder;
-import link.ebbinghaus.planning.core.model.po.FastTemplate;
+import link.ebbinghaus.planning.core.model.local.po.FastTemplate;
 
 /**
  * Created by WINFIELD on 2016/3/20.

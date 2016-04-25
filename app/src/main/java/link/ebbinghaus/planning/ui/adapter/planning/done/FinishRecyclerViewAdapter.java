@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.yurikami.lib.entity.Datetime;
+import com.yurikami.lib.model.Datetime;
 import com.yurikami.lib.util.DateUtils;
 
 import java.util.List;
@@ -18,8 +18,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
-import link.ebbinghaus.planning.common.constant.entity.EventConstant;
-import link.ebbinghaus.planning.core.model.po.Event;
+import link.ebbinghaus.planning.common.constant.model.EventConstant;
+import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.ui.view.planning.display.activity.PlanningDisplaySpecEventDetailActivity;
 import link.ebbinghaus.planning.ui.view.planning.done.activity.PlanningDoneFinishActivity;
 import link.ebbinghaus.planning.R;

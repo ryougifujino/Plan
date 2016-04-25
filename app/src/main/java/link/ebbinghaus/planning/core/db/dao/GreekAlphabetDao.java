@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import link.ebbinghaus.planning.common.constant.config.DBConfig;
-import link.ebbinghaus.planning.core.model.po.GreekAlphabet;
+import link.ebbinghaus.planning.core.model.local.po.GreekAlphabet;
 
 /**
  * Created by WINFIELD on 2016/3/28.
@@ -89,4 +89,16 @@ public class GreekAlphabetDao extends BaseDao<GreekAlphabet> implements DBConfig
     }
 
     /* 以下方法为非通用方法 */
+
+    /**
+     * 更新（增加）使用次数
+     * @param pk 希腊字母表主键
+     * @param increment 增加的个数（可为负值）
+     */
+    public void updateUsage(Long pk, int increment){
+        String updateSql = "UPDATE "+ mTableName
+                +" SET "+ USAGE +" = ("+ USAGE +" + ?) "
+                + "WHERE "+ PK_GREEK_ALPHABET_ID +" = ?";
+        db.execSQL(updateSql,new Object[]{increment,pk});
+    }
 }

@@ -5,7 +5,7 @@ import com.yurikami.lib.util.DateUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import link.ebbinghaus.planning.core.model.po.Event;
+import link.ebbinghaus.planning.core.model.local.po.Event;
 
 /**
  * Created by WINFIELD on 2016/3/6.

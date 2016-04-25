@@ -3,7 +3,7 @@ package link.ebbinghaus.planning.core.service.impl;
 import java.util.List;
 
 import link.ebbinghaus.planning.core.service.AchievementService;
-import link.ebbinghaus.planning.core.model.po.Achievement;
+import link.ebbinghaus.planning.core.model.local.po.Achievement;
 import link.ebbinghaus.planning.core.db.decorator.impl.AchievementDaoDecorator;
 
 /**

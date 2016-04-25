@@ -1,6 +1,6 @@
 package link.ebbinghaus.planning.ui.presenter.planning.build.impl;
 
-import link.ebbinghaus.planning.core.model.po.EventGroup;
+import link.ebbinghaus.planning.core.model.local.po.EventGroup;
 import link.ebbinghaus.planning.ui.presenter.planning.build.PlanningBuildAbstractPresenter;
 import link.ebbinghaus.planning.ui.view.planning.build.PlanningBuildAbstractView;
 
