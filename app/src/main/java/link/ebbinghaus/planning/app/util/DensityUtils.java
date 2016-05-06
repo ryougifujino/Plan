@@ -1,6 +1,6 @@
-package link.ebbinghaus.planning.common.util;
+package link.ebbinghaus.planning.app.util;
 
-import link.ebbinghaus.planning.common.App;
+import link.ebbinghaus.planning.app.App;
 
 /**
  * Created by WINFIELD on 2016/3/23.

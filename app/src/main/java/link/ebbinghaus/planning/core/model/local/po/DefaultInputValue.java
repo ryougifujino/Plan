@@ -7,8 +7,8 @@ import com.yurikami.lib.util.DateUtils;
 import com.yurikami.lib.util.NonNullContentValues;
 import com.yurikami.lib.util.Utils;
 
-import link.ebbinghaus.planning.common.constant.config.DBConfig;
-import link.ebbinghaus.planning.common.constant.config.entity.LearningEventGroupConfig;
+import link.ebbinghaus.planning.app.constant.config.DBConfig;
+import link.ebbinghaus.planning.app.constant.config.entity.LearningEventGroupConfig;
 
 /**
  * Created by WINFIELD on 2016/2/29.

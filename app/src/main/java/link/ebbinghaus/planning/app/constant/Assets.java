@@ -1,4 +1,4 @@
-package link.ebbinghaus.planning.common.constant;
+package link.ebbinghaus.planning.app.constant;
 
 /**
  * Created by WINFIELD on 2016/4/1.

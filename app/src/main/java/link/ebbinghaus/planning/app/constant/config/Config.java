@@ -1,4 +1,4 @@
-package link.ebbinghaus.planning.common.constant.config;
+package link.ebbinghaus.planning.app.constant.config;
 
 /**
  * 全局配置

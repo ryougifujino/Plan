@@ -6,8 +6,8 @@ import com.yurikami.lib.util.DateUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
-import link.ebbinghaus.planning.common.constant.module.PlanningDisplayConstant;
+import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
+import link.ebbinghaus.planning.app.constant.module.PlanningDisplayConstant;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventSubtypeDaoDecorator;
 import link.ebbinghaus.planning.core.model.local.vo.planning.display.SpecEventDetailVo;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventDaoDecorator;

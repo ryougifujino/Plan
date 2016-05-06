@@ -1,4 +1,4 @@
-package link.ebbinghaus.planning.common.constant.model;
+package link.ebbinghaus.planning.app.constant.model;
 
 import link.ebbinghaus.planning.R;
 

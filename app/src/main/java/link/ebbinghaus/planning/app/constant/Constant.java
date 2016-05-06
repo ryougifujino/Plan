@@ -1,4 +1,4 @@
-package link.ebbinghaus.planning.common.constant;
+package link.ebbinghaus.planning.app.constant;
 
 /**
  * 全局通用常量

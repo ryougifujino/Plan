@@ -18,7 +18,7 @@ import com.yurikami.lib.util.LogUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.R;
-import link.ebbinghaus.planning.common.constant.config.DBConfig;
+import link.ebbinghaus.planning.app.constant.config.DBConfig;
 import link.ebbinghaus.planning.ui.presenter.main.MainPresenter;
 import link.ebbinghaus.planning.ui.presenter.main.impl.MainPresenterImpl;
 import link.ebbinghaus.planning.ui.view.main.MainView;

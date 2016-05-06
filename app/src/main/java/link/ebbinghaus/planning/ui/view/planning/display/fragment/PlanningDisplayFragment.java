@@ -29,7 +29,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.ui.adapter.SimpleFragmentPagerAdapter;
-import link.ebbinghaus.planning.common.util.CommonUtils;
+import link.ebbinghaus.planning.app.util.CommonUtils;
 import link.ebbinghaus.planning.core.model.local.sys.Tab;
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplayPresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.display.impl.PlanningDisplayPresenterImpl;

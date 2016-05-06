@@ -47,11 +47,18 @@ public abstract class BaseDao<T> implements IBaseDaoDecorator<T> {
      * 比起直接使用db,操作要简化一些
      */
     protected abstract List<T> _select(String querySql,String[] selectionArgs);
-    protected List<T> _select(String querySql){ return _select(querySql, null); }
+    protected List<T> _select(String querySql){ return _select(querySql, new String[]{}); }
     protected abstract long _insert(T t);
     protected int _delete(String where, String[] args){ return db.delete(mTableName, where, args); }
     protected abstract int _update(T t, String where, String[] args);
 
+    protected  List<T> _select(String querySql,int... selectionArgs){
+        String[] realSelectionArgs = new String[selectionArgs.length];
+        for (int i = 0; i < selectionArgs.length; i++) {
+            realSelectionArgs[i] = selectionArgs[i] + "";
+        }
+        return _select(querySql,realSelectionArgs);
+    }
     /**
      * 以下按顺序为单条记录操作,批量操作,所有记录操作,<br>
      * 能实现则直接实现,不能实现则设置为抽象方法
@@ -166,4 +173,7 @@ public abstract class BaseDao<T> implements IBaseDaoDecorator<T> {
     public void endTransaction(){
         db.endTransaction();
     }
+
+
+
 }

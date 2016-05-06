@@ -3,18 +3,18 @@ package link.ebbinghaus.planning.core.db.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.yurikami.lib.db.SelectHelper;
+import com.yurikami.lib.db.WhereHelper;
 import com.yurikami.lib.util.DateUtils;
+import com.yurikami.lib.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import link.ebbinghaus.planning.common.constant.config.DBConfig;
-import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
+import link.ebbinghaus.planning.app.constant.config.DBConfig;
+import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 
 public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
-
 
     public EventDao() {
         super(PK_EVENT_ID, DBConfig.Table.EVENT);
@@ -78,7 +78,7 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
     public List<Event> selectSpecMonthEvents(int year, int month){
         String querySql = "SELECT * FROM " + mTableName
                 + " WHERE (" + EVENT_TYPE + " = "+ EventConfig.TYPE_SPEC_LEARNING + " OR " + EVENT_TYPE + " = "+ EventConfig.TYPE_SPEC_NORMAL + ")"
-                + " AND " + SelectHelper.in(EVENT_EXPECTED_FINISHED_DATE, year, month);
+                + " AND " + WhereHelper.in(EVENT_EXPECTED_FINISHED_DATE, year, month);
         return _select(querySql);
     }
 
@@ -94,7 +94,7 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
         String eventType = EVENT_TYPE;
         String querySql = "SELECT * FROM " + mTableName
                 + " WHERE (" + eventType + " = "+ EventConfig.TYPE_SPEC_LEARNING + " OR " + eventType + " = "+ EventConfig.TYPE_SPEC_NORMAL + ")"
-                + " AND " + SelectHelper.between(EVENT_EXPECTED_FINISHED_DATE, startEnd[0], startEnd[1])
+                + " AND " + WhereHelper.between(EVENT_EXPECTED_FINISHED_DATE, startEnd[0], startEnd[1])
                 + " ORDER BY " + EVENT_EXPECTED_FINISHED_DATE + " ASC";
         return _select(querySql);
     }
@@ -141,7 +141,7 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
         long start = DateUtils.timestampBefore(todayTimestamp, 1);
         long end = DateUtils.timestampAfter(todayTimestamp,1);
         String querySql = "SELECT * FROM "+ mTableName +" WHERE "
-                + SelectHelper.between(EVENT_EXPECTED_FINISHED_DATE,start,end);
+                + WhereHelper.between(EVENT_EXPECTED_FINISHED_DATE,start,end);
         return _select(querySql);
     }
 
@@ -151,7 +151,7 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
      */
     public List<Event> selectAllDoneSpecEvents(){
         String querySql = "SELECT * FROM "+ mTableName +" WHERE ("+ EVENT_TYPE +" = ? OR "+ EVENT_TYPE +" = ?) AND "+ IS_EVENT_FINISHED +" = ?";
-        return _select(querySql,new String[]{EventConfig.TYPE_SPEC_LEARNING + "",EventConfig.TYPE_SPEC_NORMAL + "","1"});
+        return _select(querySql,EventConfig.TYPE_SPEC_LEARNING,EventConfig.TYPE_SPEC_NORMAL,1);
     }
 
     /**
@@ -164,5 +164,61 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
         return _delete(whereClause,null);
     }
 
+    /** 更新过期的普通计划 */
+    public void updateExpiredNormalEvents() {
+        String updateSql = "UPDATE " + mTableName + " SET " + EVENT_PROCESS + " = ? WHERE (" +
+                EVENT_EXPECTED_FINISHED_DATE + " + ?) <= ? AND " + IS_EVENT_FINISHED + " = 0 AND "+
+                EVENT_PROCESS + " != ? AND " + EVENT_TYPE + " = ?";
+        LogUtils.d("update events","更新过期的普通计划 : " + updateSql);
+        db.execSQL(updateSql, new Object[]{EventConfig.PROCESS_EXPIRE, DateUtils.DAY_MILLISECONDS,
+                System.currentTimeMillis(),EventConfig.PROCESS_EXPIRE, EventConfig.TYPE_SPEC_NORMAL});
+    }
+
+    /** 更新待办的普通计划 */
+    public void updateTodoNormalEvents() {
+        long now = System.currentTimeMillis();
+        String updateSql = "UPDATE "+ mTableName +" SET "+ EVENT_PROCESS +" = ? WHERE ? >= "+
+                EVENT_EXPECTED_FINISHED_DATE +" AND ? < ("+ EVENT_EXPECTED_FINISHED_DATE +" + ?) AND "+
+                EVENT_PROCESS +" = ? AND "+ EVENT_TYPE +" = ?";
+        LogUtils.d("update events","更新待办的普通计划 : " + updateSql);
+        db.execSQL(updateSql, new Object[]{EventConfig.PROCESS_TODO,now,now,
+                DateUtils.DAY_MILLISECONDS,EventConfig.PROCESS_NOT_STARTED,EventConfig.TYPE_SPEC_NORMAL});
+    }
+
+    /** 更新失败的学习计划组 */
+    public void updateFailedLearningEventGroups(){
+        String updateSql = "UPDATE learning_event_group SET KNOWLEDGE_QUANTITY = 0,LEARNING_EVENT_FINISHED_COUNT = 0 " +
+                "WHERE PK_LEARNING_EVENT_GROUP_ID IN " +
+                "(SELECT DISTINCT LEARNING_EVENT_GROUP_ID FROM event WHERE EVENT_TYPE = 1 AND EVENT_PROCESS != 4" +
+                " AND (((EVENT_SEQUENCE = 1 OR EVENT_SEQUENCE = 2) AND ? >= (EVENT_EXPECTED_FINISHED_DATE + 86400000))" +
+                " OR ? >= (EVENT_EXPECTED_FINISHED_DATE + 172800000)))";
+        long now = System.currentTimeMillis();
+        LogUtils.d("update events","更新失败的学习计划组 : " + updateSql);
+        db.execSQL(updateSql,new Object[]{now,now});
+    }
+
+    /** 更新失败的学习计划 */
+    public void updateFailedLearningEvents() {
+        String updateSql = "UPDATE event SET EVENT_PROCESS = 4 " +
+                "WHERE LEARNING_EVENT_GROUP_ID IN " +
+                "(SELECT DISTINCT LEARNING_EVENT_GROUP_ID FROM event " +
+                "WHERE EVENT_TYPE = 1 AND EVENT_PROCESS != 4 AND " +
+                "(((EVENT_SEQUENCE = 1 OR EVENT_SEQUENCE = 2) AND ? >= (EVENT_EXPECTED_FINISHED_DATE + 86400000))" +
+                " OR ? >= (EVENT_EXPECTED_FINISHED_DATE + 172800000)))";
+        long now = System.currentTimeMillis();
+        LogUtils.d("update events","更新失败的学习计划 : " + updateSql);
+        db.execSQL(updateSql,new Object[]{now,now});
+    }
+
+    /** 更新进行中的学习计划 */
+    public void updateInProgressLearningEvents() {
+        String updateSql = "UPDATE event SET EVENT_PROCESS = 2 WHERE LEARNING_EVENT_GROUP_ID IN " +
+                "(SELECT DISTINCT LEARNING_EVENT_GROUP_ID FROM event WHERE" +
+                " EVENT_TYPE = 1 AND EVENT_PROCESS = 1" +
+                " AND EVENT_EXPECTED_FINISHED_DATE < (?+86400000) AND EVENT_EXPECTED_FINISHED_DATE >= ?)";
+        LogUtils.d("update events","更新进行中的学习计划 : " + updateSql);
+        long today = DateUtils.dateTimestampOfToday();
+        db.execSQL(updateSql,new Object[]{today,today});
+    }
 
 }

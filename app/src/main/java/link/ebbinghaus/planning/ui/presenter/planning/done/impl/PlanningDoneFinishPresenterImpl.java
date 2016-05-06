@@ -1,6 +1,6 @@
 package link.ebbinghaus.planning.ui.presenter.planning.done.impl;
 
-import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
+import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
 import link.ebbinghaus.planning.core.service.PlanningDoneService;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.core.model.local.po.LearningEventGroup;

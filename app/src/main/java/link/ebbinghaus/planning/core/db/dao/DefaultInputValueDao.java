@@ -9,7 +9,7 @@ import com.yurikami.lib.util.DateUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import link.ebbinghaus.planning.common.constant.config.DBConfig;
+import link.ebbinghaus.planning.app.constant.config.DBConfig;
 import link.ebbinghaus.planning.core.model.local.po.DefaultInputValue;
 
 /**

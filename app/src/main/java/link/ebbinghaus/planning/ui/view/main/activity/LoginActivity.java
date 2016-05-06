@@ -8,11 +8,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yurikami.lib.base.BaseActivity;
+import com.yurikami.lib.util.StringUtils;
 import com.yurikami.lib.widget.TextObserver;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.R;
+import link.ebbinghaus.planning.app.util.CommonUtils;
 import link.ebbinghaus.planning.ui.presenter.main.LoginPresenter;
 import link.ebbinghaus.planning.ui.presenter.main.impl.LoginPresenterImpl;
 import link.ebbinghaus.planning.ui.view.main.LoginView;
@@ -62,8 +64,34 @@ public class LoginActivity extends BaseActivity implements LoginView,
                 mPresenter.login(accountEt.getText().toString(),passwordEt.getText().toString());
                 break;
             case R.id.btn_login_register:
+                mPresenter.register(accountEt.getText().toString(),passwordEt.getText().toString());
                 break;
         }
+    }
+
+    @Override
+    public void showRegisterSuccessHint(String successMsg) {
+        CommonUtils.showLongToast(successMsg);
+    }
+
+    @Override
+    public void showRegisterFailureHint(String failureMsg) {
+        CommonUtils.showLongToast(failureMsg);
+    }
+
+    @Override
+    public void showLoginSuccessHint(String successMsg) {
+        CommonUtils.showLongToast(successMsg);
+    }
+
+    @Override
+    public void exitLoginView() {
+        finish();
+    }
+
+    @Override
+    public void showLoginFailureHint(String failureMsg) {
+        CommonUtils.showLongToast(failureMsg);
     }
 
 
@@ -80,6 +108,7 @@ public class LoginActivity extends BaseActivity implements LoginView,
                     if (!mPresenter.validateName(s.toString())){
                         accountTil.setError(getString(R.string.login_account_error));
                     }else {
+                        //必须先null再false才能有toggle的效果
                         accountTil.setError(null);
                         accountTil.setErrorEnabled(false);
                     }
@@ -94,7 +123,8 @@ public class LoginActivity extends BaseActivity implements LoginView,
                     }
                     break;
             }
-            boolean btnEnable = !accountTil.isErrorEnabled() && !passwordTil.isErrorEnabled();  // TODO: 2016/4/20 第一次用户名验证成功后，注册和登陆就都开启了
+            boolean btnEnable = !accountTil.isErrorEnabled() && !passwordTil.isErrorEnabled()
+                    && !StringUtils.isAnyEmpty(accountEt.getText().toString(),passwordEt.getText().toString());
             signInBtn.setEnabled(btnEnable);
             registerBtn.setEnabled(btnEnable);
             signInBtn.setAlpha(btnEnable ? 1.0f : 0.5f);

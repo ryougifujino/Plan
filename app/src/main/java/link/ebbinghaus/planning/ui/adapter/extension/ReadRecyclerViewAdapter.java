@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.R;
-import link.ebbinghaus.planning.common.util.CommonUtils;
+import link.ebbinghaus.planning.app.util.CommonUtils;
 import link.ebbinghaus.planning.core.model.local.vo.extension.douban.book.Book;
 import link.ebbinghaus.planning.core.model.local.vo.extension.douban.book.Result;
 

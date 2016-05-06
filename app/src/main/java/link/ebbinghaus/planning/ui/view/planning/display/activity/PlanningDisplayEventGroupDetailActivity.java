@@ -18,7 +18,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.ui.adapter.planning.display.abst.AllRecyclerViewAdapter;
 import link.ebbinghaus.planning.ui.adapter.planning.display.spec.WeekRecyclerViewAdapter;
-import link.ebbinghaus.planning.common.constant.Constant;
+import link.ebbinghaus.planning.app.constant.Constant;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.core.model.local.po.EventGroup;
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplayEventGroupDetailPresenter;

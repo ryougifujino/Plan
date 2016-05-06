@@ -23,7 +23,7 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.common.App;
+import link.ebbinghaus.planning.app.App;
 import link.ebbinghaus.planning.core.service.PlanningDisplaySpecificService;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.core.service.impl.PlanningDisplaySpecificServiceImpl;

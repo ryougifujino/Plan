@@ -23,8 +23,13 @@ public interface LoginPresenter {
      * 用户登录
      * @param loginName 用户名
      * @param password 密码
-     * @return 登录的网络连接
      */
     void login(String loginName, String password);
 
+    /**
+     * 用户注册
+     * @param registerName 注册名
+     * @param password 密码
+     */
+    void register(String registerName, String password);
 }

@@ -1,4 +1,4 @@
-package link.ebbinghaus.planning.common.mock;
+package link.ebbinghaus.planning.app.mock;
 
 import com.yurikami.lib.util.DateUtils;
 

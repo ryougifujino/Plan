@@ -1,5 +1,6 @@
 package link.ebbinghaus.planning.core.db.decorator.impl;
 
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -8,7 +9,7 @@ import com.yurikami.lib.util.DateUtils;
 
 import java.util.List;
 
-import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
+import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
 import link.ebbinghaus.planning.core.db.dao.EventDao;
 import link.ebbinghaus.planning.core.db.dao.EventGroupDao;
 import link.ebbinghaus.planning.core.db.dao.GreekAlphabetDao;
@@ -219,4 +220,24 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
 
     }
 
+    /**
+     * 更新计划进程以及因日期改变产生的相关变化<br>
+     * 系统时间向后调整无影响，向前调整会发生错乱（比如穿越到未来完成之类的，无视之）
+     */
+    public void updateEventsProcessAndRelated() {
+        dao.beginTransaction();
+        try {
+            //更新普通计划
+            dao.updateExpiredNormalEvents();
+            dao.updateTodoNormalEvents();
+            //更新学习计划
+            dao.updateFailedLearningEventGroups();
+            dao.updateFailedLearningEvents();
+            dao.updateInProgressLearningEvents();
+
+            dao.setTransactionSuccessful();
+        }finally {
+            dao.endTransaction();
+        }
+    }
 }

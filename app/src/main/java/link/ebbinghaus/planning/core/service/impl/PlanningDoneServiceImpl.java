@@ -2,7 +2,7 @@ package link.ebbinghaus.planning.core.service.impl;
 
 import java.util.List;
 
-import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
+import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
 import link.ebbinghaus.planning.core.service.PlanningDoneService;
 import link.ebbinghaus.planning.core.db.decorator.impl.LearningEventGroupDaoDecorator;
 import link.ebbinghaus.planning.core.model.local.po.Event;

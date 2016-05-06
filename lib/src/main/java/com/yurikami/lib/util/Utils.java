@@ -28,6 +28,7 @@ public class Utils {
         return false;
     }
 
+
     /**
      * 参数可为null的布尔值相等判断
      * @param boolean1

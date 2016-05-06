@@ -2,6 +2,7 @@ package com.yurikami.lib.net.parser.impl;
 
 import com.google.gson.Gson;
 import com.yurikami.lib.net.parser.Parser;
+import com.yurikami.lib.util.JsonUtils;
 
 import java.io.Reader;
 import java.lang.reflect.Type;
@@ -36,7 +37,7 @@ public class BigModelParser<T> implements Parser<T> {
 
     @Override
     public T parse(Response response) {
-        Gson gson = new Gson();
+        Gson gson = JsonUtils.create();
         Reader json = response.body().charStream();
         if (mClass != null){
             return gson.fromJson(json,mClass);

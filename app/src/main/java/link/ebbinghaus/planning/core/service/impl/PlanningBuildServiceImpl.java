@@ -3,8 +3,8 @@ package link.ebbinghaus.planning.core.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import link.ebbinghaus.planning.common.constant.config.entity.LearningEventGroupConfig;
-import link.ebbinghaus.planning.common.constant.module.PlanningBuildConstant;
+import link.ebbinghaus.planning.app.constant.config.entity.LearningEventGroupConfig;
+import link.ebbinghaus.planning.app.constant.module.PlanningBuildConstant;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventSubtypeDaoDecorator;
 import link.ebbinghaus.planning.core.model.local.sys.Tab;
 import link.ebbinghaus.planning.core.db.decorator.impl.DefaultInputValueDaoDecorator;

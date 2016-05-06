@@ -7,10 +7,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.yurikami.lib.db.SqlBuilder;
 import com.yurikami.lib.util.LogUtils;
 
-import link.ebbinghaus.planning.common.constant.config.DBConfig;
+import link.ebbinghaus.planning.app.constant.config.DBConfig;
 import link.ebbinghaus.planning.core.db.dao.AchievementDao;
 import link.ebbinghaus.planning.core.db.dao.GreekAlphabetDao;
 import link.ebbinghaus.planning.core.db.dao.DefaultInputValueDao;
+import link.ebbinghaus.planning.core.service.MainService;
+import link.ebbinghaus.planning.core.service.impl.MainServiceImpl;
 
 /**
  * !禁止直接获取本类实例后调用getWritableDatabase
@@ -71,6 +73,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public static void createDatabase(){
         DBManager.getInstance().openDB();
         DBManager.getInstance().closeDB();
+    }
+
+    /** 同步本地数据库，使得数据库里的数据和真实时间同步 */
+    public static void syncLocalDatabase(){
+        MainService mainService = new MainServiceImpl();
+        mainService.updateEventsProcessAndRelated();
     }
 
 }

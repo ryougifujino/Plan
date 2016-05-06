@@ -1,4 +1,4 @@
-package link.ebbinghaus.planning.common.constant.config;
+package link.ebbinghaus.planning.app.constant.config;
 
 import com.yurikami.lib.db.SqlBuilder;
 import com.yurikami.lib.util.DateUtils;
@@ -37,7 +37,7 @@ public class DBConfig {
             .sql();
     public static final String CREATE_TABLE_LEARNING_EVENT_GROUP = SqlBuilder.build().create(Table.LEARNING_EVENT_GROUP)
             .pk(LearningEventGroupColumn.PK_LEARNING_EVENT_GROUP_ID)
-            .integer(LearningEventGroupColumn.KNOWLEDGE_QUANTITY)
+            .integer(LearningEventGroupColumn.KNOWLEDGE_QUANTITY)._default(0)
             .integer(LearningEventGroupColumn.STRATEGY)
             .integer(LearningEventGroupColumn.LEARNING_EVENT_TOTAL)
             .integer(LearningEventGroupColumn.LEARNING_EVENT_FINISHED_COUNT)._default(0)

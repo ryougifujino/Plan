@@ -23,11 +23,11 @@ import java.math.BigInteger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.common.constant.Constant;
-import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
-import link.ebbinghaus.planning.common.constant.config.entity.LearningEventGroupConfig;
-import link.ebbinghaus.planning.common.constant.model.LearningEventGroupConstant;
-import link.ebbinghaus.planning.common.util.CommonUtils;
+import link.ebbinghaus.planning.app.constant.Constant;
+import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
+import link.ebbinghaus.planning.app.constant.config.entity.LearningEventGroupConfig;
+import link.ebbinghaus.planning.app.constant.model.LearningEventGroupConstant;
+import link.ebbinghaus.planning.app.util.CommonUtils;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.core.model.local.po.LearningEventGroup;
 import link.ebbinghaus.planning.ui.presenter.planning.done.PlanningDoneFinishPresenter;

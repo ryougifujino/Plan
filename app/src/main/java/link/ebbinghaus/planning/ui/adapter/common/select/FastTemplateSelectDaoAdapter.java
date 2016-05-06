@@ -2,7 +2,7 @@ package link.ebbinghaus.planning.ui.adapter.common.select;
 
 import java.util.List;
 
-import link.ebbinghaus.planning.common.constant.config.entity.FastTemplateConfig;
+import link.ebbinghaus.planning.app.constant.config.entity.FastTemplateConfig;
 import link.ebbinghaus.planning.core.db.decorator.impl.FastTemplateDaoDecorator;
 import link.ebbinghaus.planning.core.model.local.po.FastTemplate;
 

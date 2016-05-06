@@ -6,8 +6,8 @@ import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.List;
 
-import link.ebbinghaus.planning.common.constant.config.DBConfig;
-import link.ebbinghaus.planning.common.constant.config.entity.FastTemplateConfig;
+import link.ebbinghaus.planning.app.constant.config.DBConfig;
+import link.ebbinghaus.planning.app.constant.config.entity.FastTemplateConfig;
 import link.ebbinghaus.planning.core.model.local.po.FastTemplate;
 
 /**

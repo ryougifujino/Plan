@@ -8,10 +8,10 @@ import android.widget.TextView;
 import com.yurikami.lib.util.DateUtils;
 import com.yurikami.lib.util.Utils;
 
-import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
-import link.ebbinghaus.planning.common.constant.model.EventConstant;
-import link.ebbinghaus.planning.common.constant.model.LearningEventGroupConstant;
-import link.ebbinghaus.planning.common.App;
+import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
+import link.ebbinghaus.planning.app.constant.model.EventConstant;
+import link.ebbinghaus.planning.app.constant.model.LearningEventGroupConstant;
+import link.ebbinghaus.planning.app.App;
 import link.ebbinghaus.planning.ui.viewholder.BaseActivityViewHolder;
 import link.ebbinghaus.planning.core.model.local.vo.planning.display.SpecEventDetailVo;
 import link.ebbinghaus.planning.R;

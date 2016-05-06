@@ -2,7 +2,7 @@ package link.ebbinghaus.planning.ui.presenter.main.impl;
 
 import com.yurikami.lib.net.NetCallback;
 
-import link.ebbinghaus.planning.common.constant.Constant;
+import link.ebbinghaus.planning.app.constant.Constant;
 import link.ebbinghaus.planning.core.model.server.po.User;
 import link.ebbinghaus.planning.core.model.server.sys.Result;
 import link.ebbinghaus.planning.core.service.MainService;
@@ -57,6 +57,14 @@ public class LoginPresenterImpl implements LoginPresenter,NetCallback {
         mLoginCall = mMainService.login(loginName,password,this);
     }
 
+    @Override
+    public void register(String registerName, String password) {
+        if (mRegisterCall != null){
+            mRegisterCall.cancel();
+        }
+        mRegisterCall = mMainService.register(registerName,password,this);
+    }
+
 
     @Override
     public void onSuccess(Object result, Call call) {
@@ -65,8 +73,18 @@ public class LoginPresenterImpl implements LoginPresenter,NetCallback {
             if (loginResult.getCode() == Result.RIGHT_CODE){
                 //登录成功
                 mMainService.updateUser(loginResult.getData());
+                mView.showLoginSuccessHint(loginResult.getMsgs().get(Result.SUCCESS_MSG_KEY));
+                mView.exitLoginView();
             }else if (loginResult.getCode() == Result.DEFAULT_ERROR_CODE){
                 //登录失败
+                mView.showLoginFailureHint(loginResult.getMsgs().get(Result.FAILURE_SINGLE_MSG_KEY));
+            }
+        }else if (call == mRegisterCall){
+            Result<Object> registerResult = (Result<Object>) result;
+            if (registerResult.getCode() == Result.RIGHT_CODE){
+                mView.showRegisterSuccessHint(registerResult.getMsgs().get(Result.SUCCESS_MSG_KEY));
+            }else if (registerResult.getCode() == Result.DEFAULT_ERROR_CODE){
+                mView.showRegisterFailureHint(registerResult.getMsgs().get(Result.FAILURE_SINGLE_MSG_KEY));
             }
         }
         mLoginCall = null;

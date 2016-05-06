@@ -1,4 +1,4 @@
-package link.ebbinghaus.planning.common.constant.config.entity;
+package link.ebbinghaus.planning.app.constant.config.entity;
 
 /**
  * Created by WINFIELD on 2016/3/20.

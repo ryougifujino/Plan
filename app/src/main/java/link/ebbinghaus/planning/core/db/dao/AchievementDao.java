@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import link.ebbinghaus.planning.common.constant.config.DBConfig;
+import link.ebbinghaus.planning.app.constant.config.DBConfig;
 import link.ebbinghaus.planning.core.model.local.po.Achievement;
 
 /**

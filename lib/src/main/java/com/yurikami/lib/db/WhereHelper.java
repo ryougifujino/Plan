@@ -6,7 +6,7 @@ import com.yurikami.lib.util.DateUtils;
 /**
  * Created by WINFIELD on 2016/3/24.
  */
-public class SelectHelper {
+public class WhereHelper {
 
     /**
      * 生成条件子句,将给定字段timestamp里的时间戳包裹在给定时间中

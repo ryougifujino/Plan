@@ -2,7 +2,7 @@ package link.ebbinghaus.planning.ui.presenter.planning.build.impl;
 
 import java.util.List;
 
-import link.ebbinghaus.planning.common.constant.config.entity.EventConfig;
+import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
 import link.ebbinghaus.planning.core.service.PlanningBuildService;
 import link.ebbinghaus.planning.core.model.local.sys.Tab;
 import link.ebbinghaus.planning.core.model.local.vo.planning.build.InputEventVo;

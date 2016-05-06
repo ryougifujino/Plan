@@ -18,9 +18,9 @@ import com.yurikami.lib.base.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.common.constant.Constant;
-import link.ebbinghaus.planning.common.constant.config.entity.FastTemplateConfig;
-import link.ebbinghaus.planning.common.constant.module.PlanningBuildConstant;
+import link.ebbinghaus.planning.app.constant.Constant;
+import link.ebbinghaus.planning.app.constant.config.entity.FastTemplateConfig;
+import link.ebbinghaus.planning.app.constant.module.PlanningBuildConstant;
 import link.ebbinghaus.planning.core.model.local.po.EventGroup;
 import link.ebbinghaus.planning.core.model.local.po.FastTemplate;
 import link.ebbinghaus.planning.core.model.local.vo.planning.build.InputEventVo;

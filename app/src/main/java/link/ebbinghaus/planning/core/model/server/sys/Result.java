@@ -48,8 +48,8 @@ public class Result<T> {
 	}
 	
 	/** 设置成功  */
-	public void setSuccess(T result,String successMsg){
-		this.data = result;
+	public void setSuccess(T data,String successMsg){
+		this.data = data;
 		this.msgs.put(SUCCESS_MSG_KEY, successMsg);
 		this.code = RIGHT_CODE;
 	}
@@ -60,8 +60,8 @@ public class Result<T> {
 	}
 	
 	/** 设置失败  */
-	public void setFailure(T result,Integer errorCode,Map<String,String> failureMsgs){
-		this.data = result;
+	public void setFailure(T data,Integer errorCode,Map<String,String> failureMsgs){
+		this.data = data;
 		this.code = errorCode;
 		this.msgs = failureMsgs;
 	}
@@ -72,8 +72,8 @@ public class Result<T> {
 	}
 	
 	/** 设置失败（单条失败消息） */
-	public void setFailure(T result,Integer errorCode,String failureMsg){
-		this.data = result;
+	public void setFailure(T data,Integer errorCode,String failureMsg){
+		this.data = data;
 		this.code = errorCode;
 		this.msgs.put(FAILURE_SINGLE_MSG_KEY, failureMsg);
 	}
@@ -84,8 +84,8 @@ public class Result<T> {
 	}
 	
 	/** 设置失败（默认失败码） */
-	public void setFailure(T result,Map<String,String> failureMsgs){
-		setFailure(result, DEFAULT_ERROR_CODE, failureMsgs);
+	public void setFailure(T data,Map<String,String> failureMsgs){
+		setFailure(data, DEFAULT_ERROR_CODE, failureMsgs);
 	}
 	
 	/** 设置失败（默认失败码、无结果） */
@@ -94,8 +94,8 @@ public class Result<T> {
 	}
 	
 	/** 设置失败（默认失败码、单条失败消息） */
-	public void setFailure(T result,String failureMsg){
-		setFailure(result,DEFAULT_ERROR_CODE, failureMsg);
+	public void setFailure(T data,String failureMsg){
+		setFailure(data,DEFAULT_ERROR_CODE, failureMsg);
 	}
 	
 	/** 设置失败（默认失败码、无结果、单条失败消息） */

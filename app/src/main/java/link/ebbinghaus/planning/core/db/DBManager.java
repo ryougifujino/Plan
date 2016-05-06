@@ -4,7 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import link.ebbinghaus.planning.common.App;
+import link.ebbinghaus.planning.app.App;
 
 /**
  * 数据库管理器,使用此可以让数据库变得线程安全<br>

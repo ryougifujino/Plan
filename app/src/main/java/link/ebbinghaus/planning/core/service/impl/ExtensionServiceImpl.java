@@ -4,7 +4,7 @@ import com.yurikami.lib.net.NetCallback;
 import com.yurikami.lib.net.UICallBack;
 import com.yurikami.lib.net.parser.impl.BigModelParser;
 
-import link.ebbinghaus.planning.common.constant.API;
+import link.ebbinghaus.planning.app.constant.API;
 import link.ebbinghaus.planning.core.model.local.vo.extension.douban.book.Result;
 import link.ebbinghaus.planning.core.service.ExtensionService;
 import okhttp3.Call;

@@ -19,7 +19,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.common.constant.model.EventConstant;
+import link.ebbinghaus.planning.app.constant.model.EventConstant;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.ui.view.planning.display.activity.PlanningDisplaySpecEventDetailActivity;
 import link.ebbinghaus.planning.R;

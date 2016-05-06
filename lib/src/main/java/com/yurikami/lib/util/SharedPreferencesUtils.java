@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import java.lang.reflect.Type;
@@ -17,7 +16,7 @@ public class SharedPreferencesUtils {
     @SuppressLint("CommitPrefEdits")
     private static SharedPreferences.Editor save(Context context,String saveKey,Object model){
          SharedPreferences.Editor editor = context.getSharedPreferences(saveKey, Context.MODE_PRIVATE).edit();
-        editor.putString(saveKey,new Gson().toJson(model));
+        editor.putString(saveKey,JsonUtils.create().toJson(model));
         return editor;
     }
 
@@ -45,7 +44,7 @@ public class SharedPreferencesUtils {
     public static <T> T getModel(Context context,String getKey,Class<T> clazz){
         SharedPreferences sp = context.getSharedPreferences(getKey,Context.MODE_PRIVATE);
         try {
-            return new Gson().fromJson(sp.getString(getKey,""),clazz);
+            return JsonUtils.create().fromJson(sp.getString(getKey,""),clazz);
         }catch (JsonSyntaxException e){
             LogUtils.d("Allowed error",e.getMessage());
         }
@@ -56,7 +55,7 @@ public class SharedPreferencesUtils {
     public static Object getModel(Context context, String getKey, Type type){
         SharedPreferences sp = context.getSharedPreferences(getKey,Context.MODE_PRIVATE);
         try {
-            return new Gson().fromJson(sp.getString(getKey,""),type);
+            return JsonUtils.create().fromJson(sp.getString(getKey,""),type);
         }catch (JsonSyntaxException e){
             LogUtils.d("Allowed error",e.getMessage());
         }

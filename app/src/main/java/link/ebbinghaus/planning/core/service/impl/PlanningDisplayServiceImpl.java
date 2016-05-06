@@ -3,7 +3,7 @@ package link.ebbinghaus.planning.core.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import link.ebbinghaus.planning.common.constant.module.PlanningDisplayConstant;
+import link.ebbinghaus.planning.app.constant.module.PlanningDisplayConstant;
 import link.ebbinghaus.planning.core.service.PlanningDisplayService;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventGroupDaoDecorator;
 import link.ebbinghaus.planning.core.model.local.po.Event;

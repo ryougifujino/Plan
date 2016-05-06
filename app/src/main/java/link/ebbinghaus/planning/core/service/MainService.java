@@ -28,4 +28,18 @@ public interface MainService {
      * @param user 需要保存或更新的user
      */
     void updateUser(User user);
+
+    /**
+     * 注册
+     * @param registerName 注册名，手机号或邮箱
+     * @param password 注册密码
+     * @param callback 网络回调函数
+     * @return 本次注册的连接
+     */
+    Call register(String registerName, String password, NetCallback callback);
+
+    /**
+     * 更新计划进程以及因日期改变产生的相关变化
+     */
+    void updateEventsProcessAndRelated();
 }

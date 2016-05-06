@@ -23,10 +23,10 @@ import com.yurikami.lib.widget.RadioSelectDialog;
 
 import java.util.Calendar;
 
-import link.ebbinghaus.planning.common.constant.Constant;
-import link.ebbinghaus.planning.common.constant.config.entity.FastTemplateConfig;
-import link.ebbinghaus.planning.common.constant.config.entity.LearningEventGroupConfig;
-import link.ebbinghaus.planning.common.constant.module.PlanningBuildConstant;
+import link.ebbinghaus.planning.app.constant.Constant;
+import link.ebbinghaus.planning.app.constant.config.entity.FastTemplateConfig;
+import link.ebbinghaus.planning.app.constant.config.entity.LearningEventGroupConfig;
+import link.ebbinghaus.planning.app.constant.module.PlanningBuildConstant;
 import link.ebbinghaus.planning.ui.viewholder.planning.build.SpecificViewHolder;
 import link.ebbinghaus.planning.core.model.local.po.DefaultInputValue;
 import link.ebbinghaus.planning.core.model.local.po.EventGroup;

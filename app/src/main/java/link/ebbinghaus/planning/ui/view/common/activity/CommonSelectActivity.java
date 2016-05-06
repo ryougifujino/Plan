@@ -22,7 +22,7 @@ import link.ebbinghaus.planning.ui.adapter.common.select.SelectEventGroupRVAdapt
 import link.ebbinghaus.planning.ui.adapter.common.select.SelectEventSubtypeRVAdapter;
 import link.ebbinghaus.planning.ui.adapter.common.select.SelectFastTemplateRVAdapter;
 import link.ebbinghaus.planning.ui.adapter.common.select.SelectRecycleViewAdapter;
-import link.ebbinghaus.planning.common.constant.Constant;
+import link.ebbinghaus.planning.app.constant.Constant;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventGroupDaoDecorator;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventSubtypeDaoDecorator;
 import link.ebbinghaus.planning.ui.viewholder.common.select.DeleteToolbarViewHolder;
