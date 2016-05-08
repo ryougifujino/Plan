@@ -244,7 +244,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     @Override
     public void onTimeSet(RadialTimePickerDialogFragment dialog, int hourOfDay, int minute) {
         String hourMinute = hourOfDay + ":" + minute;   // FIXME: 2016/4/24 末尾为0时只显示一个0
-        mInputEvent.setRemindTime(DateUtils.convertHourMinute2Timestamp(hourMinute));
+        mInputEvent.setRemindTime(DateUtils.getHourMinuteMilliseconds(hourOfDay,minute));
         vh.remindTimeTv.setText(hourMinute);
         mRadialTimePicker.setStartTime(hourOfDay, minute);
     }

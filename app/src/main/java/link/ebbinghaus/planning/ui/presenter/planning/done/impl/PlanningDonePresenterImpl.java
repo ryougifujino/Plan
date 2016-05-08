@@ -3,8 +3,8 @@ package link.ebbinghaus.planning.ui.presenter.planning.done.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import link.ebbinghaus.planning.core.service.PlanningDoneService;
 import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.core.service.PlanningDoneService;
 import link.ebbinghaus.planning.core.service.impl.PlanningDoneServiceImpl;
 import link.ebbinghaus.planning.ui.presenter.planning.done.PlanningDonePresenter;
 import link.ebbinghaus.planning.ui.view.planning.done.PlanningDoneView;

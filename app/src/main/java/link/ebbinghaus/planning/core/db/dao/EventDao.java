@@ -133,15 +133,16 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
     }
 
     /**
-     * 查找从今天算起的过去两天的具体计划
+     * 查找从今天算起的过去两天的具体计划（不包括失败（过期）的计划）
      * @return 从今天(包括今天)算起的过去两天的具体计划
      */
     public List<Event> selectLast2DaysSpecEvents(){
         long todayTimestamp = DateUtils.dateTimestampOfToday();
         long start = DateUtils.timestampBefore(todayTimestamp, 1);
         long end = DateUtils.timestampAfter(todayTimestamp,1);
-        String querySql = "SELECT * FROM "+ mTableName +" WHERE "
-                + WhereHelper.between(EVENT_EXPECTED_FINISHED_DATE,start,end);
+        String querySql = "SELECT * FROM "+ mTableName +" WHERE " +
+                WhereHelper.between(EVENT_EXPECTED_FINISHED_DATE,start,end) +
+                " AND " + EVENT_PROCESS + " != " + EventConfig.PROCESS_FAILED;
         return _select(querySql);
     }
 
@@ -150,8 +151,9 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
      * @return 所有已经完成的具体计划
      */
     public List<Event> selectAllDoneSpecEvents(){
-        String querySql = "SELECT * FROM "+ mTableName +" WHERE ("+ EVENT_TYPE +" = ? OR "+ EVENT_TYPE +" = ?) AND "+ IS_EVENT_FINISHED +" = ?";
-        return _select(querySql,EventConfig.TYPE_SPEC_LEARNING,EventConfig.TYPE_SPEC_NORMAL,1);
+        String querySql = "SELECT * FROM "+ mTableName +" WHERE ("+
+                EVENT_TYPE +" = ? OR "+ EVENT_TYPE +" = ?) AND ("+ IS_EVENT_FINISHED +" = ? OR " + EVENT_PROCESS + " = ?)";
+        return _select(querySql,EventConfig.TYPE_SPEC_LEARNING,EventConfig.TYPE_SPEC_NORMAL,1,EventConfig.PROCESS_FAILED);
     }
 
     /**

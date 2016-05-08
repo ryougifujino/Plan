@@ -104,7 +104,7 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
         planningBuildStrategyTv.setText(LearningEventGroupConstant.STRATEGY[settings.defaultInputValue.getStrategy() - 1]);
         planningBuildMaxWidthTv.setText(settings.defaultInputValue.getMaxWidth() + "");
         planningBuildIsRemindSwitch.setChecked(settings.defaultInputValue.getIsRemind());
-        planningBuildRemindTimeTv.setText(DateUtils.formatTimestamp2HourMinute(settings.defaultInputValue.getRemindTime()));
+        planningBuildRemindTimeTv.setText(DateUtils.formatChinaTimestamp2HourMinute(settings.defaultInputValue.getRemindTime()));
         planningBuildIsShowEventSequenceSwitch.setChecked(settings.defaultInputValue.getIsShowEventSequence());
         planningBuildIsGreekAlphabetMarkedSwitch.setChecked(settings.defaultInputValue.getIsGreekAlphabetMarked());
     }
@@ -149,7 +149,7 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
     @Override
     public void onTimeSet(RadialTimePickerDialogFragment dialog, int hourOfDay, int minute) {
         String hourMinute = hourOfDay + ":" + minute;   // FIXME: 2016/4/24 末尾为0时只显示一个0
-        settings.defaultInputValue.setRemindTime(DateUtils.convertHourMinute2Timestamp(hourMinute));
+        settings.defaultInputValue.setRemindTime(DateUtils.getHourMinuteMilliseconds(hourOfDay,minute));
         planningBuildRemindTimeTv.setText(hourMinute);
         mRadialTimePicker.setStartTime(hourOfDay, minute);
     }

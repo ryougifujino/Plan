@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by WINFIELD on 2016/2/29.
@@ -35,7 +37,6 @@ public class DateUtils {
 
     private static SimpleDateFormat chnDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
     private static SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    private static SimpleDateFormat hourMinuteFormat = new SimpleDateFormat("HH:mm");
 
     private static Date now() { return new Date(); }
     private static long nowTimestamp() { return System.currentTimeMillis(); }
@@ -262,18 +263,27 @@ public class DateUtils {
     }
 
     /**
-     * 将形如HH:mm的时分字符串转换为时间戳
+     * 将形如HH:mm的时分字符串转换为中国时间戳（中国时间戳正好对应时长）
      * @param hourMinute 时分字符串
      * @return 正确返回时间戳,错误返回-1
      */
-    public static long convertHourMinute2Timestamp(String hourMinute){
+    public static long convertHourMinute2ChinaTimestamp(String hourMinute){
         try {
+            SimpleDateFormat hourMinuteFormat = new SimpleDateFormat("HH:mm", Locale.CHINA);
             Date date = hourMinuteFormat.parse(hourMinute);
             return date.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return -1;
+    }
+
+    /**
+     * 获取时分所代表的毫秒数（时长），正好等于中国时区的时分时间戳<br>
+     * 和{@link #convertHourMinute2ChinaTimestamp}功能类似，不过效率更高
+     */
+    public static long getHourMinuteMilliseconds(int hour,int minute){
+        return hour * HOUR_MILLISECONDS + minute * MINUTE_MILLISECONDS;
     }
 
     /**
@@ -288,11 +298,13 @@ public class DateUtils {
     }
 
     /**
-     * 将时间戳转换为形如HH:mm
-     * @param timestamp 时间戳
+     * 将中国时区的时分时间戳（中国时区的时分时间戳正好=时长）转换为形如HH:mm
+     * @param timestamp 时间戳（中国时区，正好对应时长）
      * @return 形如HH:mm的字符串
      */
-    public static String formatTimestamp2HourMinute(long timestamp){
+    public static String formatChinaTimestamp2HourMinute(long timestamp){
+        SimpleDateFormat hourMinuteFormat = new SimpleDateFormat("HH:mm",Locale.getDefault());
+        hourMinuteFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
         return hourMinuteFormat.format(timestamp);
     }
 

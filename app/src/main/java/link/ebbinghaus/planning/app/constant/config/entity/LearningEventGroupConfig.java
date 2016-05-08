@@ -8,6 +8,7 @@ public class LearningEventGroupConfig {
     public static final int[] STRATEGY_MEMORIAL = {1, 2, 6, 31};
     public static final int[] STRATEGY_MEMORIAL_PRO = {1, 2, 4, 7, 15, 31};
     public static final int[] STRATEGY_PERSISTENT = {1, 2, 4, 7, 15, 31, 60, 90, 120, 150, 180};
+    public static final int [][] STRATEGY = {STRATEGY_COMPREHENSIVE,STRATEGY_MEMORIAL,STRATEGY_MEMORIAL_PRO,STRATEGY_PERSISTENT};
 
     public static final float EFFICIENCY_POOR = 0.3F;
     public static final float EFFICIENCY_GENERAL = 0.6F;

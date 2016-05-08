@@ -49,6 +49,7 @@ public class HistoryFragment extends BaseFragment implements HistoryView {
         mActivity.setSupportActionBar(mToolbar);
         mToolbar.setTitle(R.string.history_title);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        // TODO: 2016/5/8 用自定义的代替
         mFinishRecyclerViewAdapter = new FinishRecyclerViewAdapter(mActivity,mPresenter.obtainSpecDoneEvents());
         mRecyclerView.setAdapter(mFinishRecyclerViewAdapter);
     }

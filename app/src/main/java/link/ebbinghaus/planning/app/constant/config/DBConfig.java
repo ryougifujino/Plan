@@ -67,7 +67,7 @@ public class DBConfig {
             .integer(DefaultInputValueColumn.MAX_WIDTH)._default(5)
             .integer(DefaultInputValueColumn.IS_GREEK_ALPHABET_MARKED)._default(0)
             .integer(DefaultInputValueColumn.IS_REMIND)._default(0)
-            .integer(DefaultInputValueColumn.REMIND_TIME)._default(DateUtils.convertHourMinute2Timestamp("19:00"))
+            .integer(DefaultInputValueColumn.REMIND_TIME)._default(DateUtils.getHourMinuteMilliseconds(19,0))
             .integer(DefaultInputValueColumn.STRATEGY)._default(1)
             .integer(DefaultInputValueColumn.IS_SHOW_EVENT_SEQUENCE)._default(0)
             .sql();

@@ -3,6 +3,7 @@ package link.ebbinghaus.planning.ui.presenter.planning.build.impl;
 import java.util.List;
 
 import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
+import link.ebbinghaus.planning.app.util.AlarmUtils;
 import link.ebbinghaus.planning.core.service.PlanningBuildService;
 import link.ebbinghaus.planning.core.model.local.sys.Tab;
 import link.ebbinghaus.planning.core.model.local.vo.planning.build.InputEventVo;
@@ -44,9 +45,11 @@ public class PlanningBuildPresenterImpl implements PlanningBuildPresenter {
             switch (inputEvent.getEventType()) {
                 case EventConfig.TYPE_SPEC_LEARNING:
                     mPlanningBuildService.addLearningEvent(inputEvent);
+                    AlarmUtils.setNotificationAlarm(inputEvent);
                     break;
                 case EventConfig.TYPE_SPEC_NORMAL:
                     mPlanningBuildService.addNormalEvent(inputEvent);
+                    AlarmUtils.setNotificationAlarm(inputEvent);
                     break;
                 default: return false;
             }

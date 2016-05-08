@@ -105,7 +105,7 @@ public class DefaultInputValue {
     }
 
     public String getFormatRemindTime(){
-        return DateUtils.formatTimestamp2HourMinute(remindTime);
+        return DateUtils.formatChinaTimestamp2HourMinute(remindTime);
     }
 
 

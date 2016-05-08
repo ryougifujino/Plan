@@ -80,7 +80,7 @@ public class DefaultInputValueDao extends BaseDao<DefaultInputValue> implements 
         defaultInputValue.setMaxWidth(5);
         defaultInputValue.setIsGreekAlphabetMarked(false);
         defaultInputValue.setIsRemind(false);
-        defaultInputValue.setRemindTime(DateUtils.convertHourMinute2Timestamp("19:00"));
+        defaultInputValue.setRemindTime(DateUtils.getHourMinuteMilliseconds(19,0));
         defaultInputValue.setStrategy(1);
         defaultInputValue.setIsShowEventSequence(false);
 

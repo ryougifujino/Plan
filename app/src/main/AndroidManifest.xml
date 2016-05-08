@@ -37,10 +37,12 @@
         <activity android:name=".ui.view.main.activity.UserActivity">
         </activity>
 
-        <service android:name=".app.service.SyncLocalDatabaseService">
+        <service android:name=".app.service.AmendDatabaseProcessAndRelatedService">
         </service>
 
-        <receiver android:name=".app.receiver.SyncLocalDatabaseReceiver">
+        <receiver android:name=".app.receiver.NotificationAlarmReceiver">
+        </receiver>
+        <receiver android:name=".app.receiver.AmendDatabaseProcessAndRelatedReceiver">
         </receiver>
         <receiver android:name=".app.receiver.TimeSetReceiver">
             <intent-filter>

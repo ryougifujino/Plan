@@ -178,7 +178,7 @@ public class SpecEventDetailViewHolder extends BaseActivityViewHolder {
         }
 
         if (vo.event.getIsRemind()){
-            remindTimeTv.setText(DateUtils.formatTimestamp2HourMinute(vo.event.getRemindTime()));
+            remindTimeTv.setText(DateUtils.formatChinaTimestamp2HourMinute(vo.event.getRemindTime()));
         }else {
             remindTimeTv.setText(R.string.planning_display_spec_event_detail_no_prompt);
         }

@@ -31,7 +31,7 @@ public class Event implements Parcelable {
     private Long greekAlphabetId;
     private Boolean isGreekAlphabetMarked;
     private Boolean isRemind;
-    private Long remindTime;
+    private Long remindTime;    //代表了xx时xx分的时长
     private Integer eventProcess; //1:未开始 2:进行中/待办 3:成功/完成 4:失败/过期
 
     public Long getPkEventId() {

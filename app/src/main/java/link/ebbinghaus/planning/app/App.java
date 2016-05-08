@@ -8,7 +8,7 @@ import android.view.WindowManager;
 
 import com.yurikami.lib.util.LogUtils;
 
-import link.ebbinghaus.planning.app.service.SyncLocalDatabaseService;
+import link.ebbinghaus.planning.app.service.AmendDatabaseProcessAndRelatedService;
 import link.ebbinghaus.planning.core.db.DBHelper;
 import link.ebbinghaus.planning.core.model.local.sys.SystemInfo;
 
@@ -28,8 +28,8 @@ public class App extends Application {
         LogUtils.d("Application","Application onCreate()");
         initSystemInfo();
         DBHelper.createDatabase();
-//        DBHelper.syncLocalDatabase();
-        Intent intent = new Intent(this, SyncLocalDatabaseService.class);
+//        DBHelper.amendDatabaseProcessAndRelated();
+        Intent intent = new Intent(this, AmendDatabaseProcessAndRelatedService.class);
         startService(intent);
     }
 

@@ -38,7 +38,7 @@ public class PlanningDoneFragment extends BaseFragment implements PlanningDoneVi
     /**
      * 用于存储列表显示类型
      */
-    private int mDisplayType;
+    private int mDisplayType = SHOW_ALL;
     private FinishRecyclerViewAdapter mFinishRecyclerViewAdapter;
     private PlanningDonePresenter mPresenter;
 

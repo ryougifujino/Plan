@@ -75,8 +75,8 @@ public class DBHelper extends SQLiteOpenHelper {
         DBManager.getInstance().closeDB();
     }
 
-    /** 同步本地数据库，使得数据库里的数据和真实时间同步 */
-    public static void syncLocalDatabase(){
+    /** 按系统时间订正计划进程及其相关字段（异步） */
+    public static void amendDatabaseProcessAndRelated(){
         MainService mainService = new MainServiceImpl();
         mainService.updateEventsProcessAndRelated();
     }

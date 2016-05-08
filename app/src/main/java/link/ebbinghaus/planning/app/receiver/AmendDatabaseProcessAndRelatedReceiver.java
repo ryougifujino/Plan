@@ -4,13 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import link.ebbinghaus.planning.app.service.SyncLocalDatabaseService;
+import link.ebbinghaus.planning.app.service.AmendDatabaseProcessAndRelatedService;
 
-public class SyncLocalDatabaseReceiver extends BroadcastReceiver {
+public class AmendDatabaseProcessAndRelatedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent i = new Intent(context, SyncLocalDatabaseService.class);
+        Intent i = new Intent(context, AmendDatabaseProcessAndRelatedService.class);
         context.startService(i);
     }
 }
