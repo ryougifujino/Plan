@@ -1,23 +1,26 @@
 package link.ebbinghaus.planning.core.service.impl;
 
+import com.yurikami.lib.util.DateUtils;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeMap;
 
 import link.ebbinghaus.planning.app.constant.config.entity.LearningEventGroupConfig;
 import link.ebbinghaus.planning.app.constant.module.PlanningBuildConstant;
-import link.ebbinghaus.planning.core.db.decorator.impl.EventSubtypeDaoDecorator;
-import link.ebbinghaus.planning.core.model.local.sys.Tab;
 import link.ebbinghaus.planning.core.db.decorator.impl.DefaultInputValueDaoDecorator;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventDaoDecorator;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventGroupDaoDecorator;
+import link.ebbinghaus.planning.core.db.decorator.impl.EventSubtypeDaoDecorator;
 import link.ebbinghaus.planning.core.db.decorator.impl.FastTemplateDaoDecorator;
-import link.ebbinghaus.planning.core.service.PlanningBuildService;
 import link.ebbinghaus.planning.core.model.local.po.DefaultInputValue;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.core.model.local.po.EventGroup;
 import link.ebbinghaus.planning.core.model.local.po.EventSubtype;
 import link.ebbinghaus.planning.core.model.local.po.FastTemplate;
+import link.ebbinghaus.planning.core.model.local.sys.Tab;
 import link.ebbinghaus.planning.core.model.local.vo.planning.build.InputEventVo;
+import link.ebbinghaus.planning.core.service.PlanningBuildService;
 import link.ebbinghaus.planning.ui.view.planning.build.fragment.PlanningBuildAbstractFragment;
 import link.ebbinghaus.planning.ui.view.planning.build.fragment.PlanningBuildSpecificFragment;
 
@@ -74,6 +77,24 @@ public class PlanningBuildServiceImpl implements PlanningBuildService {
         DefaultInputValue defaultInputValue = dao.selectAll().get(0);
         dao.closeDB();
         return defaultInputValue;
+    }
+
+    @Override
+    public TreeMap<Long, Integer> find30daysStatistics(long startDateTimestamp) {
+        TreeMap<Long, Integer> statistics = new TreeMap<>();
+        EventDaoDecorator dao = new EventDaoDecorator();
+        List<Event> events = dao.select30daysSpecEventsFrom(startDateTimestamp);
+        dao.closeDB();
+        //将30天中每天的数量初始化为0
+        for (int dayOffset = 0; dayOffset < 30 ;dayOffset++){
+            statistics.put(DateUtils.timestampAfter(startDateTimestamp,dayOffset), 0);
+        }
+        //统计数量
+        for (Event event : events) {
+            Long key = event.getEventExpectedFinishedDate();
+            statistics.put(key, statistics.get(key) + 1);
+        }
+        return statistics;
     }
 
     @Override

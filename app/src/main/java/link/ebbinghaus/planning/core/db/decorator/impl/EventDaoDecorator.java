@@ -1,6 +1,5 @@
 package link.ebbinghaus.planning.core.db.decorator.impl;
 
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -168,6 +167,15 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
      */
     public List<Event> selectLast2DaysSpecEvents(){
         return dao.selectLast2DaysSpecEvents();
+    }
+
+    /**
+     * 查找从某天起后的30天的具体计划（包括那天）
+     * @param startDateTimestamp 开始日期时间戳
+     * @return 从某天起的30天具体计划
+     */
+    public List<Event> select30daysSpecEventsFrom(long startDateTimestamp){
+        return dao.selectSpecEventsFrom(startDateTimestamp, 30,true);
     }
 
     /**

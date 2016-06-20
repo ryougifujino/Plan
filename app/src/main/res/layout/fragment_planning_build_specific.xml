@@ -8,7 +8,7 @@
     tools:context=".ui.view.planning.build.fragment.PlanningBuildSpecificFragment">
 
     <android.support.v7.widget.CardView
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
@@ -17,18 +17,11 @@
         card_view:cardBackgroundColor="@android:color/white"
         card_view:cardCornerRadius="2dp"
         card_view:cardElevation="3dp">
-        <LinearLayout
-            android:id="@+id/ll_planning_build_charts"
+        <com.db.chart.view.BarChartView
+            android:id="@+id/bcv_planning_build_chart"
+            android:padding="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:padding="70dp"
-                android:text="统计图"
-                android:background="#ff0000"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+            android:layout_height="150dp"/>
     </android.support.v7.widget.CardView>
 
 

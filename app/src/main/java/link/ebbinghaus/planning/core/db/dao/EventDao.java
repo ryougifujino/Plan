@@ -133,6 +133,23 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
     }
 
     /**
+     * 从某年某月某日开始查找指定天数的具体计划
+     *
+     * @param startDateTimestamp 开始日期时间戳
+     * @param days 从指定日开始查找的天数
+     * @param isFailed 是否查找失败（过期）的具体计划
+     * @return 从某日开始N天的具体计划
+     */
+    public List<Event> selectSpecEventsFrom(long startDateTimestamp, int days, boolean isFailed){
+        long end = DateUtils.timestampAfter(startDateTimestamp,days);
+        String failedClause = isFailed ? (" AND " + EVENT_PROCESS + " != " + EventConfig.PROCESS_FAILED) : "";
+        String querySql = "SELECT * FROM " + mTableName + " WHERE " +
+                WhereHelper.between(EVENT_EXPECTED_FINISHED_DATE,startDateTimestamp,end) + failedClause +
+                " AND (" + EVENT_TYPE + " = " + EventConfig.TYPE_SPEC_NORMAL + " OR " + EVENT_TYPE + " = " + EventConfig.TYPE_SPEC_LEARNING + ")";
+        return _select(querySql);
+    }
+
+    /**
      * 查找从今天算起的过去两天的具体计划（不包括失败（过期）的计划）
      * @return 从今天(包括今天)算起的过去两天的具体计划
      */
@@ -142,7 +159,8 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
         long end = DateUtils.timestampAfter(todayTimestamp,1);
         String querySql = "SELECT * FROM "+ mTableName +" WHERE " +
                 WhereHelper.between(EVENT_EXPECTED_FINISHED_DATE,start,end) +
-                " AND " + EVENT_PROCESS + " != " + EventConfig.PROCESS_FAILED;
+                " AND " + EVENT_PROCESS + " != " + EventConfig.PROCESS_FAILED +
+                " AND (" + EVENT_TYPE + " = " + EventConfig.TYPE_SPEC_NORMAL + " OR " + EVENT_TYPE + " = " + EventConfig.TYPE_SPEC_LEARNING + ")";
         return _select(querySql);
     }
 
@@ -152,7 +170,7 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
      */
     public List<Event> selectAllDoneSpecEvents(){
         String querySql = "SELECT * FROM "+ mTableName +" WHERE ("+
-                EVENT_TYPE +" = ? OR "+ EVENT_TYPE +" = ?) AND ("+ IS_EVENT_FINISHED +" = ? OR " + EVENT_PROCESS + " = ?)";
+                EVENT_TYPE +" = ? OR "+ EVENT_TYPE +" = ?) AND "+ IS_EVENT_FINISHED +" = ? AND " + EVENT_PROCESS + " != ?";
         return _select(querySql,EventConfig.TYPE_SPEC_LEARNING,EventConfig.TYPE_SPEC_NORMAL,1,EventConfig.PROCESS_FAILED);
     }
 

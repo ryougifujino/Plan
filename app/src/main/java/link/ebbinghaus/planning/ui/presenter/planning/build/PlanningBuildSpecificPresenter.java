@@ -1,5 +1,7 @@
 package link.ebbinghaus.planning.ui.presenter.planning.build;
 
+import com.yurikami.lib.model.Datetime;
+
 import link.ebbinghaus.planning.core.model.local.po.EventGroup;
 import link.ebbinghaus.planning.core.model.local.po.EventSubtype;
 import link.ebbinghaus.planning.core.model.local.vo.planning.build.InputEventVo;
@@ -73,5 +75,15 @@ public interface PlanningBuildSpecificPresenter {
      * @param eventGroup 计划组
      */
     void configureEventGroup(EventGroup eventGroup);
+
+    /** 初始化宽度图表 */
+    void initChart(Datetime initDate);
+
+    /**
+     * 更新宽度图表
+     * @param startDateTimestamp 开始年月日时间戳
+     * @param strategy 如果是学习计划将会有方案
+     */
+    void updateChart(long startDateTimestamp, int[] strategy);
 
 }

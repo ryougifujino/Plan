@@ -297,6 +297,11 @@ public class DateUtils {
                 hour(timestamp), minute(timestamp), second(timestamp));
     }
 
+    /** 将时间戳转换为”月.日“的形式 */
+    public static String convertTimestamp2MonthDay(long timestamp){
+        return month(timestamp) + "." + day(timestamp);
+    }
+
     /**
      * 将中国时区的时分时间戳（中国时区的时分时间戳正好=时长）转换为形如HH:mm
      * @param timestamp 时间戳（中国时区，正好对应时长）

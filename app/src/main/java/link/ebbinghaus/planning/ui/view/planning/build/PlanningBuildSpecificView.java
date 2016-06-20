@@ -78,4 +78,17 @@ public interface PlanningBuildSpecificView {
      * @param eventGroup
      */
     void setEventGroup(EventGroup eventGroup);
+
+    /**
+     * 渲染宽度图表
+     * @param labels X轴的标签
+     * @param values 图表的值
+     * @param maxValue Y坐标的最大值
+     * @param step Y坐标的间隔
+     * @param isRerender 是否为重渲染
+     */
+    void renderChart(String[] labels, float[] values, int maxValue, int step, boolean isRerender);
+
+    /** 刷新图表 */
+    void refreshChart();
 }

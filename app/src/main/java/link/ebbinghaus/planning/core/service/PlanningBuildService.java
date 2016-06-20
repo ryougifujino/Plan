@@ -1,6 +1,7 @@
 package link.ebbinghaus.planning.core.service;
 
 import java.util.List;
+import java.util.TreeMap;
 
 import link.ebbinghaus.planning.core.model.local.po.DefaultInputValue;
 import link.ebbinghaus.planning.core.model.local.po.Event;
@@ -43,6 +44,9 @@ public interface PlanningBuildService {
      * 获取数据库中保存的默认输入值
      */
     DefaultInputValue findDefaultInputValue();
+
+    /** 查找某天（包括）之后的30天每天宽度的统计信息（按升序排好了）*/
+    TreeMap<Long, Integer> find30daysStatistics(long startDateTimestamp);
 
     /**
      * 查找所有子类型
