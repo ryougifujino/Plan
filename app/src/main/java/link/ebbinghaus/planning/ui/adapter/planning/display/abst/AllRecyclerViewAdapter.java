@@ -1,13 +1,15 @@
 package link.ebbinghaus.planning.ui.adapter.planning.display.abst;
 
 import android.content.Context;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.yurikami.lib.constant.ConstRes;
 import com.yurikami.lib.model.Datetime;
 import com.yurikami.lib.util.DateUtils;
 
@@ -15,8 +17,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.R;
+import link.ebbinghaus.planning.app.util.CommonUtils;
+import link.ebbinghaus.planning.core.model.local.po.Event;
 
 /**
  * Created by WINFIELD on 2016/3/2.
@@ -62,12 +65,33 @@ public class AllRecyclerViewAdapter extends RecyclerView.Adapter<AllRecyclerView
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.tv_planning_display_abst_all_create_time) TextView createTimeTv;
-        @Bind(R.id.tv_planning_display_abst_all_week) TextView weekTv;
+//        @Bind(R.id.tv_planning_display_abst_all_week) TextView weekTv;
         @Bind(R.id.tv_planning_display_abst_all_description) TextView descriptionTv;
+        @Bind(R.id.img_planning_display_abst_all_more) ImageView moreImg;
+        private PopupMenu mPopupMenu;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+            mPopupMenu = new PopupMenu(mContext,moreImg);
+            mPopupMenu.inflate(R.menu.planning_display_abst_all_more);
+            mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()){
+                        case R.id.item_planning_display_abst_all_more_copy:
+                            CommonUtils.showLongToast("复制");
+                            break;
+                        case R.id.item_planning_display_abst_all_more_delete:
+                            CommonUtils.showLongToast("删除");
+                            break;
+                        case R.id.item_planning_display_abst_all_more_detail:
+                            CommonUtils.showLongToast("详情");
+                            break;
+                    }
+                    return false;
+                }
+            });
         }
 
         public void setData(Event event) {
@@ -76,20 +100,28 @@ public class AllRecyclerViewAdapter extends RecyclerView.Adapter<AllRecyclerView
             Datetime datetime = DateUtils.convertTimestamp2Datetime(createTime);
 
             int daysBeforeToday = -DateUtils.daysTimestamp2Today(createTime);
-            String beforeDayStr;
-            if (daysBeforeToday == 0){
-                beforeDayStr = mContext.getString(R.string.planning_display_today);
-            }else if (daysBeforeToday < 999){
-                beforeDayStr = daysBeforeToday + mContext.getString(R.string.planning_display_before_day);
-            }else {
-                beforeDayStr = "999+";
-            }
+//            String beforeDayStr;
+//            if (daysBeforeToday == 0){
+//                beforeDayStr = mContext.getString(R.string.planning_display_today);
+//            }else if (daysBeforeToday < 999){
+//                beforeDayStr = daysBeforeToday + mContext.getString(R.string.planning_display_before_day);
+//            }else {
+//                beforeDayStr = "999+";
+//            }
 
             createTimeTv.setText(String.format(mContext.getString(R.string.planning_display_create_time),
                     datetime.getYear(), datetime.getMonth(), datetime.getDay(),
-                    datetime.getHour(),datetime.getMinute(), beforeDayStr));
-            weekTv.setText(mContext.getString(ConstRes.WEEK[datetime.getWeek() - 1]));
+                    datetime.getHour(),datetime.getMinute()));
+//            weekTv.setText(mContext.getString(ConstRes.WEEK[datetime.getWeek() - 1]));
             descriptionTv.setText(event.getDescription());
+
+            moreImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mPopupMenu.show();
+                }
+            });
+
         }
     }
 }

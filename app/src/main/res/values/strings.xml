@@ -20,7 +20,7 @@
     <string name="planning_display_title">浏览计划</string>
     <string name="planning_display_toolbar_date">%1$d年%2$d月%3$d日</string>
     <string name="planning_display_date_select_hint">只有按月和按周窗口才能选择日期</string>
-    <string name="planning_display_create_time">%1$d年%2$d月%3$d日%4$3d:%5$d%6$6s</string>
+    <string name="planning_display_create_time">%1$d年%2$d月%3$d日%4$d:%5$d</string>
     <string name="planning_display_before_day">天前</string>
     <string name="planning_display_today">今天</string>
 
@@ -31,7 +31,7 @@
 
     <string name="planning_display_spec_week_listitem_learning">学</string>
     <string name="planning_display_spec_week_listitem_normal">普</string>
-    <string name="planning_display_spec_week_listitem_date">%1$d月%2$d日</string>
+    <string name="planning_display_spec_week_listitem_date">%1$d月%2$d日，%3$s</string>
 
     <string name="planning_display_spec_event_detail_title">具体计划详情</string>
     <string name="planning_display_spec_event_detail_no_prompt">不提醒</string>

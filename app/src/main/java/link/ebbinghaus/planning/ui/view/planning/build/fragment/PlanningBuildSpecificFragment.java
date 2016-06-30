@@ -26,7 +26,7 @@ import com.yurikami.lib.base.BaseFragment;
 import com.yurikami.lib.model.Datetime;
 import com.yurikami.lib.util.DateUtils;
 import com.yurikami.lib.util.StringUtils;
-import com.yurikami.lib.widget.RadioSelectDialog;
+import com.yurikami.lib.widget.SingleSelectDialog;
 
 import java.util.Calendar;
 
@@ -56,7 +56,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         View.OnClickListener, CompoundButton.OnCheckedChangeListener,
         PlanningBuildActivity.OnBuildMenuItemClickListener, PlanningBuildActivity.OnEventSaveListener,
         RadialTimePickerDialogFragment.OnTimeSetListener, CalendarDatePickerDialogFragment.OnDateSetListener,
-        RadioSelectDialog.OnRadioSelectListener {
+        SingleSelectDialog.OnSelectListener {
 
     //requestCode(同时也将会被用作在CommonSelectActivity识别类型的Flag)
     public static final int FLAG_EVENT_SUBTYPE = R.id.tv_planning_build_subtype & CommonSelectActivity.FLAG_MASK;
@@ -73,7 +73,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     private SpecificViewHolder vh;
     private RadialTimePickerDialogFragment mRadialTimePicker;
     private CalendarDatePickerDialogFragment mCalendarDatePicker;
-    private RadioSelectDialog mRadioSelectDialog;
+    private SingleSelectDialog mSingleSelectDialog;
     private Snackbar mSnackbar;
     /**
      * 用来记录具体计划输入值的变量
@@ -179,8 +179,9 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
                 .setPreselectedDate(mNowDate.getYear(), mNowDate.getMonth() - 1, mNowDate.getDay())
                 .setDateRange(new MonthAdapter.CalendarDay(System.currentTimeMillis()), null)
                 .setThemeLight();
-        mRadioSelectDialog = RadioSelectDialog.newInstance(LearningEventGroupConfig.DESCRIPTIONS_STRATEGY, getString(R.string.planning_build_spec_event_strategy_select_dialog_title));
-        mRadioSelectDialog.setOnRadioSelectListener(this);
+//        mSingleSelectDialog = SingleSelectDialog.newInstance(LearningEventGroupConfig.DESCRIPTIONS_STRATEGY, getString(R.string.planning_build_spec_event_strategy_select_dialog_title));
+        mSingleSelectDialog = SingleSelectDialog.newInstance(LearningEventGroupConfig.DESCRIPTIONS_STRATEGY,getString(R.string.planning_build_spec_event_strategy_select_dialog_title),0);
+        mSingleSelectDialog.setOnSelectListener(this);
     }
 
     @Override
@@ -217,15 +218,15 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     @Override
     public void selectStrategy() {
         //选择计划方案(实际上是弹出dialog后,最后再下面的onRadioSelected返回结果)
-        //FIXME:快速点击时,这里有可能会崩溃
-        mRadioSelectDialog.show(getFragmentManager(), this.getTag());
+        //FIXME:快速点击时,这里有可能会崩溃?换成singleSelect之后也会吗
+        mSingleSelectDialog.show(getFragmentManager(), this.getTag());
     }
 
     @Override
-    public void onRadioSelected(int index) {
+    public void onSelected(int index, int flag) {
         mInputEvent.setStrategy(index + 1);
         vh.strategyTv.setText(LearningEventGroupConfig.DESCRIPTIONS_STRATEGY[index]);
-        mRadioSelectDialog.dismiss();
+        mSingleSelectDialog.dismiss();
         refreshChart();
     }
 
@@ -418,4 +419,5 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         super.onDestroyView();
         ButterKnife.unbind(this);
     }
+
 }

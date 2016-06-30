@@ -3,8 +3,8 @@ package link.ebbinghaus.planning.ui.view.planning.display.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +13,13 @@ import com.yurikami.lib.base.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import link.ebbinghaus.planning.R;
+import link.ebbinghaus.planning.app.util.DensityUtils;
 import link.ebbinghaus.planning.ui.adapter.planning.display.abst.AllRecyclerViewAdapter;
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplayAbstAllPresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.display.impl.PlanningDisplayAbstAllPresenterImpl;
 import link.ebbinghaus.planning.ui.view.planning.display.PlanningDisplayAbstAllView;
-import link.ebbinghaus.planning.R;
+import link.ebbinghaus.planning.ui.widget.SpaceItemDecoration;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,7 +46,8 @@ public class PlanningDisplayAbstAllFragment extends BaseFragment implements Plan
 
     @Override
     public void initRecyclerView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.addItemDecoration(new SpaceItemDecoration(DensityUtils.dp2px(5)));
         mAllRecyclerViewAdapter = new AllRecyclerViewAdapter(mActivity,mPresenter.obtainAllAbstractEvents());
         mRecyclerView.setAdapter(mAllRecyclerViewAdapter);
 

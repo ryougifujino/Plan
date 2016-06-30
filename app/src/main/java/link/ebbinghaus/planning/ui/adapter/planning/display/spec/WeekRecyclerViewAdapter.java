@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.yurikami.lib.constant.ConstRes;
 import com.yurikami.lib.model.Datetime;
 import com.yurikami.lib.util.DateUtils;
 import com.yurikami.lib.util.LogUtils;
@@ -19,10 +18,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.app.constant.model.EventConstant;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.ui.view.planning.display.activity.PlanningDisplaySpecEventDetailActivity;
-import link.ebbinghaus.planning.R;
 
 /**
  * Created by WINFIELD on 2016/3/2.
@@ -69,15 +68,15 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @Bind(R.id.ll_planning_display_spec_week) LinearLayout listitemLl;
         @Bind(R.id.iv_planning_display_spec_week_week) ImageView weekIv;
-        @Bind(R.id.tv_planning_display_spec_week_week) TextView weekTv;
+//        @Bind(R.id.tv_planning_display_spec_week_week) TextView weekTv;
         @Bind(R.id.tv_planning_display_spec_week_event_type) TextView eventTypeTv;
         @Bind(R.id.tv_planning_display_spec_week_date) TextView dateTv;
-        @Bind(R.id.tv_planning_display_spec_week_process) TextView processTv;
+//        @Bind(R.id.tv_planning_display_spec_week_process) TextView processTv;
         @Bind(R.id.tv_planning_display_spec_week_description) TextView descriptionTv;
 
-        private int[] weekImgRes = {R.mipmap.common_monday,R.mipmap.common_tuesday,
-                R.mipmap.common_wednesday,R.mipmap.common_thursday,
-                R.mipmap.common_friday,R.mipmap.common_saturday,R.mipmap.common_sunday};
+        private int[] weekImgRes = {R.mipmap.mon,R.mipmap.tue,
+                R.mipmap.wed,R.mipmap.thu,
+                R.mipmap.fri,R.mipmap.sat,R.mipmap.sun};
         private int[] eventTypeRes = {R.string.planning_display_spec_week_listitem_learning,R.string.planning_display_spec_week_listitem_normal};
         public ViewHolder(View itemView) {
             super(itemView);
@@ -90,12 +89,15 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
                 int week = planDate.getWeek();
                 int weekIndex = (week == -1) ? 0 : (week - 1);
                 weekIv.setImageResource(weekImgRes[weekIndex]);
-                weekTv.setText(mContext.getString(ConstRes.WEEK[weekIndex]));
+//                weekTv.setText(mContext.getString(ConstRes.WEEK[weekIndex]));
                 eventTypeTv.setText(eventTypeRes[event.getEventType() - 1]);
-                dateTv.setText(String.format(mContext.getString(R.string.planning_display_spec_week_listitem_date), planDate.getMonth(), planDate.getDay()));
-                processTv.setText(event.getEventType() == 1
+                dateTv.setText(String.format(mContext.getString(R.string.planning_display_spec_week_listitem_date), planDate.getMonth(), planDate.getDay(),
+                        mContext.getString(event.getEventType() == 1
                         ? EventConstant.PROCESS_LEARNING[event.getEventProcess() - 1]
-                        : EventConstant.PROCESS_NORMAL[event.getEventProcess() - 1]);
+                        : EventConstant.PROCESS_NORMAL[event.getEventProcess() - 1])));
+//                processTv.setText(event.getEventType() == 1
+//                        ? EventConstant.PROCESS_LEARNING[event.getEventProcess() - 1]
+//                        : EventConstant.PROCESS_NORMAL[event.getEventProcess() - 1]);
                 descriptionTv.setText(event.getDescription());
                 listitemLl.setOnClickListener(this);
                 listitemLl.setTag(event);
