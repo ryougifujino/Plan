@@ -51,7 +51,7 @@ public class PlanningBuildAbstractFragment extends BaseFragment implements Plann
     @Bind(R.id.tv_planning_build_event_group) TextView eventGroupTv;
 
     private PlanningBuildAbstractPresenter mPresenter;
-    private Snackbar mSnackbar;
+    private Snackbar mSnackbar; //TODO： 改成错误hint
     /** 用来记录具体计划输入值的变量 */
     private InputEventVo mInputEvent = new InputEventVo();
 

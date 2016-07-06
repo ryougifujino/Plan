@@ -90,10 +90,16 @@ public class PlanningDoneFinishActivity extends BaseActivity implements Planning
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.item_planning_done_finish && validFinishForm()) {
-            LogUtils.d(TAG, "Finish item was selected!");
-            mPresenter.finishEvent(mEvent, mLearningEventGroup);
-            return true;
+        switch (item.getItemId()){
+            case R.id.item_planning_done_finish:
+                if (validFinishForm()){
+                    LogUtils.d(TAG, "Finish item was selected!");
+                    mPresenter.finishEvent(mEvent, mLearningEventGroup);
+                }
+                return true;
+            case android.R.id.home:
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -121,7 +127,10 @@ public class PlanningDoneFinishActivity extends BaseActivity implements Planning
     @Override
     public void initToolbar() {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        mToolbar.setTitle(R.string.planning_done_toolbar_title);
     }
 
     @Override

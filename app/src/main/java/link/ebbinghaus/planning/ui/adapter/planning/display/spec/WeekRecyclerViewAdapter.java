@@ -20,6 +20,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.app.constant.model.EventConstant;
+import link.ebbinghaus.planning.app.util.CommonUtils;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.ui.view.planning.display.activity.PlanningDisplaySpecEventDetailActivity;
 
@@ -73,6 +74,8 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
         @Bind(R.id.tv_planning_display_spec_week_date) TextView dateTv;
 //        @Bind(R.id.tv_planning_display_spec_week_process) TextView processTv;
         @Bind(R.id.tv_planning_display_spec_week_description) TextView descriptionTv;
+        @Bind(R.id.tv_planning_display_spec_week_detail) TextView detailTv;
+        @Bind(R.id.tv_planning_display_spec_week_delete) TextView deleteTv;
 
         private int[] weekImgRes = {R.mipmap.mon,R.mipmap.tue,
                 R.mipmap.wed,R.mipmap.thu,
@@ -101,6 +104,10 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
                 descriptionTv.setText(event.getDescription());
                 listitemLl.setOnClickListener(this);
                 listitemLl.setTag(event);
+                detailTv.setOnClickListener(this);
+                detailTv.setTag(event);
+                deleteTv.setOnClickListener(this);
+                deleteTv.setTag(event);
             }catch (Exception e){
                 LogUtils.e("Exception", e.getMessage());
             }
@@ -108,10 +115,19 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
 
         @Override
         public void onClick(View v) {
-            Event event = (Event) v.getTag();
-            Intent intent = new Intent(mContext, PlanningDisplaySpecEventDetailActivity.class);
-            intent.putExtra(PlanningDisplaySpecEventDetailActivity.INTENT_NAME_EVENT,event);
-            mContext.startActivity(intent);
+            switch (v.getId()){
+                case R.id.tv_planning_display_spec_week_detail:
+                case R.id.ll_planning_display_spec_week:
+                    Event event = (Event) v.getTag();
+                    Intent intent = new Intent(mContext, PlanningDisplaySpecEventDetailActivity.class);
+                    intent.putExtra(PlanningDisplaySpecEventDetailActivity.INTENT_NAME_EVENT,event);
+                    mContext.startActivity(intent);
+                    break;
+                case R.id.tv_planning_display_spec_week_delete:
+                    CommonUtils.showLongToast("删除");
+                    break;
+            }
+
         }
     }
 }

@@ -89,8 +89,11 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
                 //弹出dialog
                 showDialog();
                 return true;
+            case android.R.id.home:
+                finish();
+                return true;
         }
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("ConstantConditions")

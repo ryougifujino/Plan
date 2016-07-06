@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import link.ebbinghaus.planning.app.constant.module.PlanningDisplayConstant;
-import link.ebbinghaus.planning.core.model.local.po.Event;
-import link.ebbinghaus.planning.core.model.local.sys.Tab;
+import link.ebbinghaus.planning.core.db.dao.EventDao;
+import link.ebbinghaus.planning.core.db.dao.EventGroupDao;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventDaoDecorator;
+import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.core.model.local.po.EventGroup;
+import link.ebbinghaus.planning.core.model.local.sys.Tab;
 import link.ebbinghaus.planning.core.service.PlanningDisplayAbstractService;
 import link.ebbinghaus.planning.ui.view.planning.display.fragment.PlanningDisplayAbstAllFragment;
 import link.ebbinghaus.planning.ui.view.planning.display.fragment.PlanningDisplayEventGroupFragment;
@@ -30,5 +33,26 @@ public class PlanningDisplayAbstractServiceImpl implements PlanningDisplayAbstra
         dao.closeDB();
         return events;
     }
+
+    @Override
+    public void removeAbstEvent(Long pk, Long groupPk) {
+        EventDao dao = new EventDao();
+        EventGroupDao eventGroupDao = new EventGroupDao();
+        dao.beginTransaction();
+        try {
+            EventGroup eg = eventGroupDao.selectByPrimaryKey(groupPk);
+            if (eg != null) {
+                eg.setAbstractEventCount(eg.getAbstractEventCount() - 1);
+                eventGroupDao.updateByPrimaryKey(eg);
+            }
+            dao.deleteByPrimaryKey(pk);
+            dao.setTransactionSuccessful();
+        }finally {
+            dao.endTransaction();
+        }
+        eventGroupDao.closeDB();
+        dao.closeDB();
+    }
+
 
 }

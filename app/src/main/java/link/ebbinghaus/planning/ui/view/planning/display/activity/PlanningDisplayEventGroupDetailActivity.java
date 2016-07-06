@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
@@ -16,15 +19,17 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.ui.adapter.planning.display.abst.AllRecyclerViewAdapter;
-import link.ebbinghaus.planning.ui.adapter.planning.display.spec.WeekRecyclerViewAdapter;
+import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.app.constant.Constant;
+import link.ebbinghaus.planning.app.util.DensityUtils;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.core.model.local.po.EventGroup;
+import link.ebbinghaus.planning.ui.adapter.planning.display.abst.AllRecyclerViewAdapter;
+import link.ebbinghaus.planning.ui.adapter.planning.display.spec.WeekRecyclerViewAdapter;
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplayEventGroupDetailPresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.display.impl.PlanningDisplayEventGroupDetailPresenterImpl;
 import link.ebbinghaus.planning.ui.view.planning.display.PlanningDisplayEventGroupDetailView;
-import link.ebbinghaus.planning.R;
+import link.ebbinghaus.planning.ui.widget.SpaceItemDecoration;
 
 public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implements PlanningDisplayEventGroupDetailView {
 
@@ -32,6 +37,7 @@ public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implem
     public static final String INTENT_NAME_FLAG = Constant.PACKAGE_NAME + ".Flag";
 
     @Bind(R.id.rv_planning_display_event_group_detail) RecyclerView mRecyclerView;
+    @Bind(R.id.tb_common_head) Toolbar mToolbar;
     private RecyclerView.Adapter mAdapter;
     private PlanningDisplayEventGroupDetailPresenter mPresenter;
     //存放数据
@@ -45,8 +51,17 @@ public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implem
         setContentView(R.layout.activity_planning_display_event_group_detail);
         ButterKnife.bind(this);
         mPresenter = new PlanningDisplayEventGroupDetailPresenterImpl(this);
+        configureToolbar();
         mPresenter.configureRecyclerView();
 
+    }
+
+    private void configureToolbar() {
+        setSupportActionBar(mToolbar);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        mToolbar.setTitle(R.string.planning_display_event_group_toolbar_title);
     }
 
     /**
@@ -84,13 +99,15 @@ public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implem
 
     @Override
     public void setRecyclerViewAdapter() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         mEvents = mPresenter.obtainEventGroupDetailData(mEventGroupType,mEventGroup);
 
         if (mEventGroupType){
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             mAdapter = new WeekRecyclerViewAdapter(this,mEvents);
-
         }else {
+            mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+            mRecyclerView.addItemDecoration(new SpaceItemDecoration(DensityUtils.dp2px(5)));
             mAdapter = new AllRecyclerViewAdapter(this,mEvents);
 
         }
@@ -122,5 +139,15 @@ public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implem
         TextView eventCount = (TextView) view.findViewById(R.id.tv_planning_display_event_abst_group_event_count);
         createTime.setText(getString(R.string.planning_display_event_group_detail_create_time, DateUtils.formatTimestamp2Datetime(mEventGroup.getCreateTime())));
         eventCount.setText(mEventGroup.getAbstractEventCount() + "");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

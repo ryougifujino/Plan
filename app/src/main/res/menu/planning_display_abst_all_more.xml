@@ -7,7 +7,4 @@
     <item
         android:id="@+id/item_planning_display_abst_all_more_delete"
         android:title="删除"/>
-    <item
-        android:id="@+id/item_planning_display_abst_all_more_detail"
-        android:title="详情"/>
 </menu>

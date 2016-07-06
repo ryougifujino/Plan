@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.yurikami.lib.base.BaseActivity;
 import com.yurikami.lib.net.NetCallback;
@@ -50,7 +51,9 @@ public class ExtensionReadActivity extends BaseActivity implements ExtensionRead
     public void initExtensionRead() {
         //Toolbar
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         mToolbar.setTitle(R.string.extension_read_title);
 
         //RecyclerView
@@ -65,6 +68,16 @@ public class ExtensionReadActivity extends BaseActivity implements ExtensionRead
         MenuTint.colorIcons(this, menu, getResources().getColor(R.color.md_white_1000));
         setSearchView(menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setSearchView(Menu menu) {

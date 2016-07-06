@@ -23,7 +23,7 @@
         <ImageView
             android:id="@+id/iv_planning_display_spec_week_week"
             android:layout_width="wrap_content"
-            android:layout_height="180dp"
+            android:layout_height="150dp"
             android:adjustViewBounds="true"
             android:src="@mipmap/mon"/>
 
@@ -59,8 +59,10 @@
                 android:id="@+id/tv_planning_display_spec_week_description"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_below="@id/tv_planning_display_spec_week_date"
                 android:maxLength="30"
+                android:maxLines="2"
                 android:ellipsize="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,7 +71,7 @@
             <RelativeLayout
                 android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="50dp">
 
                 <View
                     android:background="@color/md_grey_300"
@@ -77,24 +79,36 @@
                     android:layout_height="0.5dp"/>
 
                 <TextView
-                    android:id="@+id/delete"
-                    android:layout_marginLeft="50dp"
-                    android:textSize="17sp"
-                    android:textColor="@color/md_red_300"
+                    android:id="@+id/tv_planning_display_spec_week_detail"
+                    android:textSize="11sp"
+                    android:textColor="@color/md_green_200"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/common_rounded_rectangle_grey"
                     android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="删除"/>
-
-                <TextView
-                    android:layout_toRightOf="@id/delete"
-                    android:layout_marginLeft="50dp"
-                    android:textSize="17sp"
-                    android:textColor="@color/md_light_green_300"
-                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="详情"/>
+
+                <TextView
+                    android:id="@+id/tv_planning_display_spec_week_delete"
+                    android:textSize="11sp"
+                    android:textColor="@color/md_red_200"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:background="@drawable/common_rounded_rectangle_grey"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_planning_display_spec_week_detail"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="删除"/>
 
             </RelativeLayout>
 

@@ -37,6 +37,7 @@
     <string name="planning_display_spec_event_detail_no_prompt">不提醒</string>
     <string name="planning_display_spec_event_detail_unfinished">未完成</string>
 
+    <string name="planning_display_event_group_toolbar_title">计划组</string>
     <string name="planning_display_event_group_detail_create_time">创建于%1$s</string>
 
     <!-- planning_build -->

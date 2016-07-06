@@ -23,4 +23,5 @@ public interface PlanningDisplayEventGroupDetailPresenter {
      * 配置RecyclerView
      */
     void configureRecyclerView();
+
 }

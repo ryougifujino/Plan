@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.util.SparseArray;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -33,6 +34,7 @@ public class MainActivity extends BaseActivity implements MainView,
 
     private SparseArray<Class> mFragmentMap = new SparseArray<>();
     private int mNowFragmentId;
+    private int mLastFragmentId;
     private MenuItem mLastMenuItem;
 
     @Override
@@ -78,7 +80,7 @@ public class MainActivity extends BaseActivity implements MainView,
         menuItem.setChecked(true);
         mLastMenuItem = menuItem;
         mNowFragmentId = menuItem.getItemId();
-        mDrawerLayout.closeDrawer(mNVDrawer);
+        mDrawerLayout.closeDrawer(Gravity.LEFT);
         return true;
     }
 
@@ -102,8 +104,11 @@ public class MainActivity extends BaseActivity implements MainView,
     public void onDrawerClosed(View drawerView) {
         try {
             //FIXME java.lang.NullPointerException
-            Fragment f = (Fragment) mFragmentMap.get(mNowFragmentId).newInstance();
-            getSupportFragmentManager().beginTransaction().replace(R.id.fl_main_content,f).commit();
+            if (mNowFragmentId != mLastFragmentId) {
+                Fragment f = (Fragment) mFragmentMap.get(mNowFragmentId).newInstance();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fl_main_content, f).commit();
+            }
+            mLastFragmentId = mNowFragmentId;
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package link.ebbinghaus.planning.ui.view.planning.display.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -50,6 +51,9 @@ public class PlanningDisplaySpecEventDetailActivity extends BaseActivity impleme
         mPresenter.initSpecEventDetail(vo);
 
         setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         mToolbar.setTitle(R.string.planning_display_spec_event_detail_title);
 
     }
@@ -107,7 +111,15 @@ public class PlanningDisplaySpecEventDetailActivity extends BaseActivity impleme
         }
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void exitThisView() {

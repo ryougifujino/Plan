@@ -22,4 +22,11 @@ public interface PlanningDisplayAbstractService {
      */
     List<Event> findAllAbstEvent();
 
+    /**
+     *
+     * @param pk 模糊计划主键
+     * @param groupPk 模糊计划所关联的计划组主键
+     */
+    void removeAbstEvent(Long pk, Long groupPk);
+
 }

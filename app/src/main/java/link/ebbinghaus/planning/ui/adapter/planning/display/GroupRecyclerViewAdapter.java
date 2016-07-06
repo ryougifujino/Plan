@@ -85,19 +85,19 @@ public class GroupRecyclerViewAdapter extends RecyclerView.Adapter<GroupRecycler
                 long createTime = eventGroup.getCreateTime();
                 Datetime datetime = DateUtils.convertTimestamp2Datetime(createTime);
 
-                int daysBeforeToday = -DateUtils.daysTimestamp2Today(createTime);
-                String beforeDayStr;
-                if (daysBeforeToday == 0){
-                    beforeDayStr = mContext.getString(R.string.planning_display_today);
-                }else if (daysBeforeToday < 999){
-                    beforeDayStr = daysBeforeToday + mContext.getString(R.string.planning_display_before_day);
-                }else {
-                    beforeDayStr = "999+";
-                }
+//                int daysBeforeToday = -DateUtils.daysTimestamp2Today(createTime);
+//                String beforeDayStr;
+//                if (daysBeforeToday == 0){
+//                    beforeDayStr = mContext.getString(R.string.planning_display_today);
+//                }else if (daysBeforeToday < 999){
+//                    beforeDayStr = daysBeforeToday + mContext.getString(R.string.planning_display_before_day);
+//                }else {
+//                    beforeDayStr = "999+";
+//                }
 
                 createTimeTv.setText(String.format(mContext.getString(R.string.planning_display_create_time),
                         datetime.getYear(), datetime.getMonth(), datetime.getDay(),
-                        datetime.getHour(),datetime.getMinute(),beforeDayStr));
+                        datetime.getHour(),datetime.getMinute()));
                 eventCountTv.setText(String.format(mContext.getString(R.string.planning_display_event_group_event_count),
                         mEventGroupType ? eventGroup.getLearningEventCount() + eventGroup.getNormalEventCount()
                                 : eventGroup.getAbstractEventCount()));

@@ -7,7 +7,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,6 +48,7 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
     @Bind(R.id.tb_common_head) Toolbar mToolbar;
     @Bind(R.id.vp_planning_display) ViewPager mViewPager;
     @Bind(R.id.tl_planning_display) TabLayout mTabLayout;
+    private DrawerLayout mDrawerLayout;
     private LayoutInflater mLayoutInflater;
     private FragmentPagerAdapter mFragmentPagerAdapter;
     private int mViewPagerPosition;
@@ -65,16 +68,29 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
 
         mViewPager.addOnPageChangeListener(this);
         mPresenter.configureRelatedViewPagerTabLayout();
+        configureToolbar();
 
+        return v;
+    }
+
+    private void configureToolbar() {
         mActivity.setSupportActionBar(mToolbar);
+        if (mActivity.getSupportActionBar() != null){
+            mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        mToolbar.setNavigationIcon(R.drawable.common_navigation_menu);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+        mDrawerLayout = (DrawerLayout) mActivity.findViewById(R.id.dl_main_whole);
         mToolbar.setTitle(R.string.planning_display_title);
         //设置此,toolbar上的menu才能显示
         setHasOptionsMenu(true);
 
         mPresenter.preprocessToolbarDate();
-
-
-        return v;
     }
 
     @Override

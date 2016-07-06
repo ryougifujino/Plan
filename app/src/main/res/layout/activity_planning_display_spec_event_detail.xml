@@ -124,9 +124,6 @@
                         android:layout_height="wrap_content"
                         android:gravity="right"
                         android:text="描述描述描述描述描述描述描述描述描述描述描述描述"
-                        android:ellipsize="end"
-                        android:maxLength="30"
-                        android:maxLines="3"
                         android:padding="15dp"/>
 
                     <TextView

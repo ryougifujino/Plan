@@ -1,5 +1,7 @@
 package link.ebbinghaus.planning.ui.adapter.planning.display.abst;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -18,8 +20,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.R;
-import link.ebbinghaus.planning.app.util.CommonUtils;
 import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.core.service.PlanningDisplayAbstractService;
+import link.ebbinghaus.planning.core.service.impl.PlanningDisplayAbstractServiceImpl;
 
 /**
  * Created by WINFIELD on 2016/3/2.
@@ -69,24 +72,28 @@ public class AllRecyclerViewAdapter extends RecyclerView.Adapter<AllRecyclerView
         @Bind(R.id.tv_planning_display_abst_all_description) TextView descriptionTv;
         @Bind(R.id.img_planning_display_abst_all_more) ImageView moreImg;
         private PopupMenu mPopupMenu;
+        private PlanningDisplayAbstractService mPlanningDisplayAbstractService;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+            mPlanningDisplayAbstractService = new PlanningDisplayAbstractServiceImpl();
             mPopupMenu = new PopupMenu(mContext,moreImg);
             mPopupMenu.inflate(R.menu.planning_display_abst_all_more);
             mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
+                    int pos = ViewHolder.this.getLayoutPosition();
                     switch (item.getItemId()){
                         case R.id.item_planning_display_abst_all_more_copy:
-                            CommonUtils.showLongToast("复制");
+                            ClipboardManager cm = (ClipboardManager) mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+                            cm.setPrimaryClip(ClipData.newPlainText("text",mEvents.get(pos).getDescription()));
                             break;
                         case R.id.item_planning_display_abst_all_more_delete:
-                            CommonUtils.showLongToast("删除");
-                            break;
-                        case R.id.item_planning_display_abst_all_more_detail:
-                            CommonUtils.showLongToast("详情");
+                            Event e = mEvents.get(pos);
+                            mPlanningDisplayAbstractService.removeAbstEvent(e.getPkEventId(),e.getEventGroupId());
+                            mEvents.remove(pos);
+                            AllRecyclerViewAdapter.this.notifyItemRemoved(pos);
                             break;
                     }
                     return false;

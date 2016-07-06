@@ -1,9 +1,11 @@
 package link.ebbinghaus.planning.ui.view.planning.done.fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,7 +32,7 @@ public class PlanningDoneFragment extends BaseFragment implements PlanningDoneVi
 
     @Bind(R.id.rv_planning_done) RecyclerView mRecyclerView;
     @Bind(R.id.tb_common_head) Toolbar mToolbar;
-
+    private DrawerLayout mDrawerLayout;
 
     private static final int SHOW_ONLY_UNFINISHED = 763;
     private static final int SHOW_ONLY_FINISHED = 713;
@@ -61,7 +63,17 @@ public class PlanningDoneFragment extends BaseFragment implements PlanningDoneVi
     public void initToolbar() {
         mActivity.setSupportActionBar(mToolbar);
         mToolbar.setTitle(R.string.planning_done_toolbar_title);
-        mActivity.getSupportActionBar().setDisplayUseLogoEnabled(true);
+        if (mActivity.getSupportActionBar() != null) {
+            mActivity.getSupportActionBar().setDisplayUseLogoEnabled(true);
+        }
+        mToolbar.setNavigationIcon(R.drawable.common_navigation_menu);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+        mDrawerLayout = (DrawerLayout) mActivity.findViewById(R.id.dl_main_whole);
         setHasOptionsMenu(true);
     }
 
