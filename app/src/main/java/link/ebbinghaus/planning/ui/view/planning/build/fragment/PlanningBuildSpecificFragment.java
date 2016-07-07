@@ -29,6 +29,7 @@ import com.yurikami.lib.util.StringUtils;
 import com.yurikami.lib.widget.SingleSelectDialog;
 
 import java.util.Calendar;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -264,7 +265,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
 
     @Override
     public void onTimeSet(RadialTimePickerDialogFragment dialog, int hourOfDay, int minute) {
-        String hourMinute = hourOfDay + ":" + minute;   // FIXME: 2016/4/24 末尾为0时只显示一个0
+        String hourMinute = String.format(Locale.US,"%02d:%02d",hourOfDay,minute);
         mInputEvent.setRemindTime(DateUtils.getHourMinuteMilliseconds(hourOfDay, minute));
         vh.remindTimeTv.setText(hourMinute);
         mRadialTimePicker.setStartTime(hourOfDay, minute);

@@ -2,7 +2,9 @@ package link.ebbinghaus.planning.ui.adapter.planning.display.spec;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +25,12 @@ import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.app.App;
-import link.ebbinghaus.planning.core.service.PlanningDisplaySpecificService;
 import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.core.service.PlanningDisplaySpecificService;
 import link.ebbinghaus.planning.core.service.impl.PlanningDisplaySpecificServiceImpl;
 import link.ebbinghaus.planning.ui.view.planning.display.activity.PlanningDisplaySpecEventDetailActivity;
-import link.ebbinghaus.planning.R;
 
 /**
  * Created by WINFIELD on 2016/3/2.
@@ -121,6 +123,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         }
 
         holder.setDayWeek(mDayWeekListitems.get(position));
+        holder.markToday(this.mDatetime.getYear(), this.mDatetime.getMonth(), mDayWeekListitems.get(position).getDay());
         holder.countTv.setText(blockEventCount > 999 ? "999+" : blockEventCount + "");
 
     }
@@ -147,9 +150,23 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         @Bind(R.id.tv_planning_display_spec_month_listitem_count) TextView countTv;
         @Bind(R.id.fl_planning_display_spec_month_block) FrameLayout blockFl;
 
+        private Datetime today = DateUtils.dateOfToday();
+        private int blue = ContextCompat.getColor(mContext, R.color.md_blue_300);
+        private ColorStateList defaultColor = new TextView(mContext).getTextColors();
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+        }
+
+        public void markToday(int year, int month, int day){
+            if (today.getYear() == year && today.getMonth() == month && today.getDay() == day){
+                dayOfMonthTv.setTextColor(blue);
+                dayOfWeekTv.setTextColor(blue);
+            }else {
+                dayOfMonthTv.setTextColor(defaultColor);
+                dayOfWeekTv.setTextColor(defaultColor);
+            }
         }
 
         public void setDayWeek(Datetime dayWeek){
