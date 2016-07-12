@@ -21,6 +21,7 @@ import com.yurikami.lib.widget.RadioSelectDialog;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -159,9 +160,8 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
 
     @Override
     public void onTimeSet(RadialTimePickerDialogFragment dialog, int hourOfDay, int minute) {
-        String hourMinute = hourOfDay + ":" + minute;   // FIXME: 2016/4/24 末尾为0时只显示一个0
         settings.defaultInputValue.setRemindTime(DateUtils.getHourMinuteMilliseconds(hourOfDay,minute));
-        planningBuildRemindTimeTv.setText(hourMinute);
+        planningBuildRemindTimeTv.setText(String.format(Locale.US,"%02d:%02d",hourOfDay,minute));
         mRadialTimePicker.setStartTime(hourOfDay, minute);
     }
 

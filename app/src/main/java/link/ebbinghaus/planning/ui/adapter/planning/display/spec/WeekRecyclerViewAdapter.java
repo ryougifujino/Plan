@@ -20,8 +20,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.app.constant.model.EventConstant;
-import link.ebbinghaus.planning.app.util.CommonUtils;
 import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.core.service.PlanningDisplaySpecificService;
+import link.ebbinghaus.planning.core.service.impl.PlanningDisplaySpecificServiceImpl;
 import link.ebbinghaus.planning.ui.view.planning.display.activity.PlanningDisplaySpecEventDetailActivity;
 
 /**
@@ -31,10 +32,12 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
 
     private Context mContext;
     private List<Event> mSpecWeekEvents;
+    private PlanningDisplaySpecificService mPlanningDisplaySpecificService;
 
     public WeekRecyclerViewAdapter(Context context, List<Event> specWeekEvents) {
         this.mContext = context;
         mSpecWeekEvents = specWeekEvents;
+        mPlanningDisplaySpecificService = new PlanningDisplaySpecificServiceImpl();
     }
 
     /**
@@ -115,16 +118,19 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
 
         @Override
         public void onClick(View v) {
+            Event event = (Event) v.getTag();
             switch (v.getId()){
                 case R.id.tv_planning_display_spec_week_detail:
                 case R.id.ll_planning_display_spec_week:
-                    Event event = (Event) v.getTag();
                     Intent intent = new Intent(mContext, PlanningDisplaySpecEventDetailActivity.class);
                     intent.putExtra(PlanningDisplaySpecEventDetailActivity.INTENT_NAME_EVENT,event);
                     mContext.startActivity(intent);
                     break;
                 case R.id.tv_planning_display_spec_week_delete:
-                    CommonUtils.showLongToast("删除");
+                    mPlanningDisplaySpecificService.removeSpecEventAndProcessRelated(event);
+                    int index = mSpecWeekEvents.indexOf(event);
+                    mSpecWeekEvents.remove(index);
+                    WeekRecyclerViewAdapter.this.notifyItemRemoved(index);
                     break;
             }
 
