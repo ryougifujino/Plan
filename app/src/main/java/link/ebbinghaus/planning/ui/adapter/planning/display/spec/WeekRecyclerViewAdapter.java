@@ -2,6 +2,7 @@ package link.ebbinghaus.planning.ui.adapter.planning.display.spec;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +31,12 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
 
     private Context mContext;
     private List<Event> mSpecWeekEvents;
+    AlertDialog.Builder mQuickDialog;
 
     public WeekRecyclerViewAdapter(Context context, List<Event> specWeekEvents) {
         this.mContext = context;
         mSpecWeekEvents = specWeekEvents;
+        mQuickDialog = new AlertDialog.Builder(context);
     }
 
     /**
@@ -74,7 +77,7 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
 //        @Bind(R.id.tv_planning_display_spec_week_process) TextView processTv;
         @Bind(R.id.tv_planning_display_spec_week_description) TextView descriptionTv;
         @Bind(R.id.tv_planning_display_spec_week_detail) TextView detailTv;
-        @Bind(R.id.tv_planning_display_spec_week_hide) TextView hideTv;
+        @Bind(R.id.tv_planning_display_spec_week_quick_view) TextView quickViewTv;
 
         private int[] weekImgRes = {R.mipmap.mon,R.mipmap.tue,
                 R.mipmap.wed,R.mipmap.thu,
@@ -105,8 +108,8 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
                 listitemLl.setTag(event);
                 detailTv.setOnClickListener(this);
                 detailTv.setTag(event);
-                hideTv.setOnClickListener(this);
-                hideTv.setTag(event);
+                quickViewTv.setOnClickListener(this);
+                quickViewTv.setTag(event);
             }catch (Exception e){
                 LogUtils.e("Exception", e.getMessage());
             }
@@ -122,10 +125,9 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
                     intent.putExtra(PlanningDisplaySpecEventDetailActivity.INTENT_NAME_EVENT,event);
                     mContext.startActivity(intent);
                     break;
-                case R.id.tv_planning_display_spec_week_hide:
-                    int index = mSpecWeekEvents.indexOf(event);
-                    mSpecWeekEvents.remove(index);
-                    WeekRecyclerViewAdapter.this.notifyItemRemoved(index);
+                case R.id.tv_planning_display_spec_week_quick_view:
+                    mQuickDialog.setMessage(event.getDescription());
+                    mQuickDialog.show();
                     break;
             }
 

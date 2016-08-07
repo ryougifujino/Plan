@@ -95,20 +95,19 @@
                     android:text="详情"/>
 
                 <TextView
-                    android:id="@+id/tv_planning_display_spec_week_hide"
+                    android:id="@+id/tv_planning_display_spec_week_quick_view"
                     android:textSize="11sp"
                     android:textColor="@color/md_amber_500"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_centerVertical="true"
                     android:background="?android:selectableItemBackground"
                     android:layout_toLeftOf="@id/tv_planning_display_spec_week_detail"
-                    android:layout_marginRight="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="隐藏"/>
+                    android:text="快览"/>
 
             </RelativeLayout>
 
