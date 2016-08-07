@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,8 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
     private Map<Integer, LinearLayout> mBlocksCache = new HashMap<>();  //TODO:思考这里是否有问题
     private PlanningDisplaySpecificService mPlanningDisplaySpecificService;
 
+
+
     public MonthRecyclerViewAdapter(Context context, Datetime datetime) {
         this.mContext = context;
         this.mDatetime = datetime;
@@ -64,6 +67,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         mPlanningDisplaySpecificService.makeDayWeekListitems(mDayWeekListitems, mDayInMonth, datetime);
         mSpecMonthEvents = mPlanningDisplaySpecificService.findSpecMonthEvents(mDatetime);
         mBlocks = mPlanningDisplaySpecificService.eventsToBlocks(mSpecMonthEvents, mDayInMonth);
+
     }
 
     /**
@@ -144,7 +148,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener{
         @Bind(R.id.tv_planning_display_spec_month_day_of_month) TextView dayOfMonthTv;
         @Bind(R.id.tv_planning_display_spec_month_day_of_week) TextView dayOfWeekTv;
         @Bind(R.id.tv_planning_display_spec_month_listitem_count) TextView countTv;
@@ -153,6 +157,8 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         private Datetime today = DateUtils.dateOfToday();
         private int blue = ContextCompat.getColor(mContext, R.color.md_blue_300);
         private ColorStateList defaultColor = new TextView(mContext).getTextColors();
+
+        private AlertDialog.Builder quickView = new AlertDialog.Builder(mContext);
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -187,6 +193,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
             }
             eventTv.setWidth(width);
             eventTv.setOnClickListener(this);
+            eventTv.setOnLongClickListener(this);
             eventTv.setTag(event);
         }
 
@@ -196,6 +203,14 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
             Intent intent = new Intent(mContext, PlanningDisplaySpecEventDetailActivity.class);
             intent.putExtra(PlanningDisplaySpecEventDetailActivity.INTENT_NAME_EVENT,event);
             mContext.startActivity(intent);
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            Event event = (Event) v.getTag();
+            quickView.setMessage(event.getDescription());
+            quickView.show();
+            return true;
         }
     }
 }
