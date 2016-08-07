@@ -48,6 +48,7 @@ public class PlanningDoneFinishPresenterImpl implements PlanningDoneFinishPresen
 
     @Override
     public void finishEvent(Event event, LearningEventGroup learningEventGroup) {
+        mView.collectInfo();
         mPlanningDoneService.finishEvent(event,learningEventGroup);
         mView.exitPlanningDoneView();
     }

@@ -20,4 +20,10 @@ public interface PlanningDisplaySpecEventDetailPresenter {
      * @param event 删除参数
      */
     void deleteThisEventAndProcessRelated(Event event);
+
+    /** 更新是否显示顺序 */
+    void updateIsShowEventSequence(Event event);
+
+    /**  更新是否用希腊字母标记 */
+    void updateIsGreekAlphabetMarked(Event event);
 }

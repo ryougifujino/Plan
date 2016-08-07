@@ -110,6 +110,11 @@ public class PlanningDoneFinishActivity extends BaseActivity implements Planning
     }
 
     @Override
+    public void collectInfo() {
+        mEvent.setSummary(summaryEt.getText().toString());
+    }
+
+    @Override
     public Event getIntentData() {
         Intent intent = getIntent();
         mEvent = intent.getParcelableExtra(INTENT_NAME_EVENT);

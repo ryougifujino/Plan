@@ -100,6 +100,8 @@
                 android:id="@+id/tv_planning_done_description"
                 android:layout_alignLeft="@id/tv_planning_done_event_type"
                 android:layout_below="@id/tv_planning_done_finished_date"
+                android:ellipsize="end"
+                android:lines="3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="描述描述描述描述描述描述描述描述描述描述描述描述"/>

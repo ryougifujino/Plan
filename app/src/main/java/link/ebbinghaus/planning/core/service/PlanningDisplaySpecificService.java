@@ -63,4 +63,7 @@ public interface PlanningDisplaySpecificService {
      */
     void removeSpecEventAndProcessRelated(Event event);
 
+    /** 常规更新 */
+    void updateEvent(Event event);
+
 }

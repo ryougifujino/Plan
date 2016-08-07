@@ -107,5 +107,12 @@ public class PlanningDisplaySpecificServiceImpl implements PlanningDisplaySpecif
         dao.closeDB();
     }
 
+    @Override
+    public void updateEvent(Event event) {
+        EventDaoDecorator dao = new EventDaoDecorator();
+        dao.updateByPrimaryKey(event);
+        dao.closeDB();
+    }
+
 
 }

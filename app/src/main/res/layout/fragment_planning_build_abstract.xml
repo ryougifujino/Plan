@@ -31,15 +31,13 @@
                     <TextView
                         android:padding="15dp"
                         android:text="描述"
+                        android:textColor="@color/label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <EditText
                         android:padding="15dp"
                         android:id="@+id/et_planning_build_description"
-                        android:maxLength="30"
-                        android:maxLines="3"
-                        android:ellipsize="end"
-                        android:hint="可输入30字"
+                        android:hint="请输入描述"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -63,6 +61,7 @@
                     android:layout_below="@id/ll_planning_build_fast_template"
                     android:id="@+id/label_planning_build_event_group"
                     android:text="计划组"
+                    android:textColor="@color/label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView

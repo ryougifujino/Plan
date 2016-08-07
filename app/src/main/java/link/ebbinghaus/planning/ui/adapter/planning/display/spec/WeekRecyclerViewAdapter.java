@@ -21,8 +21,6 @@ import butterknife.ButterKnife;
 import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.app.constant.model.EventConstant;
 import link.ebbinghaus.planning.core.model.local.po.Event;
-import link.ebbinghaus.planning.core.service.PlanningDisplaySpecificService;
-import link.ebbinghaus.planning.core.service.impl.PlanningDisplaySpecificServiceImpl;
 import link.ebbinghaus.planning.ui.view.planning.display.activity.PlanningDisplaySpecEventDetailActivity;
 
 /**
@@ -32,12 +30,10 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
 
     private Context mContext;
     private List<Event> mSpecWeekEvents;
-    private PlanningDisplaySpecificService mPlanningDisplaySpecificService;
 
     public WeekRecyclerViewAdapter(Context context, List<Event> specWeekEvents) {
         this.mContext = context;
         mSpecWeekEvents = specWeekEvents;
-        mPlanningDisplaySpecificService = new PlanningDisplaySpecificServiceImpl();
     }
 
     /**
@@ -78,7 +74,7 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
 //        @Bind(R.id.tv_planning_display_spec_week_process) TextView processTv;
         @Bind(R.id.tv_planning_display_spec_week_description) TextView descriptionTv;
         @Bind(R.id.tv_planning_display_spec_week_detail) TextView detailTv;
-        @Bind(R.id.tv_planning_display_spec_week_delete) TextView deleteTv;
+        @Bind(R.id.tv_planning_display_spec_week_hide) TextView hideTv;
 
         private int[] weekImgRes = {R.mipmap.mon,R.mipmap.tue,
                 R.mipmap.wed,R.mipmap.thu,
@@ -109,8 +105,8 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
                 listitemLl.setTag(event);
                 detailTv.setOnClickListener(this);
                 detailTv.setTag(event);
-                deleteTv.setOnClickListener(this);
-                deleteTv.setTag(event);
+                hideTv.setOnClickListener(this);
+                hideTv.setTag(event);
             }catch (Exception e){
                 LogUtils.e("Exception", e.getMessage());
             }
@@ -126,8 +122,7 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
                     intent.putExtra(PlanningDisplaySpecEventDetailActivity.INTENT_NAME_EVENT,event);
                     mContext.startActivity(intent);
                     break;
-                case R.id.tv_planning_display_spec_week_delete:
-                    mPlanningDisplaySpecificService.removeSpecEventAndProcessRelated(event);
+                case R.id.tv_planning_display_spec_week_hide:
                     int index = mSpecWeekEvents.indexOf(event);
                     mSpecWeekEvents.remove(index);
                     WeekRecyclerViewAdapter.this.notifyItemRemoved(index);

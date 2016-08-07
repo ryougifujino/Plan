@@ -37,4 +37,14 @@ public class PlanningDisplaySpecEventDetailPresenterImpl implements PlanningDisp
         mPlanningDisplaySpecificService.removeSpecEventAndProcessRelated(event);
         mView.exitThisView();
     }
+
+    @Override
+    public void updateIsShowEventSequence(Event event) {
+        mPlanningDisplaySpecificService.updateEvent(event);
+    }
+
+    @Override
+    public void updateIsGreekAlphabetMarked(Event event) {
+        mPlanningDisplaySpecificService.updateEvent(event);
+    }
 }

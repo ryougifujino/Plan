@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.view.planning.display.activity.PlanningDisplaySpecEventDetailActivity">
@@ -13,367 +13,378 @@
         android:id="@+id/abl_planning_display_event_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/tb_common_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="App Title"
-            app:layout_scrollFlags="scroll|snap"
-            android:minHeight="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="App Title">
 
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <RelativeLayout
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/sv_planning_display_event_detail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cv_planning_display_event_detail_delete"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            card_view:cardCornerRadius="2dp"
-            card_view:cardElevation="2dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_planning_display_event_detail_delete"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/ripple_red_bg"
-                android:gravity="center"
-                android:text="删除"
-                android:textColor="@color/bpWhite"/>
-        </android.support.v7.widget.CardView>
-
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/cv_planning_display_event_detail_delete"
-            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             card_view:cardBackgroundColor="@android:color/white"
             card_view:cardCornerRadius="2dp"
             card_view:cardElevation="2dp">
 
-            <android.support.v4.widget.NestedScrollView
-                android:id="@+id/sv_planning_display_event_detail"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none">
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:padding="15dp">
 
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_event_type"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:padding="15dp">
+                    android:padding="15dp"
+                    android:text="计划类型"
+                    android:textColor="@color/label"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_event_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="15dp"
-                        android:text="计划类型"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_event_type"
-                        android:padding="15dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:text="学习计划"/>
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_event_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:padding="15dp"
+                    android:text="学习计划"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_event_subtype"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_event_type"
-                        android:padding="15dp"
-                        android:text="计划子类型"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_event_subtype"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_event_subtype"
-                        android:layout_alignParentRight="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:maxWidth="200dp"
-                        android:padding="15dp"
-                        android:text="无/英语学习"/>
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_event_subtype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_event_type"
+                    android:padding="15dp"
+                    android:text="计划子类型"
+                    android:textColor="@color/label"/>
+
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_event_subtype"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_event_subtype"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:maxWidth="200dp"
+                    android:padding="15dp"
+                    android:text="无/英语学习"/>
 
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_event_subtype"
-                        android:padding="15dp"
-                        android:text="描述"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_description"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_description"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="描述描述描述描述描述描述描述描述描述描述描述描述"
-                        android:padding="15dp"/>
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_event_subtype"
+                    android:padding="15dp"
+                    android:text="描述"
+                    android:textColor="@color/label"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_strategy"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_planning_display_event_detail_description"
-                        android:padding="15dp"
-                        android:text="计划方案"
-                        android:visibility="visible"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_strategy"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_strategy"
-                        android:layout_alignParentRight="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="15dp"
-                        android:text="理解型"
-                        android:visibility="visible"/>
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_description"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_description"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:padding="15dp"
+                    android:text="描述描述描述描述描述描述描述描述描述描述描述描述"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_sequence"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_strategy"
-                        android:padding="15dp"
-                        android:text="计划次序"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_sequence"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_sequence"
-                        android:layout_alignParentRight="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="15dp"
-                        android:text="3"/>
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_strategy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_planning_display_event_detail_description"
+                    android:padding="15dp"
+                    android:text="计划方案"
+                    android:textColor="@color/label"
+                    android:visibility="visible"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_expected_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_sequence"
-                        android:padding="15dp"
-                        android:text="计划日期"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_expected_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_expected_date"
-                        android:layout_alignParentRight="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="15dp"
-                        android:text="2016年3月13日"/>
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_strategy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_strategy"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="理解型"
+                    android:visibility="visible"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_create_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_expected_date"
-                        android:padding="15dp"
-                        android:text="创建时间"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_create_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_create_time"
-                        android:layout_alignParentRight="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="15dp"
-                        android:text="2016年3月13日16时22分34秒"/>
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_sequence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_strategy"
+                    android:padding="15dp"
+                    android:text="计划次序"
+                    android:textColor="@color/label"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_finished_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_create_time"
-                        android:padding="15dp"
-                        android:text="完成日期"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_finished_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_finished_time"
-                        android:layout_alignParentRight="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="15dp"
-                        android:text="2016年3月24日20时30分18秒"/>
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_sequence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_sequence"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="3"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_process"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_finished_time"
-                        android:padding="15dp"
-                        android:text="计划进程"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_process"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_process"
-                        android:layout_alignParentRight="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="15dp"
-                        android:text="进行中"/>
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_expected_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_sequence"
+                    android:padding="15dp"
+                    android:text="计划日期"
+                    android:textColor="@color/label"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_progress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_process"
-                        android:padding="15dp"
-                        android:text="完成进度"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_progress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_progress"
-                        android:layout_alignParentRight="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="15dp"
-                        android:text="5/10"/>
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_expected_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_expected_date"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="2016年3月13日"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_knowledge_quantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_progress"
-                        android:padding="15dp"
-                        android:text="知识量"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_knowledge_quantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_knowledge_quantity"
-                        android:layout_alignParentRight="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="15dp"
-                        android:text="500"/>
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_create_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_expected_date"
+                    android:padding="15dp"
+                    android:text="创建时间"
+                    android:textColor="@color/label"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_workload"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_knowledge_quantity"
-                        android:padding="15dp"
-                        android:text="工作量"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_workload"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_workload"
-                        android:layout_alignParentRight="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="15dp"
-                        android:text="59人分"/>
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_create_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_create_time"
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_remind_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_workload"
-                        android:padding="15dp"
-                        android:text="提醒时间"
-                        android:visibility="visible"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_remind_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_remind_time"
-                        android:layout_alignParentRight="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:padding="15dp"
-                        android:text="15:30/不提醒"
-                        android:visibility="visible"/>
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="2016年3月13日16时22分34秒"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_is_show_sequence"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_remind_time"
-                        android:padding="15dp"
-                        android:text="显示次序"
-                        android:visibility="visible"/>
-                    <Switch
-                        android:id="@+id/switch_planning_display_event_detail_is_show_sequence"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_is_show_sequence"
-                        android:layout_alignParentRight="true"
-                        android:padding="15dp"
-                        android:visibility="visible"/>
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_finished_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_create_time"
+                    android:padding="15dp"
+                    android:text="完成日期"
+                    android:textColor="@color/label"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_is_greek_alphabet_marked"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_is_show_sequence"
-                        android:padding="15dp"
-                        android:text="用希腊字母标记"/>
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_finished_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_finished_time"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="2016年3月24日20时30分18秒"/>
 
-                    <Switch
-                        android:id="@+id/switch_planning_display_event_detail_is_greek_alphabet_marked"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_is_greek_alphabet_marked"
-                        android:layout_alignParentRight="true"
-                        android:padding="15dp"/>
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_process"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_finished_time"
+                    android:padding="15dp"
+                    android:text="计划进程"
+                    android:textColor="@color/label"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_event_group"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_is_greek_alphabet_marked"
-                        android:padding="15dp"
-                        android:text="计划组"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_event_group"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_event_group"
-                        android:layout_alignParentRight="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:maxWidth="200dp"
-                        android:padding="15dp"
-                        android:text="C++学习计划"/>
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_process"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_process"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="进行中"/>
 
-                    <TextView
-                        android:id="@+id/label_planning_display_event_detail_summary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/label_planning_display_event_detail_event_group"
-                        android:padding="15dp"
-                        android:text="总结"/>
-                    <TextView
-                        android:id="@+id/tv_planning_display_event_detail_summary"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_planning_display_event_detail_summary"
-                        android:layout_alignParentRight="true"
-                        android:background="?android:attr/selectableItemBackground"
-                        android:maxWidth="200dp"
-                        android:padding="15dp"
-                        android:text="C++学习计划是一个好的计划"/>
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_process"
+                    android:padding="15dp"
+                    android:text="完成进度"
+                    android:textColor="@color/label"/>
+
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_progress"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="5/10"/>
+
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_knowledge_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_progress"
+                    android:padding="15dp"
+                    android:text="知识量"
+                    android:textColor="@color/label"/>
+
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_knowledge_quantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_knowledge_quantity"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="500"/>
+
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_workload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_knowledge_quantity"
+                    android:padding="15dp"
+                    android:text="工作量"
+                    android:textColor="@color/label"/>
+
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_workload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_workload"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="59人分"/>
+
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_remind_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_workload"
+                    android:padding="15dp"
+                    android:text="提醒时间"
+                    android:textColor="@color/label"
+                    android:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_remind_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_remind_time"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="15:30/不提醒"
+                    android:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_is_show_sequence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_remind_time"
+                    android:padding="15dp"
+                    android:text="显示次序"
+                    android:textColor="@color/label"
+                    android:visibility="visible"/>
+
+                <Switch
+                    android:id="@+id/switch_planning_display_event_detail_is_show_sequence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_is_show_sequence"
+                    android:layout_alignParentRight="true"
+                    android:padding="15dp"
+                    android:visibility="visible"/>
+
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_is_greek_alphabet_marked"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_is_show_sequence"
+                    android:padding="15dp"
+                    android:text="用希腊字母标记"
+                    android:textColor="@color/label"
+                    android:visibility="gone"/>
+
+                <Switch
+                    android:id="@+id/switch_planning_display_event_detail_is_greek_alphabet_marked"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_is_greek_alphabet_marked"
+                    android:layout_alignParentRight="true"
+                    android:padding="15dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_event_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_is_greek_alphabet_marked"
+                    android:padding="15dp"
+                    android:text="计划组"
+                    android:textColor="@color/label"/>
+
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_event_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_event_group"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:maxWidth="200dp"
+                    android:padding="15dp"
+                    android:text="C++学习计划"/>
+
+                <TextView
+                    android:id="@+id/label_planning_display_event_detail_summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_planning_display_event_detail_event_group"
+                    android:padding="15dp"
+                    android:text="总结"
+                    android:textColor="@color/label"/>
+
+                <TextView
+                    android:id="@+id/tv_planning_display_event_detail_summary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_planning_display_event_detail_summary"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:maxWidth="200dp"
+                    android:padding="15dp"
+                    android:text="C++学习计划是一个好的计划"/>
 
 
-                </RelativeLayout>
-            </android.support.v4.widget.NestedScrollView>
+            </RelativeLayout>
+
         </android.support.v7.widget.CardView>
-    </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+
 
 </android.support.design.widget.CoordinatorLayout>
 

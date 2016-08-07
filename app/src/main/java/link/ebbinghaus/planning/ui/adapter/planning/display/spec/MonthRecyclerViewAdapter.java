@@ -176,7 +176,11 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         }
 
         public void setMonthEventAttrs(TextView eventTv, Event event){
-            eventTv.setText(event.getDescription());
+            String realDescription = event.getDescription();
+            if (event.getIsShowEventSequence()){
+                realDescription = event.getEventSequence() + "$" + realDescription;
+            }
+            eventTv.setText(realDescription);
             int width = App.getSystemInfo().getWindowWidth() / 4;
             if (event.getEventType() == 2){
                 eventTv.setBackgroundResource(R.drawable.planning_display_spec_month_event_normal);
