@@ -10,7 +10,7 @@
     card_view:cardElevation="2dp">
     <RelativeLayout
         android:id="@+id/rl_common_select_listitem"
-        android:padding="30dp"
+        android:padding="10dp"
         android:orientation="horizontal"
         android:background="?android:attr/selectableItemBackground"
         android:layout_width="match_parent"
@@ -22,6 +22,7 @@
             android:maxLines="3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:maxWidth="200dp"
             android:text="描述描述描述描述描述描述"/>
 
@@ -29,6 +30,8 @@
             android:visibility="gone"
             android:id="@+id/iv_common_select_selected_icon"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_check_dark_disabled"/>

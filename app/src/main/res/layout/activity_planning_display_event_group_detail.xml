@@ -1,19 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.view.planning.display.activity.PlanningDisplayEventGroupDetailActivity">
 
-    <include layout="@layout/head_common"/>
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/abl"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="192dp"
+        app:layout_behavior="com.yurikami.lib.widget.FlingBehavior">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/ctl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="?attr/colorPrimary"
+            android:background="@mipmap/blur_bg"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_marginTop="30dp"
+                    android:id="@+id/label_planning_display_event_spec_group_dynamic_count"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="学习计划"/>
+                <TextView
+                    android:id="@+id/tv_planning_display_event_spec_group_dynamic_count"
+                    android:layout_alignParentRight="true"
+                    android:textSize="18sp"
+                    android:textColor="#E3E3E3"
+                    android:layout_alignBaseline="@id/label_planning_display_event_spec_group_dynamic_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3"/>
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="18sp"
+                    android:id="@+id/label_planning_display_event_spec_group_normal_count"
+                    android:layout_below="@id/label_planning_display_event_spec_group_dynamic_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="普通计划"/>
+                <TextView
+                    android:id="@+id/tv_planning_display_event_spec_group_normal_count"
+                    android:layout_alignParentRight="true"
+                    android:textSize="18sp"
+                    android:textColor="#709BBE"
+                    android:layout_alignBaseline="@id/label_planning_display_event_spec_group_normal_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"/>
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/md_white_1000"
+                    android:textSize="18sp"
+                    android:id="@+id/label_planning_display_event_spec_group_progress"
+                    android:layout_below="@id/label_planning_display_event_spec_group_normal_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="完成进度"/>
+                <TextView
+                    android:id="@+id/tv_planning_display_event_spec_group_progress"
+                    android:layout_alignParentRight="true"
+                    android:textSize="18sp"
+                    android:textColor="#709BBE"
+                    android:layout_alignBaseline="@id/label_planning_display_event_spec_group_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4/8"/>
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/tb_common_head"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:layout_collapseMode="pin"/>
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_planning_display_event_group_detail"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

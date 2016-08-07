@@ -1,17 +1,16 @@
 package link.ebbinghaus.planning.ui.view.planning.display.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.yurikami.lib.base.BaseActivity;
 import com.yurikami.lib.util.DateUtils;
 
@@ -29,6 +28,7 @@ import link.ebbinghaus.planning.ui.adapter.planning.display.spec.WeekRecyclerVie
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplayEventGroupDetailPresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.display.impl.PlanningDisplayEventGroupDetailPresenterImpl;
 import link.ebbinghaus.planning.ui.view.planning.display.PlanningDisplayEventGroupDetailView;
+import link.ebbinghaus.planning.ui.viewholder.planning.display.EventGroupDetailViewHolder;
 import link.ebbinghaus.planning.ui.widget.SpaceItemDecoration;
 
 public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implements PlanningDisplayEventGroupDetailView {
@@ -38,6 +38,9 @@ public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implem
 
     @Bind(R.id.rv_planning_display_event_group_detail) RecyclerView mRecyclerView;
     @Bind(R.id.tb_common_head) Toolbar mToolbar;
+    @Bind(R.id.ctl) CollapsingToolbarLayout mCtl;
+    private boolean mFirstAccess = true;
+    private EventGroupDetailViewHolder vh;
     private RecyclerView.Adapter mAdapter;
     private PlanningDisplayEventGroupDetailPresenter mPresenter;
     //存放数据
@@ -50,28 +53,58 @@ public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planning_display_event_group_detail);
         ButterKnife.bind(this);
+        vh = new EventGroupDetailViewHolder(this);
         mPresenter = new PlanningDisplayEventGroupDetailPresenterImpl(this);
-        configureToolbar();
         mPresenter.configureRecyclerView();
+        configureToolbar();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //更新数据
+        if (!mFirstAccess) {
+            mEventGroup = mPresenter.obtainEventGroup(mEventGroup.getPkEventGroupId());
+            mEvents = mPresenter.obtainEventGroupDetailData(mEventGroupType, mEventGroup);
+            setRecyclerViewHeader();
+            if (mEventGroupType) {
+                ((WeekRecyclerViewAdapter) mAdapter).refresh(mEvents);
+            } else {
+                ((AllRecyclerViewAdapter) mAdapter).refresh(mEvents);
+            }
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mFirstAccess = false;
     }
 
     private void configureToolbar() {
         setSupportActionBar(mToolbar);
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        mToolbar.setTitle(R.string.planning_display_event_group_toolbar_title);
+//        mToolbar.setTitle(R.string.planning_display_event_group_toolbar_title);
+        mCtl.setTitle(getString(R.string.planning_display_event_group_detail_create_time, DateUtils.fromTimestamp2Date(mEventGroup.getCreateTime())));
+        mCtl.setCollapsedTitleTextColor(getResources().getColor(R.color.md_white_1000));
+        mCtl.setExpandedTitleColor(Color.parseColor("#709BBE"));
+        mCtl.setExpandedTitleMarginStart(DensityUtils.dp2px(20));
+        mCtl.setExpandedTitleMarginBottom(DensityUtils.dp2px(20));
     }
 
     /**
      * 启动本Activity(带数据)
-     * @param context 发送者上下文
-     * @param eventGroup 计划组数据
+     *
+     * @param context        发送者上下文
+     * @param eventGroup     计划组数据
      * @param eventGroupType true:具体计划组 false:模糊计划组
      */
-    public static void actionStart(Context context,EventGroup eventGroup,boolean eventGroupType){
-        Intent intent = new Intent(context,PlanningDisplayEventGroupDetailActivity.class);
+    public static void actionStart(Context context, EventGroup eventGroup, boolean eventGroupType) {
+        Intent intent = new Intent(context, PlanningDisplayEventGroupDetailActivity.class);
         intent.putExtra(INTENT_NAME_EVENT_GROUP, eventGroup);
         intent.putExtra(INTENT_NAME_FLAG, eventGroupType);
         context.startActivity(intent);
@@ -86,64 +119,42 @@ public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implem
 
     @Override
     public void setRecyclerViewHeader() {
-        RecyclerViewHeader header;
         if (mEventGroupType){
-            header = RecyclerViewHeader.fromXml(this,R.layout.listheader_planning_display_spec_event_group);
-            setSpecificHeader(header);
+            vh.setDynamicCount(mEventGroup.getLearningEventCount());
+            vh.setNormalCount(mEventGroup.getNormalEventCount());
+
+            int finishedCount = 0;
+            for (Event event : mEvents) {
+                if (event.getIsEventFinished())
+                    finishedCount++;
+            }
+            vh.setProgress(finishedCount,mEvents.size());
         }else {
-            header = RecyclerViewHeader.fromXml(this,R.layout.listheader_planning_display_abst_event_group);
-            setAbstractHeader(header);
+            vh.switchToAbstract();
+            vh.setDynamicCount(mEventGroup.getAbstractEventCount());
         }
-        header.attachTo(mRecyclerView);
     }
 
     @Override
     public void setRecyclerViewAdapter() {
 
-        mEvents = mPresenter.obtainEventGroupDetailData(mEventGroupType,mEventGroup);
+        mEvents = mPresenter.obtainEventGroupDetailData(mEventGroupType, mEventGroup);
 
-        if (mEventGroupType){
+        if (mEventGroupType) {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            mAdapter = new WeekRecyclerViewAdapter(this,mEvents);
-        }else {
-            mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+            mAdapter = new WeekRecyclerViewAdapter(this, mEvents);
+        } else {
+            mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
             mRecyclerView.addItemDecoration(new SpaceItemDecoration(DensityUtils.dp2px(5)));
-            mAdapter = new AllRecyclerViewAdapter(this,mEvents);
+            mAdapter = new AllRecyclerViewAdapter(this, mEvents);
 
         }
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    //TODO:删除后刷新列表
-
-    @SuppressLint("SetTextI18n")    //TODO:收纳入ViewHolder
-    public void setSpecificHeader(RecyclerViewHeader view) {
-        TextView createTimeTv = (TextView) view.findViewById(R.id.tv_planning_display_event_spec_group_create_time);
-        TextView learningCountTv = (TextView) view.findViewById(R.id.tv_planning_display_event_spec_group_learning_count);
-        TextView normalCountTv = (TextView) view.findViewById(R.id.tv_planning_display_event_spec_group_normal_count);
-        TextView progressTv = (TextView) view.findViewById(R.id.tv_planning_display_event_spec_group_progress);
-        createTimeTv.setText(getString(R.string.planning_display_event_group_detail_create_time, DateUtils.formatTimestamp2Datetime(mEventGroup.getCreateTime())));
-        learningCountTv.setText(mEventGroup.getLearningEventCount() + "");
-        normalCountTv.setText(mEventGroup.getNormalEventCount() + "");
-        int finishedCount = 0;
-        for (Event event : mEvents) {
-            if (event.getIsEventFinished())
-                finishedCount ++;
-        }
-        progressTv.setText(finishedCount + "/" + mEvents.size());
-    }
-
-    @SuppressLint("SetTextI18n")    //TODO:收纳入ViewHolder
-    public void setAbstractHeader(RecyclerViewHeader view) {
-        TextView createTime = (TextView) view.findViewById(R.id.tv_planning_display_event_abst_group_create_time);
-        TextView eventCount = (TextView) view.findViewById(R.id.tv_planning_display_event_abst_group_event_count);
-        createTime.setText(getString(R.string.planning_display_event_group_detail_create_time, DateUtils.formatTimestamp2Datetime(mEventGroup.getCreateTime())));
-        eventCount.setText(mEventGroup.getAbstractEventCount() + "");
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;

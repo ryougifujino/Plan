@@ -20,6 +20,13 @@ public interface PlanningDisplayEventGroupDetailPresenter {
     List<Event> obtainEventGroupDetailData(boolean eventGroupType,EventGroup eventGroup);
 
     /**
+     * 根据id获取计划组最新值
+     * @param pk 计划组主键
+     * @return 计划组最新值
+     */
+    EventGroup obtainEventGroup(long pk);
+
+    /**
      * 配置RecyclerView
      */
     void configureRecyclerView();

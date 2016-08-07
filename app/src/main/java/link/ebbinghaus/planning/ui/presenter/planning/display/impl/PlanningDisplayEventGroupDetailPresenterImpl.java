@@ -30,6 +30,11 @@ public class PlanningDisplayEventGroupDetailPresenterImpl implements PlanningDis
     }
 
     @Override
+    public EventGroup obtainEventGroup(long pk) {
+        return mPlanningDisplayService.findEventGroup(pk);
+    }
+
+    @Override
     public void configureRecyclerView() {
         mView.getIntentData();
         mView.setRecyclerViewAdapter();

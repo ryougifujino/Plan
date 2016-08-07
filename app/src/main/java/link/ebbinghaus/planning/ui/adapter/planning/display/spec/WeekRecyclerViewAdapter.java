@@ -37,7 +37,7 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
     }
 
     /**
-     * 刷新按月视图
+     * 刷新按周视图
      * @param specWeekEvents 新数据
      */
     public void refresh(List<Event> specWeekEvents) {

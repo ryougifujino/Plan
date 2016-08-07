@@ -168,6 +168,7 @@
                 <TextView
                     android:visibility="gone"
                     android:padding="15dp"
+                    android:textColor="@color/label"
                     android:layout_below="@id/label_planning_build_is_remind"
                     android:id="@+id/label_planning_build_remind_time"
                     android:text="提醒时间"

@@ -26,15 +26,15 @@
         
         <TextView
             android:layout_marginTop="5dp"
-            android:id="@+id/label_planning_display_event_spec_group_learning_count"
+            android:id="@+id/label_planning_display_event_spec_group_dynamic_count"
             android:layout_below="@id/tv_planning_display_event_spec_group_create_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="学习计划"/>
         <TextView
-            android:id="@+id/tv_planning_display_event_spec_group_learning_count"
+            android:id="@+id/tv_planning_display_event_spec_group_dynamic_count"
             android:layout_alignParentRight="true"
-            android:layout_alignBaseline="@id/label_planning_display_event_spec_group_learning_count"
+            android:layout_alignBaseline="@id/label_planning_display_event_spec_group_dynamic_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3个"/>
@@ -42,7 +42,7 @@
         <TextView
             android:layout_marginTop="5dp"
             android:id="@+id/label_planning_display_event_spec_group_normal_count"
-            android:layout_below="@id/label_planning_display_event_spec_group_learning_count"
+            android:layout_below="@id/label_planning_display_event_spec_group_dynamic_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="普通计划"/>

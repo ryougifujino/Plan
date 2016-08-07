@@ -38,7 +38,7 @@
     <string name="planning_display_spec_event_detail_unfinished">未完成</string>
 
     <string name="planning_display_event_group_toolbar_title">计划组</string>
-    <string name="planning_display_event_group_detail_create_time">创建于%1$s</string>
+    <string name="planning_display_event_group_detail_create_time">%1$s创建</string>
 
     <!-- planning_build -->
     <string name="planning_build_spec_normal_event">普通计划</string>

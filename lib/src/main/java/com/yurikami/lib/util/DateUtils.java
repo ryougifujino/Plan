@@ -37,6 +37,7 @@ public class DateUtils {
 
     private static SimpleDateFormat chnDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
     private static SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
     private static Date now() { return new Date(); }
     private static long nowTimestamp() { return System.currentTimeMillis(); }
@@ -251,6 +252,15 @@ public class DateUtils {
      */
     public static String formatTimestamp2ChnDate(long timestamp){
         return chnDateFormat.format(timestamp);
+    }
+
+    /**
+     * 将时间戳转换为形如1999/09/19
+     * @param timestamp 时间戳
+     * @return 日期时间字符串
+     */
+    public static String fromTimestamp2Date(long timestamp){
+        return dateFormat.format(timestamp);
     }
 
     /**
