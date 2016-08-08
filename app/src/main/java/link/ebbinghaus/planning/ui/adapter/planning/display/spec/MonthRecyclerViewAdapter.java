@@ -1,5 +1,6 @@
 package link.ebbinghaus.planning.ui.adapter.planning.display.spec;
 
+import android.animation.LayoutTransition;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -27,7 +28,6 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.R;
-import link.ebbinghaus.planning.app.App;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.core.service.PlanningDisplaySpecificService;
 import link.ebbinghaus.planning.core.service.impl.PlanningDisplaySpecificServiceImpl;
@@ -55,6 +55,12 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
     private Map<Integer, LinearLayout> mBlocksCache = new HashMap<>();  //TODO:思考这里是否有问题
     private PlanningDisplaySpecificService mPlanningDisplaySpecificService;
 
+    //ViewHolder caches
+    private int mEventWidth = 0;
+    private AlertDialog.Builder mQuickView;
+    private ColorStateList mDefaultColor;
+    private int mBlue;
+    private Datetime mToday = DateUtils.dateOfToday();
 
 
     public MonthRecyclerViewAdapter(Context context, Datetime datetime) {
@@ -67,6 +73,11 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         mPlanningDisplaySpecificService.makeDayWeekListitems(mDayWeekListitems, mDayInMonth, datetime);
         mSpecMonthEvents = mPlanningDisplaySpecificService.findSpecMonthEvents(mDatetime);
         mBlocks = mPlanningDisplaySpecificService.eventsToBlocks(mSpecMonthEvents, mDayInMonth);
+
+        //init ViewHolder caches
+        mQuickView = new AlertDialog.Builder(mContext);
+        mDefaultColor = new TextView(mContext).getTextColors();
+        mBlue = ContextCompat.getColor(mContext, R.color.md_blue_300);
 
     }
 
@@ -109,6 +120,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
 
                 //把block里面的所有Event放入block容器中
                 LinearLayout row = ViewGroupUtils.newHorizontalLl(mContext, lp);
+                row.setLayoutTransition(new LayoutTransition());
                 for (int i = 1; i <= blockEventCount; i++) {
                     Event event = blockEvents.get(i - 1);
                     TextView eventTv = (TextView) mInflater.inflate(R.layout.textview_planning_display_spec_month_event, row, false);
@@ -133,7 +145,6 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
     }
 
 
-
     @Override
     public int getItemCount() {
         if(mBlocks != null)
@@ -154,24 +165,18 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         @Bind(R.id.tv_planning_display_spec_month_listitem_count) TextView countTv;
         @Bind(R.id.fl_planning_display_spec_month_block) FrameLayout blockFl;
 
-        private Datetime today = DateUtils.dateOfToday();
-        private int blue = ContextCompat.getColor(mContext, R.color.md_blue_300);
-        private ColorStateList defaultColor = new TextView(mContext).getTextColors();
-
-        private AlertDialog.Builder quickView = new AlertDialog.Builder(mContext);
-
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
 
         public void markToday(int year, int month, int day){
-            if (today.getYear() == year && today.getMonth() == month && today.getDay() == day){
-                dayOfMonthTv.setTextColor(blue);
-                dayOfWeekTv.setTextColor(blue);
+            if (mToday.getYear() == year && mToday.getMonth() == month && mToday.getDay() == day){
+                dayOfMonthTv.setTextColor(mBlue);
+                dayOfWeekTv.setTextColor(mBlue);
             }else {
-                dayOfMonthTv.setTextColor(defaultColor);
-                dayOfWeekTv.setTextColor(defaultColor);
+                dayOfMonthTv.setTextColor(mDefaultColor);
+                dayOfWeekTv.setTextColor(mDefaultColor);
             }
         }
 
@@ -181,17 +186,31 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
             dayOfWeekTv.setText(String.format(res.getString(R.string.planning_display_spec_month_listitem_week), dayWeek.getChnWeek()));
         }
 
-        public void setMonthEventAttrs(TextView eventTv, Event event){
+        public void setMonthEventAttrs(final TextView eventTv, final Event event){
             String realDescription = event.getDescription();
             if (event.getIsShowEventSequence()){
                 realDescription = event.getEventSequence() + "$" + realDescription;
             }
             eventTv.setText(realDescription);
-            int width = App.getSystemInfo().getWindowWidth() / 4;
             if (event.getEventType() == 2){
                 eventTv.setBackgroundResource(R.drawable.planning_display_spec_month_event_normal);
             }
-            eventTv.setWidth(width);
+            if (mEventWidth == 0) {
+                blockFl.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mEventWidth == 0) {
+                            final int leftMargin = ((ViewGroup.MarginLayoutParams) eventTv.getLayoutParams()).leftMargin;
+                            mEventWidth = (blockFl.getWidth() - (ROW_EVENT_COUNT + 1) * leftMargin) / ROW_EVENT_COUNT;
+                        }
+                        eventTv.setWidth(mEventWidth);
+                        eventTv.setVisibility(View.VISIBLE);
+                    }
+                });
+            }else {
+                eventTv.setWidth(mEventWidth);
+                eventTv.setVisibility(View.VISIBLE);
+            }
             eventTv.setOnClickListener(this);
             eventTv.setOnLongClickListener(this);
             eventTv.setTag(event);
@@ -208,8 +227,8 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         @Override
         public boolean onLongClick(View v) {
             Event event = (Event) v.getTag();
-            quickView.setMessage(event.getDescription());
-            quickView.show();
+            mQuickView.setMessage(event.getDescription());
+            mQuickView.show();
             return true;
         }
     }
