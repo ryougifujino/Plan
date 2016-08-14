@@ -28,6 +28,8 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.R;
+import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
+import link.ebbinghaus.planning.app.constant.model.EventConstant;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.core.service.PlanningDisplaySpecificService;
 import link.ebbinghaus.planning.core.service.impl.PlanningDisplaySpecificServiceImpl;
@@ -188,12 +190,17 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
 
         public void setMonthEventAttrs(final TextView eventTv, final Event event){
             String realDescription = event.getDescription();
-            if (event.getIsShowEventSequence()){
+            if (event.getIsShowEventSequence() && event.getEventType() == EventConfig.TYPE_SPEC_LEARNING){    // FIXME: 2016/8/15 普通计划默认值也被设置成了可以显示序号，暂时用这个判断修复
                 realDescription = event.getEventSequence() + "$" + realDescription;
             }
             eventTv.setText(realDescription);
-            if (event.getEventType() == 2){
-                eventTv.setBackgroundResource(R.drawable.planning_display_spec_month_event_normal);
+            if (event.getEventType() == EventConfig.TYPE_SPEC_NORMAL){      //TODO: use attr simplify
+                eventTv.setBackgroundResource(EventConstant.STYLE_MONTH_EVENT_NORMAL[event.getEventProcess() - 1]);
+            }else if (event.getEventType() == EventConfig.TYPE_SPEC_LEARNING){
+                eventTv.setBackgroundResource(EventConstant.STYLE_MONTH_EVENT_LEARNING[event.getEventProcess() - 1]);
+            }
+            if (event.getEventProcess() == 2){
+                eventTv.setTextColor(mContext.getResources().getColor(R.color.md_white_1000));
             }
             if (mEventWidth == 0) {
                 blockFl.post(new Runnable() {
