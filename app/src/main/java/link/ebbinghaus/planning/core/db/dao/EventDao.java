@@ -175,6 +175,21 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
     }
 
     /**
+     * 查找出所有即将被置为失败的学习计划
+     * @return 即将被置为失败的学习计划
+     */
+    public List<Event> selectAllFailedLearningEvents(){
+        long now = System.currentTimeMillis();
+        String querySql = "SELECT * FROM " + mTableName + " WHERE " + LEARNING_EVENT_GROUP_ID + " IN " +
+                "(SELECT DISTINCT LEARNING_EVENT_GROUP_ID FROM event " +
+                "WHERE EVENT_TYPE = 1 AND EVENT_PROCESS = 1 AND " +
+                "(((EVENT_SEQUENCE = 1 OR EVENT_SEQUENCE = 2) AND " + now + " >= (EVENT_EXPECTED_FINISHED_DATE + 86400000) AND EVENT_FINISHED_TIME IS NULL)" +
+                " OR ("+ now +" >= (EVENT_EXPECTED_FINISHED_DATE + 172800000) AND EVENT_FINISHED_TIME IS NULL) ))";
+        LogUtils.d("fuck",querySql);
+        return _select(querySql);
+    }
+
+    /**
      * 通过学习计划组id删除计划(实际上删的是学习计划)
      * @param learningEventGroupId 学习计划组id
      * @return 删除计划的个数

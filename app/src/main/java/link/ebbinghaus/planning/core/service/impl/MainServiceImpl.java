@@ -9,10 +9,14 @@ import com.yurikami.lib.net.parser.impl.ModelParser;
 import com.yurikami.lib.util.LogUtils;
 import com.yurikami.lib.util.SharedPreferencesUtils;
 
+import java.util.Arrays;
+import java.util.List;
+
 import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.app.App;
 import link.ebbinghaus.planning.app.constant.API;
 import link.ebbinghaus.planning.app.constant.config.Config;
+import link.ebbinghaus.planning.app.util.AlarmUtils;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventDaoDecorator;
 import link.ebbinghaus.planning.core.model.server.po.User;
 import link.ebbinghaus.planning.core.model.server.sys.Result;
@@ -89,8 +93,14 @@ public class MainServiceImpl implements MainService {
             public void run() {
                 LogUtils.d("sub process","子线程启动");
                 EventDaoDecorator dao = new EventDaoDecorator();
+                List<Long> learningEventIds = dao.selectAllFailedLearningEventIds();
+                LogUtils.d("fuck", Arrays.toString(learningEventIds.toArray(new Long[learningEventIds.size()])));
                 dao.updateEventsProcessAndRelated();
                 dao.closeDB();
+                if (learningEventIds.size() > 0) {
+                    LogUtils.d("fuck","fuckyou");
+                    AlarmUtils.cancelNotificationAlarm(learningEventIds);
+                }
             }
         }.start();
     }

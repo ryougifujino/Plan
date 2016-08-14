@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import com.yurikami.lib.model.Datetime;
 import com.yurikami.lib.util.DateUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
@@ -46,8 +47,10 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
      * (包括Events和对应的LearningEventGroup,计划组对应学习计划数量增加)
      * @param inputEvent 插入的信息
      * @param strategy 策略
+     * @return 插入的学习计划组的id
      */
-    public void insertLearningEvents(InputEventVo inputEvent, int[] strategy){
+    public List<Long> insertLearningEvents(InputEventVo inputEvent, int[] strategy){
+        List<Long> eventIds = new ArrayList<>();
         dao.beginTransaction();
         try {
             //插入学习计划组
@@ -62,14 +65,14 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
             e.setLearningEventGroupId(legPk);
             e.setEventSequence(1);
 
-            dao.insert(e);
+            eventIds.add(dao.insert(e));
             for (int i = 1; i < strategy.length; i++) {
                 e = new Event();
                 e.copyFrom(inputEvent);
                 e.setLearningEventGroupId(legPk);
                 e.setEventSequence(i + 1);
                 e.setEventExpectedFinishedDate(DateUtils.timestampAfter(inputEvent.getEventExpectedFinishedDate(), strategy[i] - 1));
-                dao.insert(e);
+                eventIds.add(dao.insert(e));
             }
             if (inputEvent.getEventGroupId() != null) {
                 eventGroupDao.updateLearningEventCount(inputEvent.getEventGroupId(), strategy.length);
@@ -78,18 +81,21 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
         }finally {
             dao.endTransaction();
         }
+        return eventIds;
     }
 
     /**
      * 插入一个普通计划(计划组对应普通计划数量增加)<br>
      * @param event 插入信息
+     * @return 插入的普通计划的id
      */
-    public void insertNormalEvent(Event event){
+    public Long insertNormalEvent(Event event){
+        Long id;
         dao.beginTransaction();
         try {
             event.setEventSequence(null);
 
-            dao.insert(event);
+            id = dao.insert(event);
             if (event.getEventGroupId() != null) {
                 eventGroupDao.updateNormalEventCount(event.getEventGroupId(), 1);
             }
@@ -97,6 +103,7 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
         }finally {
             dao.endTransaction();
         }
+        return id;
 
     }
 
@@ -177,6 +184,18 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
      */
     public List<Event> selectAllDoneSpecEvents(){
         return dao.selectAllDoneSpecEvents();
+    }
+
+    /**
+     * 查找出所有即将被置为失败的学习计划的id
+     * @return 即将被置为失败的学习计划的id
+     */
+    public List<Long> selectAllFailedLearningEventIds(){
+        List<Long> ids = new ArrayList<>();
+        for (Event event : dao.selectAllFailedLearningEvents()) {
+            ids.add(event.getPkEventId());
+        }
+        return ids;
     }
 
     /**
