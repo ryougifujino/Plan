@@ -37,7 +37,7 @@ public class PlanningDoneServiceImpl implements PlanningDoneService {
         }
 
         //更新计划
-        event.setEventProcess(EventConfig.PROCESS_FINISHED);    /* 同PROCESS_SUCCEED */
+        event.setEventProcess(EventConfig.PROCESS_FINISHED);
         event.setEventFinishedTime(System.currentTimeMillis());
         event.setIsEventFinished(true);
 

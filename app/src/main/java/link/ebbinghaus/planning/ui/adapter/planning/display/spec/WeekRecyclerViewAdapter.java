@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.yurikami.lib.model.Datetime;
 import com.yurikami.lib.util.DateUtils;
-import com.yurikami.lib.util.LogUtils;
 
 import java.util.List;
 
@@ -89,30 +88,26 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
         }
 
         public void setData(Event event) {
-            try {
-                Datetime planDate = DateUtils.convertTimestamp2Datetime(event.getEventExpectedFinishedDate());
-                int week = planDate.getWeek();
-                int weekIndex = (week == -1) ? 0 : (week - 1);
-                weekIv.setImageResource(weekImgRes[weekIndex]);
+            Datetime planDate = DateUtils.convertTimestamp2Datetime(event.getEventExpectedFinishedDate());
+            int week = planDate.getWeek();
+            int weekIndex = (week == -1) ? 0 : (week - 1);
+            weekIv.setImageResource(weekImgRes[weekIndex]);
 //                weekTv.setText(mContext.getString(ConstRes.WEEK[weekIndex]));
-                eventTypeTv.setText(eventTypeRes[event.getEventType() - 1]);
-                dateTv.setText(String.format(mContext.getString(R.string.planning_display_spec_week_listitem_date), planDate.getMonth(), planDate.getDay(),
-                        mContext.getString(event.getEventType() == 1
-                        ? EventConstant.PROCESS_LEARNING[event.getEventProcess() - 1]
-                        : EventConstant.PROCESS_NORMAL[event.getEventProcess() - 1])));
+            eventTypeTv.setText(eventTypeRes[event.getEventType() - 1]);
+            dateTv.setText(String.format(mContext.getString(R.string.planning_display_spec_week_listitem_date), planDate.getMonth(), planDate.getDay(),
+                    mContext.getString(event.getEventType() == 1
+                    ? EventConstant.PROCESS_LEARNING[event.getEventProcess() - 1]
+                    : EventConstant.PROCESS_NORMAL[event.getEventProcess() - 1])));
 //                processTv.setText(event.getEventType() == 1
 //                        ? EventConstant.PROCESS_LEARNING[event.getEventProcess() - 1]
 //                        : EventConstant.PROCESS_NORMAL[event.getEventProcess() - 1]);
-                descriptionTv.setText(event.getDescription());
-                listitemLl.setOnClickListener(this);
-                listitemLl.setTag(event);
-                detailTv.setOnClickListener(this);
-                detailTv.setTag(event);
-                quickViewTv.setOnClickListener(this);
-                quickViewTv.setTag(event);
-            }catch (Exception e){
-                LogUtils.e("Exception", e.getMessage());
-            }
+            descriptionTv.setText(event.getDescription());
+            listitemLl.setOnClickListener(this);
+            listitemLl.setTag(event);
+            detailTv.setOnClickListener(this);
+            detailTv.setTag(event);
+            quickViewTv.setOnClickListener(this);
+            quickViewTv.setTag(event);
         }
 
         @Override

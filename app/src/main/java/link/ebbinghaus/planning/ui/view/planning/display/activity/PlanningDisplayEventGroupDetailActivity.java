@@ -58,6 +58,7 @@ public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implem
         mPresenter.configureRecyclerView();
         configureToolbar();
 
+
     }
 
     @Override

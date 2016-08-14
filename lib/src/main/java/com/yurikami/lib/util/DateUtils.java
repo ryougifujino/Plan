@@ -32,7 +32,7 @@ public class DateUtils {
     public static final long DEC_MS = _31_MS;
 
 
-    private static long sLastTimestamp = 0l;
+    private static long sLastTimestamp = 0L;
     private static Calendar sLastCalendar;
 
     private static SimpleDateFormat chnDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
@@ -58,6 +58,7 @@ public class DateUtils {
             c = Calendar.getInstance();
             c.setTimeInMillis(timestamp);
             sLastCalendar = c;
+            sLastTimestamp = timestamp;
         }
         if("year".equals(part)){ return c.get(Calendar.YEAR); }
         else if("month".equals(part)){ return c.get(Calendar.MONTH) + 1; }

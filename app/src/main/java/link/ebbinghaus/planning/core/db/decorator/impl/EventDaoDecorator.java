@@ -61,17 +61,13 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
             e.copyFrom(inputEvent);
             e.setLearningEventGroupId(legPk);
             e.setEventSequence(1);
-            e.setEventProcess(
-                    DateUtils.isInSameDate(DateUtils.currentDateTimestamp(), e.getEventExpectedFinishedDate())
-                            ? EventConfig.PROCESS_IN_PROGRESS
-                            : EventConfig.PROCESS_NOT_STARTED);
+
             dao.insert(e);
             for (int i = 1; i < strategy.length; i++) {
                 e = new Event();
                 e.copyFrom(inputEvent);
                 e.setLearningEventGroupId(legPk);
                 e.setEventSequence(i + 1);
-                e.setEventProcess(EventConfig.PROCESS_NOT_STARTED);
                 e.setEventExpectedFinishedDate(DateUtils.timestampAfter(inputEvent.getEventExpectedFinishedDate(), strategy[i] - 1));
                 dao.insert(e);
             }
@@ -92,10 +88,7 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
         dao.beginTransaction();
         try {
             event.setEventSequence(null);
-            event.setEventProcess(
-                    DateUtils.isInSameDate(DateUtils.currentDateTimestamp(), event.getEventExpectedFinishedDate())
-                            ? EventConfig.PROCESS_TODO
-                            : EventConfig.PROCESS_NOT_STARTED);
+
             dao.insert(event);
             if (event.getEventGroupId() != null) {
                 eventGroupDao.updateNormalEventCount(event.getEventGroupId(), 1);
@@ -237,11 +230,9 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
         try {
             //更新普通计划
             dao.updateExpiredNormalEvents();
-            dao.updateTodoNormalEvents();
             //更新学习计划
             dao.updateFailedLearningEventGroups();
             dao.updateFailedLearningEvents();
-            dao.updateInProgressLearningEvents();
 
             dao.setTransactionSuccessful();
         }finally {
