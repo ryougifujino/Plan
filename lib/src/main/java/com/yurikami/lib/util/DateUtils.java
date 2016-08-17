@@ -153,6 +153,15 @@ public class DateUtils {
     }
 
     /**
+     * 计算出今天0点的时间戳
+     * @return 今天0点的时间戳
+     */
+    public static long dateTimestampOfToday(){
+        Datetime dateOfToday = dateOfToday();
+        return newDateTimestamp(dateOfToday.getYear(),dateOfToday.getMonth(),dateOfToday.getDay());
+    }
+
+    /**
      * 计算出今天的年月日星期,效率较高
      * @return 今天的年月日星期
      */
@@ -161,15 +170,6 @@ public class DateUtils {
         Datetime date = Datetime.buildDate(year(nowTimestamp), month(nowTimestamp), day(nowTimestamp));
         date.setWeek(week(nowTimestamp));
         return date;
-    }
-
-    /**
-     * 计算出今天0点的时间戳
-     * @return 今天0点的时间戳
-     */
-    public static long dateTimestampOfToday(){
-        Datetime dateOfToday = dateOfToday();
-        return newDateTimestamp(dateOfToday.getYear(),dateOfToday.getMonth(),dateOfToday.getDay());
     }
 
     public static boolean isLeapYear(int year){

@@ -217,8 +217,8 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
                 "WHERE PK_LEARNING_EVENT_GROUP_ID IN " +
                 "(SELECT DISTINCT LEARNING_EVENT_GROUP_ID FROM event " +
                 "WHERE EVENT_TYPE = 1 AND EVENT_PROCESS = 1 AND " +
-                "(((EVENT_SEQUENCE = 1 OR EVENT_SEQUENCE = 2) AND ? >= (EVENT_EXPECTED_FINISHED_DATE + 86400000) AND EVENT_FINISHED_TIME IS NULL)" +
-                " OR (? >= (EVENT_EXPECTED_FINISHED_DATE + 172800000) AND EVENT_FINISHED_TIME IS NULL) ))";
+                "((EVENT_SEQUENCE = 1 OR EVENT_SEQUENCE = 2) AND ? >= (EVENT_EXPECTED_FINISHED_DATE + 86400000)" +
+                " OR ? >= (EVENT_EXPECTED_FINISHED_DATE + 172800000) ))";
         long now = System.currentTimeMillis();
         LogUtils.d("update events","更新失败的学习计划组 : " + updateSql);
         db.execSQL(updateSql,new Object[]{now,now});
@@ -230,8 +230,8 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
                 "WHERE LEARNING_EVENT_GROUP_ID IN " +
                 "(SELECT DISTINCT LEARNING_EVENT_GROUP_ID FROM event " +
                 "WHERE EVENT_TYPE = 1 AND EVENT_PROCESS = 1 AND " +
-                "(((EVENT_SEQUENCE = 1 OR EVENT_SEQUENCE = 2) AND ? >= (EVENT_EXPECTED_FINISHED_DATE + 86400000) AND EVENT_FINISHED_TIME IS NULL)" +
-                " OR (? >= (EVENT_EXPECTED_FINISHED_DATE + 172800000) AND EVENT_FINISHED_TIME IS NULL) ))";
+                "((EVENT_SEQUENCE = 1 OR EVENT_SEQUENCE = 2) AND ? >= (EVENT_EXPECTED_FINISHED_DATE + 86400000)" +
+                " OR ? >= (EVENT_EXPECTED_FINISHED_DATE + 172800000) ))";
         long now = System.currentTimeMillis();
         LogUtils.d("update events","更新失败的学习计划 : " + updateSql);
         db.execSQL(updateSql,new Object[]{now,now});

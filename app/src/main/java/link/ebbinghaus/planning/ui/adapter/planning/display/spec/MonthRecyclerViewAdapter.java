@@ -95,6 +95,7 @@ public class MonthRecyclerViewAdapter extends RecyclerView.Adapter<MonthRecycler
         mPlanningDisplaySpecificService.makeDayWeekListitems(mDayWeekListitems, mDayInMonth, mDatetime);
         List<Event> newSpecMonthEvents = mPlanningDisplaySpecificService.findSpecMonthEvents(mDatetime);
         mBlocks = mPlanningDisplaySpecificService.eventsToBlocks(newSpecMonthEvents, mDayInMonth);
+        mToday = DateUtils.dateOfToday();
         this.notifyDataSetChanged();
     }
     public void refresh(){

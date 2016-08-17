@@ -9,7 +9,6 @@ import com.yurikami.lib.net.parser.impl.ModelParser;
 import com.yurikami.lib.util.LogUtils;
 import com.yurikami.lib.util.SharedPreferencesUtils;
 
-import java.util.Arrays;
 import java.util.List;
 
 import link.ebbinghaus.planning.R;
@@ -94,11 +93,9 @@ public class MainServiceImpl implements MainService {
                 LogUtils.d("sub process","子线程启动");
                 EventDaoDecorator dao = new EventDaoDecorator();
                 List<Long> learningEventIds = dao.selectAllFailedLearningEventIds();
-                LogUtils.d("fuck", Arrays.toString(learningEventIds.toArray(new Long[learningEventIds.size()])));
                 dao.updateEventsProcessAndRelated();
                 dao.closeDB();
                 if (learningEventIds.size() > 0) {
-                    LogUtils.d("fuck","fuckyou");
                     AlarmUtils.cancelNotificationAlarm(learningEventIds);
                 }
             }
