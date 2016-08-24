@@ -2,7 +2,6 @@ package link.ebbinghaus.planning.ui.view.planning.display.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,6 +50,7 @@ public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        translucentStatusBar();
         setContentView(R.layout.activity_planning_display_event_group_detail);
         ButterKnife.bind(this);
         vh = new EventGroupDetailViewHolder(this);
@@ -92,7 +92,7 @@ public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implem
 //        mToolbar.setTitle(R.string.planning_display_event_group_toolbar_title);
         mCtl.setTitle(getString(R.string.planning_display_event_group_detail_create_time, DateUtils.fromTimestamp2Date(mEventGroup.getCreateTime())));
         mCtl.setCollapsedTitleTextColor(getResources().getColor(R.color.md_white_1000));
-        mCtl.setExpandedTitleColor(Color.parseColor("#709BBE"));
+        mCtl.setExpandedTitleColor(getResources().getColor(R.color.md_blue_grey_700));
         mCtl.setExpandedTitleMarginStart(DensityUtils.dp2px(20));
         mCtl.setExpandedTitleMarginBottom(DensityUtils.dp2px(20));
     }
