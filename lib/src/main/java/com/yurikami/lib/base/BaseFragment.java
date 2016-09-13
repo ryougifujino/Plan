@@ -58,6 +58,14 @@ public class BaseFragment extends Fragment {
         return new Intent(mActivity, cls);
     }
 
+    /**
+     * 跳转到某个Activity
+     * @param cls 目标Activity的class
+     */
+    protected void startActivity(Class<?> cls){
+        startActivity(newIntent(cls));
+    }
+
     //life circle
 
     @Override

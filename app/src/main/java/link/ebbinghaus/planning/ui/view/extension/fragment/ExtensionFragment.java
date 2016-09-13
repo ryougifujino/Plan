@@ -19,12 +19,14 @@ import link.ebbinghaus.planning.ui.presenter.extension.ExtensionPresenter;
 import link.ebbinghaus.planning.ui.presenter.extension.impl.ExtensionPresenterImpl;
 import link.ebbinghaus.planning.ui.view.extension.ExtensionView;
 import link.ebbinghaus.planning.ui.view.extension.activity.ExtensionReadActivity;
+import link.ebbinghaus.planning.ui.view.extension.activity.ExtensionTimeSaverActivity;
 
 public class ExtensionFragment extends BaseFragment implements ExtensionView,View.OnClickListener{
 
     @Bind(R.id.tb_common_head) Toolbar mToolbar;
     private DrawerLayout mDrawerLayout;
     @Bind(R.id.ll_extension_read) LinearLayout readLl;
+    @Bind(R.id.ll_extension_fragment_time_saver) LinearLayout timeSaverLl;
     private ExtensionPresenter mPresenter;
 
 
@@ -64,13 +66,17 @@ public class ExtensionFragment extends BaseFragment implements ExtensionView,Vie
     @Override
     public void initExtension() {
         readLl.setOnClickListener(this);
+        timeSaverLl.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.ll_extension_read:
-                startActivity(newIntent(ExtensionReadActivity.class));
+                startActivity(ExtensionReadActivity.class);
+                break;
+            case R.id.ll_extension_fragment_time_saver:
+                startActivity(ExtensionTimeSaverActivity.class);
                 break;
         }
     }
