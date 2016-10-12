@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="1dp"
-    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:layout_marginLeft="@dimen/item_margin_horizontal"
+    android:layout_marginRight="@dimen/item_margin_horizontal"
     card_view:cardBackgroundColor="@android:color/white"
     card_view:cardCornerRadius="2dp"
     card_view:cardElevation="2dp">

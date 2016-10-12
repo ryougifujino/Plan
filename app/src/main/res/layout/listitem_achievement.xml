@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/md_white_1000"
     app:cardElevation="2dp"
-    android:layout_marginTop="10dp">
+    android:layout_marginTop="@dimen/item_margin_vertical">
 <RelativeLayout
     android:padding="10dp"
     android:layout_width="match_parent"

@@ -8,19 +8,17 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.yurikami.lib.model.Datetime;
-import com.yurikami.lib.util.DateUtils;
 import com.yurikami.lib.util.LogUtils;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.core.service.PlanningDisplayService;
+import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.core.model.local.po.EventGroup;
+import link.ebbinghaus.planning.core.service.PlanningDisplayService;
 import link.ebbinghaus.planning.core.service.impl.PlanningDisplayServiceImpl;
 import link.ebbinghaus.planning.ui.view.planning.display.activity.PlanningDisplayEventGroupDetailActivity;
-import link.ebbinghaus.planning.R;
 
 /**
  * Created by WINFIELD on 2016/3/2.
@@ -71,7 +69,6 @@ public class GroupRecyclerViewAdapter extends RecyclerView.Adapter<GroupRecycler
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         @Bind(R.id.rl_planning_display_event_group) RelativeLayout listitemRl;
-        @Bind(R.id.tv_planning_display_event_group_create_time) TextView createTimeTv;
         @Bind(R.id.tv_planning_display_event_group_event_count) TextView eventCountTv;
         @Bind(R.id.tv_view_planning_display_event_group_description) TextView descriptionTv;
 
@@ -82,8 +79,6 @@ public class GroupRecyclerViewAdapter extends RecyclerView.Adapter<GroupRecycler
 
         public void setData(EventGroup eventGroup) {
             try {
-                long createTime = eventGroup.getCreateTime();
-                Datetime datetime = DateUtils.convertTimestamp2Datetime(createTime);
 
 //                int daysBeforeToday = -DateUtils.daysTimestamp2Today(createTime);
 //                String beforeDayStr;
@@ -95,11 +90,7 @@ public class GroupRecyclerViewAdapter extends RecyclerView.Adapter<GroupRecycler
 //                    beforeDayStr = "999+";
 //                }
 
-                createTimeTv.setText(String.format(mContext.getString(R.string.planning_display_create_time),
-                        datetime.getYear(), datetime.getMonth(), datetime.getDay(),
-                        datetime.getHour(),datetime.getMinute()));
-                eventCountTv.setText(String.format(mContext.getString(R.string.planning_display_event_group_event_count),
-                        mEventGroupType ? eventGroup.getLearningEventCount() + eventGroup.getNormalEventCount()
+                eventCountTv.setText(String.valueOf(mEventGroupType ? eventGroup.getLearningEventCount() + eventGroup.getNormalEventCount()
                                 : eventGroup.getAbstractEventCount()));
                 descriptionTv.setText(eventGroup.getDescription());
                 listitemRl.setOnClickListener(this);

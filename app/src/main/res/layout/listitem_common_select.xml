@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     card_view:cardBackgroundColor="@android:color/white"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="@dimen/item_margin_vertical"
     card_view:cardCornerRadius="2dp"
     card_view:cardElevation="2dp">
     <RelativeLayout
@@ -21,13 +21,13 @@
             android:maxLength="30"
             android:maxLines="3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:maxWidth="200dp"
-            android:text="描述描述描述描述描述描述"/>
+            android:layout_height="50sp"
+            android:textSize="20sp"
+            android:maxWidth="250dp"
+            android:text="描述描述描描述描述描述描述描述述描述描述描述"/>
 
         <ImageView
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/iv_common_select_selected_icon"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
