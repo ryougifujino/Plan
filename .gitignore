@@ -9,3 +9,5 @@
 /build.gradle
 /app/build.gradle
 /lib/build.gradle
+/gradle.properties
+/.idea/misc.xml
