@@ -97,6 +97,14 @@ public class PlanningDisplaySpecificServiceImpl implements PlanningDisplaySpecif
     }
 
     @Override
+    public List<Event> findSpecEventsByDescription(String key) {
+        EventDaoDecorator dao = new EventDaoDecorator();
+        List<Event> events = dao.selectSpecEventsByDescription(key);
+        dao.closeDB();
+        return events;
+    }
+
+    @Override
     public void removeSpecEventAndProcessRelated(Event event) {
         EventDaoDecorator dao = new EventDaoDecorator();
         if (event.getEventType() == EventConfig.TYPE_SPEC_LEARNING){

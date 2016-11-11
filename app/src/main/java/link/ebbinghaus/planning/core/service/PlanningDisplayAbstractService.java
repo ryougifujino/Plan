@@ -23,6 +23,13 @@ public interface PlanningDisplayAbstractService {
     List<Event> findAllAbstEvent();
 
     /**
+     * 搜索用，根据描述关键字查找模糊计划
+     * @param key 描述关键字
+     * @return 搜索结果
+     */
+    List<Event> findAbstEventsByDescription(String key);
+    
+    /**
      *
      * @param pk 模糊计划主键
      * @param groupPk 模糊计划所关联的计划组主键

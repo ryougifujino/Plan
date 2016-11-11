@@ -12,20 +12,34 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/abl_planning_display_event_detail"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="192dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/tb_common_head"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="App Title">
 
         </android.support.v7.widget.Toolbar>
+
+        <ScrollView
+            android:background="?attr/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/tv_planning_display_event_detail_description_top"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/md_white_1000"/>
+        </ScrollView>
     </android.support.design.widget.AppBarLayout>
 
 

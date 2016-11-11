@@ -1,6 +1,5 @@
 package link.ebbinghaus.planning.ui.view.planning.display.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -30,14 +29,15 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.ui.adapter.SimpleFragmentPagerAdapter;
+import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.app.util.CommonUtils;
 import link.ebbinghaus.planning.core.model.local.sys.Tab;
+import link.ebbinghaus.planning.ui.adapter.SimpleFragmentPagerAdapter;
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplayPresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.display.impl.PlanningDisplayPresenterImpl;
+import link.ebbinghaus.planning.ui.view.common.activity.CommonSearchEventActivity;
 import link.ebbinghaus.planning.ui.view.planning.build.activity.PlanningBuildActivity;
 import link.ebbinghaus.planning.ui.view.planning.display.PlanningDisplayView;
-import link.ebbinghaus.planning.R;
 
 public class PlanningDisplayFragment extends BaseFragment implements PlanningDisplayView,
         ViewPager.OnPageChangeListener, View.OnClickListener, CalendarDatePickerDialogFragment.OnDateSetListener {
@@ -176,7 +176,10 @@ public class PlanningDisplayFragment extends BaseFragment implements PlanningDis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.item_planning_display_toolbar_add:
-                item.setIntent(new Intent(mActivity, PlanningBuildActivity.class));
+                item.setIntent(newIntent(PlanningBuildActivity.class));
+                return false;
+            case R.id.item_planning_display_toolbar_search:
+                item.setIntent(newIntent(CommonSearchEventActivity.class));
                 return false;
         }
         return super.onOptionsItemSelected(item);

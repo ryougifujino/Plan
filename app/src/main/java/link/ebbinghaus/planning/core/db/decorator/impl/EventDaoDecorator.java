@@ -258,4 +258,14 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
             dao.endTransaction();
         }
     }
+
+    /** 搜索模糊计划 */
+    public List<Event> selectAbstEventsByDescription(String key) {
+        return dao.selectAbstEventsByDescription(key);
+    }
+
+    /** 搜索具体计划 */
+    public List<Event> selectSpecEventsByDescription(String key) {
+        return dao.selectSpecEventsByDescription(key);
+    }
 }

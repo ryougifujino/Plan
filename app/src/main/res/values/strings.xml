@@ -80,6 +80,7 @@
     <!-- common_select -->
     <string name="common_select_delete_toolbar_select_info">已选择%1$d个</string>
     <string name="common_select_add_dialog_title">创建新条目</string>
+
     <!-- ______________________module#end______________________ -->
 
     <!-- ______________________entity______________________ -->

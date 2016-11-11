@@ -237,4 +237,19 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
         db.execSQL(updateSql,new Object[]{now,now});
     }
 
+    /** 搜索模糊计划 */
+    public List<Event> selectAbstEventsByDescription(String key) {
+        String querySql = "SELECT * FROM " + mTableName + " WHERE " +
+                EVENT_TYPE + " = " + EventConfig.TYPE_ABSTRACT +
+                " AND " + DESCRIPTION + " LIKE %?%";
+        return _select(querySql,new String[]{ key });
+    }
+
+    /** 搜索具体计划 */
+    public List<Event> selectSpecEventsByDescription(String key) {
+        String querySql = "SELECT * FROM " + mTableName + " WHERE " +
+                EVENT_TYPE + " != " + EventConfig.TYPE_ABSTRACT +
+                " AND " + DESCRIPTION + " LIKE %?%";
+        return _select(querySql,new String[]{ key });
+    }
 }

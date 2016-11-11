@@ -5,7 +5,7 @@
         android:id="@+id/item_planning_done_filter"
         android:orderInCategory="100"
         android:title="过滤器"
-        android:icon="@drawable/planning_done_filter"
+        android:icon="@drawable/common_filter"
         app:showAsAction="always">
         <menu>
             <item

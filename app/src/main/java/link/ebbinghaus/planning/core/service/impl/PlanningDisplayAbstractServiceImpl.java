@@ -35,6 +35,14 @@ public class PlanningDisplayAbstractServiceImpl implements PlanningDisplayAbstra
     }
 
     @Override
+    public List<Event> findAbstEventsByDescription(String key) {
+        EventDaoDecorator dao = new EventDaoDecorator();
+        List<Event> events = dao.selectAbstEventsByDescription(key);
+        dao.closeDB();
+        return events;
+    }
+
+    @Override
     public void removeAbstEvent(Long pk, Long groupPk) {
         EventDao dao = new EventDao();
         EventGroupDao eventGroupDao = new EventGroupDao();

@@ -20,6 +20,8 @@ import link.ebbinghaus.planning.R;
  * Created by WINFIELD on 2016/3/28.
  */
 public class SpecEventDetailViewHolder extends BaseActivityViewHolder {
+    public TextView topDescriptionTv;
+
     public TextView eventTypeTv;
     public TextView eventSubtypeTv;
     public TextView descriptionTv;
@@ -55,6 +57,9 @@ public class SpecEventDetailViewHolder extends BaseActivityViewHolder {
 
     public SpecEventDetailViewHolder(Activity activity) {
         super(activity);
+
+        topDescriptionTv = find(R.id.tv_planning_display_event_detail_description_top);
+
         eventTypeTv = find(R.id.tv_planning_display_event_detail_event_type);
         eventSubtypeTv = find(R.id.tv_planning_display_event_detail_event_subtype);
         descriptionTv = find(R.id.tv_planning_display_event_detail_description);
@@ -93,23 +98,6 @@ public class SpecEventDetailViewHolder extends BaseActivityViewHolder {
      * 显示学习计划模式(即全部控件,默认显示全部控件,所以不用调用此方法,因此为空方法)
      */
     public void learningMode(){
-//        strategyLabel.setVisibility(View.VISIBLE);
-//        strategyTv.setVisibility(View.VISIBLE);
-//
-//        sequenceLabel.setVisibility(View.VISIBLE);
-//        sequenceTv.setVisibility(View.VISIBLE);
-//
-//        progressLabel.setVisibility(View.VISIBLE);
-//        progressTv.setVisibility(View.VISIBLE);
-//
-//        knowledgeQuantityLabel.setVisibility(View.VISIBLE);
-//        knowledgeQuantityTv.setVisibility(View.VISIBLE);
-//
-//        workloadLabel.setVisibility(View.VISIBLE);
-//        workloadTv.setVisibility(View.VISIBLE);
-//
-//        showSequenceLabel.setVisibility(View.VISIBLE);
-//        showSequenceSwitch.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -136,6 +124,7 @@ public class SpecEventDetailViewHolder extends BaseActivityViewHolder {
     }
     
     public void setData(SpecEventDetailVo vo){
+        topDescriptionTv.setText(vo.event.getDescription());
 
         //计划组
         if (vo.eventGroup != null){

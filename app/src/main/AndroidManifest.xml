@@ -54,6 +54,8 @@
         </activity>
         <activity android:name=".ui.view.common.activity.CommonSearchEventActivity">
         </activity>
+        <activity android:name=".ui.view.extension.activity.ExtensionTaskStackActivity">
+        </activity>
     </application>
 
 </manifest>
