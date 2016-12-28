@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -38,6 +37,7 @@ import link.ebbinghaus.planning.app.constant.Constant;
 import link.ebbinghaus.planning.app.constant.config.entity.FastTemplateConfig;
 import link.ebbinghaus.planning.app.constant.config.entity.LearningEventGroupConfig;
 import link.ebbinghaus.planning.app.constant.module.PlanningBuildConstant;
+import link.ebbinghaus.planning.app.util.CommonUtils;
 import link.ebbinghaus.planning.core.model.local.po.DefaultInputValue;
 import link.ebbinghaus.planning.core.model.local.po.EventGroup;
 import link.ebbinghaus.planning.core.model.local.po.EventSubtype;
@@ -61,7 +61,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
 
     //requestCode(同时也将会被用作在CommonSelectActivity识别类型的Flag)
     public static final int FLAG_EVENT_SUBTYPE = R.id.tv_planning_build_subtype & CommonSelectActivity.FLAG_MASK;
-    public static final int FLAG_FAST_TEMPLATE = R.id.btn_planning_build_fast_template & CommonSelectActivity.FLAG_MASK;
+    public static final int FLAG_FAST_TEMPLATE = R.id.iv_planning_build_template & CommonSelectActivity.FLAG_MASK;
     public static final int FLAG_EVENT_GROUP = R.id.tv_planning_build_event_group & CommonSelectActivity.FLAG_MASK;
 
     /**
@@ -75,7 +75,6 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     private RadialTimePickerDialogFragment mRadialTimePicker;
     private CalendarDatePickerDialogFragment mCalendarDatePicker;
     private SingleSelectDialog mSingleSelectDialog;
-    private Snackbar mSnackbar;
     /**
      * 用来记录具体计划输入值的变量
      */
@@ -188,17 +187,19 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mSnackbar = Snackbar.make(getView(), getString(R.string.planning_build_spec_description_validate_info), Snackbar.LENGTH_LONG);
     }
 
     @Override
-    public void setBuildPanel() {
-        if (mPanelShowEventType) {
-            vh.eventTypeTv.setText(getString(R.string.planning_build_spec_normal_event));
+    public void setBuildPanel(boolean eventType) {
+        if (eventType == mPanelShowEventType) return;
+        if (mPanelShowEventType = eventType) {
             vh.showNormalPanel();
+            vh.eventTypeNormalTv.setTextColor(getResources().getColor(R.color.md_white_1000));
+            vh.eventTypeLearningTv.setTextColor(getResources().getColor(R.color.md_grey_600));
         } else {
-            vh.eventTypeTv.setText(getString(R.string.planning_build_spec_learning_event));
             vh.showLearningPanel();
+            vh.eventTypeNormalTv.setTextColor(getResources().getColor(R.color.md_grey_600));
+            vh.eventTypeLearningTv.setTextColor(getResources().getColor(R.color.md_white_1000));
         }
         mPanelShowEventType = !mPanelShowEventType;
         mInputEvent.setEventType(mPanelShowEventType ? FastTemplateConfig.TYPE_SPEC_LEARNING : FastTemplateConfig.TYPE_SPEC_NORMAL);
@@ -323,21 +324,23 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         mInputEvent = new InputEventVo();
         mPresenter.getAndSetDefaultInputValues(mInputEvent);
         vh.descriptionEt.setText("");
-        mSnackbar.setText(getString(R.string.planning_build_spec_saved_successfully_info));
-        mSnackbar.show();
+        CommonUtils.showLongToast(R.string.planning_build_spec_saved_successfully_info);
         refreshChart();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_planning_build_switch_event_type:
-                mPresenter.switchBuildPanel();
+            case R.id.tv_planning_build_event_type_normal:
+                mPresenter.switchBuildPanel(true);
                 break;
-            case R.id.tv_planning_build_subtype:
+            case R.id.tv_planning_build_event_type_learning:
+                mPresenter.switchBuildPanel(false);
+                break;
+            case R.id.ll_planning_build_subtype:
                 jumpToSelectActivityForResult(PlanningBuildConstant.TITLE_SELECT_SUBTYPE, FLAG_EVENT_SUBTYPE);
                 break;
-            case R.id.btn_planning_build_fast_template:
+            case R.id.iv_planning_build_template:
                 startActivityForResult(
                         newIntent(CommonSelectActivity.class)
                                 .putExtra(INTENT_NAME_FAST_TEMPLATE_TYPE, mPanelShowEventType ? FastTemplateConfig.TYPE_SPEC_LEARNING : FastTemplateConfig.TYPE_SPEC_NORMAL)
@@ -345,17 +348,23 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
                                 .putExtra(CommonSelectActivity.INTENT_NAME_FLAG, FLAG_FAST_TEMPLATE),
                         FLAG_FAST_TEMPLATE);
                 break;
-            case R.id.tv_planning_build_strategy:
+            case R.id.ll_planning_build_strategy:
                 mPresenter.configureStrategy();
                 break;
-            case R.id.tv_planning_build_expected_finish_date:
+            case R.id.ll_planning_build_expected_finish_date:
                 mPresenter.configureExpectedFinishDate();
                 break;
-            case R.id.tv_planning_build_remind_time:
+            case R.id.ll_planning_build_remind_time:
                 mPresenter.configureRemindTime();
                 break;
-            case R.id.tv_planning_build_event_group:
+            case R.id.ll_planning_build_event_group:
                 jumpToSelectActivityForResult(PlanningBuildConstant.TITLE_SELECT_EVENT_GROUP, FLAG_EVENT_GROUP);
+                break;
+            case R.id.ll_planning_build_is_remind:
+                vh.remindSwitch.toggle();
+                break;
+            case R.id.ll_planning_build_is_show_event_sequence:
+                vh.sequenceSwitch.toggle();
                 break;
         }
     }
@@ -388,8 +397,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         //提取页面数据到event中
         //step 1.验证填写完整性
         if (TextUtils.isEmpty(vh.descriptionEt.getText().toString().trim())) {
-            mSnackbar.setText(getString(R.string.planning_build_spec_description_validate_info));
-            mSnackbar.show();
+            CommonUtils.showLongToast(R.string.planning_build_spec_description_validate_info);
             return false;
         }
         //step 2.拷贝填入

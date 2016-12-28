@@ -70,8 +70,8 @@ public class SingleSelectDialog extends DialogFragment implements View.OnClickLi
             View v = activity.getLayoutInflater().inflate(R.layout.dialog_single_select, null);
             LinearLayout optionContainerLl = (LinearLayout) v.findViewById(R.id.ll_dialog_single_select);
             ViewGroup.LayoutParams lp = ViewGroupUtils.genMatchWrapLP();
-            int padding = DensityUtils.dp2px(getContext(), 20);    //TODO:换成软编码
-            int textSize = DensityUtils.sp2px(getContext(), 5);
+            int padding = DensityUtils.dp2px(getContext(), 17);    //TODO:换成软编码
+            int textSize = DensityUtils.sp2px(getContext(), 7);
             for (int i = 0; i < optionTitles.length; i++) {
                 TextView optionTv = new TextView(activity);
                 optionTv.setText(optionTitles[i]);

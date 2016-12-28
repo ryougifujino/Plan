@@ -7,7 +7,11 @@
     android:orientation="vertical"
     tools:context=".ui.view.extension.fragment.ExtensionFragment">
 
-    <include layout="@layout/head_common"/>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/head_common"/>
+    </android.support.design.widget.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,8 +26,8 @@
                 android:id="@+id/ll_extension_read"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
                 android:layout_margin="20dp"
+                android:background="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 app:layout_columnWeight="1">
@@ -46,8 +50,8 @@
                 android:id="@+id/ll_extension_fragment_time_saver"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
                 android:layout_margin="20dp"
+                android:background="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 app:layout_columnWeight="1">
@@ -70,8 +74,8 @@
                 android:id="@+id/ll_extension_task_stack"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
                 android:layout_margin="20dp"
+                android:background="?attr/selectableItemBackground"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 app:layout_columnWeight="1">
@@ -89,7 +93,6 @@
                     android:text="任务栈"/>
 
             </LinearLayout>
-
 
 
         </android.support.v7.widget.GridLayout>

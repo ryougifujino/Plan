@@ -17,7 +17,7 @@
     <string name="login_password_error">密码至少6位</string>
 
     <!-- planning_display -->
-    <string name="planning_display_title">浏览计划</string>
+    <string name="planning_display_title">浏览</string>
     <string name="planning_display_toolbar_date">%1$d年%2$d月%3$d日</string>
     <string name="planning_display_date_select_hint">只有按月和按周窗口才能选择日期</string>
     <string name="planning_display_create_time">%1$d年%2$d月%3$d日%4$d:%5$d</string>

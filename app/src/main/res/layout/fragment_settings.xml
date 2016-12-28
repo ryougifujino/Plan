@@ -1,134 +1,146 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               tools:context=".ui.view.setting.fragment.SettingsFragment">
 
-    <include layout="@layout/head_common"/>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include layout="@layout/head_common"/>
+    </android.support.design.widget.AppBarLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/item_margin_horizontal"
-            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/md_white_1000"
             app:cardCornerRadius="2dp"
-            app:cardBackgroundColor="@color/md_white_1000">
+            app:cardElevation="2dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="15dp">
+
                 <TextView
                     android:id="@+id/label_settings_planning_build"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
                     android:layout_marginLeft="5dp"
                     android:paddingBottom="10dp"
-                    android:text="计划制定默认值"/>
+                    android:text="计划制定默认值"
+                    android:textSize="20sp"/>
 
                 <TextView
-                    android:padding="15dp"
-                    android:layout_below="@id/label_settings_planning_build"
                     android:id="@+id/label_settings_planning_build_strategy"
-                    android:text="计划方案"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_settings_planning_build"
                     android:padding="15dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignBaseline="@id/label_settings_planning_build_strategy"
+                    android:text="计划方案"/>
+
+                <TextView
                     android:id="@+id/tv_settings_planning_build_strategy"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:text="理解型"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_settings_planning_build_strategy"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="理解型"/>
 
                 <TextView
-                    android:padding="15dp"
-                    android:layout_below="@id/label_settings_planning_build_strategy"
                     android:id="@+id/label_settings_planning_build_max_width"
-                    android:text="最大宽度限制"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_settings_planning_build_strategy"
                     android:padding="15dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignBaseline="@id/label_settings_planning_build_max_width"
-                    android:id="@+id/tv_settings_planning_build_max_width"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:text="5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:text="最大宽度限制"/>
 
                 <TextView
-                    android:padding="15dp"
-                    android:layout_below="@id/label_settings_planning_build_max_width"
-                    android:id="@+id/label_settings_planning_build_is_remind"
-                    android:text="提醒"
+                    android:id="@+id/tv_settings_planning_build_max_width"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <Switch
-                    android:padding="15dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_settings_planning_build_max_width"
                     android:layout_alignParentRight="true"
-                    android:layout_alignBaseline="@id/label_settings_planning_build_is_remind"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="5"/>
+
+                <TextView
+                    android:id="@+id/label_settings_planning_build_is_remind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_settings_planning_build_max_width"
+                    android:padding="15dp"
+                    android:text="提醒"/>
+
+                <Switch
                     android:id="@+id/switch_settings_planning_build_is_remind"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_settings_planning_build_is_remind"
+                    android:layout_alignParentRight="true"
+                    android:padding="15dp"/>
 
                 <TextView
-                    android:padding="15dp"
-                    android:layout_below="@id/label_settings_planning_build_is_remind"
                     android:id="@+id/label_settings_planning_build_remind_time"
-                    android:text="提醒时间"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_settings_planning_build_is_remind"
                     android:padding="15dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignBaseline="@id/label_settings_planning_build_remind_time"
-                    android:id="@+id/tv_settings_planning_build_remind_time"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:text="15:30"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:text="提醒时间"/>
 
                 <TextView
-                    android:padding="15dp"
-                    android:layout_below="@id/label_settings_planning_build_remind_time"
-                    android:id="@+id/label_settings_planning_build_is_show_event_sequence"
-                    android:text="显示次序"
+                    android:id="@+id/tv_settings_planning_build_remind_time"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <Switch
-                    android:padding="15dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_settings_planning_build_remind_time"
                     android:layout_alignParentRight="true"
-                    android:layout_alignBaseline="@id/label_settings_planning_build_is_show_event_sequence"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="15:30"/>
+
+                <TextView
+                    android:id="@+id/label_settings_planning_build_is_show_event_sequence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_settings_planning_build_remind_time"
+                    android:padding="15dp"
+                    android:text="显示次序"/>
+
+                <Switch
                     android:id="@+id/switch_settings_planning_build_is_show_event_sequence"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_settings_planning_build_is_show_event_sequence"
+                    android:layout_alignParentRight="true"
+                    android:padding="15dp"/>
 
                 <TextView
-                    android:visibility="gone"
-                    android:padding="15dp"
-                    android:layout_below="@id/label_settings_planning_build_is_show_event_sequence"
                     android:id="@+id/label_settings_planning_build_is_greek_alphabet_marked"
-                    android:text="用希腊字母标记"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <Switch
-                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/label_settings_planning_build_is_show_event_sequence"
                     android:padding="15dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignBaseline="@id/label_settings_planning_build_is_greek_alphabet_marked"
+                    android:text="用希腊字母标记"
+                    android:visibility="gone"/>
+
+                <Switch
                     android:id="@+id/switch_settings_planning_build_is_greek_alphabet_marked"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/label_settings_planning_build_is_greek_alphabet_marked"
+                    android:layout_alignParentRight="true"
+                    android:padding="15dp"
+                    android:visibility="gone"/>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
     </ScrollView>

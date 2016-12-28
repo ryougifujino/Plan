@@ -4,32 +4,33 @@ package link.ebbinghaus.planning.ui.view.planning.build.fragment;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yurikami.lib.base.BaseFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.app.constant.Constant;
 import link.ebbinghaus.planning.app.constant.config.entity.FastTemplateConfig;
 import link.ebbinghaus.planning.app.constant.module.PlanningBuildConstant;
+import link.ebbinghaus.planning.app.util.CommonUtils;
 import link.ebbinghaus.planning.core.model.local.po.EventGroup;
 import link.ebbinghaus.planning.core.model.local.po.FastTemplate;
 import link.ebbinghaus.planning.core.model.local.vo.planning.build.InputEventVo;
 import link.ebbinghaus.planning.ui.presenter.planning.build.PlanningBuildAbstractPresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.build.impl.PlanningBuildAbstractPresenterImpl;
-import link.ebbinghaus.planning.ui.view.planning.build.activity.PlanningBuildActivity;
 import link.ebbinghaus.planning.ui.view.common.activity.CommonSelectActivity;
 import link.ebbinghaus.planning.ui.view.planning.build.PlanningBuildAbstractView;
-import link.ebbinghaus.planning.R;
+import link.ebbinghaus.planning.ui.view.planning.build.activity.PlanningBuildActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,11 +48,11 @@ public class PlanningBuildAbstractFragment extends BaseFragment implements Plann
     public static final String INTENT_NAME_FAST_TEMPLATE_TYPE = Constant.PACKAGE_NAME + ".FastTemplateType";
 
     @Bind(R.id.et_planning_build_description) EditText descriptionEt;
-    @Bind(R.id.btn_planning_build_fast_template) Button fastTemplateBtn;
+    @Bind(R.id.iv_planning_build_template) ImageView templateIv;
     @Bind(R.id.tv_planning_build_event_group) TextView eventGroupTv;
+    @Bind(R.id.ll_planning_build_event_group) LinearLayout eventGroupLl;
 
     private PlanningBuildAbstractPresenter mPresenter;
-    private Snackbar mSnackbar; //TODO： 改成错误hint
     /** 用来记录具体计划输入值的变量 */
     private InputEventVo mInputEvent = new InputEventVo();
 
@@ -94,8 +95,8 @@ public class PlanningBuildAbstractFragment extends BaseFragment implements Plann
 
     @Override
     public void setListeners() {
-        fastTemplateBtn.setOnClickListener(this);
-        eventGroupTv.setOnClickListener(this);
+        templateIv.setOnClickListener(this);
+        eventGroupLl.setOnClickListener(this);
 
         //注册PlanningBuildActivity里面的监听器
         //!省略,由父Activity在Page切换的时候获取子类实例进行注册
@@ -132,20 +133,18 @@ public class PlanningBuildAbstractFragment extends BaseFragment implements Plann
         mInputEvent = new InputEventVo();
         descriptionEt.setText("");
         eventGroupTv.setText(getString(R.string.common_none));
-        mSnackbar.setText(getString(R.string.planning_build_abst_saved_successfully_info));
-        mSnackbar.show();
+        CommonUtils.showLongToast(R.string.planning_build_abst_saved_successfully_info);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mSnackbar = Snackbar.make(getView(), getString(R.string.planning_build_spec_description_validate_info), Snackbar.LENGTH_LONG);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.btn_planning_build_fast_template:
+            case R.id.iv_planning_build_template:
                 startActivityForResult(
                         newIntent(CommonSelectActivity.class)
                                 .putExtra(INTENT_NAME_FAST_TEMPLATE_TYPE, FastTemplateConfig.TYPE_ABSTRACT)
@@ -153,7 +152,7 @@ public class PlanningBuildAbstractFragment extends BaseFragment implements Plann
                                 .putExtra(CommonSelectActivity.INTENT_NAME_FLAG, FLAG_FAST_TEMPLATE),
                         FLAG_FAST_TEMPLATE);
                 break;
-            case R.id.tv_planning_build_event_group:
+            case R.id.ll_planning_build_event_group:
                 startActivityForResult(
                         newIntent(CommonSelectActivity.class)
                                 .putExtra(CommonSelectActivity.INTENT_NAME_TITLE, PlanningBuildConstant.TITLE_SELECT_EVENT_GROUP)
@@ -168,8 +167,7 @@ public class PlanningBuildAbstractFragment extends BaseFragment implements Plann
         //提取页面数据到event中
         //step 1.验证填写完整性
         if (TextUtils.isEmpty(descriptionEt.getText().toString().trim())) {
-            mSnackbar.setText(getString(R.string.planning_build_spec_description_validate_info));
-            mSnackbar.show();
+            CommonUtils.showLongToast(R.string.planning_build_spec_description_validate_info);
             return false;
         }
         //step 2.填入
