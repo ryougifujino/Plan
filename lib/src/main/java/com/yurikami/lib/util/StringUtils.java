@@ -5,9 +5,9 @@ package com.yurikami.lib.util;
  */
 public class StringUtils {
 
-    /** 拼接为中文的年月日 */
-    public static String splice2ChnDate(int year, int month, int day){
-        return year + "年" + month + "月" + day + "日";
+    /** 拼接为yyyy/MM/dd */
+    public static String splice2Date(int year, int month, int day){
+        return year + "/" + month + "/" + day;
     }
 
     /** 字符串数组判空 */

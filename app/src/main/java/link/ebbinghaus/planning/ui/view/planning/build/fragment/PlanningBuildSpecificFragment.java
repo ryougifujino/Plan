@@ -191,17 +191,16 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
 
     @Override
     public void setBuildPanel(boolean eventType) {
-        if (eventType == mPanelShowEventType) return;
+        if (mPanelShowEventType == eventType) return;
         if (mPanelShowEventType = eventType) {
-            vh.showNormalPanel();
-            vh.eventTypeNormalTv.setTextColor(getResources().getColor(R.color.md_white_1000));
-            vh.eventTypeLearningTv.setTextColor(getResources().getColor(R.color.md_grey_600));
-        } else {
             vh.showLearningPanel();
             vh.eventTypeNormalTv.setTextColor(getResources().getColor(R.color.md_grey_600));
             vh.eventTypeLearningTv.setTextColor(getResources().getColor(R.color.md_white_1000));
+        } else {
+            vh.showNormalPanel();
+            vh.eventTypeNormalTv.setTextColor(getResources().getColor(R.color.md_white_1000));
+            vh.eventTypeLearningTv.setTextColor(getResources().getColor(R.color.md_grey_600));
         }
-        mPanelShowEventType = !mPanelShowEventType;
         mInputEvent.setEventType(mPanelShowEventType ? FastTemplateConfig.TYPE_SPEC_LEARNING : FastTemplateConfig.TYPE_SPEC_NORMAL);
         refreshChart();
     }
@@ -243,7 +242,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     @Override
     public void onDateSet(CalendarDatePickerDialogFragment dialog, int year, int monthOfYear, int dayOfMonth) {
         mInputEvent.setEventExpectedFinishedDate(DateUtils.newDateTimestamp(year, monthOfYear + 1, dayOfMonth));
-        vh.expectedFinishDateTv.setText(StringUtils.splice2ChnDate(year, monthOfYear + 1, dayOfMonth));
+        vh.expectedFinishDateTv.setText(StringUtils.splice2Date(year, monthOfYear + 1, dayOfMonth));
         dialog.setPreselectedDate(mNowDate.getYear(), mNowDate.getMonth() - 1, mNowDate.getDay());
         refreshChart();
     }
@@ -332,10 +331,10 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_planning_build_event_type_normal:
-                mPresenter.switchBuildPanel(true);
+                mPresenter.switchBuildPanel(false);
                 break;
             case R.id.tv_planning_build_event_type_learning:
-                mPresenter.switchBuildPanel(false);
+                mPresenter.switchBuildPanel(true);
                 break;
             case R.id.ll_planning_build_subtype:
                 jumpToSelectActivityForResult(PlanningBuildConstant.TITLE_SELECT_SUBTYPE, FLAG_EVENT_SUBTYPE);
