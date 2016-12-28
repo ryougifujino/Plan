@@ -1,5 +1,7 @@
 package link.ebbinghaus.planning.ui.presenter.common.impl;
 
+import com.yurikami.lib.util.StringUtils;
+
 import java.util.List;
 
 import link.ebbinghaus.planning.core.model.local.po.Event;
@@ -28,9 +30,11 @@ public class CommonSearchEventPresenterImpl implements CommonSearchEventPresente
 
 
     @Override
-    public List<Event> searchEvents(String key, boolean specific) {
-        return specific ?
+    public void searchEvents(String key, boolean specific) {
+        if (StringUtils.isAnyEmpty(key == null ? null : key.trim())) return;
+        List<Event> result = specific ?
                 mPlanningDisplaySpecificService.findSpecEventsByDescription(key) :
                 mPlanningDisplayAbstractService.findAbstEventsByDescription(key);
+        mView.refreshResult(result);
     }
 }

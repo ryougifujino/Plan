@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +16,7 @@ import com.yurikami.lib.base.BaseActivity;
 import com.yurikami.lib.util.MenuTint;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,6 +34,8 @@ public class CommonSearchEventActivity extends BaseActivity implements CommonSea
     @Bind(R.id.et_common_search) EditText mEditText;
     private CommonSearchEventPresenter mPresenter;
     private WeekRecyclerViewAdapter mWeekRecyclerViewAdapter;
+
+    private String mSearchKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,11 +62,20 @@ public class CommonSearchEventActivity extends BaseActivity implements CommonSea
 
             @Override
             public void afterTextChanged(Editable s) {
-                String text = s.toString();
-                if (!TextUtils.isEmpty(text.trim()))
-                    mWeekRecyclerViewAdapter.refresh(mPresenter.searchEvents(text,true));
+                mPresenter.searchEvents(mSearchKey = s.toString(),true);
             }
         });
+    }
+
+    @Override
+    public void refreshResult(List<Event> result) {
+        mWeekRecyclerViewAdapter.refresh(result);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.searchEvents(mSearchKey,true);
     }
 
     private void configureToolbar() {
@@ -94,4 +105,5 @@ public class CommonSearchEventActivity extends BaseActivity implements CommonSea
         }
         return false;
     }
+
 }
