@@ -8,14 +8,14 @@ import java.util.List;
 
 import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
 import link.ebbinghaus.planning.app.constant.module.PlanningDisplayConstant;
-import link.ebbinghaus.planning.core.db.decorator.impl.EventSubtypeDaoDecorator;
-import link.ebbinghaus.planning.core.model.local.vo.planning.display.SpecEventDetailVo;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventDaoDecorator;
 import link.ebbinghaus.planning.core.db.decorator.impl.EventGroupDaoDecorator;
+import link.ebbinghaus.planning.core.db.decorator.impl.EventSubtypeDaoDecorator;
 import link.ebbinghaus.planning.core.db.decorator.impl.LearningEventGroupDaoDecorator;
-import link.ebbinghaus.planning.core.service.PlanningDisplaySpecificService;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.core.model.local.sys.Tab;
+import link.ebbinghaus.planning.core.model.local.vo.planning.display.SpecEventDetailVo;
+import link.ebbinghaus.planning.core.service.PlanningDisplaySpecificService;
 import link.ebbinghaus.planning.ui.view.planning.display.fragment.PlanningDisplayEventGroupFragment;
 import link.ebbinghaus.planning.ui.view.planning.display.fragment.PlanningDisplaySpecMonthFragment;
 import link.ebbinghaus.planning.ui.view.planning.display.fragment.PlanningDisplaySpecWeekFragment;
@@ -79,17 +79,15 @@ public class PlanningDisplaySpecificServiceImpl implements PlanningDisplaySpecif
 
     @Override
     public void findSpecEventDetailTo(SpecEventDetailVo specEventDetail) {
+        EventDaoDecorator eventDao = new EventDaoDecorator();
         LearningEventGroupDaoDecorator learningEventGroupDao = new LearningEventGroupDaoDecorator();
         EventGroupDaoDecorator eventGroupDao = new EventGroupDaoDecorator();
         EventSubtypeDaoDecorator eventSubtypeDao = new EventSubtypeDaoDecorator();
 
-        Long learningEventGroupId = specEventDetail.event.getLearningEventGroupId();
-        Long eventGroupId = specEventDetail.event.getEventGroupId();
-        Long eventSubtypeId = specEventDetail.event.getEventSubtypeId();
-
-        specEventDetail.learningEventGroup = learningEventGroupDao.selectByPrimaryKey(learningEventGroupId);
-        specEventDetail.eventGroup = eventGroupDao.selectByPrimaryKey(eventGroupId);
-        specEventDetail.eventSubtype = eventSubtypeDao.selectByPrimaryKey(eventSubtypeId);
+        specEventDetail.event = eventDao.selectByPrimaryKey(specEventDetail.event.getPkEventId());
+        specEventDetail.learningEventGroup = learningEventGroupDao.selectByPrimaryKey(specEventDetail.event.getLearningEventGroupId());
+        specEventDetail.eventGroup = eventGroupDao.selectByPrimaryKey(specEventDetail.event.getEventGroupId());
+        specEventDetail.eventSubtype = eventSubtypeDao.selectByPrimaryKey(specEventDetail.event.getEventSubtypeId());
 
         eventSubtypeDao.closeDB();
         eventGroupDao.closeDB();

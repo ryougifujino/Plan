@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 
 import com.yurikami.lib.base.BaseActivity;
@@ -18,13 +19,14 @@ import link.ebbinghaus.planning.core.model.local.vo.planning.display.SpecEventDe
 import link.ebbinghaus.planning.ui.presenter.planning.display.PlanningDisplaySpecEventDetailPresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.display.impl.PlanningDisplaySpecEventDetailPresenterImpl;
 import link.ebbinghaus.planning.ui.view.planning.display.PlanningDisplaySpecEventDetailView;
+import link.ebbinghaus.planning.ui.view.planning.done.activity.PlanningDoneFinishActivity;
 import link.ebbinghaus.planning.ui.viewholder.planning.display.SpecEventDetailViewHolder;
 
 /**
  * 具体计划详情的显示页面
  */
 public class PlanningDisplaySpecEventDetailActivity extends BaseActivity implements PlanningDisplaySpecEventDetailView,
-        CompoundButton.OnCheckedChangeListener{
+        CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     public static final String INTENT_NAME_EVENT = Constant.PACKAGE_NAME + "Event";
 
     @Bind(R.id.tb_common_head) Toolbar mToolbar;
@@ -56,6 +58,16 @@ public class PlanningDisplaySpecEventDetailActivity extends BaseActivity impleme
 
     }
 
+    /** 刷新此界面 */
+    private void refresh(){
+        mPresenter.refreshSpecEventDetail(vo);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refresh();
+    }
 
     @Override
     public void getIntentData() {
@@ -77,12 +89,12 @@ public class PlanningDisplaySpecEventDetailActivity extends BaseActivity impleme
     @Override
     public void registerViewListener() {
         vh.showSequenceSwitch.setOnCheckedChangeListener(this);
-        vh.greekAlphabetSwitch.setOnCheckedChangeListener(this);
+        vh.setOnClickListeners(this);   //TODO: implements these listener
     }
 
     @Override
     public void fillViewWithData() {
-        vh.setData(vo);
+        vh.setDataAndConfigViews(vo);
     }
 
     @Override
@@ -93,12 +105,43 @@ public class PlanningDisplaySpecEventDetailActivity extends BaseActivity impleme
                 vo.event.setIsShowEventSequence(isChecked);
                 mPresenter.updateIsShowEventSequence(vo.event);
                 break;
-            case R.id.switch_planning_display_event_detail_is_greek_alphabet_marked:
-                vh.greekAlphabetSwitch.setChecked(isChecked);
-                vo.event.setIsGreekAlphabetMarked(isChecked);
-                mPresenter.updateIsGreekAlphabetMarked(vo.event);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_tv_planning_display_event_detail_top_to_finish:
+                if (vo.event.isFinishable()) {
+                    PlanningDoneFinishActivity.startAction(this, vo.event);
+                }else {
+                    vh.topToFinishBtn.setVisibility(View.GONE);
+                    refresh();
+                }
+                break;
+           case R.id.rl_planning_display_spec_event_detail_subtype:
+
+                break;
+            case R.id.rl_planning_display_spec_event_detail_event_group:
+
+                break;
+            case R.id.rl_planning_display_spec_event_detail_show_sequence:
+                vh.showSequenceSwitch.toggle();
+                break;
+            case R.id.rl_planning_display_spec_event_detail_strategy:
+
+                break;
+            case R.id.rl_planning_display_event_detail_expected_date:
+
+                break;
+            case R.id.rl_planning_display_spec_event_detail_remind_time:
+
+                break;
+            case R.id.rl_planning_display_spec_event_detail_summary:
+
                 break;
         }
+
     }
 
     @Override
@@ -124,4 +167,7 @@ public class PlanningDisplaySpecEventDetailActivity extends BaseActivity impleme
     public void exitThisView() {
         finish();
     }
+
+
+
 }

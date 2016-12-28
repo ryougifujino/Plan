@@ -162,7 +162,7 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         // step2. 给控件设置默认值
         vh.eventSubtypeTv.setText(getString(R.string.common_none));
         vh.strategyTv.setText(defaultInputValue.getChnStrategy());
-        vh.expectedFinishDateTv.setText(DateUtils.currentChnDate());
+        vh.expectedFinishDateTv.setText(DateUtils.currentDate());
         vh.remindSwitch.setChecked(defaultInputValue.getIsRemind());
         vh.remindTimeTv.setText(defaultInputValue.getFormatRemindTime());
         vh.sequenceSwitch.setChecked(defaultInputValue.getIsShowEventSequence());

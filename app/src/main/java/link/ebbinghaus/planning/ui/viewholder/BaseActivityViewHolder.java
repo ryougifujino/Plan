@@ -9,6 +9,7 @@ import android.view.View;
 public class BaseActivityViewHolder {
     private Activity mActivity;
 
+
     public BaseActivityViewHolder(Activity activity) {
         this.mActivity = activity;
     }
@@ -17,4 +18,14 @@ public class BaseActivityViewHolder {
     protected  <T extends View> T find(int viewId) {
         return (T) mActivity.findViewById(viewId);
     }
+
+    protected String getString(int resId){
+        return mActivity.getString(resId);
+    }
+
+    /** Returns a color integer associated with a particular resource ID. */
+    protected int getColor(int resId){
+        return mActivity.getResources().getColor(resId);
+    }
+
 }

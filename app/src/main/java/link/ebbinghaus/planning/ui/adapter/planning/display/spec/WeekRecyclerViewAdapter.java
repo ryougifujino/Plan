@@ -73,7 +73,7 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
 //        @Bind(R.id.tv_planning_display_spec_week_week) TextView weekTv;
         @Bind(R.id.tv_planning_display_spec_week_event_type) TextView eventTypeTv;
         @Bind(R.id.tv_planning_display_spec_week_date) TextView dateTv;
-//        @Bind(R.id.tv_planning_display_spec_week_process) TextView processTv;
+//        @Bind(R.id.tv_planning_display_spec_week_process) TextView topProcessTv;
         @Bind(R.id.tv_planning_display_spec_week_description) TextView descriptionTv;
         @Bind(R.id.tv_planning_display_spec_week_detail) TextView detailTv;
         @Bind(R.id.tv_planning_display_spec_week_quick_view) TextView quickViewTv;
@@ -98,7 +98,7 @@ public class WeekRecyclerViewAdapter extends RecyclerView.Adapter<WeekRecyclerVi
                     mContext.getString(event.getEventType() == 1
                     ? EventConstant.PROCESS_LEARNING[event.getEventProcess() - 1]
                     : EventConstant.PROCESS_NORMAL[event.getEventProcess() - 1])));
-//                processTv.setText(event.getEventType() == 1
+//                topProcessTv.setText(event.getEventType() == 1
 //                        ? EventConstant.PROCESS_LEARNING[event.getEventProcess() - 1]
 //                        : EventConstant.PROCESS_NORMAL[event.getEventProcess() - 1]);
             descriptionTv.setText(event.getDescription());

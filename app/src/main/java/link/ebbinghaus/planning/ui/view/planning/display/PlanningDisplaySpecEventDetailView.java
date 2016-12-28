@@ -29,4 +29,5 @@ public interface PlanningDisplaySpecEventDetailView {
      * 离开此视图
      */
     void exitThisView();
+
 }

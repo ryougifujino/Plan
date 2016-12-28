@@ -239,17 +239,44 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
 
     /** 搜索模糊计划 */
     public List<Event> selectAbstEventsByDescription(String key) {
-        String querySql = "SELECT * FROM " + mTableName + " WHERE " +
-                EVENT_TYPE + " = " + EventConfig.TYPE_ABSTRACT +
-                " AND " + DESCRIPTION + " LIKE %?%";
-        return _select(querySql,new String[]{ key });
+        return selectEventsByCriterion(Criterion.build().description(key).specific(false));
     }
 
     /** 搜索具体计划 */
     public List<Event> selectSpecEventsByDescription(String key) {
+        return selectEventsByCriterion(Criterion.build().description(key).specific(true));
+    }
+
+    /** 根据条件对象查找计划 */
+    private List<Event> selectEventsByCriterion(Criterion criterion){
+        if (criterion.description == null){
+            throw new IllegalArgumentException("field description must not null");
+        }
+        if (criterion.specific == null) criterion.specific = true;
+        String typeClause = criterion.specific ? " != " : " = ";
         String querySql = "SELECT * FROM " + mTableName + " WHERE " +
-                EVENT_TYPE + " != " + EventConfig.TYPE_ABSTRACT +
-                " AND " + DESCRIPTION + " LIKE %?%";
-        return _select(querySql,new String[]{ key });
+                EVENT_TYPE + typeClause + EventConfig.TYPE_ABSTRACT +
+                " AND " + DESCRIPTION + " LIKE '%"+ criterion.description +"%'";
+        return _select(querySql);
+    }
+
+    private static class Criterion{
+        private Criterion() { }
+        static Criterion build(){
+            return new Criterion();
+        }
+
+        String description;
+        Boolean specific;
+
+        Criterion description(String description){
+            this.description = description;
+            return this;
+        }
+        Criterion specific(boolean specific){
+            this.specific = specific;
+            return this;
+        }
+
     }
 }

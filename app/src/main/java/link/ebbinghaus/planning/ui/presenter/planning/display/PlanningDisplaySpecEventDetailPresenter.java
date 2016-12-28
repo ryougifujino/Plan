@@ -15,6 +15,12 @@ public interface PlanningDisplaySpecEventDetailPresenter {
     void initSpecEventDetail(SpecEventDetailVo specEventDetail);
 
     /**
+     * 刷新具体计划详情页面(视图和数据两方面)
+     * @param specEventDetail specEventDetail 页面数据
+     */
+    void refreshSpecEventDetail(SpecEventDetailVo specEventDetail);
+
+    /**
      * 删除本详情页面所显示的计划<br>
      * 并且会处理这个计划的相关内容：学习计划组、计划组、希腊字母
      * @param event 删除参数
@@ -24,6 +30,4 @@ public interface PlanningDisplaySpecEventDetailPresenter {
     /** 更新是否显示顺序 */
     void updateIsShowEventSequence(Event event);
 
-    /**  更新是否用希腊字母标记 */
-    void updateIsGreekAlphabetMarked(Event event);
 }

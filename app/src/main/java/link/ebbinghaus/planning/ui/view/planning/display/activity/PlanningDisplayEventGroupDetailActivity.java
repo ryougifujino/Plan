@@ -90,7 +90,7 @@ public class PlanningDisplayEventGroupDetailActivity extends BaseActivity implem
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 //        mToolbar.setTitle(R.string.planning_display_event_group_toolbar_title);
-        mCtl.setTitle(getString(R.string.planning_display_event_group_detail_create_time, DateUtils.fromTimestamp2Date(mEventGroup.getCreateTime())));
+        mCtl.setTitle(getString(R.string.planning_display_event_group_detail_create_time, DateUtils.formatTimestamp2Date(mEventGroup.getCreateTime())));
         mCtl.setCollapsedTitleTextColor(getResources().getColor(R.color.md_white_1000));
         mCtl.setExpandedTitleColor(getResources().getColor(R.color.md_blue_grey_700));
         mCtl.setExpandedTitleMarginStart(DensityUtils.dp2px(20));

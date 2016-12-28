@@ -18,5 +18,36 @@
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
     </style>
 
+    <!-- ______________________module______________________ -->
+
+    <!-- planning_display_spec_event_detail -->
+    <style name="PlanningDisplaySpecEventDetailWrapper">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="PlanningDisplaySpecEventDetailBadge">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_width">30dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:tint">@color/md_teal_600</item>
+    </style>
+
+    <style name="PlanningDisplaySpecEventDetailItemTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">65dp</item>
+        <item name="android:textColor">@color/label</item>
+    </style>
+    <style name="PlanningDisplaySpecEventDetailItemContent">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">65dp</item>
+    </style>
+
+    <!-- ______________________module#end______________________ -->
 
 </resources>

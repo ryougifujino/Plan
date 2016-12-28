@@ -13,6 +13,8 @@
 
     <color name="label">@color/md_black_1000</color>
 
+    <!--divider of md color-->
+
     <!--reds-->
     <color name="md_red_50">#FFEBEE</color>
     <color name="md_red_100">#FFCDD2</color>

@@ -19,6 +19,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
 import link.ebbinghaus.planning.app.constant.model.EventConstant;
+import link.ebbinghaus.planning.app.util.CommonUtils;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.ui.view.planning.display.activity.PlanningDisplaySpecEventDetailActivity;
 import link.ebbinghaus.planning.ui.view.planning.done.activity.PlanningDoneFinishActivity;
@@ -131,7 +132,11 @@ public class FinishRecyclerViewAdapter extends RecyclerView.Adapter<FinishRecycl
                 intent.putExtra(PlanningDisplaySpecEventDetailActivity.INTENT_NAME_EVENT,event);
                 mContext.startActivity(intent);
             }else {
-                PlanningDoneFinishActivity.startAction(mContext,event);
+                if (event.isFinishable()) {
+                    PlanningDoneFinishActivity.startAction(mContext, event);
+                }else {
+                    CommonUtils.showLongToast("此计划已过期，不能进行完成");
+                }
             }
         }
 

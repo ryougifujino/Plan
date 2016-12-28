@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Lib</string>
     <!-- common -->
-    <string name="common_none">无</string>
+    <string name="common_none"></string>
     <string name="common_select_all">全选</string>
     <string name="common_select_none">全不选</string>
     <string name="common_delete">删除</string>
@@ -23,4 +23,5 @@
     <string name="common_minute">分钟</string>
     <string name="common_second">秒</string>
 
+    <string name="common_zero_hour_minute_second">00:00:00</string>
 </resources>
