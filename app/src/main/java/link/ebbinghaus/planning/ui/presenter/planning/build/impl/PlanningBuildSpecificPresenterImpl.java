@@ -47,8 +47,8 @@ public class PlanningBuildSpecificPresenterImpl implements PlanningBuildSpecific
     }
 
     @Override
-    public void switchBuildPanel() {
-        mView.setBuildPanel();
+    public void switchBuildPanel(boolean eventType) {
+        mView.setBuildPanel(eventType);
     }
 
     @Override

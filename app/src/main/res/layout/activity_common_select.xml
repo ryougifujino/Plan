@@ -7,62 +7,70 @@
     android:orientation="vertical"
     tools:context=".ui.view.common.activity.CommonSelectActivity">
 
-    <FrameLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <include layout="@layout/head_common"/>
 
-        <RelativeLayout
-            android:visibility="gone"
-            android:id="@+id/rl_common_select_delete_toolbar"
-            android:background="?attr/colorPrimary"
+        <FrameLayout
+            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/iv_common_select_delete_toolbar_arrow_back"
-                android:background="?android:attr/selectableItemBackground"
-                android:layout_width="25dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_centerVertical="true"
-                android:adjustViewBounds="true"
-                android:src="@drawable/common_arrow_back"/>
+            <include layout="@layout/head_common"/>
 
-            <TextView
-                android:layout_toRightOf="@id/iv_common_select_delete_toolbar_arrow_back"
-                android:id="@+id/tv_common_select_delete_toolbar_select_info"
-                android:padding="15dp"
-                android:text="已选择1个"
-                android:textColor="@color/md_white_1000"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
 
-            <TextView
-                android:layout_alignParentRight="true"
-                android:id="@+id/tv_common_select_delete_toolbar_delete"
-                android:background="?android:attr/selectableItemBackground"
-                android:layout_centerVertical="true"
-                android:textColor="@color/md_white_1000"
-                android:padding="15dp"
-                android:text="删除"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            <RelativeLayout
+                android:id="@+id/rl_common_select_delete_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:visibility="gone">
 
-            <TextView
-                android:layout_toLeftOf="@id/tv_common_select_delete_toolbar_delete"
-                android:id="@+id/tv_common_select_delete_toolbar_select_all_toggle"
-                android:layout_centerVertical="true"
-                android:background="?android:attr/selectableItemBackground"
-                android:textColor="@color/md_white_1000"
-                android:padding="15dp"
-                android:text="全选"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                <ImageView
+                    android:id="@+id/iv_common_select_delete_toolbar_arrow_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:padding="16dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:src="@drawable/common_arrow_back"/>
 
-        </RelativeLayout>
-    </FrameLayout>
+                <TextView
+                    android:id="@+id/tv_common_select_delete_toolbar_select_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/iv_common_select_delete_toolbar_arrow_back"
+                    android:padding="15dp"
+                    android:textSize="16sp"
+                    android:text="已选择1个"
+                    android:textColor="@color/md_white_1000"/>
+
+                <TextView
+                    android:id="@+id/tv_common_select_delete_toolbar_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="删除"
+                    android:textColor="@color/md_white_1000"/>
+
+                <TextView
+                    android:id="@+id/tv_common_select_delete_toolbar_select_all_toggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/tv_common_select_delete_toolbar_delete"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:padding="15dp"
+                    android:text="全选"
+                    android:textColor="@color/md_white_1000"/>
+
+            </RelativeLayout>
+        </FrameLayout>
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_common_select"

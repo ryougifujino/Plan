@@ -28,8 +28,9 @@ public interface PlanningBuildSpecificView {
 
     /**
      * 根据普通计划还是学习计划设置面板
+     * @param eventType true:普通计划 false:学习计划
      */
-    void setBuildPanel();
+    void setBuildPanel(boolean eventType);
 
     /**
      * 设置计划子类型

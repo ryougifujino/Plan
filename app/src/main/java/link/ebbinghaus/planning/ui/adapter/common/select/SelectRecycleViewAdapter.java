@@ -3,10 +3,10 @@ package link.ebbinghaus.planning.ui.adapter.common.select;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,8 +19,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.ui.viewholder.common.select.DeleteToolbarViewHolder;
 import link.ebbinghaus.planning.R;
+import link.ebbinghaus.planning.ui.viewholder.common.select.DeleteToolbarViewHolder;
 
 /**
  * <pre>
@@ -48,6 +48,8 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
     protected List<T> mData;
     //DaoAdapter为方法级数据库关闭
     protected ISelectDaoAdapter<T> mDaoAdapter;
+    //cache
+    protected TypedValue mOutValue;
 
     /** 用于记录每个listitem的选中情况 */
     protected List<Boolean> mListitemsSelectedStatus = new ArrayList<>();
@@ -58,11 +60,15 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
     /** 是否选中了所有 */
     protected boolean mIsSelectedAll = false;
 
+
+
     public SelectRecycleViewAdapter(Context context, ISelectDaoAdapter<T> daoAdapter,DeleteToolbarViewHolder deleteToolbar) {
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(this.mContext);
         this.mDaoAdapter = daoAdapter;
         this.mDeleteToolbar = deleteToolbar;
+        this.mOutValue =new TypedValue();
+        mContext.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, mOutValue, true);
 
         this.mData = mDaoAdapter.selectAll();
         Collections.reverse(mData);
@@ -71,6 +77,7 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
         mDeleteToolbar.arrowBackIv.setOnClickListener(this);
         mDeleteToolbar.selectAllToggleTv.setOnClickListener(this);
         mDeleteToolbar.deleteTv.setOnClickListener(this);
+
     }
 
 
@@ -92,7 +99,6 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
     public class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.rl_common_select_listitem) RelativeLayout listitemRl;
         @Bind(R.id.tv_common_select_description) TextView descriptionTv;
-        @Bind(R.id.iv_common_select_selected_icon) ImageView selectedIconIv;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -108,9 +114,9 @@ public abstract class SelectRecycleViewAdapter<T extends Parcelable> extends Rec
         public void configure(int position, String description){
             boolean isSelected = mListitemsSelectedStatus.get(position);
             if(isSelected){
-                selectedIconIv.setVisibility(View.VISIBLE);
+                listitemRl.setBackgroundColor(descriptionTv.getCurrentTextColor());
             }else {
-                selectedIconIv.setVisibility(View.GONE);
+                listitemRl.setBackgroundResource(mOutValue.resourceId);
             }
             descriptionTv.setText(description);
             listitemRl.setOnClickListener(SelectRecycleViewAdapter.this);
