@@ -16,6 +16,14 @@
         <item name="tabPaddingEnd">12dp</item>
         <item name="tabBackground">?attr/selectableItemBackground</item>
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="CustomSubTabLayout" parent="CustomTabLayout">
+        <item name="tabMode">scrollable</item>
+        <item name="tabTextColor">@color/md_grey_300</item>
+        <item name="tabSelectedTextColor">@color/md_white_1000</item>
     </style>
 
     <!-- ______________________module______________________ -->

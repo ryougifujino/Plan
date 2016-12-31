@@ -37,6 +37,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:padding="10dp"
+                android:background="?android:attr/selectableItemBackground"
                 android:src="@drawable/ic_receipt_white_24dp"/>
         </RelativeLayout>
 
@@ -50,7 +51,8 @@
             android:paddingLeft="21.5dp"
             android:paddingRight="21.5dp"
             android:paddingTop="5dp"
-            android:textColor="@color/md_grey_800"/>
+            android:textColorHint="@color/md_grey_300"
+            android:textColor="@color/md_grey_100"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,7 +79,7 @@
                 android:padding="15dp"
                 android:text="学习计划"
                 android:textAlignment="center"
-                android:textColor="@color/md_grey_600"/>
+                android:textColor="@color/md_grey_400"/>
         </LinearLayout>
 
         <com.db.chart.view.BarChartView

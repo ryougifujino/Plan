@@ -5,7 +5,7 @@
     <item
         android:id="@+id/item_planning_display_spec_event_detail"
         android:orderInCategory="100"
-        android:title="action_settings"
+        android:title="删除计划"
         android:icon="@drawable/common_delete"
         app:showAsAction="always">
     </item>

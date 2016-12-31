@@ -8,7 +8,7 @@ public interface CommonSelectPresenter {
     /**
      * 对toolbar进行设置
      */
-    void configureToolbar();
+    void configureToolbar(boolean isInstanceSaved);
 
     /**
      * 获取并设置发送者发过来的数据

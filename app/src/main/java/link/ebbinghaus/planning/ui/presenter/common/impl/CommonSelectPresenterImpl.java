@@ -14,9 +14,9 @@ public class CommonSelectPresenterImpl implements CommonSelectPresenter {
     }
 
     @Override
-    public void configureToolbar() {
+    public void configureToolbar(boolean isInstanceSaved) {
         mView.setToolbar();
-        mView.initToolbarAddDialog();
+        mView.initSingleInputDialog(isInstanceSaved);
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.yurikami.lib.model;
 import com.yurikami.lib.util.DateUtils;
 import com.yurikami.lib.util.Utils;
 
+import java.util.Calendar;
+
 /**
  * Created by WINFIELD on 2016/3/6.
  */
@@ -17,6 +19,7 @@ public class Datetime {
 
     private String[] chnWeeks = {"一","二","三","四","五","六","日"};
     private String chnWeek;
+    private Calendar c;
 
     public Datetime(){ }
 
@@ -54,65 +57,73 @@ public class Datetime {
         return year;
     }
 
-    public void setYear(Integer year) {
+    public Datetime setYear(Integer year) {
         this.year = year;
+        return this;
     }
 
     public Integer getMonth() {
         return month;
     }
 
-    public void setMonth(Integer month) {
+    public Datetime setMonth(Integer month) {
         this.month = month;
+        return this;
     }
 
     public Integer getWeek() {
         return week;
     }
 
-    public void setWeek(Integer week) {
+    public Datetime setWeek(Integer week) {
         this.chnWeek = (week >= 1 && week <= 7) ? chnWeeks[week - 1] : "";
         this.week = week;
+        return this;
     }
 
     public Integer getDay() {
         return day;
     }
 
-    public void setDay(Integer day) {
+    public Datetime setDay(Integer day) {
         this.day = day;
+        return this;
     }
 
     public Integer getHour() {
         return hour;
     }
 
-    public void setHour(Integer hour) {
+    public Datetime setHour(Integer hour) {
         this.hour = hour;
+        return this;
     }
 
     public Integer getMinute() {
         return minute;
     }
 
-    public void setMinute(Integer minute) {
+    public Datetime setMinute(Integer minute) {
         this.minute = minute;
+        return this;
     }
 
     public Integer getSecond() {
         return second;
     }
 
-    public void setSecond(Integer second) {
+    public Datetime setSecond(Integer second) {
         this.second = second;
+        return this;
     }
 
     public String getChnWeek() {
         return chnWeek;
     }
 
-    public void setChnWeek(String chnWeek) {
+    public Datetime setChnWeek(String chnWeek) {
         this.chnWeek = chnWeek;
+        return this;
     }
 
     public boolean isSameWith(Datetime t){
@@ -124,5 +135,25 @@ public class Datetime {
         }else {
             return false;
         }
+    }
+
+    /**
+     * 把Datetime实例合法化，如果有null（不包括week）则作初始化
+     * @return 合法的Datetime实例
+     */
+    public Datetime valid(){
+        if (getYear() == null) setYear(0);
+        if (getMonth() == null) setMonth(1);
+        if (getDay() == null) setDay(1);
+        if (getHour() == null) setHour(0);
+        if (getMinute() == null) setMinute(0);
+        if (getSecond() == null) setSecond(0);
+        if (c == null) c = Calendar.getInstance();
+        c.set(getYear(),getMonth() - 1,getDay(),getHour(),getMinute(),getSecond());
+        setYear(c.get(Calendar.YEAR)).setMonth(c.get(Calendar.MONTH) + 1)
+                .setDay(c.get(Calendar.DATE)).setHour(c.get(Calendar.HOUR))
+                .setMinute(c.get(Calendar.MINUTE)).setSecond(c.get(Calendar.SECOND))
+                .setWeek(DateUtils.formatWeek(c.get(Calendar.DAY_OF_WEEK)));
+        return this;
     }
 }

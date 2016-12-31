@@ -5,8 +5,8 @@ package link.ebbinghaus.planning.app.constant.module;
  */
 public class PlanningDisplayConstant {
     /* 最顶层 */
-    public static final String TAB_NAME_SPECIFIC = "具体计划";
-    public static final String TAB_NAME_ABSTRACT = "模糊计划";
+    public static final String TAB_NAME_SPECIFIC = "具体";
+    public static final String TAB_NAME_ABSTRACT = "模糊";
 
     /* 次层 */
     public static final String SUB_TAB_NAME_SPEC_MONTH = "月";

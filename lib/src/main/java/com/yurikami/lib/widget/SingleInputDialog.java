@@ -19,13 +19,15 @@ import com.yurikami.lib.R;
  * 带一个框的dialog,可通过setTitle设置标题
  */
 public class SingleInputDialog extends DialogFragment
-        implements DialogInterface.OnShowListener,View.OnClickListener,TextWatcher{
+        implements DialogInterface.OnClickListener,TextWatcher{
     public static final String KEY_TITLE = "title";
+    public static final String TAG = "com.yurikami.lib.widget.SingleInputDialog";
 
     private EditText mInputEt;
-    private OnDialogConfirmListener mOnDialogConfirmListener;
     private Button mPositiveButton;
     private AlertDialog mDialog;
+
+    private OnDialogConfirmListener mOnDialogConfirmListener;
 
     public static SingleInputDialog newInstance(String title){
         SingleInputDialog singleInputDialog = new SingleInputDialog();
@@ -41,27 +43,27 @@ public class SingleInputDialog extends DialogFragment
         String title = getArguments().getString(KEY_TITLE);
         View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_single_input, null);
         mInputEt = (EditText) v.findViewById(R.id.et_dialog_single_input);
+        mInputEt.addTextChangedListener(this);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(v)
                 .setTitle(title)
-                .setPositiveButton(getString(R.string.common_confirm), null)
+                .setPositiveButton(getString(R.string.common_confirm), this)
                 .setNegativeButton(getString(R.string.common_cancel), null);
         mDialog = builder.create();
-        mDialog.setOnShowListener(this);
 
-        mInputEt.addTextChangedListener(this);
         return mDialog;
     }
 
     @Override
-    public void onShow(DialogInterface dialog) {
-        mPositiveButton = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
-        mPositiveButton.setEnabled(false);
-        mPositiveButton.setOnClickListener(this);
+    public void onStart() {
+        super.onStart();
+        setPositiveButtonEnable(
+                !TextUtils.isEmpty( mInputEt.getText().toString().trim() )
+        );
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(DialogInterface dialog, int which) {
         if(mOnDialogConfirmListener == null){
             throw new IllegalStateException("确认按钮的监听器必须被注册");
         }
@@ -71,23 +73,28 @@ public class SingleInputDialog extends DialogFragment
 
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        String content = mInputEt.getText().toString();
-        if(TextUtils.isEmpty(content.trim())){
-            mPositiveButton.setEnabled(false);      //FIXME:若要适配横屏,则这里要修复
-        }else{
-            mPositiveButton.setEnabled(true);
-        }
+        setPositiveButtonEnable(!TextUtils.isEmpty(mInputEt.getText().toString()));
     }
-
     @Override
     public void afterTextChanged(Editable s) { }
+
+    /**
+     * 设置确认按钮是否点击，为了防止屏幕旋转后直接通过mPositiveButton获取不到而设置
+     */
+    private void setPositiveButtonEnable(boolean enabled) {
+        if (mPositiveButton == null){
+            mPositiveButton = mDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        }
+        mPositiveButton.setEnabled(enabled);
+    }
+
 
     public void setOnDialogConfirmListener(OnDialogConfirmListener l){
         mOnDialogConfirmListener = l;
     }
+
     /**
      * 确认按钮的监听器
      */
