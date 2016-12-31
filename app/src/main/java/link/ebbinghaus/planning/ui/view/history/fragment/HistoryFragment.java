@@ -63,7 +63,7 @@ public class HistoryFragment extends BaseFragment implements HistoryView {
 
     @Override
     public void initHistory() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity,LinearLayoutManager.HORIZONTAL,false));
         // TODO: 2016/5/8 用自定义的代替
         mFinishRecyclerViewAdapter = new FinishRecyclerViewAdapter(mActivity,mPresenter.obtainSpecDoneEvents());
         mRecyclerView.setAdapter(mFinishRecyclerViewAdapter);

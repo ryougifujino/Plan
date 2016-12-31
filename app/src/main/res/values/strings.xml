@@ -18,9 +18,9 @@
 
     <!-- planning_display -->
     <string name="planning_display_title">浏览</string>
-    <string name="planning_display_toolbar_date">%1$d年%2$d月%3$d日</string>
+    <string name="planning_display_toolbar_date">%1$d/%2$02d/%3$02d</string>
     <string name="planning_display_date_select_hint">只有按月和按周窗口才能选择日期</string>
-    <string name="planning_display_create_time">%1$d年%2$d月%3$d日%4$d:%5$d</string>
+    <string name="planning_display_create_time">%1$d/%2$02d/%3$d %4$d:%5$d</string>
     <string name="planning_display_before_day">天前</string>
     <string name="planning_display_today">今天</string>
 
@@ -31,7 +31,7 @@
 
     <string name="planning_display_spec_week_listitem_learning">学</string>
     <string name="planning_display_spec_week_listitem_normal">普</string>
-    <string name="planning_display_spec_week_listitem_date">%1$d月%2$d日，%3$s</string>
+    <string name="planning_display_spec_week_listitem_date">%1$02d/%2$02d，%3$s</string>
 
     <string name="planning_display_spec_event_detail_title">具体计划详情</string>
     <string name="planning_display_spec_event_detail_no_prompt">不提醒</string>
@@ -50,9 +50,9 @@
 
     <!-- planning_done -->
     <string name="planning_done_toolbar_title">@string/main_drawer_planning_done</string>
-    <string name="planning_done_expected_finished_time">计划应于%1$d年%2$d月%3$d日完成</string>
+    <string name="planning_done_expected_finished_time">计划应于%1$d/%2$02d/%3$02d完成</string>
     <string name="planning_done_event_not_finished">计划尚未完成</string>
-    <string name="planning_done_finished_time">计划完成于%1$d年%2$d月%3$d日 %4$d:%5$d:%6$d</string>
+    <string name="planning_done_finished_time">计划完成于%1$d/%2$02d/%3$02d %4$d:%5$d:%6$d</string>
     <string name="planning_done_learning_event_sequence">计划序号:%1$2d</string>
 
     <string name="planning_done_finish_learning_time">%1$d分钟</string>
@@ -71,7 +71,7 @@
     <!-- extension -->
     <string name="extension_title">扩展</string>
     <string name="extension_read_title">阅读计划</string>
-    <string name="extension_read_search_view_hint">搜索图书...</string>
+    <string name="extension_read_search_view_hint">搜索图书…</string>
     <string name="extension_read_load_prompt">没有更多图书了</string>
 
     <!-- settings -->

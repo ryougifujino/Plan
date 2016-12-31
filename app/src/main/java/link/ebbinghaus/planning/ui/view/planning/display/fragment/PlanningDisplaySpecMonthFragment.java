@@ -26,7 +26,7 @@ import link.ebbinghaus.planning.R;
  * A simple {@link Fragment} subclass.
  */
 public class PlanningDisplaySpecMonthFragment extends BaseFragment implements PlanningDisplaySpecMonthView,
-        PlanningDisplayFragment.OnToolbarDateChangeListener {
+        PlanningDisplaySpecificFragment.OnDateSelectorChangeListener {
 
     @Bind(R.id.rv_planning_display_spec_month) RecyclerView mRecyclerView;
     private PlanningDisplaySpecMonthPresenter mPresenter;
@@ -58,8 +58,8 @@ public class PlanningDisplaySpecMonthFragment extends BaseFragment implements Pl
 
     @Override
     public void registerToolbarDateChangeListener() {
-        PlanningDisplayFragment planningDisplayFragment = (PlanningDisplayFragment) getParentFragment().getParentFragment();
-        planningDisplayFragment.addOnToolbarDateChangeListener(this);
+        ((PlanningDisplaySpecificFragment) getParentFragment())
+                .addOnDateSelectorChangeListener(this);
     }
 
     @Override

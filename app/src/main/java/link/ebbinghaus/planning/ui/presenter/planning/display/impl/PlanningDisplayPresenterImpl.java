@@ -27,12 +27,5 @@ public class PlanningDisplayPresenterImpl implements PlanningDisplayPresenter {
         mView.bindViewPagerToTabLayout(tabs);
     }
 
-    @Override
-    public void preprocessToolbarDate() { mView.presetToolbarDate();}
-
-    @Override
-    public void configureToolbarDate() {
-        mView.setToolbarDate();
-    }
 
 }
