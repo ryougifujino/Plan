@@ -16,21 +16,21 @@ import com.yurikami.lib.widget.SingleInputDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import link.ebbinghaus.planning.R;
+import link.ebbinghaus.planning.app.constant.Constant;
+import link.ebbinghaus.planning.core.db.decorator.impl.EventGroupDaoDecorator;
+import link.ebbinghaus.planning.core.db.decorator.impl.EventSubtypeDaoDecorator;
 import link.ebbinghaus.planning.ui.adapter.common.select.DefaultSelectDaoAdapter;
 import link.ebbinghaus.planning.ui.adapter.common.select.FastTemplateSelectDaoAdapter;
 import link.ebbinghaus.planning.ui.adapter.common.select.SelectEventGroupRVAdapter;
 import link.ebbinghaus.planning.ui.adapter.common.select.SelectEventSubtypeRVAdapter;
 import link.ebbinghaus.planning.ui.adapter.common.select.SelectFastTemplateRVAdapter;
 import link.ebbinghaus.planning.ui.adapter.common.select.SelectRecycleViewAdapter;
-import link.ebbinghaus.planning.app.constant.Constant;
-import link.ebbinghaus.planning.core.db.decorator.impl.EventGroupDaoDecorator;
-import link.ebbinghaus.planning.core.db.decorator.impl.EventSubtypeDaoDecorator;
-import link.ebbinghaus.planning.ui.viewholder.common.select.DeleteToolbarViewHolder;
 import link.ebbinghaus.planning.ui.presenter.common.CommonSelectPresenter;
 import link.ebbinghaus.planning.ui.presenter.common.impl.CommonSelectPresenterImpl;
-import link.ebbinghaus.planning.ui.view.planning.build.fragment.PlanningBuildSpecificFragment;
 import link.ebbinghaus.planning.ui.view.common.CommonSelectView;
-import link.ebbinghaus.planning.R;
+import link.ebbinghaus.planning.ui.view.planning.build.fragment.PlanningBuildSpecificFragment;
+import link.ebbinghaus.planning.ui.viewholder.common.select.DeleteToolbarViewHolder;
 
 /**
  * 要想添加这个类SelectActivity新的使用者,只需要更改chooseRecyclerViewAdapter方法,<br>
@@ -68,7 +68,7 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
         ButterKnife.bind(this);
         mDeleteToolbar = new DeleteToolbarViewHolder(this);
         mPresenter = new CommonSelectPresenterImpl(this);
-        mPresenter.configureToolbar();
+        mPresenter.configureToolbar(savedInstanceState != null);
         mPresenter.getAndSetSenderData();
         mPresenter.configureRecyclerView();
 
@@ -104,11 +104,15 @@ public class CommonSelectActivity extends BaseActivity implements CommonSelectVi
     }
 
     @Override
-    public void initToolbarAddDialog() {
-        mAddDialog = SingleInputDialog.newInstance(getString(R.string.common_select_add_dialog_title));
+    public void initSingleInputDialog(boolean isInstanceSaved) {
+        mAddDialog = isInstanceSaved ?
+                (SingleInputDialog) getSupportFragmentManager()
+                        .findFragmentByTag(SingleInputDialog.TAG) :
+                SingleInputDialog.newInstance(getString(R.string.common_select_add_dialog_title));
     }
     private void showDialog() {
-        mAddDialog.show(getSupportFragmentManager(), getClass().getName());
+        if (!mAddDialog.isAdded())
+            mAddDialog.show(getSupportFragmentManager(), SingleInputDialog.TAG);
     }
 
     @Override

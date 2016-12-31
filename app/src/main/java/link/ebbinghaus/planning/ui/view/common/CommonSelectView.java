@@ -12,8 +12,9 @@ public interface CommonSelectView {
 
     /**
      * 初始化点击toolbar上的+按钮后弹出的dialog
+     * @param isInstanceSaved
      */
-    void initToolbarAddDialog();
+    void initSingleInputDialog(boolean isInstanceSaved);
 
     /**
      * 把发送者发送过来的数据设置到成员变量中
