@@ -47,7 +47,7 @@ public class PlanningDisplayAbstAllFragment extends BaseFragment implements Plan
     @Override
     public void initRecyclerView() {
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-        mRecyclerView.addItemDecoration(new SpaceItemDecoration(DensityUtils.dp2px(5)));
+        mRecyclerView.addItemDecoration(new SpaceItemDecoration(DensityUtils.dp2px(3)));
         mAllRecyclerViewAdapter = new AllRecyclerViewAdapter(mActivity,mPresenter.obtainAllAbstractEvents());
         mRecyclerView.setAdapter(mAllRecyclerViewAdapter);
 

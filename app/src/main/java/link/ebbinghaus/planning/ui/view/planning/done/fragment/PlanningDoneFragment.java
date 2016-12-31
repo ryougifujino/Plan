@@ -21,12 +21,12 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.ui.adapter.planning.done.FinishRecyclerViewAdapter;
+import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.ui.adapter.planning.done.FinishRecyclerViewAdapter;
 import link.ebbinghaus.planning.ui.presenter.planning.done.PlanningDonePresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.done.impl.PlanningDonePresenterImpl;
 import link.ebbinghaus.planning.ui.view.planning.done.PlanningDoneView;
-import link.ebbinghaus.planning.R;
 
 public class PlanningDoneFragment extends BaseFragment implements PlanningDoneView {
 
@@ -131,6 +131,10 @@ public class PlanningDoneFragment extends BaseFragment implements PlanningDoneVi
             case R.id.sub_item_planning_done_filter_all:
                 mFinishRecyclerViewAdapter.refresh(mPresenter.obtainDoneModuleEvents());
                 mDisplayType = SHOW_ALL;
+                return true;
+            case R.id.item_planning_done_help:
+                showMessageDialog(R.string.planning_done_help_title,
+                        R.string.planning_done_help_content,R.string.common_got_it);
                 return true;
         }
 

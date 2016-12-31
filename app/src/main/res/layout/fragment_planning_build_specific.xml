@@ -79,7 +79,7 @@
                 android:padding="15dp"
                 android:text="学习计划"
                 android:textAlignment="center"
-                android:textColor="@color/md_grey_600"/>
+                android:textColor="@color/md_grey_400"/>
         </LinearLayout>
 
         <com.db.chart.view.BarChartView

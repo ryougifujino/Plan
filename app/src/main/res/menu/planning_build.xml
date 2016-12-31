@@ -4,14 +4,14 @@
 
     <item
         android:id="@+id/item_planning_build_save"
-        android:title="action_settings"
+        android:title="保存不退出"
         android:icon="@drawable/planning_build_save"
         app:showAsAction="ifRoom">
     </item>
     <item
         android:id="@+id/item_planning_build_done"
         android:orderInCategory="100"
-        android:title="action_settings"
+        android:title="保存并退出"
         android:icon="@drawable/common_done"
         app:showAsAction="always">
     </item>

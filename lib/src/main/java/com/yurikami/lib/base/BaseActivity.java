@@ -1,5 +1,7 @@
 package com.yurikami.lib.base;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -82,6 +84,27 @@ public class BaseActivity extends AppCompatActivity {
             window.setStatusBarColor(Color.TRANSPARENT);
             /*window.setNavigationBarColor(Color.TRANSPARENT);*/
         }
+    }
+
+    /** 有一个按钮的消息框 */
+    protected void showMessageDialog(String title, String message, String buttonTitle){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(buttonTitle, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog dlg = builder.create();
+        dlg.show();
+    }
+
+    /** 有一个按钮的消息框 */
+    protected void showMessageDialog(int titleResId, int messageResId, int buttonTitleResId){
+        showMessageDialog(getString(titleResId),
+                getString(messageResId),getString(buttonTitleResId));
     }
 
     //life circle

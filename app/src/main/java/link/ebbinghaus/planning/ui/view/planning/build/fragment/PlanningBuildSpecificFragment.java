@@ -194,12 +194,12 @@ public class PlanningBuildSpecificFragment extends BaseFragment implements Plann
         if (mPanelShowEventType == eventType) return;
         if (mPanelShowEventType = eventType) {
             vh.showLearningPanel();
-            vh.eventTypeNormalTv.setTextColor(getResources().getColor(R.color.md_grey_600));
+            vh.eventTypeNormalTv.setTextColor(getResources().getColor(R.color.md_grey_400));
             vh.eventTypeLearningTv.setTextColor(getResources().getColor(R.color.md_white_1000));
         } else {
             vh.showNormalPanel();
             vh.eventTypeNormalTv.setTextColor(getResources().getColor(R.color.md_white_1000));
-            vh.eventTypeLearningTv.setTextColor(getResources().getColor(R.color.md_grey_600));
+            vh.eventTypeLearningTv.setTextColor(getResources().getColor(R.color.md_grey_400));
         }
         mInputEvent.setEventType(mPanelShowEventType ? FastTemplateConfig.TYPE_SPEC_LEARNING : FastTemplateConfig.TYPE_SPEC_NORMAL);
         refreshChart();

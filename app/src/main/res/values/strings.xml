@@ -60,6 +60,10 @@
     <string name="planning_done_finish_dialog_understand_degree_title">选择理解程度</string>
     <string name="planning_done_finish_learning_duration_validation_message">请填写学习时长</string>
 
+    <string name="planning_done_help_title">帮助</string>
+    <string name="planning_done_help_content">这里显示今天和昨天已经完成和需要完成的计划，
+        您可以直接查看或者完成它们，也可以点击右上角的按钮对它们进行筛选后再做操作</string>
+
     <!-- history -->
     <string name="history_title">@string/main_drawer_history</string>
 
