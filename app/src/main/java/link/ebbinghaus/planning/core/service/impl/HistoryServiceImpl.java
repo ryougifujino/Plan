@@ -17,4 +17,12 @@ public class HistoryServiceImpl implements HistoryService {
         dao.closeDB();
         return events;
     }
+
+    @Override
+    public List<Event> findAllExpiredSpecEvents() {
+        EventDaoDecorator dao = new EventDaoDecorator();
+        List<Event> events = dao.selectAllExpiredSpecEvents();
+        dao.closeDB();
+        return events;
+    }
 }

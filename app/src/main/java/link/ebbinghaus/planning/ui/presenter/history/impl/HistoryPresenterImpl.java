@@ -26,4 +26,9 @@ public class HistoryPresenterImpl implements HistoryPresenter {
     public List<Event> obtainSpecDoneEvents() {
         return mHistoryService.findAllDoneSpecEvents();
     }
+
+    @Override
+    public List<Event> obtainSpecExpiredEvents() {
+        return mHistoryService.findAllExpiredSpecEvents();
+    }
 }

@@ -16,7 +16,7 @@ import com.yurikami.lib.base.BaseFragment;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.R;
-import link.ebbinghaus.planning.ui.adapter.planning.done.FinishRecyclerViewAdapter;
+import link.ebbinghaus.planning.ui.adapter.history.HistoryRecyclerViewAdapter;
 import link.ebbinghaus.planning.ui.presenter.history.HistoryPresenter;
 import link.ebbinghaus.planning.ui.presenter.history.impl.HistoryPresenterImpl;
 import link.ebbinghaus.planning.ui.view.history.HistoryView;
@@ -24,11 +24,14 @@ import link.ebbinghaus.planning.ui.view.history.HistoryView;
 public class HistoryFragment extends BaseFragment implements HistoryView {
 
     @Bind(R.id.tb_common_head) Toolbar mToolbar;
-    @Bind(R.id.rv_history) RecyclerView mRecyclerView;
+    @Bind(R.id.rv_history_done) RecyclerView mDoneRecyclerView;
+    @Bind(R.id.rv_history_expired) RecyclerView mExpiredRecyclerView;
     private DrawerLayout mDrawerLayout;
-    private FinishRecyclerViewAdapter mFinishRecyclerViewAdapter;
+    private HistoryRecyclerViewAdapter mDoneAdapter;
+    private HistoryRecyclerViewAdapter mExpiredAdapter;
     private HistoryPresenter mPresenter;
 
+    private boolean isCallOnCreateView = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,6 +42,7 @@ public class HistoryFragment extends BaseFragment implements HistoryView {
         configureToolbar();
         initHistory();
 
+        isCallOnCreateView = true;
         return v;
     }
 
@@ -62,10 +66,28 @@ public class HistoryFragment extends BaseFragment implements HistoryView {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (!isCallOnCreateView) {
+            mDoneAdapter.refresh(mPresenter.obtainSpecDoneEvents());
+            mExpiredAdapter.refresh(mPresenter.obtainSpecExpiredEvents());
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isCallOnCreateView = false;
+    }
+
+    @Override
     public void initHistory() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity,LinearLayoutManager.HORIZONTAL,false));
-        // TODO: 2016/5/8 用自定义的代替
-        mFinishRecyclerViewAdapter = new FinishRecyclerViewAdapter(mActivity,mPresenter.obtainSpecDoneEvents());
-        mRecyclerView.setAdapter(mFinishRecyclerViewAdapter);
+        mDoneRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity,LinearLayoutManager.HORIZONTAL,false));
+        mDoneAdapter = new HistoryRecyclerViewAdapter(mActivity,mPresenter.obtainSpecDoneEvents());
+        mDoneRecyclerView.setAdapter(mDoneAdapter);
+
+        mExpiredRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity,LinearLayoutManager.HORIZONTAL,false));
+        mExpiredAdapter = new HistoryRecyclerViewAdapter(mActivity,mPresenter.obtainSpecExpiredEvents());
+        mExpiredRecyclerView.setAdapter(mExpiredAdapter);
     }
 }

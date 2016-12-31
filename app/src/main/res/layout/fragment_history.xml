@@ -17,6 +17,7 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:paddingBottom="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -66,8 +67,30 @@
                     android:textSize="40dp"/>
             </android.support.v7.widget.CardView>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="已完成计划"/>
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_history"
+                android:id="@+id/rv_history_done"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="horizontal">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:text="已过期计划"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_history_expired"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="horizontal">
