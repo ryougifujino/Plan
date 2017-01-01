@@ -187,6 +187,14 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
     }
 
     /**
+     * 查找所有已经过期的具体计划
+     * @return 所有已经过期的具体计划
+     */
+    public List<Event> selectAllExpiredSpecEvents() {
+        return dao.selectAllExpiredSpecEvents();
+    }
+
+    /**
      * 查找出所有即将被置为失败的学习计划的id
      * @return 即将被置为失败的学习计划的id
      */
@@ -268,4 +276,5 @@ public class EventDaoDecorator extends BaseDaoDecorator<Event> {
     public List<Event> selectSpecEventsByDescription(String key) {
         return dao.selectSpecEventsByDescription(key);
     }
+
 }

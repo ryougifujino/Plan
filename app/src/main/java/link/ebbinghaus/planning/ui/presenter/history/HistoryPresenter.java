@@ -11,7 +11,13 @@ public interface HistoryPresenter {
 
     /**
      * 获取已完成的具体计划
-     * @ret 已完成的具体计划
+     * @return 已完成的具体计划
      */
     List<Event> obtainSpecDoneEvents();
+
+    /**
+     * 获取已过期的具体计划
+     * @return 已过期的具体计划
+     */
+    List<Event> obtainSpecExpiredEvents();
 }

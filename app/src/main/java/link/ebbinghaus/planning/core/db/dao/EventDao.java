@@ -175,6 +175,16 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
     }
 
     /**
+     * 查找所有已经过期的具体计划
+     * @return 所有已经过期的具体计划
+     */
+    public List<Event> selectAllExpiredSpecEvents() {
+        String querySql = "SELECT * FROM "+ mTableName +" WHERE ("+
+                EVENT_TYPE +" = ? OR "+ EVENT_TYPE +" = ?) AND " + EVENT_PROCESS + " == ?";
+        return _select(querySql,EventConfig.TYPE_SPEC_LEARNING,EventConfig.TYPE_SPEC_NORMAL,EventConfig.PROCESS_EXPIRED);
+    }
+
+    /**
      * 查找出所有即将被置为失败的学习计划
      * @return 即将被置为失败的学习计划
      */
@@ -259,6 +269,7 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
                 " AND " + DESCRIPTION + " LIKE '%"+ criterion.description +"%'";
         return _select(querySql);
     }
+
 
     private static class Criterion{
         private Criterion() { }

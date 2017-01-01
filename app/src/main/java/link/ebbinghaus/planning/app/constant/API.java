@@ -7,7 +7,7 @@ public class API {
 //    public static final String BASE_URL = "http://192.168.199.105:8080/Planning/";
     public static final String BASE_URL = "http://192.168.199.105:8080/Planning/";
 
-    public static final String DOUBAN_READ = "http://api.douban.com/v2/book/";
+    public static final String DOUBAN_READ = "https://api.douban.com/v2/book/";
 
 
 }

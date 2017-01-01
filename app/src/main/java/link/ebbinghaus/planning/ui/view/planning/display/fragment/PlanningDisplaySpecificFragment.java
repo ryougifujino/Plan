@@ -74,7 +74,7 @@ public class PlanningDisplaySpecificFragment extends BaseFragment implements Pla
 
     private void configureDateSelector() {
         mDateSelectorTv.setText(String.format(mActivity.getResources().getString(
-                R.string.planning_display_toolbar_date),
+                R.string.common_date),
                 mNowDate.getYear(), mNowDate.getMonth(), mNowDate.getDay()));
         mDateSelectorTv.setOnClickListener(this);
         mDateSelectorTv.setOnLongClickListener(this);
@@ -124,7 +124,7 @@ public class PlanningDisplaySpecificFragment extends BaseFragment implements Pla
                 listener.onDateChanged(mNowDate);
             }
         }
-        mDateSelectorTv.setText(String.format(getString(R.string.planning_display_toolbar_date),
+        mDateSelectorTv.setText(String.format(getString(R.string.common_date),
                 year, monthOfYear + 1, dayOfMonth));
         //TODO:可以有一个全局变量的设置控制重新开启是今天还是上一次的日期
         dialog.setPreselectedDate(mNowDate.getYear(), mNowDate.getMonth() - 1, mNowDate.getDay());
