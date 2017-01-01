@@ -6,27 +6,34 @@
     android:layout_height="match_parent"
     tools:context=".ui.view.extension.activity.ExtensionTimeSaverActivity">
 
-    <include layout="@layout/head_common"/>
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/head_common"/>
+    </android.support.design.widget.AppBarLayout>
 
     <!-- 按google闹钟的样式来设计 -->
     <!-- 一共三个页面，第一页计时器，第二页列表，第三页统计 -->
 
     <TextView
         android:id="@+id/time_display"
-        android:layout_margin="100dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="100dp"/>
+
     <Button
         android:id="@+id/start"
-        android:layout_below="@id/time_display"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/time_display"
         android:text="start"/>
+
     <Button
         android:id="@+id/stop"
-        android:layout_below="@id/start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/start"
         android:text="stop"/>
 
 </RelativeLayout>
