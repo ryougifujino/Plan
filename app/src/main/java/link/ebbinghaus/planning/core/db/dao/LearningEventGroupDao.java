@@ -72,14 +72,19 @@ public class LearningEventGroupDao extends BaseDao<LearningEventGroup> implement
      * @param leg 更新用到的数据
      */
     public void updateLearningEventGroupAfterFinishing1Event(LearningEventGroup leg){
+        String quantityClause = "," + KNOWLEDGE_QUANTITY + " = ?, " + LEARNING_DURATION + " = ?,"+
+                EFFICIENCY +" = ?,"+ UNDERSTANDING_DEGREE +" = ? ";
+        boolean isFirst = leg.getLearningDuration() != null;
         String updateSql = "UPDATE "+ mTableName +" SET " +
-                KNOWLEDGE_QUANTITY + " = ?, " +
-                LEARNING_EVENT_FINISHED_COUNT + " = "+ LEARNING_EVENT_FINISHED_COUNT +" + 1," +
-                LEARNING_DURATION + " = ?,"+ EFFICIENCY +" = ?,"+ UNDERSTANDING_DEGREE +" = ? " +
+                LEARNING_EVENT_FINISHED_COUNT + " = "+ LEARNING_EVENT_FINISHED_COUNT +" + 1" +
+                (isFirst ? quantityClause : " ") +
                 "WHERE "+ mPkColumn +" = ?";
-        db.execSQL(updateSql,
+        db.execSQL(updateSql,isFirst ?
                 new Object[]{leg.getKnowledgeQuantity(),leg.getLearningDuration(),
-                        leg.getEfficiency(),leg.getUnderstandingDegree(),leg.getPkLearningEventGroupId()});
+                        leg.getEfficiency(),leg.getUnderstandingDegree(),
+                        leg.getPkLearningEventGroupId()} :
+                new Object[]{leg.getPkLearningEventGroupId()}
+        );
         
     }
 
