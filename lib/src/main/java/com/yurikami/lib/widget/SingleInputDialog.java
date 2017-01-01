@@ -10,10 +10,10 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.yurikami.lib.R;
+import com.yurikami.lib.util.LogUtils;
 
 /**
  * 带一个框的dialog,可通过setTitle设置标题
@@ -24,7 +24,6 @@ public class SingleInputDialog extends DialogFragment
     public static final String TAG = "com.yurikami.lib.widget.SingleInputDialog";
 
     private EditText mInputEt;
-    private Button mPositiveButton;
     private AlertDialog mDialog;
 
     private OnDialogConfirmListener mOnDialogConfirmListener;
@@ -60,6 +59,7 @@ public class SingleInputDialog extends DialogFragment
         setPositiveButtonEnable(
                 !TextUtils.isEmpty( mInputEt.getText().toString().trim() )
         );
+        LogUtils.d("bug2|onStart","called");
     }
 
     @Override
@@ -84,10 +84,7 @@ public class SingleInputDialog extends DialogFragment
      * 设置确认按钮是否点击，为了防止屏幕旋转后直接通过mPositiveButton获取不到而设置
      */
     private void setPositiveButtonEnable(boolean enabled) {
-        if (mPositiveButton == null){
-            mPositiveButton = mDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-        }
-        mPositiveButton.setEnabled(enabled);
+        mDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(enabled);
     }
 
 
