@@ -1,9 +1,11 @@
 package link.ebbinghaus.planning.ui.view.planning.done.fragment;
 
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,18 +21,18 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.ui.adapter.planning.done.FinishRecyclerViewAdapter;
+import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.core.model.local.po.Event;
+import link.ebbinghaus.planning.ui.adapter.planning.done.FinishRecyclerViewAdapter;
 import link.ebbinghaus.planning.ui.presenter.planning.done.PlanningDonePresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.done.impl.PlanningDonePresenterImpl;
 import link.ebbinghaus.planning.ui.view.planning.done.PlanningDoneView;
-import link.ebbinghaus.planning.R;
 
 public class PlanningDoneFragment extends BaseFragment implements PlanningDoneView {
 
     @Bind(R.id.rv_planning_done) RecyclerView mRecyclerView;
     @Bind(R.id.tb_common_head) Toolbar mToolbar;
-
+    private DrawerLayout mDrawerLayout;
 
     private static final int SHOW_ONLY_UNFINISHED = 763;
     private static final int SHOW_ONLY_FINISHED = 713;
@@ -61,7 +63,17 @@ public class PlanningDoneFragment extends BaseFragment implements PlanningDoneVi
     public void initToolbar() {
         mActivity.setSupportActionBar(mToolbar);
         mToolbar.setTitle(R.string.planning_done_toolbar_title);
-        mActivity.getSupportActionBar().setDisplayUseLogoEnabled(true);
+        if (mActivity.getSupportActionBar() != null) {
+            mActivity.getSupportActionBar().setDisplayUseLogoEnabled(true);
+        }
+        mToolbar.setNavigationIcon(R.drawable.common_navigation_menu);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+        mDrawerLayout = (DrawerLayout) mActivity.findViewById(R.id.dl_main_whole);
         setHasOptionsMenu(true);
     }
 
@@ -119,6 +131,10 @@ public class PlanningDoneFragment extends BaseFragment implements PlanningDoneVi
             case R.id.sub_item_planning_done_filter_all:
                 mFinishRecyclerViewAdapter.refresh(mPresenter.obtainDoneModuleEvents());
                 mDisplayType = SHOW_ALL;
+                return true;
+            case R.id.item_planning_done_help:
+                showMessageDialog(R.string.planning_done_help_title,
+                        R.string.planning_done_help_content,R.string.common_got_it);
                 return true;
         }
 

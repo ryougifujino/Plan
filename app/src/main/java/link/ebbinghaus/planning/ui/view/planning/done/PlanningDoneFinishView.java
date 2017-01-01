@@ -63,4 +63,6 @@ public interface PlanningDoneFinishView {
      */
     void exitPlanningDoneView();
 
+    /** 完成前收集界面信息 */
+    void collectInfo();
 }

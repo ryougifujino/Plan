@@ -142,7 +142,7 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
      */
     public List<Event> selectSpecEventsFrom(long startDateTimestamp, int days, boolean isFailed){
         long end = DateUtils.timestampAfter(startDateTimestamp,days);
-        String failedClause = isFailed ? (" AND " + EVENT_PROCESS + " != " + EventConfig.PROCESS_FAILED) : "";
+        String failedClause = isFailed ? (" AND " + EVENT_PROCESS + " != " + EventConfig.PROCESS_EXPIRED) : "";
         String querySql = "SELECT * FROM " + mTableName + " WHERE " +
                 WhereHelper.between(EVENT_EXPECTED_FINISHED_DATE,startDateTimestamp,end) + failedClause +
                 " AND (" + EVENT_TYPE + " = " + EventConfig.TYPE_SPEC_NORMAL + " OR " + EVENT_TYPE + " = " + EventConfig.TYPE_SPEC_LEARNING + ")";
@@ -159,7 +159,7 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
         long end = DateUtils.timestampAfter(todayTimestamp,1);
         String querySql = "SELECT * FROM "+ mTableName +" WHERE " +
                 WhereHelper.between(EVENT_EXPECTED_FINISHED_DATE,start,end) +
-                " AND " + EVENT_PROCESS + " != " + EventConfig.PROCESS_FAILED +
+                " AND " + EVENT_PROCESS + " != " + EventConfig.PROCESS_EXPIRED +
                 " AND (" + EVENT_TYPE + " = " + EventConfig.TYPE_SPEC_NORMAL + " OR " + EVENT_TYPE + " = " + EventConfig.TYPE_SPEC_LEARNING + ")";
         return _select(querySql);
     }
@@ -171,7 +171,32 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
     public List<Event> selectAllDoneSpecEvents(){
         String querySql = "SELECT * FROM "+ mTableName +" WHERE ("+
                 EVENT_TYPE +" = ? OR "+ EVENT_TYPE +" = ?) AND "+ IS_EVENT_FINISHED +" = ? AND " + EVENT_PROCESS + " != ?";
-        return _select(querySql,EventConfig.TYPE_SPEC_LEARNING,EventConfig.TYPE_SPEC_NORMAL,1,EventConfig.PROCESS_FAILED);
+        return _select(querySql,EventConfig.TYPE_SPEC_LEARNING,EventConfig.TYPE_SPEC_NORMAL,1,EventConfig.PROCESS_EXPIRED);
+    }
+
+    /**
+     * 查找所有已经过期的具体计划
+     * @return 所有已经过期的具体计划
+     */
+    public List<Event> selectAllExpiredSpecEvents() {
+        String querySql = "SELECT * FROM "+ mTableName +" WHERE ("+
+                EVENT_TYPE +" = ? OR "+ EVENT_TYPE +" = ?) AND " + EVENT_PROCESS + " == ?";
+        return _select(querySql,EventConfig.TYPE_SPEC_LEARNING,EventConfig.TYPE_SPEC_NORMAL,EventConfig.PROCESS_EXPIRED);
+    }
+
+    /**
+     * 查找出所有即将被置为失败的学习计划
+     * @return 即将被置为失败的学习计划
+     */
+    public List<Event> selectAllFailedLearningEvents(){
+        long now = System.currentTimeMillis();
+        String querySql = "SELECT * FROM " + mTableName + " WHERE " + LEARNING_EVENT_GROUP_ID + " IN " +
+                "(SELECT DISTINCT LEARNING_EVENT_GROUP_ID FROM event " +
+                "WHERE EVENT_TYPE = 1 AND EVENT_PROCESS = 1 AND " +
+                "(((EVENT_SEQUENCE = 1 OR EVENT_SEQUENCE = 2) AND " + now + " >= (EVENT_EXPECTED_FINISHED_DATE + 86400000) AND EVENT_FINISHED_TIME IS NULL)" +
+                " OR ("+ now +" >= (EVENT_EXPECTED_FINISHED_DATE + 172800000) AND EVENT_FINISHED_TIME IS NULL) ))";
+        LogUtils.d("fuck",querySql);
+        return _select(querySql);
     }
 
     /**
@@ -186,32 +211,24 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
 
     /** 更新过期的普通计划 */
     public void updateExpiredNormalEvents() {
-        String updateSql = "UPDATE " + mTableName + " SET " + EVENT_PROCESS + " = ? WHERE (" +
+        String updateSql = "UPDATE " + mTableName + " SET " + EVENT_PROCESS + " = ? WHERE " +
+                EVENT_PROCESS + " != ? AND (" +
                 EVENT_EXPECTED_FINISHED_DATE + " + ?) <= ? AND " + IS_EVENT_FINISHED + " = 0 AND "+
-                EVENT_PROCESS + " != ? AND " + EVENT_TYPE + " = ?";
+                EVENT_TYPE + " = ?";
         LogUtils.d("update events","更新过期的普通计划 : " + updateSql);
-        db.execSQL(updateSql, new Object[]{EventConfig.PROCESS_EXPIRE, DateUtils.DAY_MILLISECONDS,
-                System.currentTimeMillis(),EventConfig.PROCESS_EXPIRE, EventConfig.TYPE_SPEC_NORMAL});
-    }
-
-    /** 更新待办的普通计划 */
-    public void updateTodoNormalEvents() {
-        long now = System.currentTimeMillis();
-        String updateSql = "UPDATE "+ mTableName +" SET "+ EVENT_PROCESS +" = ? WHERE ? >= "+
-                EVENT_EXPECTED_FINISHED_DATE +" AND ? < ("+ EVENT_EXPECTED_FINISHED_DATE +" + ?) AND "+
-                EVENT_PROCESS +" = ? AND "+ EVENT_TYPE +" = ?";
-        LogUtils.d("update events","更新待办的普通计划 : " + updateSql);
-        db.execSQL(updateSql, new Object[]{EventConfig.PROCESS_TODO,now,now,
-                DateUtils.DAY_MILLISECONDS,EventConfig.PROCESS_NOT_STARTED,EventConfig.TYPE_SPEC_NORMAL});
+        db.execSQL(updateSql, new Object[]{EventConfig.PROCESS_EXPIRED,
+                EventConfig.PROCESS_EXPIRED, DateUtils.DAY_MILLISECONDS,
+                System.currentTimeMillis(), EventConfig.TYPE_SPEC_NORMAL});
     }
 
     /** 更新失败的学习计划组 */
     public void updateFailedLearningEventGroups(){
         String updateSql = "UPDATE learning_event_group SET KNOWLEDGE_QUANTITY = 0,LEARNING_EVENT_FINISHED_COUNT = 0 " +
                 "WHERE PK_LEARNING_EVENT_GROUP_ID IN " +
-                "(SELECT DISTINCT LEARNING_EVENT_GROUP_ID FROM event WHERE EVENT_TYPE = 1 AND EVENT_PROCESS != 4" +
-                " AND (((EVENT_SEQUENCE = 1 OR EVENT_SEQUENCE = 2) AND ? >= (EVENT_EXPECTED_FINISHED_DATE + 86400000))" +
-                " OR ? >= (EVENT_EXPECTED_FINISHED_DATE + 172800000)))";
+                "(SELECT DISTINCT LEARNING_EVENT_GROUP_ID FROM event " +
+                "WHERE EVENT_TYPE = 1 AND EVENT_PROCESS = 1 AND " +
+                "((EVENT_SEQUENCE = 1 OR EVENT_SEQUENCE = 2) AND ? >= (EVENT_EXPECTED_FINISHED_DATE + 86400000)" +
+                " OR ? >= (EVENT_EXPECTED_FINISHED_DATE + 172800000) ))";
         long now = System.currentTimeMillis();
         LogUtils.d("update events","更新失败的学习计划组 : " + updateSql);
         db.execSQL(updateSql,new Object[]{now,now});
@@ -219,26 +236,58 @@ public class EventDao extends BaseDao <Event> implements DBConfig.EventColumn{
 
     /** 更新失败的学习计划 */
     public void updateFailedLearningEvents() {
-        String updateSql = "UPDATE event SET EVENT_PROCESS = 4 " +
+        String updateSql = "UPDATE event SET EVENT_PROCESS = 3,IS_EVENT_FINISHED = 0 " +
                 "WHERE LEARNING_EVENT_GROUP_ID IN " +
                 "(SELECT DISTINCT LEARNING_EVENT_GROUP_ID FROM event " +
-                "WHERE EVENT_TYPE = 1 AND EVENT_PROCESS != 4 AND " +
-                "(((EVENT_SEQUENCE = 1 OR EVENT_SEQUENCE = 2) AND ? >= (EVENT_EXPECTED_FINISHED_DATE + 86400000))" +
-                " OR ? >= (EVENT_EXPECTED_FINISHED_DATE + 172800000)))";
+                "WHERE EVENT_TYPE = 1 AND EVENT_PROCESS = 1 AND " +
+                "((EVENT_SEQUENCE = 1 OR EVENT_SEQUENCE = 2) AND ? >= (EVENT_EXPECTED_FINISHED_DATE + 86400000)" +
+                " OR ? >= (EVENT_EXPECTED_FINISHED_DATE + 172800000) ))";
         long now = System.currentTimeMillis();
         LogUtils.d("update events","更新失败的学习计划 : " + updateSql);
         db.execSQL(updateSql,new Object[]{now,now});
     }
 
-    /** 更新进行中的学习计划 */
-    public void updateInProgressLearningEvents() {
-        String updateSql = "UPDATE event SET EVENT_PROCESS = 2 WHERE LEARNING_EVENT_GROUP_ID IN " +
-                "(SELECT DISTINCT LEARNING_EVENT_GROUP_ID FROM event WHERE" +
-                " EVENT_TYPE = 1 AND EVENT_PROCESS = 1" +
-                " AND EVENT_EXPECTED_FINISHED_DATE < (?+86400000) AND EVENT_EXPECTED_FINISHED_DATE >= ?)";
-        LogUtils.d("update events","更新进行中的学习计划 : " + updateSql);
-        long today = DateUtils.dateTimestampOfToday();
-        db.execSQL(updateSql,new Object[]{today,today});
+    /** 搜索模糊计划 */
+    public List<Event> selectAbstEventsByDescription(String key) {
+        return selectEventsByCriterion(Criterion.build().description(key).specific(false));
     }
 
+    /** 搜索具体计划 */
+    public List<Event> selectSpecEventsByDescription(String key) {
+        return selectEventsByCriterion(Criterion.build().description(key).specific(true));
+    }
+
+    /** 根据条件对象查找计划 */
+    private List<Event> selectEventsByCriterion(Criterion criterion){
+        if (criterion.description == null){
+            throw new IllegalArgumentException("field description must not null");
+        }
+        if (criterion.specific == null) criterion.specific = true;
+        String typeClause = criterion.specific ? " != " : " = ";
+        String querySql = "SELECT * FROM " + mTableName + " WHERE " +
+                EVENT_TYPE + typeClause + EventConfig.TYPE_ABSTRACT +
+                " AND " + DESCRIPTION + " LIKE '%"+ criterion.description +"%'";
+        return _select(querySql);
+    }
+
+
+    private static class Criterion{
+        private Criterion() { }
+        static Criterion build(){
+            return new Criterion();
+        }
+
+        String description;
+        Boolean specific;
+
+        Criterion description(String description){
+            this.description = description;
+            return this;
+        }
+        Criterion specific(boolean specific){
+            this.specific = specific;
+            return this;
+        }
+
+    }
 }

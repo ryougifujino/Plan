@@ -26,7 +26,7 @@ import link.ebbinghaus.planning.R;
  * A simple {@link Fragment} subclass.
  */
 public class PlanningDisplaySpecWeekFragment extends BaseFragment implements PlanningDisplaySpecWeekView,
-        PlanningDisplayFragment.OnToolbarDateChangeListener{
+        PlanningDisplaySpecificFragment.OnDateSelectorChangeListener{
 
     @Bind(R.id.rv_planning_display_spec_week) RecyclerView mRecyclerView;
     private WeekRecyclerViewAdapter mWeekRecyclerViewAdapter;
@@ -56,8 +56,8 @@ public class PlanningDisplaySpecWeekFragment extends BaseFragment implements Pla
 
     @Override
     public void registerToolbarDateChangeListener() {
-        PlanningDisplayFragment planningDisplayFragment = (PlanningDisplayFragment) getParentFragment().getParentFragment();
-        planningDisplayFragment.addOnToolbarDateChangeListener(this);
+        ((PlanningDisplaySpecificFragment) getParentFragment())
+                .addOnDateSelectorChangeListener(this);
     }
 
     @Override

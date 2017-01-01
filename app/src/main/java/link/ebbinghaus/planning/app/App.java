@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.view.WindowManager;
 
+import com.facebook.stetho.Stetho;
 import com.yurikami.lib.util.LogUtils;
 
 import link.ebbinghaus.planning.app.service.AmendDatabaseProcessAndRelatedService;
@@ -22,6 +23,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Stetho.initializeWithDefaults(this);
         sContext = getApplicationContext(); /*! 这句话必须在这里 */
 
         //一些初始化操作(轻量级)

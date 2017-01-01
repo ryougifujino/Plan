@@ -2,7 +2,9 @@ package link.ebbinghaus.planning.ui.view.setting.fragment;
 
 
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import com.yurikami.lib.widget.RadioSelectDialog;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,6 +47,7 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
     @Bind(R.id.tv_settings_planning_build_remind_time) TextView planningBuildRemindTimeTv;
     @Bind(R.id.switch_settings_planning_build_is_show_event_sequence) Switch planningBuildIsShowEventSequenceSwitch;
     @Bind(R.id.switch_settings_planning_build_is_greek_alphabet_marked) Switch planningBuildIsGreekAlphabetMarkedSwitch;
+    private DrawerLayout mDrawerLayout;
     private RadialTimePickerDialogFragment mRadialTimePicker;
     private NumberPickerBuilder mNumberPicker;
     private RadioSelectDialog mRadioSelectDialog;
@@ -68,6 +72,14 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
 
         mActivity.setSupportActionBar(mToolbar);
         mToolbar.setTitle(R.string.settings_title);
+        mToolbar.setNavigationIcon(R.drawable.common_navigation_menu);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
+        mDrawerLayout = (DrawerLayout) mActivity.findViewById(R.id.dl_main_whole);
 
         mPresenter.initViewData(settings);
         planningBuildStrategyTv.setOnClickListener(this);
@@ -148,9 +160,8 @@ public class SettingsFragment extends BaseFragment implements SettingsView,
 
     @Override
     public void onTimeSet(RadialTimePickerDialogFragment dialog, int hourOfDay, int minute) {
-        String hourMinute = hourOfDay + ":" + minute;   // FIXME: 2016/4/24 末尾为0时只显示一个0
         settings.defaultInputValue.setRemindTime(DateUtils.getHourMinuteMilliseconds(hourOfDay,minute));
-        planningBuildRemindTimeTv.setText(hourMinute);
+        planningBuildRemindTimeTv.setText(String.format(Locale.US,"%02d:%02d",hourOfDay,minute));
         mRadialTimePicker.setStartTime(hourOfDay, minute);
     }
 

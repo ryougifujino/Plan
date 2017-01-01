@@ -6,10 +6,13 @@ import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.yurikami.lib.util.DateUtils;
+import com.yurikami.lib.util.LogUtils;
 import com.yurikami.lib.util.NonNullContentValues;
 import com.yurikami.lib.util.Utils;
 
 import link.ebbinghaus.planning.app.constant.config.DBConfig;
+import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
 
 /**
  * Created by WINFIELD on 2016/2/29.
@@ -32,7 +35,7 @@ public class Event implements Parcelable {
     private Boolean isGreekAlphabetMarked;
     private Boolean isRemind;
     private Long remindTime;    //代表了xx时xx分的时长
-    private Integer eventProcess; //1:未开始 2:进行中/待办 3:成功/完成 4:失败/过期
+    private Integer eventProcess; //1:未完成 2:完成 3:过期
 
     public Long getPkEventId() {
         return pkEventId;
@@ -194,6 +197,43 @@ public class Event implements Parcelable {
 
     public void setIsRemind(Integer isRemind) {
         setIsRemind(Utils.int2Bool(isRemind));
+    }
+
+    /**
+     * 业务逻辑，获取是否能够完成这条Event
+     * @return 有资格完成返回true，否则返回false
+     */
+    public boolean isFinishable(){
+        if (getIsEventFinished()) return false;
+        long now = System.currentTimeMillis();
+        long efd = getEventExpectedFinishedDate();
+        if (getEventType() == EventConfig.TYPE_SPEC_NORMAL) {
+            return DateUtils.between(now, efd, efd + DateUtils.DAY_MILLISECONDS);
+        } else
+            return getEventType() == EventConfig.TYPE_SPEC_LEARNING &&
+                    ((getEventSequence() == 1 || getEventSequence() == 2) ?
+                            DateUtils.between(now, efd, efd + DateUtils.DAY_MILLISECONDS) :
+                            DateUtils.between(now, efd, efd + DateUtils.DAY_MILLISECONDS * 2));
+    }
+
+    /**
+     * 业务逻辑，获取可完成这个Event剩余的时间
+     * @return 剩余时间（单位毫秒）
+     */
+    public long getRemainingTime(){
+        if (getIsEventFinished()) return 0L;
+        long now = System.currentTimeMillis();
+        long efd = getEventExpectedFinishedDate();
+        LogUtils.d("getEventExpectedFinishedDate", getEventExpectedFinishedDate() + "");
+        long offset = DateUtils.DAY_MILLISECONDS;
+        if (getEventType() == EventConfig.TYPE_SPEC_NORMAL){
+            return DateUtils.between(now, efd, efd + offset) ? efd + offset - now : 0;
+        }else if (getEventType() == EventConfig.TYPE_SPEC_LEARNING){
+            offset = getEventSequence() == 1 || getEventSequence() == 2 ? offset : DateUtils.DAY_MILLISECONDS * 2;
+            return DateUtils.between(now, efd, efd + offset) ? efd + offset - now : 0;
+        }else {
+            return 0;
+        }
     }
 
 

@@ -48,4 +48,13 @@ public class PlanningDisplayServiceImpl implements PlanningDisplayService {
         return events;
     }
 
+    @Override
+    public EventGroup findEventGroup(long pk) {
+        EventGroup eventGroup;
+        EventGroupDaoDecorator dao = new EventGroupDaoDecorator();
+        eventGroup = dao.selectByPrimaryKey(pk);
+        dao.closeDB();
+        return eventGroup;
+    }
+
 }

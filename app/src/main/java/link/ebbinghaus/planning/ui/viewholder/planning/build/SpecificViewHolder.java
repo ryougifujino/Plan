@@ -1,9 +1,11 @@
 package link.ebbinghaus.planning.ui.viewholder.planning.build;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -14,50 +16,65 @@ import link.ebbinghaus.planning.ui.viewholder.BaseFragmentViewHolder;
  * Created by WINFIELD on 2016/3/13.
  */
 public class SpecificViewHolder extends BaseFragmentViewHolder {
-    public TextView eventTypeTv;
-    public TextView eventSubtypeTv;
-    public Button eventTypeBtn;
     public EditText descriptionEt;
-    public Button fastTemplateBtn;
-    public TextView strategyLabel;
+    public ImageView templateIv;
+    public TextView eventTypeNormalTv;
+    public TextView eventTypeLearningTv;
+
+    public TextView eventSubtypeTv;
+    public LinearLayout eventSubtypeLl;
     public TextView strategyTv;
+    public LinearLayout strategyLl;
     public TextView expectedFinishDateTv;
+    public LinearLayout expectedFinishDateLl;
     public Switch remindSwitch;
-    public TextView remindTimeLabel;
+    public RelativeLayout remindRl;
     public TextView remindTimeTv;
-    public TextView sequenceLabel;
+    public LinearLayout remindTimeLl;
     public Switch sequenceSwitch;
+    public RelativeLayout sequenceRl;
     public Switch greekAlphabetSwitch;
     public TextView eventGroupTv;
+    public LinearLayout eventGroupLl;
 
     public SpecificViewHolder(View v) {
         super(v);
-        eventTypeTv = find(R.id.tv_planning_build_event_type);
-        eventSubtypeTv = find(R.id.tv_planning_build_subtype);
-        eventTypeBtn = find(R.id.btn_planning_build_switch_event_type);
         descriptionEt = find(R.id.et_planning_build_description);
-        fastTemplateBtn = find(R.id.btn_planning_build_fast_template);
-        strategyLabel = find(R.id.label_planning_build_strategy);
+        templateIv = find(R.id.iv_planning_build_template);
+        eventTypeNormalTv = find(R.id.tv_planning_build_event_type_normal);
+        eventTypeLearningTv = find(R.id.tv_planning_build_event_type_learning);
+
+        eventSubtypeTv = find(R.id.tv_planning_build_subtype);
         strategyTv = find(R.id.tv_planning_build_strategy);
         expectedFinishDateTv = find(R.id.tv_planning_build_expected_finish_date);
         remindSwitch = find(R.id.switch_planning_build_is_remind);
-        remindTimeLabel = find(R.id.label_planning_build_remind_time);
         remindTimeTv = find(R.id.tv_planning_build_remind_time);
-        sequenceLabel = find(R.id.label_planning_build_is_show_event_sequence);
         sequenceSwitch = find(R.id.switch_planning_build_is_show_event_sequence);
         greekAlphabetSwitch = find(R.id.switch_planning_build_is_greek_alphabet_marked);
         eventGroupTv = find(R.id.tv_planning_build_event_group);
 
+        eventSubtypeLl = find(R.id.ll_planning_build_subtype);
+        strategyLl = find(R.id.ll_planning_build_strategy);
+        expectedFinishDateLl = find(R.id.ll_planning_build_expected_finish_date);
+        remindRl = find(R.id.ll_planning_build_is_remind);
+        remindTimeLl = find(R.id.ll_planning_build_remind_time);
+        sequenceRl = find(R.id.ll_planning_build_is_show_event_sequence);
+        eventGroupLl = find(R.id.ll_planning_build_event_group);
+
     }
 
     public void setOnclickListener(View.OnClickListener l){
-        eventTypeBtn.setOnClickListener(l);
-        eventSubtypeTv.setOnClickListener(l);
-        fastTemplateBtn.setOnClickListener(l);
-        strategyTv.setOnClickListener(l);
-        expectedFinishDateTv.setOnClickListener(l);
-        remindTimeTv.setOnClickListener(l);
-        eventGroupTv.setOnClickListener(l);
+        eventTypeNormalTv.setOnClickListener(l);
+        eventTypeLearningTv.setOnClickListener(l);
+        templateIv.setOnClickListener(l);
+        
+        eventSubtypeLl.setOnClickListener(l);
+        strategyLl.setOnClickListener(l);
+        expectedFinishDateLl.setOnClickListener(l);
+        remindRl.setOnClickListener(l);
+        remindTimeLl.setOnClickListener(l);
+        sequenceRl.setOnClickListener(l);
+        eventGroupLl.setOnClickListener(l);
     }
 
     public void setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener l){
@@ -67,10 +84,8 @@ public class SpecificViewHolder extends BaseFragmentViewHolder {
     }
     
     private void controlPanel(int visibility){
-        strategyLabel.setVisibility(visibility);
-        strategyTv.setVisibility(visibility);
-        sequenceLabel.setVisibility(visibility);
-        sequenceSwitch.setVisibility(visibility);
+        strategyLl.setVisibility(visibility);
+        sequenceRl.setVisibility(visibility);
     }
     public void showLearningPanel(){ controlPanel(View.VISIBLE); }
     public void showNormalPanel(){
@@ -78,8 +93,7 @@ public class SpecificViewHolder extends BaseFragmentViewHolder {
     }
 
     private void controlRemindTime(int visibility){
-        remindTimeLabel.setVisibility(visibility);
-        remindTimeTv.setVisibility(visibility);
+        remindTimeLl.setVisibility(visibility);
     }
     public void showRemindTime(){
         controlRemindTime(View.VISIBLE);

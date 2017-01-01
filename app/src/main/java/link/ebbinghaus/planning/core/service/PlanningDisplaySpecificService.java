@@ -56,11 +56,21 @@ public interface PlanningDisplaySpecificService {
     void findSpecEventDetailTo(SpecEventDetailVo specEventDetail);
 
     /**
+     * 搜索用，根据描述关键字查找具体计划
+     * @param key 描述关键字
+     * @return 搜索结果
+     */
+    List<Event> findSpecEventsByDescription(String key);
+
+    /**
      * 删除具体计划<br>
      * 这个具体计划可能是学习计划，也可能是普通计划<br>
      * 并且会处理其相关的计划组、希腊字母表、学习计划组
      * @param event 要删除的计划信息
      */
     void removeSpecEventAndProcessRelated(Event event);
+
+    /** 常规更新 */
+    void updateEvent(Event event);
 
 }

@@ -17,18 +17,18 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import link.ebbinghaus.planning.ui.adapter.SimpleFragmentPagerAdapter;
+import link.ebbinghaus.planning.R;
 import link.ebbinghaus.planning.core.model.local.sys.Tab;
 import link.ebbinghaus.planning.core.model.local.vo.planning.build.InputEventVo;
+import link.ebbinghaus.planning.ui.adapter.SimpleFragmentPagerAdapter;
 import link.ebbinghaus.planning.ui.presenter.planning.build.PlanningBuildPresenter;
 import link.ebbinghaus.planning.ui.presenter.planning.build.impl.PlanningBuildPresenterImpl;
 import link.ebbinghaus.planning.ui.view.planning.build.PlanningBuildView;
 import link.ebbinghaus.planning.ui.view.planning.build.fragment.PlanningBuildAbstractFragment;
 import link.ebbinghaus.planning.ui.view.planning.build.fragment.PlanningBuildSpecificFragment;
-import link.ebbinghaus.planning.R;
 
 public class PlanningBuildActivity extends BaseActivity implements PlanningBuildView,
-        ViewPager.OnPageChangeListener{
+        ViewPager.OnPageChangeListener {
 
     @Bind(R.id.tb_common_head) Toolbar mToolbar;
     @Bind(R.id.tl_planning_build) TabLayout mTabLayout;
@@ -49,14 +49,15 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
         mPresenter.configureToolbar();
         mPresenter.configureRelatedViewPagerTabLayout();
 
-
     }
 
 
     @Override
     public void setToolbar() {
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -136,6 +137,9 @@ public class PlanningBuildActivity extends BaseActivity implements PlanningBuild
                 }else {
                     mPresenter.doneAbstractEvent();
                 }
+                return true;
+            case android.R.id.home:
+                finish();
                 return true;
         }
 

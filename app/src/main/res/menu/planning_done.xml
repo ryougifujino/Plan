@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/item_planning_done_help"
+        android:orderInCategory="50"
+        android:title="帮助"
+        android:icon="@drawable/ic_help_white_24dp"
+        android:actionViewClass="android.widget.ImageButton"
+        app:showAsAction="always">
+
+    </item>
+
     <item
         android:id="@+id/item_planning_done_filter"
         android:orderInCategory="100"
         android:title="过滤器"
-        android:icon="@drawable/planning_done_filter"
+        android:icon="@drawable/common_filter"
         app:showAsAction="always">
         <menu>
             <item

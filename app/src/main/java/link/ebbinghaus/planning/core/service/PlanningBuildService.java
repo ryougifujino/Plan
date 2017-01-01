@@ -25,14 +25,16 @@ public interface PlanningBuildService {
     /**
      * 根据参数里的策略,向数据库添加相应的Event和LearningEventGroup
      * @param inputEvent 学习计划分项
+     * @return 插入的学习计划的id
      */
-    void addLearningEvent(InputEventVo inputEvent);
+    List<Long> addLearningEvent(InputEventVo inputEvent);
 
     /**
      * 向数据库保存一个制定好的普通计划,会把和普通计划无关的属性设null
      * @param event 普通计划
+     * @return 保存的普通计划的id
      */
-    void addNormalEvent(Event event);
+    Long addNormalEvent(Event event);
 
     /**
      * 向数据库保存一个制定好的模糊计划

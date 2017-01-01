@@ -19,6 +19,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import link.ebbinghaus.planning.app.constant.config.entity.EventConfig;
 import link.ebbinghaus.planning.app.constant.model.EventConstant;
+import link.ebbinghaus.planning.app.util.CommonUtils;
 import link.ebbinghaus.planning.core.model.local.po.Event;
 import link.ebbinghaus.planning.ui.view.planning.display.activity.PlanningDisplaySpecEventDetailActivity;
 import link.ebbinghaus.planning.ui.view.planning.done.activity.PlanningDoneFinishActivity;
@@ -32,9 +33,16 @@ public class FinishRecyclerViewAdapter extends RecyclerView.Adapter<FinishRecycl
     private Context mContext;
     private List<Event> mEvents;
 
+    //caches
+    private int[] mIndicatorRes = {R.drawable.planning_done_finished,R.drawable.planning_done_to_finish};
+    private int[] mColor;
+
     public FinishRecyclerViewAdapter(Context context, List<Event> events) {
         this.mContext = context;
         this.mEvents = events;
+
+        //init caches
+        mColor = new int[]{mContext.getResources().getColor(R.color.md_light_green_500),mContext.getResources().getColor(R.color.md_light_blue_500)};
     }
 
     /**
@@ -77,8 +85,6 @@ public class FinishRecyclerViewAdapter extends RecyclerView.Adapter<FinishRecycl
         @Bind(R.id.tv_planning_done_description) TextView descriptionTv;
         @Bind(R.id.tv_planning_done_learning_event_sequence) TextView sequenceTv;
 
-        private int[] indicatorRes = {R.drawable.planning_done_finished,R.drawable.planning_done_to_finish};
-        private int[] color = {mContext.getResources().getColor(R.color.md_light_green_500),mContext.getResources().getColor(R.color.md_light_blue_500)};
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
@@ -86,20 +92,20 @@ public class FinishRecyclerViewAdapter extends RecyclerView.Adapter<FinishRecycl
 
         public void setData(Event event) {
             if (event.getIsEventFinished()) {
-                indicatorIv.setImageResource(indicatorRes[0]);
-                indicatorIv.setColorFilter(color[0]);
+                indicatorIv.setImageResource(mIndicatorRes[0]);
+                indicatorIv.setColorFilter(mColor[0]);
                 Datetime finishedDate = DateUtils.convertTimestamp2Datetime(event.getEventFinishedTime());
                 finishedTimeTv.setText(mContext.getString(R.string.planning_done_finished_time, finishedDate.getYear(), finishedDate.getMonth(), finishedDate.getDay(),finishedDate.getHour(),finishedDate.getMinute(),finishedDate.getSecond()));
-                finishedTimeTv.setTextColor(color[0]);
-                expectedFinishedTimeTv.setTextColor(color[0]);
+                finishedTimeTv.setTextColor(mColor[0]);
+                expectedFinishedTimeTv.setTextColor(mColor[0]);
                 detailIv.setVisibility(View.VISIBLE);
                 finishTv.setVisibility(View.GONE);
             }else{
-                indicatorIv.setImageResource(indicatorRes[1]);
-                indicatorIv.setColorFilter(color[1]);
+                indicatorIv.setImageResource(mIndicatorRes[1]);
+                indicatorIv.setColorFilter(mColor[1]);
                 finishedTimeTv.setText(R.string.planning_done_event_not_finished);
-                finishedTimeTv.setTextColor(color[1]);
-                expectedFinishedTimeTv.setTextColor(color[1]);
+                finishedTimeTv.setTextColor(mColor[1]);
+                expectedFinishedTimeTv.setTextColor(mColor[1]);
                 detailIv.setVisibility(View.GONE);
                 finishTv.setVisibility(View.VISIBLE);
             }
@@ -126,7 +132,11 @@ public class FinishRecyclerViewAdapter extends RecyclerView.Adapter<FinishRecycl
                 intent.putExtra(PlanningDisplaySpecEventDetailActivity.INTENT_NAME_EVENT,event);
                 mContext.startActivity(intent);
             }else {
-                PlanningDoneFinishActivity.startAction(mContext,event);
+                if (event.isFinishable()) {
+                    PlanningDoneFinishActivity.startAction(mContext, event);
+                }else {
+                    CommonUtils.showLongToast("此计划已过期，不能进行完成");
+                }
             }
         }
 

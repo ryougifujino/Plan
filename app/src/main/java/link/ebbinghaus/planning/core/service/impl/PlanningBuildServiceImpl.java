@@ -38,30 +38,19 @@ public class PlanningBuildServiceImpl implements PlanningBuildService {
     }
 
     @Override
-    public void addLearningEvent(InputEventVo inputEvent) {
+    public List<Long> addLearningEvent(InputEventVo inputEvent) {
         EventDaoDecorator eventDao = new EventDaoDecorator();
-        switch (inputEvent.getStrategy()){
-            case LearningEventGroupConfig.TYPE_COMPREHENSIVE:
-                eventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_COMPREHENSIVE);
-                break;
-            case LearningEventGroupConfig.TYPE_MEMORIAL:
-                eventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_MEMORIAL);
-                break;
-            case LearningEventGroupConfig.TYPE_MEMORIAL_PRO:
-                eventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_MEMORIAL_PRO);
-                break;
-            case LearningEventGroupConfig.TYPE_PERSISTENT:
-                eventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY_PERSISTENT);
-                break;
-        }
+        List<Long> eventIds = eventDao.insertLearningEvents(inputEvent, LearningEventGroupConfig.STRATEGY[inputEvent.getStrategy() - 1]);
         eventDao.closeDB();
+        return eventIds;
     }
 
     @Override
-    public void addNormalEvent(Event event) {
+    public Long addNormalEvent(Event event) {
         EventDaoDecorator dao = new EventDaoDecorator();
-        dao.insertNormalEvent(event);
+        Long id = dao.insertNormalEvent(event);
         dao.closeDB();
+        return id;
     }
 
     @Override

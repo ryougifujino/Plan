@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by WINFIELD on 2016/2/29.
@@ -32,11 +33,11 @@ public class DateUtils {
     public static final long DEC_MS = _31_MS;
 
 
-    private static long sLastTimestamp = 0l;
+    private static long sLastTimestamp = 0L;
     private static Calendar sLastCalendar;
 
-    private static SimpleDateFormat chnDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
-    private static SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static SimpleDateFormat datetimeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss",Locale.US);
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd",Locale.US);
 
     private static Date now() { return new Date(); }
     private static long nowTimestamp() { return System.currentTimeMillis(); }
@@ -57,6 +58,7 @@ public class DateUtils {
             c = Calendar.getInstance();
             c.setTimeInMillis(timestamp);
             sLastCalendar = c;
+            sLastTimestamp = timestamp;
         }
         if("year".equals(part)){ return c.get(Calendar.YEAR); }
         else if("month".equals(part)){ return c.get(Calendar.MONTH) + 1; }
@@ -151,6 +153,15 @@ public class DateUtils {
     }
 
     /**
+     * 计算出今天0点的时间戳
+     * @return 今天0点的时间戳
+     */
+    public static long dateTimestampOfToday(){
+        Datetime dateOfToday = dateOfToday();
+        return newDateTimestamp(dateOfToday.getYear(),dateOfToday.getMonth(),dateOfToday.getDay());
+    }
+
+    /**
      * 计算出今天的年月日星期,效率较高
      * @return 今天的年月日星期
      */
@@ -159,15 +170,6 @@ public class DateUtils {
         Datetime date = Datetime.buildDate(year(nowTimestamp), month(nowTimestamp), day(nowTimestamp));
         date.setWeek(week(nowTimestamp));
         return date;
-    }
-
-    /**
-     * 计算出今天0点的时间戳
-     * @return 今天0点的时间戳
-     */
-    public static long dateTimestampOfToday(){
-        Datetime dateOfToday = dateOfToday();
-        return newDateTimestamp(dateOfToday.getYear(),dateOfToday.getMonth(),dateOfToday.getDay());
     }
 
     public static boolean isLeapYear(int year){
@@ -225,32 +227,20 @@ public class DateUtils {
 
     /**
      * 获取当前时间
-     * @return 格式:yyyy年MM月dd日
+     * @return 格式:yyyy/MM/dd
      */
-    public static String currentChnDate(){
-        return chnDateFormat.format(now());
+    public static String currentDate(){
+        return dateFormat.format(now());
     }
+
+
     /**
-     * 将形如yyyy年MM月dd日的日期字符串转换为时间戳
-     * @param chnDate 日期字符串
-     * @return 正确返回时间戳,错误返回-1
-     */
-    public static long convertChnDate2Timestamp(String chnDate){
-        try {
-            Date date = chnDateFormat.parse(chnDate);
-            return date.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return -1;
-    }
-    /**
-     * 将时间戳转换为形如yyyy年MM月dd日
+     * 将时间戳转换为形如1999/09/19
      * @param timestamp 时间戳
-     * @return 中文年月日字符串
+     * @return 日期时间字符串
      */
-    public static String formatTimestamp2ChnDate(long timestamp){
-        return chnDateFormat.format(timestamp);
+    public static String formatTimestamp2Date(long timestamp){
+        return dateFormat.format(timestamp);
     }
 
     /**
@@ -303,6 +293,18 @@ public class DateUtils {
     }
 
     /**
+     * 把毫秒转换为形如HH:mm:ss的形式
+     * @param millisecond 待转换的毫秒数
+     * @return HH:mm:ss形式的字符串
+     */
+    public static String convertMillisecond2HourHMS(long millisecond){
+        long hours = TimeUnit.MILLISECONDS.toHours(millisecond);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(millisecond) - hours * 60;
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(millisecond) - hours * 3600 - minutes * 60;
+        return String.format(Locale.US,"%02d:%02d:%02d",hours,minutes,seconds);
+    }
+
+    /** TODO：时区的问题还要思考一下
      * 将中国时区的时分时间戳（中国时区的时分时间戳正好=时长）转换为形如HH:mm
      * @param timestamp 时间戳（中国时区，正好对应时长）
      * @return 形如HH:mm的字符串
@@ -426,6 +428,17 @@ public class DateUtils {
         startEnd[0] = timestampBefore(targetTimestamp, dayOfWeek - 1);
         startEnd[1] = timestampAfter(targetTimestamp, 8 - dayOfWeek);
         return startEnd;
+    }
+
+    /**
+     * 判断目标时间戳是否在参数范围内
+     * @param target 目标时间戳
+     * @param from 起始参数（包括）
+     * @param to 截止参数（不包括）
+     * @return 在返回true，否则返回false
+     */
+    public static boolean between(long target, long from, long to){
+        return target >= from && target < to;
     }
 
 }

@@ -14,4 +14,10 @@ public interface HistoryService {
      * @return 所有已经完成的具体计划
      */
     List<Event> findAllDoneSpecEvents();
+
+    /**
+     * 查找所有已经过期的具体计划
+     * @return 所有已经过期的具体计划
+     */
+    List<Event> findAllExpiredSpecEvents();
 }

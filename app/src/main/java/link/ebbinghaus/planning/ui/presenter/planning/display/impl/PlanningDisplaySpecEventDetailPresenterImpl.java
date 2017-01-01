@@ -33,8 +33,21 @@ public class PlanningDisplaySpecEventDetailPresenterImpl implements PlanningDisp
     }
 
     @Override
+    public void refreshSpecEventDetail(SpecEventDetailVo specEventDetail) {
+        //根据id抓取最新的数据
+        mPlanningDisplaySpecificService.findSpecEventDetailTo(specEventDetail);
+        //重新设置数据某些控件样式
+        mView.fillViewWithData();
+    }
+
+    @Override
     public void deleteThisEventAndProcessRelated(Event event) {
         mPlanningDisplaySpecificService.removeSpecEventAndProcessRelated(event);
         mView.exitThisView();
+    }
+
+    @Override
+    public void updateIsShowEventSequence(Event event) {
+        mPlanningDisplaySpecificService.updateEvent(event);
     }
 }

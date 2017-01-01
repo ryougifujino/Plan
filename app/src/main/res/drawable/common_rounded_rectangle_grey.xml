@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_pressed="false">
+		<shape>
+		    <!-- 圆角 -->
+		    <corners
+		        android:radius="3dp"/>
+		    
+		    <!-- 间隔 -->
+		    <padding 
+		        android:left="5dp"
+		        android:right="5dp"
+		        android:top="2dp"
+		        android:bottom="2dp"/>
+		    
+		    <!-- 描边 -->
+		    
+		    <!-- 填充 -->
+		    <solid 
+		        android:color="@color/md_grey_100"/>
+		</shape>        
+    </item>
+
+    <item android:state_pressed="true">
+		<shape>
+		    <!-- 圆角 -->
+		    <corners
+		        android:radius="3dp"/>
+
+		    <!-- 间隔 -->
+		    <padding
+		        android:left="5dp"
+		        android:right="5dp"
+		        android:top="2dp"
+		        android:bottom="2dp"/>
+
+		    <!-- 描边 -->
+
+		    <!-- 填充 -->
+		    <solid
+		        android:color="@color/md_grey_300"/>
+		</shape>
+    </item>
+
+</selector>

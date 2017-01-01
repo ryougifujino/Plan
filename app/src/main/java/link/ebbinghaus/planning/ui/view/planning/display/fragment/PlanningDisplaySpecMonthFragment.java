@@ -26,12 +26,12 @@ import link.ebbinghaus.planning.R;
  * A simple {@link Fragment} subclass.
  */
 public class PlanningDisplaySpecMonthFragment extends BaseFragment implements PlanningDisplaySpecMonthView,
-        PlanningDisplayFragment.OnToolbarDateChangeListener {
+        PlanningDisplaySpecificFragment.OnDateSelectorChangeListener {
 
     @Bind(R.id.rv_planning_display_spec_month) RecyclerView mRecyclerView;
     private PlanningDisplaySpecMonthPresenter mPresenter;
     private MonthRecyclerViewAdapter mMonthRecyclerViewAdapter;
-    private Datetime mDateOfToday = DateUtils.dateOfToday();
+    private Datetime mToolbarDate = DateUtils.dateOfToday();
     //标识变量,用于控制当执行了onCreateView后,onResume不再重复执行渲染工作
     private boolean isCallOnCreateView = false;
 
@@ -51,15 +51,15 @@ public class PlanningDisplaySpecMonthFragment extends BaseFragment implements Pl
     @Override
     public void initRecyclerView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mMonthRecyclerViewAdapter = new MonthRecyclerViewAdapter(mActivity, mDateOfToday);  //FIXME:5.0以下要报错,检查Cursor column -1
+        mMonthRecyclerViewAdapter = new MonthRecyclerViewAdapter(mActivity, mToolbarDate);  //FIXME:5.0以下要报错,检查Cursor column -1
         mRecyclerView.setAdapter(mMonthRecyclerViewAdapter);
         setOnFragmentStopListener(mMonthRecyclerViewAdapter);
     }
 
     @Override
     public void registerToolbarDateChangeListener() {
-        PlanningDisplayFragment planningDisplayFragment = (PlanningDisplayFragment) getParentFragment().getParentFragment();
-        planningDisplayFragment.addOnToolbarDateChangeListener(this);
+        ((PlanningDisplaySpecificFragment) getParentFragment())
+                .addOnDateSelectorChangeListener(this);
     }
 
     @Override
@@ -70,6 +70,7 @@ public class PlanningDisplaySpecMonthFragment extends BaseFragment implements Pl
     @Override
     public void onDateChanged(Datetime datetime) {
         mMonthRecyclerViewAdapter.refresh(datetime);
+        mToolbarDate = datetime;
         LogUtils.d(TAG, "onDateChanged");
     }
 

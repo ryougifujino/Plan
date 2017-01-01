@@ -49,6 +49,15 @@
                 <action android:name="android.intent.action.TIME_SET"/>
             </intent-filter>
         </receiver>
+
+        <activity android:name=".ui.view.extension.activity.ExtensionTimeSaverActivity">
+        </activity>
+        <activity android:name=".ui.view.common.activity.CommonSearchEventActivity">
+        </activity>
+        <activity android:name=".ui.view.extension.activity.ExtensionTaskStackActivity">
+        </activity>
+        <activity android:name=".ui.view.common.activity.CommonWebViewActivity">
+        </activity>
     </application>
 
 </manifest>

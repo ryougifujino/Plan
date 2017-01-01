@@ -24,8 +24,9 @@ public interface PlanningBuildSpecificPresenter {
 
     /**
      * 根据是普通计划还是学习计划切换到相应的面板上去
+     * @param eventType true:普通计划 false:学习计划
      */
-    void switchBuildPanel();
+    void switchBuildPanel(boolean eventType);
 
     /**
      * 配置计划子类型

@@ -1,10 +1,17 @@
 package com.yurikami.lib.base;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.yurikami.lib.util.ActivityCollector;
 import com.yurikami.lib.util.LogUtils;
@@ -62,6 +69,42 @@ public class BaseActivity extends AppCompatActivity {
          * 当Activity的生命周期执行到onStop时调用
          */
         void onStop();
+    }
+
+    protected void translucentStatusBar() {
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    /*| WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION*/);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    /*| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION*/
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            /*window.setNavigationBarColor(Color.TRANSPARENT);*/
+        }
+    }
+
+    /** 有一个按钮的消息框 */
+    protected void showMessageDialog(String title, String message, String buttonTitle){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(buttonTitle, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog dlg = builder.create();
+        dlg.show();
+    }
+
+    /** 有一个按钮的消息框 */
+    protected void showMessageDialog(int titleResId, int messageResId, int buttonTitleResId){
+        showMessageDialog(getString(titleResId),
+                getString(messageResId),getString(buttonTitleResId));
     }
 
     //life circle

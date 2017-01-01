@@ -5,7 +5,7 @@ import android.widget.Toast;
 import link.ebbinghaus.planning.app.App;
 
 /**
- * Created by WINFIELD on 2016/2/17.
+ * 依赖于整个App的Context但不依赖于业务的工具类
  */
 public class CommonUtils {
     private static Toast sToast;

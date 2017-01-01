@@ -1,10 +1,12 @@
 package com.yurikami.lib.base;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +58,35 @@ public class BaseFragment extends Fragment {
      */
     protected Intent newIntent(Class<?> cls){
         return new Intent(mActivity, cls);
+    }
+
+    /**
+     * 跳转到某个Activity
+     * @param cls 目标Activity的class
+     */
+    protected void startActivity(Class<?> cls){
+        startActivity(newIntent(cls));
+    }
+
+    /** 有一个按钮的消息框 */
+    protected void showMessageDialog(String title, String message, String buttonTitle){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(buttonTitle, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog dlg = builder.create();
+        dlg.show();
+    }
+
+    /** 有一个按钮的消息框 */
+    protected void showMessageDialog(int titleResId, int messageResId, int buttonTitleResId){
+        showMessageDialog(getString(titleResId),
+                getString(messageResId),getString(buttonTitleResId));
     }
 
     //life circle
@@ -144,5 +175,6 @@ public class BaseFragment extends Fragment {
         LogUtils.i(TAG,"onViewStateRestored");
         super.onViewStateRestored(savedInstanceState);
     }
+
 
 }

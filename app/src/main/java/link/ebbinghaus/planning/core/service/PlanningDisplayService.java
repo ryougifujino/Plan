@@ -32,4 +32,7 @@ public interface PlanningDisplayService {
      */
     List<Event> findEventGroupDetail(boolean eventGroupType,Long eventGroupId);
 
+    /** 查找计划组最新值 */
+    EventGroup findEventGroup(long pk);
+
 }

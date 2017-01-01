@@ -28,7 +28,7 @@ public class DBConfig {
             .integer(EventColumn.IS_GREEK_ALPHABET_MARKED)
             .integer(EventColumn.IS_REMIND)
             .integer(EventColumn.REMIND_TIME)
-            .integer(EventColumn.EVENT_PROCESS)
+            .integer(EventColumn.EVENT_PROCESS)._default(1)
             .sql();
     public static final String CREATE_TABLE_GREEK_ALPHABET = SqlBuilder.build().create(Table.GREEK_ALPHABET)
             .pk(GreekAlphabetColumn.PK_GREEK_ALPHABET_ID)
@@ -108,7 +108,7 @@ public class DBConfig {
         String IS_GREEK_ALPHABET_MARKED = "IS_GREEK_ALPHABET_MARKED";
         String IS_REMIND = "IS_REMIND";
         String REMIND_TIME = "REMIND_TIME";
-        String EVENT_PROCESS = "EVENT_PROCESS"; //1:未开始 2:进行中/待办 3:成功/完成 4:失败/过期
+        String EVENT_PROCESS = "EVENT_PROCESS"; //1:未完成 2:完成 3:过期
     }
     public interface GreekAlphabetColumn{
         String PK_GREEK_ALPHABET_ID = "PK_GREEK_ALPHABET_ID";

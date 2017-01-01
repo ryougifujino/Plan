@@ -44,12 +44,12 @@ public class PlanningBuildPresenterImpl implements PlanningBuildPresenter {
         if(isValid) {
             switch (inputEvent.getEventType()) {
                 case EventConfig.TYPE_SPEC_LEARNING:
-                    mPlanningBuildService.addLearningEvent(inputEvent);
-                    AlarmUtils.setNotificationAlarm(inputEvent);
+                    List<Long> learningIds = mPlanningBuildService.addLearningEvent(inputEvent);
+                    AlarmUtils.setNotificationAlarm(inputEvent, learningIds);
                     break;
                 case EventConfig.TYPE_SPEC_NORMAL:
-                    mPlanningBuildService.addNormalEvent(inputEvent);
-                    AlarmUtils.setNotificationAlarm(inputEvent);
+                    Long normalId = mPlanningBuildService.addNormalEvent(inputEvent);
+                    AlarmUtils.setNotificationAlarm(inputEvent, normalId);
                     break;
                 default: return false;
             }
