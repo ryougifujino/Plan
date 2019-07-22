@@ -1,10 +1,10 @@
 
-#Planning
+# Planning
 
-##Introduction
+## Introduction
 An Android application aiming to schedule one person's plans.
 
-##License
+## License
 ```
 Copyright (C)  yrzh
 
